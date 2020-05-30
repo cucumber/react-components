@@ -17,7 +17,9 @@
     "lint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "build": "tsc",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@cucumber/messages": "file:../../messages/javascript",
@@ -30,7 +32,8 @@
     "color": "^3.1.2",
     "marked": "^0.8.2",
     "react-accessible-accordion": "^3.0.1",
-    "sanitize-html": "^1.23.0"
+    "sanitize-html": "^1.23.0",
+    "snyk": "^1.332.1"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -87,5 +90,6 @@
   "directories": {
     "test": "test"
   },
-  "keywords": []
+  "keywords": [],
+  "snyk": true
 }
