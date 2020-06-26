@@ -1,28 +1,25 @@
 import React from 'react'
 import { messages } from '@cucumber/messages'
-import IScenario = messages.GherkinDocument.Feature.IScenario
+import IBackground = messages.GherkinDocument.Feature.IBackground
 import Keyword from './Keyword'
-import HighLight from '../app/HighLight'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 
 interface IProps {
   id: string
-  scenario: IScenario
+  background: IBackground
 }
 
-const ScenarioTitle: React.FunctionComponent<IProps> = ({ id, scenario }) => {
+const BackgroundTitle: React.FunctionComponent<IProps> = ({ id, background }) => {
   return (
     <div className="anchored-link">
       <a href={"#" + id}><FontAwesomeIcon icon={faLink} className="attachment-icon"/></a>
-      <h2 id={id}>
-        <Keyword>{scenario.keyword}:</Keyword>{' '}
-        <span className="step-text">
-          <HighLight text={scenario.name} />
-        </span>
+      <h2 id={id} >
+        <Keyword>{background.keyword}:</Keyword>{' '}
+        <span className="step-text">{background.name}</span>
       </h2>
     </div>
   )
 }
 
-export default ScenarioTitle
+export default BackgroundTitle
