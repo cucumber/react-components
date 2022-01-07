@@ -1,10 +1,11 @@
+import { TestStepResultStatus } from '@cucumber/messages'
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import assert from 'assert'
 import React from 'react'
 import sinon from 'sinon'
-import { render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+
 import { SearchBar } from '../../../src/components/app'
-import { TestStepResultStatus } from '@cucumber/messages'
 
 describe('SearchBar', () => {
   describe('searching', () => {

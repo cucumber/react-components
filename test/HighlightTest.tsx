@@ -1,8 +1,9 @@
 import assert from 'assert'
-import ReactDOM from 'react-dom'
-import React from 'react'
-import { HighLight } from '../src/components/app/index'
 import { JSDOM } from 'jsdom'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+import { HighLight } from '../src/components/app/index'
 import SearchQueryContext, { SearchQueryCtx } from '../src/SearchQueryContext'
 
 describe('HighLight', () => {

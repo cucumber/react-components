@@ -1,15 +1,16 @@
-import fs from 'fs'
-import * as messages from '@cucumber/messages'
-import { NdjsonToMessageStream } from '@cucumber/message-streams'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import { NdjsonToMessageStream } from '@cucumber/message-streams'
+import * as messages from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
+import fs from 'fs'
+import glob from 'glob'
+import { JSDOM } from 'jsdom'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { JSDOM } from 'jsdom'
-import { components, EnvelopesQuery } from '../src'
-import { Query as CucumberQuery } from '@cucumber/query'
-import { promisify } from 'util'
 import { pipeline, Writable } from 'stream'
-import glob from 'glob'
+import { promisify } from 'util'
+
+import { components, EnvelopesQuery } from '../src'
 
 const asyncPipeline = promisify(pipeline)
 

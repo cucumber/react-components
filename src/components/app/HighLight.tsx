@@ -1,8 +1,9 @@
-import React from 'react'
-import SearchQueryContext from '../../SearchQueryContext'
 import elasticlunr from 'elasticlunr'
 import highlightWords from 'highlight-words'
+import React from 'react'
 import ReactMarkdown from 'react-markdown'
+
+import SearchQueryContext from '../../SearchQueryContext'
 import rehypePlugins from './rehypePlugins'
 
 interface IProps {

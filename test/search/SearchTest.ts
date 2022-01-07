@@ -1,9 +1,9 @@
+import { generateMessages } from '@cucumber/gherkin'
+import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
 import assert from 'assert'
 
-import * as messages from '@cucumber/messages'
-import { generateMessages } from '@cucumber/gherkin'
 import Search from '../../src/search/Search'
-import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 
 describe('Search', () => {
   let search: Search

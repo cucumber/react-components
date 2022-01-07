@@ -1,13 +1,14 @@
 import React from 'react'
-import { Keyword } from './Keyword'
-import { ExamplesTable } from './ExamplesTable'
-import { Description } from './Description'
-import { Title } from './Title'
-import { Tags } from './Tags'
-import { Children } from './Children'
-import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise'
 
-const DefaultRenderer: DefaultComponent<ExamplesProps, {}> = ({ examples }) => {
+import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise'
+import { Children } from './Children'
+import { Description } from './Description'
+import { ExamplesTable } from './ExamplesTable'
+import { Keyword } from './Keyword'
+import { Tags } from './Tags'
+import { Title } from './Title'
+
+const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples }) => {
   return (
     <section>
       <Tags tags={examples.tags} />
@@ -26,6 +27,6 @@ const DefaultRenderer: DefaultComponent<ExamplesProps, {}> = ({ examples }) => {
 }
 
 export const Examples: React.FunctionComponent<ExamplesProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<ExamplesProps, {}>('Examples', {}, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<ExamplesProps>('Examples', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

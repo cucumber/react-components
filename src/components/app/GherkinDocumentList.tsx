@@ -1,9 +1,8 @@
-import React from 'react'
-import { GherkinDocument } from '../gherkin/GherkinDocument'
-import { StatusIcon } from '../gherkin/StatusIcon'
-import { MDG } from '../gherkin/MDG'
 import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import {
   Accordion,
   AccordionItem,
@@ -11,12 +10,14 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from 'react-accessible-accordion'
-import UriContext from '../../UriContext'
-import GherkinQueryContext from '../../GherkinQueryContext'
+
 import CucumberQueryContext from '../../CucumberQueryContext'
+import GherkinQueryContext from '../../GherkinQueryContext'
+import UriContext from '../../UriContext'
+import { GherkinDocument } from '../gherkin/GherkinDocument'
+import { MDG } from '../gherkin/MDG'
+import { StatusIcon } from '../gherkin/StatusIcon'
 import styles from './GherkinDocumentList.module.scss'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface IProps {
   gherkinDocuments?: readonly messages.GherkinDocument[] | null
@@ -35,7 +36,7 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
 
   const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
     (gherkinDocument) => {
-      if(!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
+      if (!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
       const gherkinDocumentStatus = gherkinDocument.feature
         ? getWorstTestStepResult(
             cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
@@ -48,11 +49,13 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
 
   // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
   const preExpanded = preExpand
-    ? gherkinDocs
+    ? (gherkinDocs
         .filter(
-          (doc) => doc.uri && gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
+          (doc) =>
+            doc.uri &&
+            gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
         )
-        .map((doc) => doc.uri!)
+        .map((doc) => doc.uri) as string[])
     : []
 
   return (
@@ -63,11 +66,11 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
       className={styles.accordion}
     >
       {gherkinDocs.map((doc) => {
-        if(!doc.uri) throw new Error('No url for gherkinDocument')
+        if (!doc.uri) throw new Error('No url for gherkinDocument')
         const gherkinDocumentStatus = gherkinDocumentStatusByUri.get(doc.uri)
-        if(!gherkinDocumentStatus) throw new Error(`No status for ${doc.uri}`)
+        if (!gherkinDocumentStatus) throw new Error(`No status for ${doc.uri}`)
         const source = gherkinQuery.getSource(doc.uri)
-        if(!source) throw new Error(`No source for ${doc.uri}`)
+        if (!source) throw new Error(`No source for ${doc.uri}`)
 
         return (
           <AccordionItem key={doc.uri} className={styles.accordionItem}>

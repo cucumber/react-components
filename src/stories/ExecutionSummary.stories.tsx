@@ -1,5 +1,3 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
 import * as messages from '@cucumber/messages'
 import {
   TestRunFinished,
@@ -7,17 +5,24 @@ import {
   TestStepResultStatus,
   TimeConversion,
 } from '@cucumber/messages'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
+
 import { components } from '../../src'
-import { IExecutionSummaryProps } from '../components/app'
 import { CucumberReact } from '../components'
+import { IExecutionSummaryProps } from '../components/app'
+import { makeEmptyScenarioCountsByStatus } from '../countScenariosByStatuses'
 
 const { ExecutionSummary } = components.app
 
-const scenarioCountByStatus = new Map<messages.TestStepResultStatus, number>([
-  [TestStepResultStatus.PASSED, 100],
-  [TestStepResultStatus.FAILED, 3],
-  [TestStepResultStatus.UNDEFINED, 1],
-])
+const scenarioCountByStatus = {
+  ...makeEmptyScenarioCountsByStatus(),
+  ...{
+    [TestStepResultStatus.PASSED]: 100,
+    [TestStepResultStatus.FAILED]: 3,
+    [TestStepResultStatus.UNDEFINED]: 1,
+  },
+}
 
 const metaMinimal: messages.Meta = {
   protocolVersion: '17.1.1',

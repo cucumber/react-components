@@ -1,11 +1,12 @@
+import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
+import { JSDOM } from 'jsdom'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { JSDOM } from 'jsdom'
-import { EnvelopesQuery, components } from '../src'
+
 import markdown from '../acceptance/markdown/markdown.feature.md'
-import * as messages from '@cucumber/messages'
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
+import { components, EnvelopesQuery } from '../src'
 import UriContext from '../src/UriContext'
 
 describe('Markdown', () => {

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
 import * as messages from '@cucumber/messages'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
-import { components } from '../../src'
 import testData from '../../acceptance/examples-tables/examples-tables.feature'
+import { components } from '../../src'
 import { CucumberReact } from '../components'
 
 const { EnvelopesWrapper, SearchWrapper, FilteredResults } = components.app

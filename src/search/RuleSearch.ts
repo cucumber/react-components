@@ -37,8 +37,8 @@ export default class RuleSearch {
   }
 
   private get(ref: string): messages.Rule {
-    let rule = this.ruleById.get(ref)
-    if(!rule) throw new Error(`No rule for ref ${ref}`)
+    const rule = this.ruleById.get(ref)
+    if (!rule) throw new Error(`No rule for ref ${ref}`)
     return rule
   }
 }

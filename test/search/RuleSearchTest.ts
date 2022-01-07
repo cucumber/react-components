@@ -1,5 +1,6 @@
-import assert from 'assert'
 import * as messages from '@cucumber/messages'
+import assert from 'assert'
+
 import RuleSearch from '../../src/search/RuleSearch'
 import { makeRule } from './utils'
 

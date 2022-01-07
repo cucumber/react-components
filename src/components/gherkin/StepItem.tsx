@@ -1,7 +1,7 @@
+import * as messages from '@cucumber/messages'
 import React from 'react'
 
 import { StatusIcon } from './StatusIcon'
-import * as messages from '@cucumber/messages'
 import styles from './StepItem.module.scss'
 
 export const StepItem: React.FunctionComponent<{

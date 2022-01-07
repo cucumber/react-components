@@ -1,8 +1,5 @@
 import React from 'react'
-import { Description } from './Description'
-import { StepList } from './StepList'
-import { Title } from './Title'
-import { Keyword } from './Keyword'
+
 import {
   BackgroundClasses,
   BackgroundProps,
@@ -10,6 +7,10 @@ import {
   useCustomRendering,
 } from '../customise'
 import defaultStyles from './Background.module.scss'
+import { Description } from './Description'
+import { Keyword } from './Keyword'
+import { StepList } from './StepList'
+import { Title } from './Title'
 
 const DefaultRenderer: DefaultComponent<BackgroundProps, BackgroundClasses> = ({
   background,

@@ -1,5 +1,6 @@
-import assert from 'assert'
 import * as messages from '@cucumber/messages'
+import assert from 'assert'
+
 import StepSearch from '../../src/search/StepSearch'
 import { makeStep } from './utils'
 

@@ -1,9 +1,11 @@
+import * as messages from '@cucumber/messages'
 import assert from 'assert'
 import React from 'react'
-import { Tags } from '../../../src/components/gherkin'
-import * as messages from '@cucumber/messages'
-import { render } from '../utils'
+
 import { CucumberReact } from '../../../src/components'
+import { Customised, TagsClasses, TagsProps } from '../../../src/components/customise'
+import { Tags } from '../../../src/components/gherkin'
+import { render } from '../utils'
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
@@ -122,7 +124,7 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const CustomComponent = (props: any) => {
+    const CustomComponent: Customised<TagsProps, TagsClasses> = (props) => {
       return <props.DefaultRenderer {...props} />
     }
 

@@ -1,24 +1,35 @@
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
-import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
+import { GherkinDocumentWalker, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { getWorstTestStepResult, TestStepResultStatus } from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
+
+export function makeEmptyScenarioCountsByStatus(): Record<TestStepResultStatus, number> {
+  return {
+    [TestStepResultStatus.UNKNOWN]: 0,
+    [TestStepResultStatus.SKIPPED]: 0,
+    [TestStepResultStatus.FAILED]: 0,
+    [TestStepResultStatus.PASSED]: 0,
+    [TestStepResultStatus.AMBIGUOUS]: 0,
+    [TestStepResultStatus.PENDING]: 0,
+    [TestStepResultStatus.UNDEFINED]: 0,
+  }
+}
 
 export default function countScenariosByStatuses(
   gherkinQuery: GherkinQuery,
   cucumberQuery: CucumberQuery
 ): {
-  scenarioCountByStatus: Map<TestStepResultStatus, number>
+  scenarioCountByStatus: Record<TestStepResultStatus, number>
   statusesWithScenarios: readonly TestStepResultStatus[]
   totalScenarioCount: number
 } {
-  const scenarioCountByStatus = new Map<TestStepResultStatus, number>()
+  const scenarioCountByStatus = makeEmptyScenarioCountsByStatus()
 
   for (const gherkinDocument of gherkinQuery.getGherkinDocuments()) {
     const counter = new GherkinDocumentWalker(
       {},
       {
         handleScenario: (scenario) => {
-          if(!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
+          if (!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
           const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
           pickleIds.forEach((pickleId) => {
@@ -26,11 +37,7 @@ export default function countScenariosByStatuses(
               cucumberQuery.getPickleTestStepResults([pickleId])
             ).status
 
-            if (scenarioCountByStatus.has(status)) {
-              scenarioCountByStatus.set(status, scenarioCountByStatus.get(status)! + 1)
-            } else {
-              scenarioCountByStatus.set(status, 1)
-            }
+            scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
           })
         },
       }
@@ -38,9 +45,9 @@ export default function countScenariosByStatuses(
     counter.walkGherkinDocument(gherkinDocument)
   }
 
-  const statusesWithScenarios = [...scenarioCountByStatus.keys()]
+  const statusesWithScenarios = [...Object.keys(scenarioCountByStatus)] as TestStepResultStatus[]
 
-  const totalScenarioCount = [...scenarioCountByStatus.values()].reduce(
+  const totalScenarioCount = [...Object.values(scenarioCountByStatus)].reduce(
     (prev, curr) => prev + curr,
     0
   )

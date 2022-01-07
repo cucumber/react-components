@@ -1,17 +1,18 @@
-import React from 'react'
 import * as messages from '@cucumber/messages'
-import { ErrorMessage } from './ErrorMessage'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // @ts-ignore
 import Convert from 'ansi-to-html'
-import defaultStyles from './Attachment.module.scss'
+import React from 'react'
+
 import {
   AttachmentClasses,
   AttachmentProps,
   DefaultComponent,
   useCustomRendering,
 } from '../customise'
+import defaultStyles from './Attachment.module.scss'
+import { ErrorMessage } from './ErrorMessage'
 
 export const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   attachment,

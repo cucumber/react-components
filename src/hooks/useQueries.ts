@@ -1,9 +1,10 @@
+import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import { Query as CucumberQuery } from '@cucumber/query'
+import { useContext } from 'react'
+
+import CucumberQueryContext from '../CucumberQueryContext'
 import EnvelopesQueryContext, { EnvelopesQuery } from '../EnvelopesQueryContext'
 import GherkinQueryContext from '../GherkinQueryContext'
-import CucumberQueryContext from '../CucumberQueryContext'
-import { Query as CucumberQuery } from '@cucumber/query'
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { useContext } from 'react'
 
 interface IQueries {
   cucumberQuery: CucumberQuery

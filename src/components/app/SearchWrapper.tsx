@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+
 import SearchQueryContext, { SearchQueryProps, useSearchQueryCtx } from '../../SearchQueryContext'
 
 export const SearchWrapper: FunctionComponent<SearchQueryProps> = ({

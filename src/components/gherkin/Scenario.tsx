@@ -1,17 +1,18 @@
 import React from 'react'
-import { HookList } from './HookList'
-import { Keyword } from './Keyword'
-import { StepList } from './StepList'
-import { Tags } from './Tags'
-import { Title } from './Title'
-import { Examples } from './Examples'
-import { Description } from './Description'
+
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import UriContext from '../../UriContext'
 import { HighLight } from '../app/HighLight'
 import { DefaultComponent, ScenarioClasses, ScenarioProps, useCustomRendering } from '../customise'
+import { Description } from './Description'
+import { Examples } from './Examples'
+import { HookList } from './HookList'
+import { Keyword } from './Keyword'
 import defaultStyles from './Scenario.module.scss'
+import { StepList } from './StepList'
+import { Tags } from './Tags'
+import { Title } from './Title'
 
 const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
   scenario,

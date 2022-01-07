@@ -1,7 +1,8 @@
-import * as messages from '@cucumber/messages'
-import assert from 'assert'
 import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
+import assert from 'assert'
+
 import TagSearch from '../../src/search/TagSearch'
 
 describe('TagSearchTest', () => {

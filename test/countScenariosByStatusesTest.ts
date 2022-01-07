@@ -1,11 +1,12 @@
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
-import * as messages from '@cucumber/messages'
 import { SupportCode } from '@cucumber/fake-cucumber'
-import runFeature from './runFeature'
-import assert from 'assert'
-import countScenariosByStatuses from '../src/countScenariosByStatuses'
+import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
 import { SourceReference, TestStepResultStatus } from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
+import assert from 'assert'
+
+import countScenariosByStatuses from '../src/countScenariosByStatuses'
+import runFeature from './runFeature'
 
 const sourceReference: SourceReference = {}
 
@@ -48,9 +49,9 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery)
 
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.PASSED), 2)
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.FAILED), 1)
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.UNDEFINED), 1)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.PASSED], 2)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
     assert.deepStrictEqual(statusesWithScenarios, [
       TestStepResultStatus.PASSED,
       TestStepResultStatus.FAILED,
@@ -82,9 +83,9 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery)
 
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.PASSED), 1)
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.FAILED), 1)
-    assert.strictEqual(scenarioCountByStatus.get(messages.TestStepResultStatus.UNDEFINED), 1)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.PASSED], 1)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
+    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
     assert.deepStrictEqual(statusesWithScenarios, [
       TestStepResultStatus.PASSED,
       TestStepResultStatus.FAILED,

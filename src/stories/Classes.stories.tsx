@@ -1,9 +1,8 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
+import './custom-classes.scss'
 
 import * as messages from '@cucumber/messages'
-
-import './custom-classes.scss'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
 import { components } from '..'
 import { CustomRenderingSupport } from '../components/customise'

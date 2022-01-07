@@ -1,14 +1,15 @@
 import { Envelope } from '@cucumber/messages'
-import SearchQueryContext, { useSearchQueryCtx } from '../../../src/SearchQueryContext'
-import { FilteredResults } from '../../../src/components/app'
-import assert from 'assert'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import assert from 'assert'
 import React, { VoidFunctionComponent } from 'react'
-import { EnvelopesWrapper } from '../../../src/components/app/EnvelopesWrapper'
+
 import attachments from '../../../acceptance/attachments/attachments.feature'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature'
 import minimal from '../../../acceptance/minimal/minimal.feature'
-import { render } from '@testing-library/react'
+import { FilteredResults } from '../../../src/components/app'
+import { EnvelopesWrapper } from '../../../src/components/app/EnvelopesWrapper'
+import SearchQueryContext, { useSearchQueryCtx } from '../../../src/SearchQueryContext'
 
 describe('FilteredResults', () => {
   const TestableFilteredResults: VoidFunctionComponent<{ envelopes: Envelope[] }> = ({

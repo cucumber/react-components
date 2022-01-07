@@ -1,5 +1,5 @@
-import React from 'react'
 import * as messages from '@cucumber/messages'
+import React from 'react'
 
 export class EnvelopesQuery {
   private envelopes: messages.Envelope[] = []

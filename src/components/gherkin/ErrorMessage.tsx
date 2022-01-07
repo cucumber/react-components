@@ -1,11 +1,12 @@
 import React from 'react'
-import defaultStyles from './ErrorMessage.module.scss'
+
 import {
   DefaultComponent,
   ErrorMessageClasses,
   ErrorMessageProps,
   useCustomRendering,
 } from '../customise'
+import defaultStyles from './ErrorMessage.module.scss'
 
 const DefaultRenderer: DefaultComponent<ErrorMessageProps, ErrorMessageClasses> = ({
   message,

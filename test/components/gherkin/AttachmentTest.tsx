@@ -1,7 +1,8 @@
-import React from 'react'
-import { Attachment } from '../../../src/components/gherkin'
 import * as messages from '@cucumber/messages'
 import assert from 'assert'
+import React from 'react'
+
+import { Attachment } from '../../../src/components/gherkin'
 import { render } from '../utils'
 
 describe('<Attachment>', () => {

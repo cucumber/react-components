@@ -1,20 +1,22 @@
+import * as messages from '@cucumber/messages'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import rehypePlugins from '../app/rehypePlugins'
+import { Element } from 'react-markdown/src/ast-to-react'
+
 import GherkinQueryContext from '../../GherkinQueryContext'
-import { GherkinStep } from './GherkinStep'
-import { Title } from './Title'
-import { Keyword } from './Keyword'
-import { ExamplesTable } from './ExamplesTable'
-import dataTableStyles from './DataTable.module.scss'
 import { HighLight } from '../app/HighLight'
-import * as messages from '@cucumber/messages'
+import rehypePlugins from '../app/rehypePlugins'
 import { Header } from '../customise'
+import dataTableStyles from './DataTable.module.scss'
+import { ExamplesTable } from './ExamplesTable'
+import { GherkinStep } from './GherkinStep'
+import { Keyword } from './Keyword'
 import styles from './MDG.module.scss'
+import { Title } from './Title'
 
 interface IProps {
   uri: string
-  children: any
+  children: string
 }
 
 export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
@@ -23,7 +25,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
   let hasExamples = false
   let examples: messages.Examples | undefined = undefined
 
-  function header(line: number, level: number, children: any) {
+  function header(line: number, level: number, children: string) {
     const scenario = gherkinQuery.getScenario(uri, line)
     hasExamples = !!scenario && scenario.examples.length > 0
     examples = gherkinQuery.getExamples(uri, line)
@@ -50,22 +52,22 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
       rehypePlugins={rehypePlugins}
       components={{
         h1({ node, level, children }) {
-          return header(node.position!.start.line, level, children)
+          return header(line(node), level, children as string)
         },
         h2({ node, level, children }) {
-          return header(node.position!.start.line, level, children)
+          return header(line(node), level, children as string)
         },
         h3({ node, level, children }) {
-          return header(node.position!.start.line, level, children)
+          return header(line(node), level, children as string)
         },
         h4({ node, level, children }) {
-          return header(node.position!.start.line, level, children)
+          return header(line(node), level, children as string)
         },
         h5({ node, level, children }) {
-          return header(node.position!.start.line, level, children)
+          return header(line(node), level, children as string)
         },
         table({ node, children }) {
-          if (examples && examples.tableHeader && node.position!.start.column >= 3) {
+          if (examples && examples.tableHeader && line(node) >= 3) {
             return (
               <ExamplesTable tableHeader={examples.tableHeader} tableBody={examples.tableBody} />
             )
@@ -73,8 +75,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
           return <table className={dataTableStyles.table}>{children}</table>
         },
         ul({ node, children }) {
-          const line = node.position!.start.line
-          const step = gherkinQuery.getStep(uri, line)
+          const step = gherkinQuery.getStep(uri, line(node))
           if (!step) {
             // Non-Gherkin list
             return <ul>{children}</ul>
@@ -82,8 +83,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
           return <ul className={styles.steps}>{children}</ul>
         },
         li({ node, children }) {
-          const line = node.position!.start.line
-          const step = gherkinQuery.getStep(uri, line)
+          const step = gherkinQuery.getStep(uri, line(node))
           if (!step) {
             // Non-Gherkin list item
             return <li>{children}</li>
@@ -99,4 +99,9 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
       {children}
     </ReactMarkdown>
   )
+}
+
+function line(node: Element): number {
+  if (node.position === undefined) throw new Error(`undefined position in ${JSON.stringify(node)}`)
+  return node.position.start.line
 }

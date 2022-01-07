@@ -47,8 +47,8 @@ export default class StepSearch {
   }
 
   private get(ref: string): messages.Step {
-    let rule = this.stepById.get(ref)
-    if(!rule) throw new Error(`No step for ref ${ref}`)
+    const rule = this.stepById.get(ref)
+    if (!rule) throw new Error(`No step for ref ${ref}`)
     return rule
   }
 

@@ -1,19 +1,20 @@
-import React from 'react'
-import { DataTable } from './DataTable'
-import { Keyword } from './Keyword'
-import { DocString } from './DocString'
-import { ErrorMessage } from './ErrorMessage'
-import { StepItem } from './StepItem'
-import { Attachment } from './Attachment'
-import { Parameter } from './Parameter'
-import { Title } from './Title'
 import { getWorstTestStepResult } from '@cucumber/messages'
+import React from 'react'
+
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import { HighLight } from '../app/HighLight'
 import { DefaultComponent, GherkinStepProps, useCustomRendering } from '../customise'
+import { Attachment } from './Attachment'
+import { DataTable } from './DataTable'
+import { DocString } from './DocString'
+import { ErrorMessage } from './ErrorMessage'
+import { Keyword } from './Keyword'
+import { Parameter } from './Parameter'
+import { StepItem } from './StepItem'
+import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<GherkinStepProps, {}> = ({ step, hasExamples }) => {
+const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples }) => {
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
@@ -47,7 +48,10 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps, {}> = ({ step, hasExam
         if (arg) {
           if (arg.length > 0) {
             stepTextElements.push(
-              <Parameter parameterTypeName={argument.parameterTypeName || 'anonymous'} key={`param-${index}`}>
+              <Parameter
+                parameterTypeName={argument.parameterTypeName || 'anonymous'}
+                key={`param-${index}`}
+              >
                 <HighLight text={arg} />
               </Parameter>
             )
@@ -87,10 +91,6 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps, {}> = ({ step, hasExam
 }
 
 export const GherkinStep: React.FunctionComponent<GherkinStepProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<GherkinStepProps, {}>(
-    'GherkinStep',
-    {},
-    DefaultRenderer
-  )
+  const ResolvedRenderer = useCustomRendering<GherkinStepProps>('GherkinStep', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

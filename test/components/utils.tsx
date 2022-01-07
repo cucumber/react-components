@@ -1,10 +1,11 @@
-import { render } from '@testing-library/react'
-import React, { ReactElement } from 'react'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { Query as CucumberQuery } from '@cucumber/query'
-import UriContext from '../../src/UriContext'
+import { render } from '@testing-library/react'
+import React, { ReactElement } from 'react'
+
 import CucumberQueryContext from '../../src/CucumberQueryContext'
 import GherkinQueryContext from '../../src/GherkinQueryContext'
+import UriContext from '../../src/UriContext'
 
 export interface TestRenderOptions {
   uri?: string

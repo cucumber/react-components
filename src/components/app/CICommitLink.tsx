@@ -1,8 +1,9 @@
-import React from 'react'
 import * as messages from '@cucumber/messages'
-import ciCommitLink from '../../ciCommitLink'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+
+import ciCommitLink from '../../ciCommitLink'
 
 interface IProps {
   ci: messages.Ci

@@ -1,15 +1,16 @@
 import React from 'react'
-import { Description } from './Description'
+
+import { HighLight } from '../app/HighLight'
+import { DefaultComponent, RuleProps, useCustomRendering } from '../customise'
 import { Background } from './Background'
 import { Children } from './Children'
+import { Description } from './Description'
 import { Keyword } from './Keyword'
 import { Scenario } from './Scenario'
 import { Tags } from './Tags'
 import { Title } from './Title'
-import { HighLight } from '../app/HighLight'
-import { DefaultComponent, RuleProps, useCustomRendering } from '../customise'
 
-const DefaultRenderer: DefaultComponent<RuleProps, {}> = ({ rule }) => {
+const DefaultRenderer: DefaultComponent<RuleProps> = ({ rule }) => {
   return (
     <section>
       <Tags tags={rule.tags} />
@@ -34,6 +35,6 @@ const DefaultRenderer: DefaultComponent<RuleProps, {}> = ({ rule }) => {
 }
 
 export const Rule: React.FunctionComponent<RuleProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<RuleProps, {}>('Rule', {}, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<RuleProps>('Rule', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

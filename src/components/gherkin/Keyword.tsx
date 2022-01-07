@@ -1,13 +1,17 @@
 import React from 'react'
-import defaultStyles from './Keyword.module.scss'
-import { DefaultComponent, KeywordClasses, useCustomRendering } from '../customise'
 
-const DefaultRenderer: DefaultComponent<any, KeywordClasses> = ({ children, styles }) => {
+import { DefaultComponent, KeywordClasses, useCustomRendering } from '../customise'
+import defaultStyles from './Keyword.module.scss'
+
+const DefaultRenderer: DefaultComponent<Record<string, never>, KeywordClasses> = ({
+  children,
+  styles,
+}) => {
   return <span className={styles.keyword}>{children}</span>
 }
 
 export const Keyword: React.FunctionComponent = ({ children }) => {
-  const ResolvedRenderer = useCustomRendering<any, KeywordClasses>(
+  const ResolvedRenderer = useCustomRendering<unknown, KeywordClasses>(
     'Keyword',
     defaultStyles,
     DefaultRenderer

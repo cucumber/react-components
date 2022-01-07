@@ -1,11 +1,9 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
-
 import * as messages from '@cucumber/messages'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
 import attachments from '../../acceptance/attachments/attachments.feature'
 import rules from '../../acceptance/rules/rules.feature'
-
 import { components } from '..'
 import { IncludedTheme } from '../components/customise'
 

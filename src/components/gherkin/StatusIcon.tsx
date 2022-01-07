@@ -1,22 +1,23 @@
+import * as messages from '@cucumber/messages'
 import {
   faCheckCircle,
-  faQuestionCircle,
-  faTimesCircle,
-  faPauseCircle,
-  faStopCircle,
   faInfoCircle,
+  faPauseCircle,
+  faQuestionCircle,
+  faStopCircle,
+  faTimesCircle,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as messages from '@cucumber/messages'
-import defaultStyles from './StatusIcon.module.scss'
+import React from 'react'
+
 import {
   DefaultComponent,
   StatusIconClasses,
   StatusIconProps,
   useCustomRendering,
 } from '../customise'
+import defaultStyles from './StatusIcon.module.scss'
 
 const DefaultRenderer: DefaultComponent<StatusIconProps, StatusIconClasses> = ({
   status,

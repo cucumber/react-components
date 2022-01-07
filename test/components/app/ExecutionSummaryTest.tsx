@@ -1,20 +1,26 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import { ExecutionSummary, IExecutionSummaryProps } from '../../../src/components/app'
-import * as messages from '@cucumber/messages'
 import { TestStepResultStatus, TimeConversion } from '@cucumber/messages'
+import { render } from '@testing-library/react'
 import assert from 'assert'
 import { add, addMilliseconds } from 'date-fns'
+import React from 'react'
+
+import { ExecutionSummary, IExecutionSummaryProps } from '../../../src/components/app'
+import { makeEmptyScenarioCountsByStatus } from '../../../src/countScenariosByStatuses'
 
 const startDate = new Date(1639753096000)
 const finishDate = new Date(1639753197000)
 
+const scenarioCountByStatus = {
+  ...makeEmptyScenarioCountsByStatus(),
+  ...{
+    [TestStepResultStatus.PASSED]: 100,
+    [TestStepResultStatus.FAILED]: 3,
+    [TestStepResultStatus.UNDEFINED]: 1,
+  },
+}
+
 const DEFAULT_PROPS: IExecutionSummaryProps = {
-  scenarioCountByStatus: new Map<messages.TestStepResultStatus, number>([
-    [TestStepResultStatus.PASSED, 100],
-    [TestStepResultStatus.FAILED, 3],
-    [TestStepResultStatus.UNDEFINED, 1],
-  ]),
+  scenarioCountByStatus,
   totalScenarioCount: 104,
   testRunStarted: {
     timestamp: TimeConversion.millisecondsSinceEpochToTimestamp(startDate.getTime()),
@@ -103,11 +109,10 @@ describe('ExecutionSummary', () => {
         const { getByText } = render(
           <ExecutionSummary
             {...DEFAULT_PROPS}
-            scenarioCountByStatus={
-              new Map<messages.TestStepResultStatus, number>([
-                [TestStepResultStatus.PASSED, passed],
-              ])
-            }
+            scenarioCountByStatus={{
+              ...makeEmptyScenarioCountsByStatus(),
+              [TestStepResultStatus.PASSED]: passed,
+            }}
             totalScenarioCount={total}
           />
         )

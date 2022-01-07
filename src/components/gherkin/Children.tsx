@@ -1,6 +1,7 @@
 import React from 'react'
-import defaultStyles from './Children.module.scss'
+
 import { ChildrenClasses, ChildrenProps, DefaultComponent, useCustomRendering } from '../customise'
+import defaultStyles from './Children.module.scss'
 
 const DefaultRenderer: DefaultComponent<ChildrenProps, ChildrenClasses> = ({
   styles,

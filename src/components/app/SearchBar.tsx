@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from 'react'
+import { TestStepResultStatus as Status } from '@cucumber/messages'
 import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './SearchBar.module.scss'
-import { TestStepResultStatus as Status } from '@cucumber/messages'
-import statuses from './statuses'
+import React, { FunctionComponent } from 'react'
+
 import statusName from '../gherkin/statusName'
+import styles from './SearchBar.module.scss'
+import statuses from './statuses'
 
 interface IProps {
   query: string
@@ -25,7 +26,7 @@ export const SearchBar: FunctionComponent<IProps> = ({
     event.preventDefault()
     const formData = new window.FormData(event.currentTarget)
     const query = formData.get('query')
-    if(query) {
+    if (query) {
       onSearch(query.toString())
     }
   }

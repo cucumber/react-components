@@ -1,11 +1,12 @@
-import React from 'react'
-import statusName from '../gherkin/statusName'
 import * as messages from '@cucumber/messages'
+import React from 'react'
+
+import statusName from '../gherkin/statusName'
 import statuses from './statuses'
 import styles from './StatusesSummary.module.scss'
 
 export interface IStatusesSummaryProps {
-  scenarioCountByStatus: Map<messages.TestStepResultStatus, number>
+  scenarioCountByStatus: Record<messages.TestStepResultStatus, number>
   totalScenarioCount: number
 }
 
@@ -16,7 +17,7 @@ export const StatusesSummary: React.FunctionComponent<IStatusesSummaryProps> = (
   return (
     <ol className={styles.statusesList}>
       {statuses.map((status) => {
-        const scenarioCount = scenarioCountByStatus.get(status)
+        const scenarioCount = scenarioCountByStatus[status]
         if (scenarioCount === undefined) {
           return
         }

@@ -1,7 +1,8 @@
-import assert from 'assert'
-import React from 'react'
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import assert from 'assert'
+import React from 'react'
+
 import { HookStep } from '../../../src/components/gherkin'
 import { render } from '../utils'
 
@@ -74,7 +75,7 @@ describe('<HookStep>', () => {
         ],
         {
           id: 'the-id',
-          sourceReference: {}
+          sourceReference: {},
         }
       ),
     })

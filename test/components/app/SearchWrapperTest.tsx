@@ -1,18 +1,19 @@
 import assert from 'assert'
-import ReactDOM from 'react-dom'
-import React from 'react'
 import { JSDOM } from 'jsdom'
-import SearchQueryContext, {
-  SearchQueryProps,
-  SearchQueryCtx,
-} from '../../../src/SearchQueryContext'
-import { components } from '../../../src'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import sinon from 'sinon'
+
+import { components } from '../../../src'
+import SearchQueryContext, {
+  SearchQueryCtx,
+  SearchQueryProps,
+} from '../../../src/SearchQueryContext'
 
 describe('SearchWrapper', () => {
   function renderSearchWrapper(opts?: SearchQueryProps): {
     document: Document
-    searchQueryCapture: sinon.SinonSpy<SearchQueryCtx[], any>
+    searchQueryCapture: sinon.SinonSpy<SearchQueryCtx[]>
   } {
     const dom = new JSDOM('<html lang="en"><body><div id="content"></div></body></html>')
     // @ts-ignore

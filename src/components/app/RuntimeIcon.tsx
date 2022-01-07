@@ -1,6 +1,7 @@
 import React, { VoidFunctionComponent } from 'react'
-import { NodeJs } from './icons/NodeJs'
+
 import { Jvm } from './icons/Jvm'
+import { NodeJs } from './icons/NodeJs'
 import { Ruby } from './icons/Ruby'
 
 export const RuntimeIcon: VoidFunctionComponent<{ name: string }> = ({ name }) => {

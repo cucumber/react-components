@@ -96,4 +96,4 @@ function makeStep(
   }
 }
 
-export { makeFeature, makeScenario, makeStep, makeRule }
+export { makeFeature, makeRule, makeScenario, makeStep }

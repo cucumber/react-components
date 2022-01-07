@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+
 import toRepositoryId from './toRepositoryId'
 
 export default function ciCommitLink(ci: messages.Ci): string | null {

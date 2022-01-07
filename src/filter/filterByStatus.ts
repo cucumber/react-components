@@ -1,8 +1,8 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
-import * as messages from '@cucumber/messages'
 import { GherkinDocumentWalker, rejectAllFilters } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
 
 export default function filterByStatus(
   gherkinDocument: messages.GherkinDocument,
@@ -12,7 +12,7 @@ export default function filterByStatus(
 ): messages.GherkinDocument | null {
   const filters = {
     acceptScenario: (scenario: messages.Scenario) => {
-      if(!gherkinDocument.uri) throw new Error('Missing uri for gherkinDocument')
+      if (!gherkinDocument.uri) throw new Error('Missing uri for gherkinDocument')
       const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
       return pickleIds

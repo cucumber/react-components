@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import { CustomRenderingContext, CustomRenderingSupport, IncludedTheme } from './customise'
+
 import styles from './CucumberReact.module.scss'
+import { CustomRenderingContext, CustomRenderingSupport, IncludedTheme } from './customise'
 
 interface IProps {
   theme?: IncludedTheme

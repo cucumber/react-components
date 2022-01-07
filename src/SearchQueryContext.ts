@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import { TestStepResultStatus as Status } from '@cucumber/messages'
+import React, { useState } from 'react'
 
 const defaultQuerySearchParam = 'search'
 const defaultHideStatusesSearchParam = 'hide'
@@ -62,7 +62,7 @@ export function searchFromURLParams(opts?: {
     query: url.searchParams.get(querySearchParam),
     hideStatuses: url.searchParams
       .getAll(hideStatusesSearchParam)
-      .filter((s) => (<any>Object).values(Status).includes(s))
+      .filter((s) => Object.values(Status).includes(s as Status))
       .map((s) => Status[s as keyof typeof Status]),
     onSearchQueryUpdated,
   }
@@ -107,9 +107,9 @@ export function useSearchQueryCtx(props: SearchQueryProps): SearchQueryCtx {
     searchQuery,
     props.onSearchQueryUpdated
       ? (query) => {
-        props.onSearchQueryUpdated && props.onSearchQueryUpdated(query)
-        setSearchQuery(query)
-      }
+          props.onSearchQueryUpdated && props.onSearchQueryUpdated(query)
+          setSearchQuery(query)
+        }
       : setSearchQuery
   )
 }

@@ -1,4 +1,5 @@
 import assert from 'assert'
+
 import toRepositoryId from '../src/toRepositoryId'
 
 const testData = [

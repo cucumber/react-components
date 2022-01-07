@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useMemo } from 'react'
-import * as messages from '@cucumber/messages'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import { QueriesWrapper } from './QueriesWrapper'
+import React, { FunctionComponent, useMemo } from 'react'
+
 import { EnvelopesQuery } from '../../EnvelopesQueryContext'
+import { QueriesWrapper } from './QueriesWrapper'
 
 interface IProps {
   envelopes: readonly messages.Envelope[]

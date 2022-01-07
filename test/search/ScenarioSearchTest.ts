@@ -1,5 +1,6 @@
-import assert from 'assert'
 import * as messages from '@cucumber/messages'
+import assert from 'assert'
+
 import ScenarioSearch from '../../src/search/ScenarioSearch'
 import { makeScenario } from './utils'
 

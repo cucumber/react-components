@@ -1,9 +1,9 @@
-import * as messages from '@cucumber/messages'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { ArrayMultimap } from '@teppeis/multimaps'
-import parse from '@cucumber/tag-expressions'
 import { GherkinDocumentWalker, rejectAllFilters } from '@cucumber/gherkin-utils'
+import * as messages from '@cucumber/messages'
 import { GherkinDocument } from '@cucumber/messages'
+import parse from '@cucumber/tag-expressions'
+import { ArrayMultimap } from '@teppeis/multimaps'
 
 export default class TagSearch {
   private readonly pickleById = new Map<string, messages.Pickle>()
@@ -47,12 +47,12 @@ export default class TagSearch {
       {},
       {
         handleScenario: (scenario) => {
-          if(!gherkinDocument.uri) throw new Error('No uri for gherkinDocument')
+          if (!gherkinDocument.uri) throw new Error('No uri for gherkinDocument')
           const pickleIds = this.gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
           pickleIds.map((pickleId) => {
             const pickle = this.pickleById.get(pickleId)
-            if(!pickle) throw new Error(`No pickle for id=${pickleId}`)
+            if (!pickle) throw new Error(`No pickle for id=${pickleId}`)
             this.picklesByScenarioId.put(scenario.id, pickle)
           })
         },

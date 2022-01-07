@@ -1,11 +1,11 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
-import * as messages from '@cucumber/messages'
 import { TestStepResultStatus } from '@cucumber/messages'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
 import { components } from '../../src'
-import { IStatusesSummaryProps } from '../components/app'
 import { CucumberReact } from '../components'
+import { IStatusesSummaryProps } from '../components/app'
+import { makeEmptyScenarioCountsByStatus } from '../countScenariosByStatuses'
 
 const { StatusesSummary } = components.app
 
@@ -22,26 +22,31 @@ const Template: Story<IStatusesSummaryProps> = (props) => {
   )
 }
 
+const scenarioCountByStatus = {
+  ...makeEmptyScenarioCountsByStatus(),
+  ...{
+    [TestStepResultStatus.PASSED]: 100,
+    [TestStepResultStatus.FAILED]: 3,
+    [TestStepResultStatus.UNDEFINED]: 1,
+  },
+}
+
 export const Typical = Template.bind({})
 Typical.args = {
-  scenarioCountByStatus: new Map<messages.TestStepResultStatus, number>([
-    [TestStepResultStatus.PASSED, 100],
-    [TestStepResultStatus.FAILED, 3],
-    [TestStepResultStatus.UNDEFINED, 1],
-  ]),
+  scenarioCountByStatus,
   totalScenarioCount: 104,
 } as IStatusesSummaryProps
 
 export const All = Template.bind({})
 All.args = {
-  scenarioCountByStatus: new Map<messages.TestStepResultStatus, number>([
-    [TestStepResultStatus.PASSED, 3],
-    [TestStepResultStatus.FAILED, 3],
-    [TestStepResultStatus.PENDING, 3],
-    [TestStepResultStatus.SKIPPED, 3],
-    [TestStepResultStatus.UNDEFINED, 3],
-    [TestStepResultStatus.AMBIGUOUS, 3],
-    [TestStepResultStatus.UNKNOWN, 3],
-  ]),
+  scenarioCountByStatus: {
+    [TestStepResultStatus.PASSED]: 3,
+    [TestStepResultStatus.FAILED]: 3,
+    [TestStepResultStatus.PENDING]: 3,
+    [TestStepResultStatus.SKIPPED]: 3,
+    [TestStepResultStatus.UNDEFINED]: 3,
+    [TestStepResultStatus.AMBIGUOUS]: 3,
+    [TestStepResultStatus.UNKNOWN]: 3,
+  },
   totalScenarioCount: 21,
 } as IStatusesSummaryProps

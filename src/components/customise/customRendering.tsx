@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
 import * as messages from '@cucumber/messages'
+import React, { useContext } from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
   custom?: Record<string, string> | React.FunctionComponent
 ): Classes {
-  const mixed: any = {}
+  const mixed: Record<string, unknown> = {}
   Object.keys(builtIn).forEach((key) => {
     if (builtIn[key]) {
       mixed[key] = builtIn[key]
@@ -37,7 +37,7 @@ export interface BackgroundProps {
 
 export type BackgroundClasses = Styles<'steps'>
 
-export interface ChildrenProps {}
+export type ChildrenProps = Record<string, unknown>
 
 export type ChildrenClasses = Styles<'children'>
 
@@ -140,17 +140,20 @@ export type TitleClasses = Styles<'title'>
 
 export declare type DefaultComponent<
   Props,
-  Classes extends Styles<string> = {}
+  Classes extends Styles<string> = Record<string, string>
 > = React.FunctionComponent<Props & { styles: Classes }>
 
-export declare type CustomisedComponent<Props, Classes> = React.FunctionComponent<
+export declare type CustomisedComponent<
+  Props,
+  Classes = Record<string, string>
+> = React.FunctionComponent<
   Props & {
     styles: Classes
     DefaultRenderer: React.FunctionComponent<Props>
   }
 >
 
-export declare type Customised<Props, Classes> =
+export declare type Customised<Props, Classes = Record<string, string>> =
   | CustomisedComponent<Props, Classes>
   | Partial<Classes>
 
@@ -163,18 +166,18 @@ export interface CustomRenderingSupport {
   Description?: Customised<DescriptionProps, DescriptionClasses>
   DocString?: Customised<DocStringProps, DocStringClasses>
   ErrorMessage?: Customised<ErrorMessageProps, ErrorMessageClasses>
-  Examples?: Customised<ExamplesProps, {}>
+  Examples?: Customised<ExamplesProps>
   ExamplesTable?: Customised<ExamplesTableProps, ExamplesTableClasses>
-  Feature?: Customised<FeatureProps, {}>
-  GherkinDocument?: Customised<GherkinDocumentProps, {}>
-  GherkinStep?: Customised<GherkinStepProps, {}>
-  HookStep?: Customised<HookStepProps, {}>
-  Keyword?: Customised<any, KeywordClasses>
+  Feature?: Customised<FeatureProps>
+  GherkinDocument?: Customised<GherkinDocumentProps>
+  GherkinStep?: Customised<GherkinStepProps>
+  HookStep?: Customised<HookStepProps>
+  Keyword?: Customised<unknown, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
-  Rule?: Customised<RuleProps, {}>
+  Rule?: Customised<RuleProps>
   Scenario?: Customised<ScenarioProps, ScenarioClasses>
   StatusIcon?: Customised<StatusIconProps, StatusIconClasses>
-  StepList?: Customised<StepListProps, {}>
+  StepList?: Customised<StepListProps>
   Tags?: Customised<TagsProps, TagsClasses>
   Title?: Customised<TitleProps, TitleClasses>
 }
@@ -183,18 +186,20 @@ export declare type CustomRenderable = keyof CustomRenderingSupport
 
 export const CustomRenderingContext = React.createContext<CustomRenderingSupport>({})
 
-export function useCustomRendering<Props, Classes extends Styles<string> = {}>(
+export function useCustomRendering<Props, Classes extends Styles<string> = Record<string, string>>(
   component: CustomRenderable,
   defaultStyles: Record<string, string>,
   DefaultRenderer: DefaultComponent<Props, Classes>
 ): React.FunctionComponent<Props> {
   const { [component]: Custom } = useContext(CustomRenderingContext)
+  // @ts-ignore
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
   const StyledDefaultRenderer: React.FunctionComponent<Props> = (props) => {
     return <DefaultRenderer {...props} styles={composedStyles} />
   }
   if (typeof Custom === 'function') {
     const StyledCustomRenderer: React.FunctionComponent<Props> = (props) => {
+      // @ts-ignore
       return <Custom {...props} styles={composedStyles} DefaultRenderer={StyledDefaultRenderer} />
     }
     return StyledCustomRenderer

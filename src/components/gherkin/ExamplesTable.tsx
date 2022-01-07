@@ -1,13 +1,10 @@
-import React from 'react'
 import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
-import defaultStyles from './DataTable.module.scss'
-import GherkinQueryContext from '../../GherkinQueryContext'
+import React from 'react'
+
 import CucumberQueryContext from '../../CucumberQueryContext'
+import GherkinQueryContext from '../../GherkinQueryContext'
 import UriContext from '../../UriContext'
-import { StatusIcon } from './StatusIcon'
-import { ErrorMessage } from './ErrorMessage'
-import isNumber from './isNumber'
 import {
   DefaultComponent,
   ExamplesTableClasses,
@@ -15,6 +12,10 @@ import {
   useCustomRendering,
 } from '../customise'
 import { Attachment } from './Attachment'
+import defaultStyles from './DataTable.module.scss'
+import { ErrorMessage } from './ErrorMessage'
+import isNumber from './isNumber'
+import { StatusIcon } from './StatusIcon'
 
 const DefaultRenderer: DefaultComponent<ExamplesTableProps, ExamplesTableClasses> = ({
   tableHeader,
@@ -66,9 +67,7 @@ const RowOrRows: React.FunctionComponent<{
   const cucumberQuery = React.useContext(CucumberQueryContext)
   const uri = React.useContext(UriContext)
   const pickleIds = uri ? gherkinQuery.getPickleIds(uri, row.id) : []
-  const testStepResult = getWorstTestStepResult(
-    cucumberQuery.getPickleTestStepResults(pickleIds)
-  )
+  const testStepResult = getWorstTestStepResult(cucumberQuery.getPickleTestStepResults(pickleIds))
 
   const pickleStepIds = gherkinQuery.getPickleStepIds(row.id)
   const attachments = cucumberQuery.getPickleStepAttachments(pickleStepIds)

@@ -1,8 +1,9 @@
-import assert from 'assert'
-import TextSearch from '../../src/search/TextSearch'
+import { AstBuilder, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
 import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
-import { AstBuilder, Parser, GherkinClassicTokenMatcher } from '@cucumber/gherkin'
+import assert from 'assert'
+
+import TextSearch from '../../src/search/TextSearch'
 
 describe('TextSearch', () => {
   let search: TextSearch

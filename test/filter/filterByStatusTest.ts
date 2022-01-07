@@ -1,12 +1,13 @@
-import assert from 'assert'
 import { SupportCode } from '@cucumber/fake-cucumber'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
-import * as messages from '@cucumber/messages'
-import filterByStatus from '../../src/filter/filterByStatus'
 import { pretty } from '@cucumber/gherkin-utils'
-import runFeature, { FailingHook } from '../runFeature'
+import * as messages from '@cucumber/messages'
 import { SourceReference } from '@cucumber/messages'
+import { Query as CucumberQuery } from '@cucumber/query'
+import assert from 'assert'
+
+import filterByStatus from '../../src/filter/filterByStatus'
+import runFeature, { FailingHook } from '../runFeature'
 
 const sourceReference: SourceReference = {}
 

@@ -1,16 +1,17 @@
 import React from 'react'
-import { Tags } from './Tags'
-import { Children } from './Children'
-import { Description } from './Description'
-import { Background } from './Background'
-import { Scenario } from './Scenario'
-import { Rule } from './Rule'
-import { Title } from './Title'
-import { Keyword } from './Keyword'
+
 import { HighLight } from '../app/HighLight'
 import { DefaultComponent, FeatureProps, useCustomRendering } from '../customise'
+import { Background } from './Background'
+import { Children } from './Children'
+import { Description } from './Description'
+import { Keyword } from './Keyword'
+import { Rule } from './Rule'
+import { Scenario } from './Scenario'
+import { Tags } from './Tags'
+import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<FeatureProps, {}> = ({ feature }) => {
+const DefaultRenderer: DefaultComponent<FeatureProps> = ({ feature }) => {
   return (
     <section>
       <Tags tags={feature.tags} />
@@ -37,6 +38,6 @@ const DefaultRenderer: DefaultComponent<FeatureProps, {}> = ({ feature }) => {
 }
 
 export const Feature: React.FunctionComponent<FeatureProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<FeatureProps, {}>('Feature', {}, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<FeatureProps>('Feature', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

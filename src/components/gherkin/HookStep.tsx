@@ -1,15 +1,16 @@
-import React from 'react'
 import * as messages from '@cucumber/messages'
+import { getWorstTestStepResult } from '@cucumber/messages'
+import React from 'react'
+
 import CucumberQueryContext from '../../CucumberQueryContext'
-import { Title } from './Title'
+import { HookStepProps, useCustomRendering } from '../customise'
+import { Attachment } from './Attachment'
 import { ErrorMessage } from './ErrorMessage'
 import { StepItem } from './StepItem'
-import { Attachment } from './Attachment'
-import { getWorstTestStepResult } from '@cucumber/messages'
-import { HookStepProps, useCustomRendering } from '../customise'
+import { Title } from './Title'
 
 const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
-  if(!step.hookId) throw new Error('Expected step to have a hookId')
+  if (!step.hookId) throw new Error('Expected step to have a hookId')
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
   const stepResult = getWorstTestStepResult(cucumberQuery.getTestStepResults(step.id))
@@ -51,6 +52,6 @@ const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
 }
 
 export const HookStep: React.FunctionComponent<HookStepProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<HookStepProps, {}>('HookStep', {}, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<HookStepProps>('HookStep', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

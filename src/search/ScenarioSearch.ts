@@ -37,8 +37,8 @@ export default class ScenarioSearch {
   }
 
   private get(ref: string): messages.Scenario {
-    let rule = this.scenarioById.get(ref)
-    if(!rule) throw new Error(`No scenario for ref ${ref}`)
+    const rule = this.scenarioById.get(ref)
+    if (!rule) throw new Error(`No scenario for ref ${ref}`)
     return rule
   }
 }

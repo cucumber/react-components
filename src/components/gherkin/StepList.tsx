@@ -1,8 +1,9 @@
 import React from 'react'
-import { GherkinStep } from './GherkinStep'
-import { DefaultComponent, StepListProps, useCustomRendering } from '../customise'
 
-const DefaultRenderer: DefaultComponent<StepListProps, {}> = ({ steps, hasExamples }) => {
+import { DefaultComponent, StepListProps, useCustomRendering } from '../customise'
+import { GherkinStep } from './GherkinStep'
+
+const DefaultRenderer: DefaultComponent<StepListProps> = ({ steps, hasExamples }) => {
   return (
     <>
       {steps.map((step, index) => (
@@ -15,6 +16,6 @@ const DefaultRenderer: DefaultComponent<StepListProps, {}> = ({ steps, hasExampl
 }
 
 export const StepList: React.FunctionComponent<StepListProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<StepListProps, {}>('StepList', {}, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<StepListProps>('StepList', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

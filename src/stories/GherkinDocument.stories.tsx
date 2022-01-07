@@ -1,8 +1,6 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
-
 import * as messages from '@cucumber/messages'
-import { components } from '../../src'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
 import attachments from '../../acceptance/attachments/attachments.feature'
 import dataTables from '../../acceptance/data-tables/data-tables.feature'
@@ -18,6 +16,7 @@ import skipped from '../../acceptance/skipped/skipped.feature'
 import stacktTraces from '../../acceptance/stack-traces/stack-traces.feature'
 import undefinedEnvelopes from '../../acceptance/undefined/undefined.feature'
 import unknownParameterTypes from '../../acceptance/unknown-parameter-type/unknown-parameter-type.feature'
+import { components } from '../../src'
 import { CucumberReact } from '../components'
 
 const { EnvelopesWrapper, GherkinDocumentList } = components.app

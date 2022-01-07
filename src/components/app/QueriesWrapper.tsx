@@ -1,9 +1,10 @@
-import React from 'react'
-import GherkinQueryContext from '../../GherkinQueryContext'
-import CucumberQueryContext from '../../CucumberQueryContext'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { Query as CucumberQuery } from '@cucumber/query'
+import React from 'react'
+
+import CucumberQueryContext from '../../CucumberQueryContext'
 import EnvelopesQueryContext, { EnvelopesQuery } from '../../EnvelopesQueryContext'
+import GherkinQueryContext from '../../GherkinQueryContext'
 
 interface IProps {
   cucumberQuery: CucumberQuery

@@ -1,4 +1,5 @@
 import assert from 'assert'
+
 import isTagExpression from '../src/isTagExpression'
 
 describe('isTagExpression', () => {

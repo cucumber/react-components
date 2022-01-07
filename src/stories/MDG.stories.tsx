@@ -1,12 +1,11 @@
-import React from 'react'
-import { Meta, Story } from '@storybook/react'
-
 import * as messages from '@cucumber/messages'
-import { components } from '../../src'
+import { Meta, Story } from '@storybook/react'
+import React from 'react'
 
 import markdown from '../../acceptance/markdown/markdown.feature.md'
-import UriContext from '../UriContext'
+import { components } from '../../src'
 import { CucumberReact } from '../components'
+import UriContext from '../UriContext'
 
 const { EnvelopesWrapper } = components.app
 const { MDG } = components.gherkin
@@ -19,7 +18,8 @@ export default {
 type TemplateArgs = { envelopes: readonly messages.Envelope[] }
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
-  const source = envelopes.filter((envelope) => envelope.source)[0].source!
+  const source = envelopes.filter((envelope) => envelope.source)[0].source
+  if (!source) throw new Error('No source')
   return (
     <CucumberReact>
       <EnvelopesWrapper envelopes={envelopes}>

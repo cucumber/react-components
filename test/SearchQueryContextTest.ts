@@ -1,7 +1,8 @@
-import { SearchQueryCtx, searchFromURLParams } from '../src/SearchQueryContext'
+import { TestStepResultStatus as Status } from '@cucumber/messages'
 import assert from 'assert'
 import sinon from 'sinon'
-import { TestStepResultStatus as Status } from '@cucumber/messages'
+
+import { searchFromURLParams, SearchQueryCtx } from '../src/SearchQueryContext'
 
 describe('SearchQueryCtx', () => {
   it('uses the given values in its initial value', () => {
