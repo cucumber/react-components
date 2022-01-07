@@ -22,7 +22,7 @@ const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
   const cucumberQuery = React.useContext(CucumberQueryContext)
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const uri = React.useContext(UriContext)
-  const pickleIds = gherkinQuery.getPickleIds(uri, scenario.id)
+  const pickleIds = uri ? gherkinQuery.getPickleIds(uri, scenario.id) : []
   const beforeHooks = cucumberQuery.getBeforeHookSteps(pickleIds[0])
   const afterHooks = cucumberQuery.getAfterHookSteps(pickleIds[0])
 

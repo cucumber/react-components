@@ -20,6 +20,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
   }
 }

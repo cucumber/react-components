@@ -15,7 +15,7 @@ describe('<Attachment>', () => {
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const img = container.querySelector('img')
-    assert.strictEqual(img.getAttribute('src'), 'data:image/png;base64,fake-base64')
+    assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
   })
 
   it('renders base64 encoded plaintext', () => {
@@ -26,7 +26,7 @@ describe('<Attachment>', () => {
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const pre = container.querySelector('pre')
-    assert.strictEqual(pre.textContent, 'hello')
+    assert.strictEqual(pre!.textContent, 'hello')
   })
 
   it('correctly renders ANSI characters', () => {
@@ -38,7 +38,7 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const span = container.querySelector('pre > span')
     assert.strictEqual(
-      span.innerHTML,
+      span!.innerHTML,
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })

@@ -5,7 +5,9 @@ import { SupportCode } from '@cucumber/fake-cucumber'
 import runFeature from './runFeature'
 import assert from 'assert'
 import countScenariosByStatuses from '../src/countScenariosByStatuses'
-import { TestStepResultStatus } from '@cucumber/messages'
+import { SourceReference, TestStepResultStatus } from '@cucumber/messages'
+
+const sourceReference: SourceReference = {}
 
 describe('countScenariosByStatuses', () => {
   let gherkinQuery: GherkinQuery
@@ -16,8 +18,8 @@ describe('countScenariosByStatuses', () => {
     gherkinQuery = new GherkinQuery()
     cucumberQuery = new CucumberQuery()
     supportCode = new SupportCode()
-    supportCode.defineStepDefinition(null, 'a passed step', () => null)
-    supportCode.defineStepDefinition(null, 'a failed step', () => {
+    supportCode.defineStepDefinition(sourceReference, 'a passed step', () => null)
+    supportCode.defineStepDefinition(sourceReference, 'a failed step', () => {
       throw new Error('Something bad happened here ...')
     })
   })

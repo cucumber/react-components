@@ -9,6 +9,7 @@ import { getWorstTestStepResult } from '@cucumber/messages'
 import { HookStepProps, useCustomRendering } from '../customise'
 
 const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
+  if(!step.hookId) throw new Error('Expected step to have a hookId')
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
   const stepResult = getWorstTestStepResult(cucumberQuery.getTestStepResults(step.id))
@@ -46,6 +47,7 @@ const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
       </StepItem>
     )
   }
+  return null
 }
 
 export const HookStep: React.FunctionComponent<HookStepProps> = (props) => {

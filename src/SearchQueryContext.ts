@@ -8,7 +8,7 @@ const defaultQuery = ''
 const defaultHideStatuses: Status[] = []
 
 export interface SearchQueryUpdate {
-  readonly query?: string
+  readonly query?: string | null
   readonly hideStatuses?: readonly Status[]
 }
 
@@ -70,14 +70,14 @@ export function searchFromURLParams(opts?: {
 
 function toSearchQuery(iQuery?: SearchQueryUpdate): SearchQuery {
   return {
-    query: iQuery.query ?? defaultQuery,
-    hideStatuses: iQuery.hideStatuses ?? defaultHideStatuses,
+    query: iQuery?.query ?? defaultQuery,
+    hideStatuses: iQuery?.hideStatuses ?? defaultHideStatuses,
   }
 }
 
 export class SearchQueryCtx implements SearchQuery {
   readonly query: string
-  readonly hideStatuses: readonly Status[] | null
+  readonly hideStatuses: readonly Status[]
   readonly update: (query: SearchQueryUpdate) => void
 
   constructor(value: SearchQuery, updateValue: SearchQueryUpdateFn) {
@@ -92,7 +92,7 @@ export class SearchQueryCtx implements SearchQuery {
   }
 
   static withDefaults = (
-    value: SearchQueryUpdate,
+    value: SearchQueryUpdate = {},
     onSearchQueryUpdated: SearchQueryUpdateFn = () => {
       //Do nothing
     }
@@ -107,9 +107,9 @@ export function useSearchQueryCtx(props: SearchQueryProps): SearchQueryCtx {
     searchQuery,
     props.onSearchQueryUpdated
       ? (query) => {
-          props.onSearchQueryUpdated(query)
-          setSearchQuery(query)
-        }
+        props.onSearchQueryUpdated && props.onSearchQueryUpdated(query)
+        setSearchQuery(query)
+      }
       : setSearchQuery
   )
 }

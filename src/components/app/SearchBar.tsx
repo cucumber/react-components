@@ -24,7 +24,10 @@ export const SearchBar: FunctionComponent<IProps> = ({
   const searchSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new window.FormData(event.currentTarget)
-    onSearch(formData.get('query').toString())
+    const query = formData.get('query')
+    if(query) {
+      onSearch(query.toString())
+    }
   }
   const filterChanged = (name: Status, show: boolean) => {
     onFilter(show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name))

@@ -28,6 +28,6 @@ describe('Description', () => {
   it('renders if we really have a description', () => {
     const { container } = render(<Description description={'## This is a heading'} />)
     const rendered = container.querySelector('h2')
-    assert.strictEqual(rendered.innerHTML, 'This is a heading')
+    assert.strictEqual(rendered!.innerHTML, 'This is a heading')
   })
 })

@@ -33,6 +33,12 @@ export default class ScenarioSearch {
       },
     })
 
-    return results.map((result) => this.scenarioById.get(result.ref))
+    return results.map((result) => this.get(result.ref))
+  }
+
+  private get(ref: string): messages.Scenario {
+    let rule = this.scenarioById.get(ref)
+    if(!rule) throw new Error(`No scenario for ref ${ref}`)
+    return rule
   }
 }

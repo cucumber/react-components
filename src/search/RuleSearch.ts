@@ -33,6 +33,12 @@ export default class RuleSearch {
       },
     })
 
-    return results.map((result) => this.ruleById.get(result.ref))
+    return results.map((result) => this.get(result.ref))
+  }
+
+  private get(ref: string): messages.Rule {
+    let rule = this.ruleById.get(ref)
+    if(!rule) throw new Error(`No rule for ref ${ref}`)
+    return rule
   }
 }

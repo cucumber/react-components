@@ -4,6 +4,7 @@ import ScenarioSearch from './ScenarioSearch'
 import StepSearch from './StepSearch'
 import RuleSearch from './RuleSearch'
 import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
+import { GherkinDocument } from '@cucumber/messages'
 
 export default class TextSearch {
   private readonly featureSearch = new FeatureSearch()
@@ -34,7 +35,7 @@ export default class TextSearch {
 
     return this.gherkinDocuments
       .map((gherkinDocument) => walker.walkGherkinDocument(gherkinDocument))
-      .filter((gherkinDocument) => gherkinDocument !== null)
+      .filter((gherkinDocument) => gherkinDocument !== null) as GherkinDocument[]
   }
 
   public add(gherkinDocument: messages.GherkinDocument) {

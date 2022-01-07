@@ -12,6 +12,7 @@ export default function filterByStatus(
 ): messages.GherkinDocument | null {
   const filters = {
     acceptScenario: (scenario: messages.Scenario) => {
+      if(!gherkinDocument.uri) throw new Error('Missing uri for gherkinDocument')
       const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
       return pickleIds

@@ -25,7 +25,7 @@ const metaMinimal: messages.Meta = {
   cpu: { name: 'x64' },
   os: { name: 'linux', version: '5.11.0-1022-azure' },
   runtime: { name: 'node.js', version: '16.13.1' },
-  ci: null,
+  ci: undefined,
 }
 
 const metaWithCi: messages.Meta = {

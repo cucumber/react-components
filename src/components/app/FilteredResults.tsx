@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchQueryContext from '../../SearchQueryContext'
 
 import { SearchBar } from './SearchBar'
 import { NoMatchResult } from './NoMatchResult'
@@ -13,6 +12,7 @@ import { ExecutionSummary } from './ExecutionSummary'
 import statuses from './statuses'
 import styles from './FilteredResults.module.scss'
 import { useQueries, useSearch } from '../../hooks'
+import { GherkinDocument } from '@cucumber/messages'
 
 interface IProps {
   className?: string
@@ -36,7 +36,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
   const matches = query ? search.search(query) : allDocuments
   const filtered = matches
     .map((document) => filterByStatus(document, gherkinQuery, cucumberQuery, onlyShowStatuses))
-    .filter((document) => document !== null)
+    .filter((document) => document !== null) as GherkinDocument[]
 
   return (
     <div className={className}>

@@ -65,9 +65,9 @@ const RowOrRows: React.FunctionComponent<{
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
   const uri = React.useContext(UriContext)
-
+  const pickleIds = uri ? gherkinQuery.getPickleIds(uri, row.id) : []
   const testStepResult = getWorstTestStepResult(
-    cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(uri, row.id))
+    cucumberQuery.getPickleTestStepResults(pickleIds)
   )
 
   const pickleStepIds = gherkinQuery.getPickleStepIds(row.id)
@@ -98,7 +98,7 @@ const RowOrRows: React.FunctionComponent<{
 
 interface IAttachmentAndErrorRowProps {
   attachments: readonly messages.Attachment[]
-  errorMessage: string
+  errorMessage: string | undefined
   colSpan: number
   className?: string
 }

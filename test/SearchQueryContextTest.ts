@@ -128,7 +128,7 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    ret.onSearchQueryUpdated({
+    ret.onSearchQueryUpdated!({
       query: '@slow',
       hideStatuses: [Status.FAILED, Status.PENDING],
     })

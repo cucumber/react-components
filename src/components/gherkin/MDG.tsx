@@ -25,7 +25,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
 
   function header(line: number, level: number, children: any) {
     const scenario = gherkinQuery.getScenario(uri, line)
-    hasExamples = scenario && scenario.examples.length > 0
+    hasExamples = !!scenario && scenario.examples.length > 0
     examples = gherkinQuery.getExamples(uri, line)
 
     const titleAstNode =
@@ -50,22 +50,22 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
       rehypePlugins={rehypePlugins}
       components={{
         h1({ node, level, children }) {
-          return header(node.position.start.line, level, children)
+          return header(node.position!.start.line, level, children)
         },
         h2({ node, level, children }) {
-          return header(node.position.start.line, level, children)
+          return header(node.position!.start.line, level, children)
         },
         h3({ node, level, children }) {
-          return header(node.position.start.line, level, children)
+          return header(node.position!.start.line, level, children)
         },
         h4({ node, level, children }) {
-          return header(node.position.start.line, level, children)
+          return header(node.position!.start.line, level, children)
         },
         h5({ node, level, children }) {
-          return header(node.position.start.line, level, children)
+          return header(node.position!.start.line, level, children)
         },
         table({ node, children }) {
-          if (examples && examples.tableHeader && node.position.start.column >= 3) {
+          if (examples && examples.tableHeader && node.position!.start.column >= 3) {
             return (
               <ExamplesTable tableHeader={examples.tableHeader} tableBody={examples.tableBody} />
             )
@@ -73,7 +73,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
           return <table className={dataTableStyles.table}>{children}</table>
         },
         ul({ node, children }) {
-          const line = node.position.start.line
+          const line = node.position!.start.line
           const step = gherkinQuery.getStep(uri, line)
           if (!step) {
             // Non-Gherkin list
@@ -82,7 +82,7 @@ export const MDG: React.FunctionComponent<IProps> = ({ uri, children }) => {
           return <ul className={styles.steps}>{children}</ul>
         },
         li({ node, children }) {
-          const line = node.position.start.line
+          const line = node.position!.start.line
           const step = gherkinQuery.getStep(uri, line)
           if (!step) {
             // Non-Gherkin list item

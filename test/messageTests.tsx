@@ -18,7 +18,7 @@ describe('App with messages', () => {
   const tckMessageFiles = glob.sync(
     `${__dirname}/../../../compatibility-kit/javascript/features/**/*.ndjson`
   )
-  const messageFiles = [].concat(localMessageFiles, tckMessageFiles)
+  const messageFiles = [...localMessageFiles, ...tckMessageFiles]
 
   for (const messageFile of messageFiles) {
     it(`can render ${messageFile}`, async () => {

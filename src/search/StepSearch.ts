@@ -25,8 +25,8 @@ export default class StepSearch {
       id: step.id,
       keyword: step.keyword,
       text: step.text,
-      docString: this.docStringToString(step),
-      dataTable: this.dataTableToString(step),
+      docString: step.docString && StepSearch.docStringToString(step.docString),
+      dataTable: step.dataTable && StepSearch.dataTableToString(step.dataTable),
     }
 
     this.index.addDoc(doc)
@@ -43,16 +43,20 @@ export default class StepSearch {
       },
     })
 
-    return results.map((result) => this.stepById.get(result.ref))
+    return results.map((result) => this.get(result.ref))
   }
 
-  private docStringToString(step: messages.Step): string {
-    return step.docString ? step.docString.content : ''
+  private get(ref: string): messages.Step {
+    let rule = this.stepById.get(ref)
+    if(!rule) throw new Error(`No step for ref ${ref}`)
+    return rule
   }
 
-  private dataTableToString(step: messages.Step): string {
-    return step.dataTable
-      ? step.dataTable.rows.map((row) => row.cells.map((cell) => cell.value).join(' ')).join(' ')
-      : undefined
+  private static docStringToString(docString: messages.DocString): string {
+    return docString.content
+  }
+
+  private static dataTableToString(dataTable: messages.DataTable): string {
+    return dataTable.rows.map((row) => row.cells.map((cell) => cell.value).join(' ')).join(' ')
   }
 }

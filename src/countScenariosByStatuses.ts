@@ -18,6 +18,7 @@ export default function countScenariosByStatuses(
       {},
       {
         handleScenario: (scenario) => {
+          if(!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
           const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
           pickleIds.forEach((pickleId) => {
@@ -26,7 +27,7 @@ export default function countScenariosByStatuses(
             ).status
 
             if (scenarioCountByStatus.has(status)) {
-              scenarioCountByStatus.set(status, scenarioCountByStatus.get(status) + 1)
+              scenarioCountByStatus.set(status, scenarioCountByStatus.get(status)! + 1)
             } else {
               scenarioCountByStatus.set(status, 1)
             }

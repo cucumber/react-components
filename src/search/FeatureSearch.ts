@@ -19,6 +19,8 @@ export default class FeatureSearch {
   public add(gherkinDocument: messages.GherkinDocument) {
     if (!gherkinDocument.feature) return
 
+    if(!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
+
     this.featuresByUri.set(gherkinDocument.uri, gherkinDocument.feature)
 
     this.index.addDoc({
@@ -37,7 +39,9 @@ export default class FeatureSearch {
     })
 
     return searchResultsList.map((searchResults) => {
-      return this.featuresByUri.get(searchResults.ref)
+      const feature = this.featuresByUri.get(searchResults.ref)
+      if(!feature) throw new Error(`No feature for ref ${searchResults.ref}`)
+      return feature
     })
   }
 }

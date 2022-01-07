@@ -19,7 +19,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface IProps {
-  gherkinDocuments?: readonly messages.GherkinDocument[]
+  gherkinDocuments?: readonly messages.GherkinDocument[] | null
   // Set to true if non-PASSED documents should be pre-expanded
   preExpand?: boolean
 }
@@ -31,11 +31,11 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
-  const gherkinDocs =
-    gherkinDocuments === undefined ? gherkinQuery.getGherkinDocuments() : gherkinDocuments
+  const gherkinDocs = gherkinDocuments ? gherkinQuery.getGherkinDocuments() : gherkinDocuments || []
 
   const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
     (gherkinDocument) => {
+      if(!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
       const gherkinDocumentStatus = gherkinDocument.feature
         ? getWorstTestStepResult(
             cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
@@ -50,9 +50,9 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
   const preExpanded = preExpand
     ? gherkinDocs
         .filter(
-          (doc) => gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
+          (doc) => doc.uri && gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
         )
-        .map((doc) => doc.uri)
+        .map((doc) => doc.uri!)
     : []
 
   return (
@@ -63,8 +63,11 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
       className={styles.accordion}
     >
       {gherkinDocs.map((doc) => {
+        if(!doc.uri) throw new Error('No url for gherkinDocument')
         const gherkinDocumentStatus = gherkinDocumentStatusByUri.get(doc.uri)
+        if(!gherkinDocumentStatus) throw new Error(`No status for ${doc.uri}`)
         const source = gherkinQuery.getSource(doc.uri)
+        if(!source) throw new Error(`No source for ${doc.uri}`)
 
         return (
           <AccordionItem key={doc.uri} className={styles.accordionItem}>

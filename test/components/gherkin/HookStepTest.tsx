@@ -51,7 +51,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(container.textContent.includes('Hook failed'), false)
+    assert.strictEqual(container.textContent!.includes('Hook failed'), false)
   })
 
   it('doesnt explode when we cant find a hook message for a failed hook', () => {
@@ -72,11 +72,14 @@ describe('<HookStep>', () => {
             },
           },
         ],
-        null
+        {
+          id: 'the-id',
+          sourceReference: {}
+        }
       ),
     })
 
-    assert.strictEqual(container.textContent.includes('Hook failed: Unknown location'), true)
+    assert.strictEqual(container.textContent!.includes('Hook failed: Unknown location'), true)
   })
 
   it('renders the uri and line number when present for a failed hook', () => {
@@ -111,7 +114,7 @@ describe('<HookStep>', () => {
     })
 
     assert.strictEqual(
-      container.textContent.includes('Hook failed: features/support/hooks.js:4'),
+      container.textContent!.includes('Hook failed: features/support/hooks.js:4'),
       true
     )
   })
@@ -147,6 +150,6 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(container.textContent.includes('Hook failed: MyHooks.doSetup'), true)
+    assert.strictEqual(container.textContent!.includes('Hook failed: MyHooks.doSetup'), true)
   })
 })

@@ -1,3 +1,3 @@
 import React from 'react'
 
-export default React.createContext(null as string)
+export default React.createContext<null|string>(null)

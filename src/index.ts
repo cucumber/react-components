@@ -1,16 +1,16 @@
-import filterByStatus from './filter/filterByStatus'
-import GherkinQueryContext from './GherkinQueryContext'
-import CucumberQueryContext from './CucumberQueryContext'
+import filterByStatus from './filter/filterByStatus.js'
+import GherkinQueryContext from './GherkinQueryContext.js'
+import CucumberQueryContext from './CucumberQueryContext.js'
 import SearchQueryContext, {
   WindowUrlApi,
   SearchQueryUpdateFn,
   SearchQueryProps,
   searchFromURLParams,
 } from './SearchQueryContext'
-import EnvelopesQueryContext, { EnvelopesQuery } from './EnvelopesQueryContext'
+import EnvelopesQueryContext, { EnvelopesQuery } from './EnvelopesQueryContext.js'
 
-export * as components from './components'
-export * as hooks from './hooks'
+export * as components from './components/index.js'
+export * as hooks from './hooks/index.js'
 export {
   GherkinQueryContext,
   CucumberQueryContext,

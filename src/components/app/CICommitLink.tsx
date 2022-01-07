@@ -11,7 +11,7 @@ interface IProps {
 export const CICommitLink: React.FunctionComponent<IProps> = ({ ci: ci }) => {
   const commitLink = ciCommitLink(ci)
 
-  if (commitLink) {
+  if (commitLink && ci.git?.remote) {
     return (
       <>
         <FontAwesomeIcon icon={faLink} />
@@ -21,7 +21,7 @@ export const CICommitLink: React.FunctionComponent<IProps> = ({ ci: ci }) => {
   }
   return (
     <>
-      <FontAwesomeIcon icon={faLink} /> {ci.git.revision.substring(0, 7)}
+      <FontAwesomeIcon icon={faLink} /> {ci.git?.revision.substring(0, 7)}
     </>
   )
 }

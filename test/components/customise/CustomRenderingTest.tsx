@@ -20,8 +20,8 @@ describe('custom rendering and theming', () => {
 
     const { container } = render(<Tags tags={tags} />)
 
-    assert.strictEqual(container.querySelector('ul').className, 'tags__generated')
-    assert.strictEqual(container.querySelector('ul > li').className, 'tag__generated')
+    assert.strictEqual(container.querySelector('ul')!.className, 'tags__generated')
+    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
   })
 
   it('uses the custom classnames provided via custom rendering', () => {
@@ -49,8 +49,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul').className, 'custom-list-class')
-    assert.strictEqual(container.querySelector('ul > li').className, 'custom-item-class')
+    assert.strictEqual(container.querySelector('ul')!.className, 'custom-list-class')
+    assert.strictEqual(container.querySelector('ul > li')!.className, 'custom-item-class')
   })
 
   it('uses a partial of custom classes and falls back to built-in styles where omitted', () => {
@@ -77,8 +77,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul').className, 'custom-list-class')
-    assert.strictEqual(container.querySelector('ul > li').className, 'tag__generated')
+    assert.strictEqual(container.querySelector('ul')!.className, 'custom-list-class')
+    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
   })
 
   it('uses a custom component implementation where provided', () => {
@@ -107,7 +107,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('div').innerHTML, '<p>Totally custom!</p>')
+    assert.strictEqual(container.querySelector('div')!.innerHTML, '<p>Totally custom!</p>')
   })
 
   it('a custom component can defer to the default renderer if it wants to', () => {
@@ -136,7 +136,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul').className, 'tags__generated')
-    assert.strictEqual(container.querySelector('ul > li').className, 'tag__generated')
+    assert.strictEqual(container.querySelector('ul')!.className, 'tags__generated')
+    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
   })
 })

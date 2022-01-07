@@ -47,7 +47,7 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps, {}> = ({ step, hasExam
         if (arg) {
           if (arg.length > 0) {
             stepTextElements.push(
-              <Parameter parameterTypeName={argument.parameterTypeName} key={`param-${index}`}>
+              <Parameter parameterTypeName={argument.parameterTypeName || 'anonymous'} key={`param-${index}`}>
                 <HighLight text={arg} />
               </Parameter>
             )

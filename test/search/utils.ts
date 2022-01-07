@@ -64,14 +64,14 @@ function makeStep(
   datatable: readonly (readonly string[])[] = []
 ): messages.Step {
   const idGenerator = messages.IdGenerator.uuid()
-  const docString: messages.DocString = docstring
+  const docString: messages.DocString | undefined = docstring
     ? {
         content: docstring,
         delimiter: '"""',
         location: { line: 1 },
       }
     : undefined
-  const dataTable: messages.DataTable =
+  const dataTable: messages.DataTable | undefined =
     datatable.length > 0
       ? {
           location: { line: 1 },

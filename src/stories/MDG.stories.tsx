@@ -19,7 +19,7 @@ export default {
 type TemplateArgs = { envelopes: readonly messages.Envelope[] }
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
-  const source = envelopes.filter((envelope) => envelope.source)[0].source
+  const source = envelopes.filter((envelope) => envelope.source)[0].source!
   return (
     <CucumberReact>
       <EnvelopesWrapper envelopes={envelopes}>

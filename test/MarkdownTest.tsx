@@ -11,7 +11,7 @@ import UriContext from '../src/UriContext'
 describe('Markdown', () => {
   it(`can render markdown as AST`, async () => {
     const envelopes = markdown as readonly messages.Envelope[]
-    const gherkinDocument = envelopes.find((e) => e.gherkinDocument).gherkinDocument
+    const gherkinDocument = envelopes.find((e) => e.gherkinDocument)!.gherkinDocument!
 
     const dom = new JSDOM('<html lang="en"><body><div id="content"></div></body></html>')
     // @ts-ignore
@@ -21,7 +21,7 @@ describe('Markdown', () => {
 
     const app = (
       <components.app.QueriesWrapper {...props(envelopes)}>
-        <UriContext.Provider value={gherkinDocument.uri}>
+        <UriContext.Provider value={gherkinDocument.uri!}>
           <components.gherkin.GherkinDocument gherkinDocument={gherkinDocument} />
         </UriContext.Provider>
       </components.app.QueriesWrapper>
@@ -31,7 +31,7 @@ describe('Markdown', () => {
 
   it(`can render markdown as Markdown`, async () => {
     const envelopes = markdown as readonly messages.Envelope[]
-    const source = envelopes.find((e) => e.source).source
+    const source = envelopes.find((e) => e.source)!.source!
 
     const dom = new JSDOM('<html lang="en"><body><div id="content"></div></body></html>')
     // @ts-ignore
