@@ -11,7 +11,7 @@
   "author": "Aslak Hellesøy",
   "license": "MIT",
   "scripts": {
-    "prepare": "make .codegen && cpy '**/*.scss' '../dist/src' --cwd='src' --parents",
+    "prepare": "cpy '**/*.scss' '../dist/src' --cwd='src' --parents",
     "test": "mocha",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.16.7",
+    "@cucumber/compatibility-kit": "^9.1.2",
     "@cucumber/fake-cucumber": "^15.0.0",
     "@cucumber/gherkin": "^22.0.0",
     "@cucumber/gherkin-streams": "^4.0.0",

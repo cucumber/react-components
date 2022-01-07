@@ -1,6 +1,5 @@
 {
   "require": [
-    "tsconfig-paths/register",
     "ts-node/register",
     "source-map-support/register",
     "./css-modules-hook.js",
