@@ -1,5 +1,5 @@
 import assert from 'assert'
-import isTagExpression from '../src/isTagExpression'
+import isTagExpression from '../src/isTagExpression.js'
 
 describe('isTagExpression', () => {
   it('returns false with empty string', () => {
