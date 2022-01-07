@@ -2,7 +2,7 @@
   "name": "@cucumber/react",
   "version": "18.1.2",
   "description": "React components for Cucumber",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/cjs/src/index.js",
   "types": "dist/cjs/src/index.d.ts",
   "files": [

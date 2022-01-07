@@ -1,5 +1,10 @@
 {
-  "loader": "ts-node/esm",
+  "require": [
+    "ts-node/register",
+    "source-map-support/register",
+    "./css-modules-hook.js",
+    "global-jsdom/register"
+  ],
   "extension": ["ts", "tsx"],
   "recursive": true,
   "timeout": 10000
