@@ -14,7 +14,7 @@ import { components } from '../src'
 import CucumberQueryStream from './CucumberQueryStream'
 
 describe('App', () => {
-  const dir = __dirname + '/../../../gherkin/testdata/good'
+  const dir = __dirname + '/../testdata/good'
   const files = fs.readdirSync(dir)
 
   for (const file of files) {
