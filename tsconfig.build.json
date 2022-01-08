@@ -6,10 +6,13 @@
     "declarationMap": true,
     "sourceMap": true,
     "rootDir": ".",
-    "noEmit": false
+    "outDir": "dist",
+    "noEmit": false,
   },
   "include": [
-    "src",
-    "test"
+    "src"
   ],
+  "exclude": [
+    "src/stories"
+  ]
 }

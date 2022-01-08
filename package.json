@@ -14,8 +14,9 @@
   "author": "Aslak Hellesøy",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install && cpy '**/*.scss' '../dist/src' --cwd='src' --parents",
+    "prepare": "husky install",
     "test": "mocha",
+    "build": "tsc --project tsconfig.build.json && cpy '**/*.scss' '../dist/src' --cwd='src' --parents",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
