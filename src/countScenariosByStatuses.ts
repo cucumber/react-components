@@ -45,7 +45,11 @@ export default function countScenariosByStatuses(
     counter.walkGherkinDocument(gherkinDocument)
   }
 
-  const statusesWithScenarios = [...Object.keys(scenarioCountByStatus)] as TestStepResultStatus[]
+  const statusesWithScenarios = Object.entries(scenarioCountByStatus)
+    .filter(([, value]) => {
+      return value > 0
+    })
+    .map(([key]) => key) as TestStepResultStatus[]
 
   const totalScenarioCount = [...Object.values(scenarioCountByStatus)].reduce(
     (prev, curr) => prev + curr,
