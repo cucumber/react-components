@@ -2,21 +2,11 @@
   "name": "@cucumber/react",
   "version": "18.1.2",
   "description": "React components for Cucumber",
-  "type": "commonjs",
-  "main": "dist/cjs/src/index.js",
-  "types": "dist/cjs/src/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
-    "dist/cjs",
-    "dist/esm"
+    "dist"
   ],
-  "module": "dist/esm/src/index.js",
-  "jsnext:main": "dist/esm/src/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/src/index.js",
-      "require": "./dist/cjs/src/index.js"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cucumber/cucumber.git"
