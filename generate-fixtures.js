@@ -2,7 +2,9 @@ const glob = require('glob')
 const fs = require('fs')
 const path = require('path')
 
-fs.rmdirSync('acceptance', { recursive: true })
+if (fs.existsSync('acceptance')) {
+  fs.rmdirSync('acceptance', { recursive: true })
+}
 
 for (const ndjsonPath of glob.sync(
   'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson'
