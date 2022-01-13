@@ -26,9 +26,7 @@ export const SearchBar: FunctionComponent<IProps> = ({
     event.preventDefault()
     const formData = new window.FormData(event.currentTarget)
     const query = formData.get('query')
-    if (query) {
-      onSearch(query.toString())
-    }
+    onSearch((query || '').toString())
   }
   const filterChanged = (name: Status, show: boolean) => {
     onFilter(show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name))
