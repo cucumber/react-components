@@ -53,8 +53,8 @@ Feature: statuses
     assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
     assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
     assert.deepStrictEqual(statusesWithScenarios, [
-      TestStepResultStatus.PASSED,
       TestStepResultStatus.FAILED,
+      TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
     assert.strictEqual(totalScenarioCount, 4)
@@ -87,8 +87,8 @@ Feature: statuses
     assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
     assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
     assert.deepStrictEqual(statusesWithScenarios, [
-      TestStepResultStatus.PASSED,
       TestStepResultStatus.FAILED,
+      TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
     assert.strictEqual(totalScenarioCount, 3)

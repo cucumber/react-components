@@ -126,6 +126,6 @@ function parse(source: string): messages.GherkinDocument {
   const newId = messages.IdGenerator.uuid()
   const parser = new Parser(new AstBuilder(newId), new GherkinClassicTokenMatcher())
   const gherkinDocument = parser.parse(source)
-  gherkinDocument.uri = ''
+  gherkinDocument.uri = 'features/acme.feature'
   return gherkinDocument
 }

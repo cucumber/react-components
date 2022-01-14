@@ -21,5 +21,8 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "jsx": "react",
+  },
+  "ts-node": {
+    "files": true
   }
 }

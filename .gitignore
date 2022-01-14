@@ -1,8 +1,6 @@
 dist/
 .idea/
 node_modules/
-yarn.lock
-package-lock.json
 *.log
 .codegen
 acceptance/

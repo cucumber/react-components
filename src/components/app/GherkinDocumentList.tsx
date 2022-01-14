@@ -32,7 +32,7 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
-  const gherkinDocs = gherkinDocuments ? gherkinQuery.getGherkinDocuments() : gherkinDocuments || []
+  const gherkinDocs = gherkinDocuments || gherkinQuery.getGherkinDocuments()
 
   const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
     (gherkinDocument) => {

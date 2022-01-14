@@ -18,7 +18,7 @@ export const StatusesSummary: React.FunctionComponent<IStatusesSummaryProps> = (
     <ol className={styles.statusesList}>
       {statuses.map((status) => {
         const scenarioCount = scenarioCountByStatus[status]
-        if (scenarioCount === undefined) {
+        if (!scenarioCount) {
           return
         }
         return (
