@@ -7,5 +7,6 @@
   ],
   "extension": ["ts", "tsx"],
   "recursive": true,
-  "timeout": 10000
+  "timeout": 10000,
+  "exit": true
 }
