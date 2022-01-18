@@ -1,28 +1,54 @@
-name: Release NPM
+name: Release npm module
 
 on:
   push:
-    branches: [release/*]
+    branches:
+      - release/*
   pull_request:
     branches:
       - main
 
 jobs:
+
+  pre-release-check:
+    uses: cucumber/cucumber-react/.github/workflows/prerelease-checks.yml@add-release-workflow
+
+  test:
+    uses: cucumber/cucumber-react/.github/workflows/test.yml@add-release-workflow
+
   publish-npm:
     name: Publish NPM module
+    needs: [pre-release-check, test]
     runs-on: ubuntu-latest
     # environment: Release
+
     steps:
-      - name: set git core.autocrlf to 'input'
-        run: git config --global core.autocrlf input
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
           cache: 'npm'
           cache-dependency-path: package-lock.json
+
       - run: npm install-ci-test
+
       - run: npm run compile
+
       # - uses: cucumber/action-publish-npm@v1.0.0
       #   with:
       #     npm-token: ${{ secrets.NPM_TOKEN }}
+
+  create-github-release:
+    name: Create GitHub Release and Git tag
+    needs: [publish-npm]
+    runs-on: ubuntu-latest
+    # environment: Release
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v2
+      # - uses: cucumber/action-create-github-release@v1.1.0
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
