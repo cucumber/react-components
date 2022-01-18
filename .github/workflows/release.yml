@@ -1,0 +1,28 @@
+name: Release NPM
+
+on:
+  push:
+    branches: [release/*]
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    name: Publish NPM module
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - name: set git core.autocrlf to 'input'
+        run: git config --global core.autocrlf input
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - run: npm install-ci-test
+      - run: npm run compile
+      # - uses: cucumber/action-publish-npm@v1.0.0
+      #   with:
+      #     npm-token: ${{ secrets.NPM_TOKEN }}
