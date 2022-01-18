@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - release/*
-  pull_request:
-    branches:
-      - main
 
 jobs:
 
@@ -20,7 +17,7 @@ jobs:
     name: Publish NPM module
     needs: [pre-release-check, test]
     runs-on: ubuntu-latest
-    # environment: Release
+    environment: Release
 
     steps:
       - uses: actions/checkout@v2
@@ -35,20 +32,20 @@ jobs:
 
       - run: npm run compile
 
-      # - uses: cucumber/action-publish-npm@v1.0.0
-      #   with:
-      #     npm-token: ${{ secrets.NPM_TOKEN }}
+      - uses: cucumber/action-publish-npm@v1.0.0
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
   create-github-release:
     name: Create GitHub Release and Git tag
     needs: [publish-npm]
     runs-on: ubuntu-latest
-    # environment: Release
+    environment: Release
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v2
-      # - uses: cucumber/action-create-github-release@v1.1.0
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: cucumber/action-create-github-release@v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
