@@ -11,7 +11,7 @@ jobs:
   publish-npm:
     name: Publish NPM module
     runs-on: ubuntu-latest
-    environment: Release
+    # environment: Release
     steps:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
