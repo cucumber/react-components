@@ -1,15 +1,15 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { HighLight } from '../app/HighLight'
+import { HighLight } from '../app/HighLight.js'
 import {
   DataTableClasses,
   DataTableProps,
   DefaultComponent,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './DataTable.module.scss'
-import isNumber from './isNumber'
+import isNumber from './isNumber.js'
 
 const TableBody: React.FunctionComponent<{
   rows: readonly messages.TableRow[]

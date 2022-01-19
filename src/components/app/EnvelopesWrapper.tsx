@@ -3,8 +3,8 @@ import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import React, { FunctionComponent, useMemo } from 'react'
 
-import { EnvelopesQuery } from '../../EnvelopesQueryContext'
-import { QueriesWrapper } from './QueriesWrapper'
+import { EnvelopesQuery } from '../../EnvelopesQueryContext.js'
+import { QueriesWrapper } from './QueriesWrapper.js'
 
 interface IProps {
   envelopes: readonly messages.Envelope[]

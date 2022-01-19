@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DefaultComponent, KeywordClasses, useCustomRendering } from '../customise'
+import { DefaultComponent, KeywordClasses, useCustomRendering } from '../customise/index.js'
 import defaultStyles from './Keyword.module.scss'
 
 const DefaultRenderer: DefaultComponent<Record<string, never>, KeywordClasses> = ({

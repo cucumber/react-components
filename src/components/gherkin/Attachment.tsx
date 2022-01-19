@@ -10,9 +10,9 @@ import {
   AttachmentProps,
   DefaultComponent,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './Attachment.module.scss'
-import { ErrorMessage } from './ErrorMessage'
+import { ErrorMessage } from './ErrorMessage.js'
 
 export const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   attachment,

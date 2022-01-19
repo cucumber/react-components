@@ -2,20 +2,20 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import React from 'react'
 
-import CucumberQueryContext from '../../CucumberQueryContext'
-import GherkinQueryContext from '../../GherkinQueryContext'
-import UriContext from '../../UriContext'
+import CucumberQueryContext from '../../CucumberQueryContext.js'
+import GherkinQueryContext from '../../GherkinQueryContext.js'
+import UriContext from '../../UriContext.js'
 import {
   DefaultComponent,
   ExamplesTableClasses,
   ExamplesTableProps,
   useCustomRendering,
-} from '../customise'
-import { Attachment } from './Attachment'
+} from '../customise/index.js'
+import { Attachment } from './Attachment.js'
 import defaultStyles from './DataTable.module.scss'
-import { ErrorMessage } from './ErrorMessage'
-import isNumber from './isNumber'
-import { StatusIcon } from './StatusIcon'
+import { ErrorMessage } from './ErrorMessage.js'
+import isNumber from './isNumber.js'
+import { StatusIcon } from './StatusIcon.js'
 
 const DefaultRenderer: DefaultComponent<ExamplesTableProps, ExamplesTableClasses> = ({
   tableHeader,

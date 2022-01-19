@@ -10,11 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatDistanceStrict, formatDuration, intervalToDuration } from 'date-fns'
 import React from 'react'
 
-import { CICommitLink } from './CICommitLink'
+import { CICommitLink } from './CICommitLink.js'
 import styles from './ExecutionSummary.module.scss'
-import { CucumberLogo } from './icons/CucumberLogo'
-import { OSIcon } from './OSIcon'
-import { RuntimeIcon } from './RuntimeIcon'
+import { CucumberLogo } from './icons/CucumberLogo.js'
+import { OSIcon } from './OSIcon.js'
+import { RuntimeIcon } from './RuntimeIcon.js'
 
 function formatDurationNicely(startDate: Date, finishDate: Date) {
   const inMilllis = finishDate.getTime() - startDate.getTime()

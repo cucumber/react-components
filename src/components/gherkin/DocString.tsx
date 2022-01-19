@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { HighLight } from '../app/HighLight'
+import { HighLight } from '../app/HighLight.js'
 import {
   DefaultComponent,
   DocStringClasses,
   DocStringProps,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './DocString.module.scss'
 
 const DefaultRenderer: DefaultComponent<DocStringProps, DocStringClasses> = ({

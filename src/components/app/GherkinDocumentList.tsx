@@ -11,12 +11,12 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion'
 
-import CucumberQueryContext from '../../CucumberQueryContext'
-import GherkinQueryContext from '../../GherkinQueryContext'
-import UriContext from '../../UriContext'
-import { GherkinDocument } from '../gherkin/GherkinDocument'
-import { MDG } from '../gherkin/MDG'
-import { StatusIcon } from '../gherkin/StatusIcon'
+import CucumberQueryContext from '../../CucumberQueryContext.js'
+import GherkinQueryContext from '../../GherkinQueryContext.js'
+import UriContext from '../../UriContext.js'
+import { GherkinDocument } from '../gherkin/GherkinDocument.js'
+import { MDG } from '../gherkin/MDG.js'
+import { StatusIcon } from '../gherkin/StatusIcon.js'
 import styles from './GherkinDocumentList.module.scss'
 
 interface IProps {

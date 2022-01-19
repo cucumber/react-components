@@ -2,11 +2,21 @@
   "name": "@cucumber/react",
   "version": "18.1.2",
   "description": "React components for Cucumber",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "main": "dist/cjs/src/index.js",
+  "types": "dist/cjs/src/index.d.ts",
   "files": [
-    "dist"
+    "dist/cjs",
+    "dist/esm"
   ],
+  "module": "dist/esm/src/index.js",
+  "jsnext:main": "dist/esm/src/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/src/index.js",
+      "require": "./dist/cjs/src/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cucumber/cucumber.git"
@@ -14,15 +24,19 @@
   "author": "Aslak Hellesøy",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install && node generate-fixtures.js",
-    "test": "mocha",
-    "compile": "tsc --project tsconfig.build.json && cpy '**/*.scss' '../dist/src' --cwd='src' --parents",
+    "build:cjs": "tsc --project tsconfig.build-cjs.json && cpy '**/*.scss' '../dist/cjs/src' --cwd='src' --parents && cpy 'package.cjs.json' 'dist/cjs' --rename='package.json' && cpy 'testdata' 'dist/cjs' --parents",
+    "build:esm": "tsc --project tsconfig.build-esm.json && cpy '**/*.scss' '../dist/esm/src' --cwd='src' --parents",
+    "build": "npm run build:cjs && npm run build:esm",
+    "prepare": "husky install && node generate-fixtures.cjs",
+    "test": "mocha && npm run test:cjs",
+    "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.json dist/cjs/test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "pretty-quick-staged": "pretty-quick --staged"
+    "pretty-quick-staged": "pretty-quick --staged",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@cucumber/gherkin-utils": "^7.0.0",
@@ -104,7 +118,8 @@
     "style-loader": "3.3.1",
     "ts-node": "10.4.0",
     "ts-sinon": "2.0.2",
-    "typescript": "4.5.4"
+    "typescript": "4.5.4",
+    "typescript-plugin-css-modules": "^3.4.0"
   },
   "bugs": {
     "url": "https://github.com/cucumber/cucumber/issues"

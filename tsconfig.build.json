@@ -10,7 +10,9 @@
     "noEmit": false,
   },
   "include": [
-    "src"
+    "src",
+    "test",
+    "acceptance"
   ],
   "exclude": [
     "src/stories"

@@ -1,18 +1,23 @@
 import React from 'react'
 
-import CucumberQueryContext from '../../CucumberQueryContext'
-import GherkinQueryContext from '../../GherkinQueryContext'
-import UriContext from '../../UriContext'
-import { HighLight } from '../app/HighLight'
-import { DefaultComponent, ScenarioClasses, ScenarioProps, useCustomRendering } from '../customise'
-import { Description } from './Description'
-import { Examples } from './Examples'
-import { HookList } from './HookList'
-import { Keyword } from './Keyword'
+import CucumberQueryContext from '../../CucumberQueryContext.js'
+import GherkinQueryContext from '../../GherkinQueryContext.js'
+import UriContext from '../../UriContext.js'
+import { HighLight } from '../app/HighLight.js'
+import {
+  DefaultComponent,
+  ScenarioClasses,
+  ScenarioProps,
+  useCustomRendering,
+} from '../customise/index.js'
+import { Description } from './Description.js'
+import { Examples } from './Examples.js'
+import { HookList } from './HookList.js'
+import { Keyword } from './Keyword.js'
 import defaultStyles from './Scenario.module.scss'
-import { StepList } from './StepList'
-import { Tags } from './Tags'
-import { Title } from './Title'
+import { StepList } from './StepList.js'
+import { Tags } from './Tags.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
   scenario,

@@ -1,8 +1,9 @@
-import sanitizerGithubSchema from 'hast-util-sanitize/lib/github.json'
 import { PluggableList } from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import gfm from 'remark-gfm'
+
+const sanitizerGithubSchema = require('hast-util-sanitize/lib/github.json')
 
 sanitizerGithubSchema['tagNames'].push('section')
 sanitizerGithubSchema['attributes']['*'].push('className')

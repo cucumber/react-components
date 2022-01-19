@@ -11,7 +11,7 @@ import ReactDOM from 'react-dom'
 
 import { EnvelopesQuery } from '../src'
 import { components } from '../src'
-import CucumberQueryStream from './CucumberQueryStream'
+import CucumberQueryStream from './CucumberQueryStream.js'
 
 describe('App', () => {
   const dir = __dirname + '/../testdata/good'

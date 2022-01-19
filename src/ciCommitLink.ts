@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import toRepositoryId from './toRepositoryId'
+import toRepositoryId from './toRepositoryId.js'
 
 export default function ciCommitLink(ci: messages.Ci): string | null {
   if (ci.git && ci.git.remote) {

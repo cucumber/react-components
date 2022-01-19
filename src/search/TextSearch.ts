@@ -2,10 +2,10 @@ import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { GherkinDocument } from '@cucumber/messages'
 
-import FeatureSearch from './FeatureSearch'
-import RuleSearch from './RuleSearch'
-import ScenarioSearch from './ScenarioSearch'
-import StepSearch from './StepSearch'
+import FeatureSearch from './FeatureSearch.js'
+import RuleSearch from './RuleSearch.js'
+import ScenarioSearch from './ScenarioSearch.js'
+import StepSearch from './StepSearch.js'
 
 export default class TextSearch {
   private readonly featureSearch = new FeatureSearch()

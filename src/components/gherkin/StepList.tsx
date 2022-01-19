@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { DefaultComponent, StepListProps, useCustomRendering } from '../customise'
-import { GherkinStep } from './GherkinStep'
+import { DefaultComponent, StepListProps, useCustomRendering } from '../customise/index.js'
+import { GherkinStep } from './GherkinStep.js'
 
 const DefaultRenderer: DefaultComponent<StepListProps> = ({ steps, hasExamples }) => {
   return (

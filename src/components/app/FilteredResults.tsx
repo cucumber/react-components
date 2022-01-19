@@ -1,17 +1,17 @@
 import { GherkinDocument } from '@cucumber/messages'
 import React from 'react'
 
-import countScenariosByStatuses from '../../countScenariosByStatuses'
-import filterByStatus from '../../filter/filterByStatus'
-import { useQueries, useSearch } from '../../hooks'
-import Search from '../../search/Search'
-import { ExecutionSummary } from './ExecutionSummary'
+import countScenariosByStatuses from '../../countScenariosByStatuses.js'
+import filterByStatus from '../../filter/filterByStatus.js'
+import { useQueries, useSearch } from '../../hooks/index.js'
+import Search from '../../search/Search.js'
+import { ExecutionSummary } from './ExecutionSummary.js'
 import styles from './FilteredResults.module.scss'
-import { GherkinDocumentList } from './GherkinDocumentList'
-import { NoMatchResult } from './NoMatchResult'
-import { SearchBar } from './SearchBar'
-import statuses from './statuses'
-import { StatusesSummary } from './StatusesSummary'
+import { GherkinDocumentList } from './GherkinDocumentList.js'
+import { NoMatchResult } from './NoMatchResult.js'
+import { SearchBar } from './SearchBar.js'
+import statuses from './statuses.js'
+import { StatusesSummary } from './StatusesSummary.js'
 
 interface IProps {
   className?: string

@@ -3,9 +3,9 @@ import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
 
-import statusName from '../gherkin/statusName'
+import statusName from '../gherkin/statusName.js'
 import styles from './SearchBar.module.scss'
-import statuses from './statuses'
+import statuses from './statuses.js'
 
 interface IProps {
   query: string

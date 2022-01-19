@@ -3,8 +3,8 @@ import highlightWords from 'highlight-words'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import SearchQueryContext from '../../SearchQueryContext'
-import rehypePlugins from './rehypePlugins'
+import SearchQueryContext from '../../SearchQueryContext.js'
+import rehypePlugins from './rehypePlugins.js'
 
 interface IProps {
   text: string

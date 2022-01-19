@@ -3,8 +3,8 @@ import { JSDOM } from 'jsdom'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { HighLight } from '../src/components/app/index'
-import SearchQueryContext, { SearchQueryCtx } from '../src/SearchQueryContext'
+import { HighLight } from '../src/components/app/index.js'
+import SearchQueryContext, { SearchQueryCtx } from '../src/SearchQueryContext.js'
 
 describe('HighLight', () => {
   function renderHighlight(text: string, query: string, markdown: boolean): Document {

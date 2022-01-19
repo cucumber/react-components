@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise'
-import { Children } from './Children'
-import { Description } from './Description'
-import { ExamplesTable } from './ExamplesTable'
-import { Keyword } from './Keyword'
-import { Tags } from './Tags'
-import { Title } from './Title'
+import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise/index.js'
+import { Children } from './Children.js'
+import { Description } from './Description.js'
+import { ExamplesTable } from './ExamplesTable.js'
+import { Keyword } from './Keyword.js'
+import { Tags } from './Tags.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples }) => {
   return (

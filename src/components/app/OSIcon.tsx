@@ -1,8 +1,8 @@
 import React, { VoidFunctionComponent } from 'react'
 
-import { Linux } from './icons/Linux'
-import { MacOS } from './icons/MacOS'
-import { Windows } from './icons/Windows'
+import { Linux } from './icons/Linux.js'
+import { MacOS } from './icons/MacOS.js'
+import { Windows } from './icons/Windows.js'
 
 export const OSIcon: VoidFunctionComponent<{ name: string }> = ({ name }) => {
   if (!name) {

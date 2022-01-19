@@ -5,12 +5,12 @@ import {
   BackgroundProps,
   DefaultComponent,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './Background.module.scss'
-import { Description } from './Description'
-import { Keyword } from './Keyword'
-import { StepList } from './StepList'
-import { Title } from './Title'
+import { Description } from './Description.js'
+import { Keyword } from './Keyword.js'
+import { StepList } from './StepList.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<BackgroundProps, BackgroundClasses> = ({
   background,

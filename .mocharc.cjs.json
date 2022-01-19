@@ -1,10 +1,8 @@
 {
-  "loader": "ts-node/esm",
   "require": [
     "./css-modules-hook.cjs",
     "global-jsdom/register"
   ],
-  "extension": ["ts", "tsx"],
   "recursive": true,
   "timeout": 10000,
   "exit": true

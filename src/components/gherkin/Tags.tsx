@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { HighLight } from '../app/HighLight'
-import { DefaultComponent, TagsClasses, TagsProps, useCustomRendering } from '../customise'
+import { HighLight } from '../app/HighLight.js'
+import { DefaultComponent, TagsClasses, TagsProps, useCustomRendering } from '../customise/index.js'
 import defaultStyles from './Tags.module.scss'
 
 const DefaultRenderer: DefaultComponent<TagsProps, TagsClasses> = ({ tags, styles }) => {
