@@ -32,7 +32,7 @@ jobs:
 
       - run: npm run compile
 
-      - uses: cucumber/action-publish-npm@v1.0.0
+      - uses: cucumber/action-publish-npm@v1.1.0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
 
