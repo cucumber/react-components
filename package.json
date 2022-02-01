@@ -64,7 +64,7 @@
     "@storybook/react": "6.4.17",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
-    "@types/color": "3.0.2",
+    "@types/color": "3.0.3",
     "@types/glob": "7.2.0",
     "@types/jsdom": "16.2.14",
     "@types/mocha": "9.1.0",
