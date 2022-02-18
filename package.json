@@ -62,7 +62,7 @@
     "@storybook/builder-webpack5": "6.4.19",
     "@storybook/manager-webpack5": "6.4.19",
     "@storybook/react": "6.4.19",
-    "@testing-library/react": "12.1.2",
+    "@testing-library/react": "12.1.3",
     "@testing-library/user-event": "13.5.0",
     "@types/color": "3.0.3",
     "@types/glob": "7.2.0",
