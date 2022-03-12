@@ -55,7 +55,7 @@
     "@cucumber/compatibility-kit": "^9.1.2",
     "@cucumber/fake-cucumber": "^15.0.0",
     "@cucumber/gherkin": "^22.0.0",
-    "@cucumber/gherkin-streams": "^4.0.0",
+    "@cucumber/gherkin-streams": "^5.0.0",
     "@cucumber/message-streams": "^3.0.0",
     "@storybook/addon-actions": "6.4.19",
     "@storybook/addon-links": "6.4.19",
