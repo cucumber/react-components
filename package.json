@@ -51,7 +51,7 @@
     "react-dom": "~17"
   },
   "devDependencies": {
-    "@babel/core": "7.17.5",
+    "@babel/core": "7.17.7",
     "@cucumber/compatibility-kit": "^9.1.2",
     "@cucumber/fake-cucumber": "^15.0.0",
     "@cucumber/gherkin": "^22.0.0",
