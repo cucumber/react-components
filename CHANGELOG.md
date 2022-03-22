@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Most content is now rendered with a sans serif font.
 
 ## [19.0.0] - 2022-01-24
 ### Added
