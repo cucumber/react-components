@@ -55,7 +55,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
     )
   }
 
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Image";
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Image':
 
   return (
     <details>
@@ -70,7 +70,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
 }
 
 function video(attachment: messages.Attachment) {
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Video";
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Video';
 
   if (attachment.contentEncoding !== 'BASE64') {
     return (
@@ -111,7 +111,7 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Text";
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Text';
 
   if (dangerouslySetInnerHTML) {
     return (
