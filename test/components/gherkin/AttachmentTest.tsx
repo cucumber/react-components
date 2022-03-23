@@ -15,7 +15,25 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
+    assert.strictEqual(summary!.textContent, 'Attached Image')
+    assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
+  })
+
+  it('renders an image with a filename', () => {
+    const binary = new Uint8Array(10)
+    binary.fill(255, 0, binary.length)
+    const attachment: messages.Attachment = {
+      mediaType: 'image/png',
+      fileName: "theFileName",
+      body: 'fake-base64',
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const img = container.querySelector('img')
+    assert.strictEqual(summary!.textContent, 'theFileName')
     assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
   })
 
@@ -26,10 +44,10 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('pre details summary')
-    const details = container.querySelector('pre details span')
-    assert.strictEqual(summary!.textContent, 'text')
-    assert.strictEqual(details!.textContent, 'hello')
+    const summary = container.querySelector('details summary')
+    const data = container.querySelector('details pre span')
+    assert.strictEqual(summary!.textContent, 'Attached Text')
+    assert.strictEqual(data!.textContent, 'hello')
   })
 
   it('renders base64 encoded plaintext with a filename', () => {
@@ -40,10 +58,10 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('pre details summary')
-    const details = container.querySelector('pre details span')
+    const summary = container.querySelector('details summary')
+    const data = container.querySelector('details pre span')
     assert.strictEqual(summary!.textContent, 'theFileName')
-    assert.strictEqual(details!.textContent, 'hello')
+    assert.strictEqual(data!.textContent, 'hello')
   })
 
   it('correctly renders ANSI characters', () => {
@@ -53,9 +71,11 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const span = container.querySelector('pre > details > span')
+    const summary = container.querySelector('details summary')
+    const data = container.querySelector('details > pre > span')
+    assert.strictEqual(summary!.textContent, 'Attached Text')
     assert.strictEqual(
-      span!.innerHTML,
+      data!.innerHTML,
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
@@ -68,11 +88,11 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('pre details summary')
-    const span = container.querySelector('pre > details > span')
+    const summary = container.querySelector('details summary')
+    const data = container.querySelector('details > pre > span')
     assert.strictEqual(summary!.textContent, 'theFileName')
     assert.strictEqual(
-      span!.innerHTML,
+      data!.innerHTML,
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })

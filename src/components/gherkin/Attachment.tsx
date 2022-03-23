@@ -54,9 +54,12 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
       />
     )
   }
+
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Image";
+
   return (
     <details>
-      <summary>Attached Image</summary>
+      <summary>{attachmentTitle}</summary>
       <img
         alt="Embedded Image"
         src={`data:${attachment.mediaType};base64,${attachment.body}`}
@@ -106,25 +109,25 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "text";
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Text";
 
   if (dangerouslySetInnerHTML) {
     return (
-      <pre className={classes.text}>
-        <details>
-            <summary>{attachmentTitle}</summary>
-            <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
-        </details>
-      </pre>
+      <details>
+        <summary>{attachmentTitle}</summary>
+        <pre className={classes.text}>
+          <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
+       </pre>
+      </details>
     )
   }
   return (
-    <pre className={classes.text}>
-        <details>
-            <summary>{attachmentTitle}</summary>
-            <span>{prettify(body)}</span>
-        </details>
-    </pre>
+    <details>
+     <summary>{attachmentTitle}</summary>
+     <pre className={classes.text}>
+        <span>{prettify(body)}</span>
+      </pre>
+    </details>
   )
 }
 
