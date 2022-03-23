@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [19.1.1] - 2022-03-22
+### Fixed
+- Fix build issue where styles were not included in package.
+
+## [19.1.0] - 2022-03-22
+### Changed
+- Most content is now rendered with a sans serif font.
+
 ## [19.0.0] - 2022-01-24
 ### Added
 - Add `<EnvelopesWrapper/>` component to succinctly populate query contexts from an array of messages.
@@ -334,7 +342,9 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v19.0.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...HEAD
+[19.1.1]: https://github.com/cucumber/cucumber-react/compare/v19.1.0...v19.1.1
+[19.1.0]: https://github.com/cucumber/cucumber-react/compare/v19.0.0...v19.1.0
 [19.0.0]: https://github.com/cucumber/cucumber-react/compare/v18.1.2...v19.0.0
 [18.1.2]: https://github.com/cucumber/cucumber-react/compare/v18.1.1...v18.1.2
 [18.1.1]: https://github.com/cucumber/cucumber-react/compare/v18.1.0...v18.1.1
