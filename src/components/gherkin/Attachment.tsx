@@ -53,7 +53,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
     )
   }
 
-  const attachmentTitle = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')';
+  const attachmentTitle = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')'
 
   return (
     <details>
@@ -68,7 +68,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
 }
 
 function video(attachment: messages.Attachment) {
-  const attachmentTitle = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')';
+  const attachmentTitle = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')'
 
   if (attachment.contentEncoding !== 'BASE64') {
     return (
@@ -109,7 +109,7 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
-  const attachmentTitle = attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')';
+  const attachmentTitle = attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')'
 
   if (dangerouslySetInnerHTML) {
     return (
