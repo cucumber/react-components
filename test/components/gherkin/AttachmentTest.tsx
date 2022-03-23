@@ -26,8 +26,24 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const pre = container.querySelector('pre')
-    assert.strictEqual(pre!.textContent, 'hello')
+    const summary = container.querySelector('pre details summary')
+    const details = container.querySelector('pre details span')
+    assert.strictEqual(summary!.textContent, 'text')
+    assert.strictEqual(details!.textContent, 'hello')
+  })
+
+  it('renders base64 encoded plaintext with a filename', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/plain',
+      fileName: "theFileName",
+      body: Buffer.from('hello').toString('base64'),
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('pre details summary')
+    const details = container.querySelector('pre details span')
+    assert.strictEqual(summary!.textContent, 'theFileName')
+    assert.strictEqual(details!.textContent, 'hello')
   })
 
   it('correctly renders ANSI characters', () => {
@@ -37,7 +53,24 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const span = container.querySelector('pre > span')
+    const span = container.querySelector('pre > details > span')
+    assert.strictEqual(
+      span!.innerHTML,
+      '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
+    )
+  })
+
+  it('correctly renders ANSI characters with a filename', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/x.cucumber.log+plain',
+      fileName: "theFileName",
+      body: '\x1b[30mblack\x1b[37mwhite',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('pre details summary')
+    const span = container.querySelector('pre > details > span')
+    assert.strictEqual(summary!.textContent, 'theFileName')
     assert.strictEqual(
       span!.innerHTML,
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'

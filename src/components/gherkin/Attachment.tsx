@@ -106,18 +106,24 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "text";
+
   if (dangerouslySetInnerHTML) {
     return (
       <pre className={classes.text}>
-        <FontAwesomeIcon icon={faPaperclip} className={classes.icon} />
-        <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
+        <details>
+            <summary>{attachmentTitle}</summary>
+            <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
+        </details>
       </pre>
     )
   }
   return (
     <pre className={classes.text}>
-      <FontAwesomeIcon icon={faPaperclip} className={classes.icon} />
-      {prettify(body)}
+        <details>
+            <summary>{attachmentTitle}</summary>
+            <span>{prettify(body)}</span>
+        </details>
     </pre>
   )
 }
