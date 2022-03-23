@@ -70,6 +70,8 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
 }
 
 function video(attachment: messages.Attachment) {
+  const attachmentTitle = attachment.fileName != null ? attachment.fileName : "Attached Video";
+
   if (attachment.contentEncoding !== 'BASE64') {
     return (
       <ErrorMessage
@@ -79,7 +81,7 @@ function video(attachment: messages.Attachment) {
   }
   return (
     <details>
-      <summary>Attached Video</summary>
+      <summary>{attachmentTitle}</summary>
       <video controls>
         <source src={`data:${attachment.mediaType};base64,${attachment.body}`} />
         Your browser is unable to display video

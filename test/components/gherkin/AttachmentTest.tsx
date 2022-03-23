@@ -6,6 +6,37 @@ import { Attachment } from '../../../src/components/gherkin'
 import { render } from '../utils'
 
 describe('<Attachment>', () => {
+  it('renders a video', () => {
+    const binary = new Uint8Array(10)
+    binary.fill(255, 0, binary.length)
+    const attachment: messages.Attachment = {
+      mediaType: 'video/mp4',
+      body: 'fake-base64',
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const video = container.querySelector('video source')
+    assert.strictEqual(summary!.textContent, 'Attached Video')
+    assert.strictEqual(video!.getAttribute('src'), 'data:video/mp4;base64,fake-base64')
+  })
+
+  it('renders a video with a filename', () => {
+    const binary = new Uint8Array(10)
+    binary.fill(255, 0, binary.length)
+    const attachment: messages.Attachment = {
+      mediaType: 'video/mp4',
+      fileName: "theFileName",
+      body: 'fake-base64',
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const video = container.querySelector('video source')
+    assert.strictEqual(summary!.textContent, 'theFileName')
+    assert.strictEqual(video!.getAttribute('src'), 'data:video/mp4;base64,fake-base64')
+  })
+
   it('renders an image', () => {
     const binary = new Uint8Array(10)
     binary.fill(255, 0, binary.length)
