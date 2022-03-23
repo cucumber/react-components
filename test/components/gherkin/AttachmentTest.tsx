@@ -26,7 +26,7 @@ describe('<Attachment>', () => {
     binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'video/mp4',
-      fileName: "the attachment name",
+      fileName: 'the attachment name',
       body: 'fake-base64',
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
@@ -57,7 +57,7 @@ describe('<Attachment>', () => {
     binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'image/png',
-      fileName: "the attachment name",
+      fileName: 'the attachment name',
       body: 'fake-base64',
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
@@ -84,7 +84,7 @@ describe('<Attachment>', () => {
   it('renders base64 encoded plaintext with a name', () => {
     const attachment: messages.Attachment = {
       mediaType: 'text/plain',
-      fileName: "the attachment name",
+      fileName: 'the attachment name',
       body: Buffer.from('hello').toString('base64'),
       contentEncoding: messages.AttachmentContentEncoding.BASE64,
     }
@@ -114,7 +114,7 @@ describe('<Attachment>', () => {
   it('correctly renders ANSI characters with a name', () => {
     const attachment: messages.Attachment = {
       mediaType: 'text/x.cucumber.log+plain',
-      fileName: "the attachment name",
+      fileName: 'the attachment name',
       body: '\x1b[30mblack\x1b[37mwhite',
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
