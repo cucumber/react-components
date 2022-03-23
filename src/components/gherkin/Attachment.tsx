@@ -1,6 +1,4 @@
 import * as messages from '@cucumber/messages'
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // @ts-ignore
 import Convert from 'ansi-to-html'
 import React from 'react'
@@ -55,7 +53,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
     )
   }
 
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Image':
+  const attachmentTitle = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')';
 
   return (
     <details>
@@ -70,7 +68,7 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
 }
 
 function video(attachment: messages.Attachment) {
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Video';
+  const attachmentTitle = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')';
 
   if (attachment.contentEncoding !== 'BASE64') {
     return (
@@ -111,7 +109,7 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
-  const attachmentTitle = attachment.fileName != null ? attachment.fileName : 'Attached Text';
+  const attachmentTitle = attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')';
 
   if (dangerouslySetInnerHTML) {
     return (
@@ -119,14 +117,14 @@ function text(
         <summary>{attachmentTitle}</summary>
         <pre className={classes.text}>
           <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
-       </pre>
+        </pre>
       </details>
     )
   }
   return (
     <details>
-     <summary>{attachmentTitle}</summary>
-     <pre className={classes.text}>
+      <summary>{attachmentTitle}</summary>
+      <pre className={classes.text}>
         <span>{prettify(body)}</span>
       </pre>
     </details>

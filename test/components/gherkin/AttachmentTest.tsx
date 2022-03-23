@@ -17,7 +17,7 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const video = container.querySelector('video source')
-    assert.strictEqual(summary!.textContent, 'Attached Video')
+    assert.strictEqual(summary!.textContent, 'Attached Video (video/mp4)')
     assert.strictEqual(video!.getAttribute('src'), 'data:video/mp4;base64,fake-base64')
   })
 
@@ -48,7 +48,7 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
-    assert.strictEqual(summary!.textContent, 'Attached Image')
+    assert.strictEqual(summary!.textContent, 'Attached Image (image/png)')
     assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
   })
 
@@ -77,7 +77,7 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details pre span')
-    assert.strictEqual(summary!.textContent, 'Attached Text')
+    assert.strictEqual(summary!.textContent, 'Attached Text (text/plain)')
     assert.strictEqual(data!.textContent, 'hello')
   })
 
@@ -104,7 +104,7 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details > pre > span')
-    assert.strictEqual(summary!.textContent, 'Attached Text')
+    assert.strictEqual(summary!.textContent, 'Attached Text (text/x.cucumber.log+plain)')
     assert.strictEqual(
       data!.innerHTML,
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
