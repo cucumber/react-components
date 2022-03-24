@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Text attachments in the html report are now displayed as collapsible sections
+### Added
+- Attachment names are now displayed as the title of attachment sections in the report
+- Where an attachment name is not provided then the media type is included in the default name of the attachment
 
 ## [19.1.1] - 2022-03-22
 ### Fixed

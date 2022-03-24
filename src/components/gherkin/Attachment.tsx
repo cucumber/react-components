@@ -1,6 +1,4 @@
 import * as messages from '@cucumber/messages'
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // @ts-ignore
 import Convert from 'ansi-to-html'
 import React from 'react'
@@ -54,9 +52,12 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
       />
     )
   }
+
+  const attachmentTitle = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')'
+
   return (
     <details>
-      <summary>Attached Image</summary>
+      <summary>{attachmentTitle}</summary>
       <img
         alt="Embedded Image"
         src={`data:${attachment.mediaType};base64,${attachment.body}`}
@@ -67,6 +68,8 @@ function image(attachment: messages.Attachment, classes: AttachmentClasses) {
 }
 
 function video(attachment: messages.Attachment) {
+  const attachmentTitle = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')'
+
   if (attachment.contentEncoding !== 'BASE64') {
     return (
       <ErrorMessage
@@ -76,7 +79,7 @@ function video(attachment: messages.Attachment) {
   }
   return (
     <details>
-      <summary>Attached Video</summary>
+      <summary>{attachmentTitle}</summary>
       <video controls>
         <source src={`data:${attachment.mediaType};base64,${attachment.body}`} />
         Your browser is unable to display video
@@ -106,19 +109,25 @@ function text(
   const body =
     attachment.contentEncoding === 'IDENTITY' ? attachment.body : base64Decode(attachment.body)
 
+  const attachmentTitle = attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')'
+
   if (dangerouslySetInnerHTML) {
     return (
-      <pre className={classes.text}>
-        <FontAwesomeIcon icon={faPaperclip} className={classes.icon} />
-        <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
-      </pre>
+      <details>
+        <summary>{attachmentTitle}</summary>
+        <pre className={classes.text}>
+          <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
+        </pre>
+      </details>
     )
   }
   return (
-    <pre className={classes.text}>
-      <FontAwesomeIcon icon={faPaperclip} className={classes.icon} />
-      {prettify(body)}
-    </pre>
+    <details>
+      <summary>{attachmentTitle}</summary>
+      <pre className={classes.text}>
+        <span>{prettify(body)}</span>
+      </pre>
+    </details>
   )
 }
 
