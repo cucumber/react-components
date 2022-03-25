@@ -6,11 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-- Text attachments in the html report are now displayed as collapsible sections
+
+## [19.2.0] - 2022-03-25
 ### Added
 - Attachment names are now displayed as the title of attachment sections in the report
 - Where an attachment name is not provided then the media type is included in the default name of the attachment
+
+### Changed
+- Text attachments in the html report are now displayed as collapsible sections
 
 ## [19.1.1] - 2022-03-22
 ### Fixed
@@ -347,7 +350,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...HEAD
+[19.2.0]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...v19.2.0
 [19.1.1]: https://github.com/cucumber/cucumber-react/compare/v19.1.0...v19.1.1
 [19.1.0]: https://github.com/cucumber/cucumber-react/compare/v19.0.0...v19.1.0
 [19.0.0]: https://github.com/cucumber/cucumber-react/compare/v18.1.2...v19.0.0
