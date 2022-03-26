@@ -1,8 +1,7 @@
 import { TestStepResultStatus as Status } from '@cucumber/messages'
-import assert from 'assert'
 import sinon from 'sinon'
 
-import { searchFromURLParams, SearchQueryCtx } from '../src/SearchQueryContext'
+import { searchFromURLParams, SearchQueryCtx } from './SearchQueryContext'
 
 describe('SearchQueryCtx', () => {
   it('uses the given values in its initial value', () => {
@@ -11,20 +10,20 @@ describe('SearchQueryCtx', () => {
       hideStatuses: [Status.PASSED],
     })
 
-    assert.strictEqual(sq.query, 'foo bar')
-    assert.deepStrictEqual(sq.hideStatuses, [Status.PASSED])
+    expect(sq.query).toEqual('foo bar')
+    expect(sq.hideStatuses).toEqual([Status.PASSED])
   })
 
   it('has a blank initial query by default', () => {
     const sq = SearchQueryCtx.withDefaults({})
 
-    assert.strictEqual(sq.query, '')
+    expect(sq.query).toEqual('')
   })
 
   it('hides no statuses by default', () => {
     const sq = SearchQueryCtx.withDefaults({})
 
-    assert.deepStrictEqual(sq.hideStatuses, [])
+    expect(sq.hideStatuses).toEqual([])
   })
 
   it('does not change its value on update by default', () => {
@@ -35,8 +34,8 @@ describe('SearchQueryCtx', () => {
       hideStatuses: [Status.PASSED],
     })
 
-    assert.strictEqual(sq.query, 'foo')
-    assert.deepStrictEqual(sq.hideStatuses, [])
+    expect(sq.query).toEqual('foo')
+    expect(sq.hideStatuses).toEqual([])
   })
 
   it('notifies its listener when the query is updated', () => {
@@ -98,8 +97,8 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    assert.strictEqual(ret.query, 'search text')
-    assert.deepStrictEqual(ret.hideStatuses, [Status.PASSED, Status.FAILED])
+    expect(ret.query).toEqual('search text')
+    expect(ret.hideStatuses).toEqual([Status.PASSED, Status.FAILED])
   })
 
   it('uses null values when no search parameters are present', () => {
@@ -114,8 +113,8 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    assert.strictEqual(ret.query, null)
-    assert.deepStrictEqual(ret.hideStatuses, [])
+    expect(ret.query).toBeNull()
+    expect(ret.hideStatuses).toEqual([])
   })
 
   it('creates an update function that adds parameters to the given URL', () => {
@@ -129,7 +128,7 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    ret.onSearchQueryUpdated!({
+    ret.onSearchQueryUpdated?.({
       query: '@slow',
       hideStatuses: [Status.FAILED, Status.PENDING],
     })
