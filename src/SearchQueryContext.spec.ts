@@ -1,5 +1,4 @@
 import { TestStepResultStatus as Status } from '@cucumber/messages'
-import sinon from 'sinon'
 
 import { searchFromURLParams, SearchQueryCtx } from './SearchQueryContext'
 
@@ -39,7 +38,7 @@ describe('SearchQueryCtx', () => {
   })
 
   it('notifies its listener when the query is updated', () => {
-    const onSearchQueryUpdated = sinon.spy()
+    const onSearchQueryUpdated = jest.fn()
 
     const sq = SearchQueryCtx.withDefaults(
       { query: 'bar', hideStatuses: [Status.FAILED] },
@@ -48,27 +47,27 @@ describe('SearchQueryCtx', () => {
 
     sq.update({ query: 'foo' })
 
-    sinon.assert.calledOnceWithMatch(onSearchQueryUpdated, {
+    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
       query: 'foo',
-      hideStatuses: sinon.match((s) => s.length === 1 && s[0] === Status.FAILED),
+      hideStatuses: [Status.FAILED],
     })
   })
 
   it('notifies its listener when the filters are updated', () => {
-    const onSearchQueryUpdated = sinon.spy()
+    const onSearchQueryUpdated = jest.fn()
 
     const sq = SearchQueryCtx.withDefaults({}, onSearchQueryUpdated)
 
     sq.update({ hideStatuses: [Status.PENDING] })
 
-    sinon.assert.calledOnceWithMatch(onSearchQueryUpdated, {
+    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
       query: '',
-      hideStatuses: sinon.match((s) => s.length === 1 && s[0] === Status.PENDING),
+      hideStatuses: [Status.PENDING],
     })
   })
 
   it("notifies its listener when it's updated with blank values", () => {
-    const onSearchQueryUpdated = sinon.spy()
+    const onSearchQueryUpdated = jest.fn()
 
     const sq = SearchQueryCtx.withDefaults(
       { query: 'foo', hideStatuses: [Status.FAILED] },
@@ -77,9 +76,9 @@ describe('SearchQueryCtx', () => {
 
     sq.update({ query: '', hideStatuses: [] })
 
-    sinon.assert.calledOnceWithMatch(onSearchQueryUpdated, {
+    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
       query: '',
-      hideStatuses: sinon.match((s) => s.length === 0),
+      hideStatuses: [],
     })
   })
 })
@@ -118,7 +117,7 @@ describe('searchFromURLParams()', () => {
   })
 
   it('creates an update function that adds parameters to the given URL', () => {
-    const setURL = sinon.spy()
+    const setURL = jest.fn()
     const ret = searchFromURLParams({
       querySearchParam: 'foo',
       hideStatusesSearchParam: 'bar',
@@ -133,20 +132,8 @@ describe('searchFromURLParams()', () => {
       hideStatuses: [Status.FAILED, Status.PENDING],
     })
 
-    sinon.assert.calledOnceWithMatch(
-      setURL,
-      sinon.match((urlString) => {
-        const url = new URL(urlString.toString())
-        const show = url.searchParams.getAll('bar')
-        return (
-          url.host === 'example.org' &&
-          url.searchParams.get('foo') === '@slow' &&
-          url.searchParams.get('baz') === 'sausage' &&
-          show.length === 2 &&
-          show.includes('FAILED') &&
-          show.includes('PENDING')
-        )
-      })
+    expect(setURL).toHaveBeenCalledWith(
+      'http://example.org/?foo=%40slow&baz=sausage&bar=FAILED&bar=PENDING'
     )
   })
 })
