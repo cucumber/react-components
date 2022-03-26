@@ -1,9 +1,8 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 import React from 'react'
 
-import { Attachment } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { Attachment } from './Attachment'
 
 describe('<Attachment>', () => {
   it('renders a video', () => {
@@ -17,8 +16,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const video = container.querySelector('video source')
-    assert.strictEqual(summary!.textContent, 'Attached Video (video/mp4)')
-    assert.strictEqual(video!.getAttribute('src'), 'data:video/mp4;base64,fake-base64')
+    expect(summary).toHaveTextContent('Attached Video (video/mp4)')
+    expect(video).toHaveAttribute('src', 'data:video/mp4;base64,fake-base64')
   })
 
   it('renders a video with a name', () => {
@@ -33,8 +32,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const video = container.querySelector('video source')
-    assert.strictEqual(summary!.textContent, 'the attachment name')
-    assert.strictEqual(video!.getAttribute('src'), 'data:video/mp4;base64,fake-base64')
+    expect(summary).toHaveTextContent('the attachment name')
+    expect(video).toHaveAttribute('src', 'data:video/mp4;base64,fake-base64')
   })
 
   it('renders an image', () => {
@@ -48,8 +47,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
-    assert.strictEqual(summary!.textContent, 'Attached Image (image/png)')
-    assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
+    expect(summary).toHaveTextContent('Attached Image (image/png)')
+    expect(img).toHaveAttribute('src', 'data:image/png;base64,fake-base64')
   })
 
   it('renders an image with a name', () => {
@@ -64,8 +63,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
-    assert.strictEqual(summary!.textContent, 'the attachment name')
-    assert.strictEqual(img!.getAttribute('src'), 'data:image/png;base64,fake-base64')
+    expect(summary).toHaveTextContent('the attachment name')
+    expect(img).toHaveAttribute('src', 'data:image/png;base64,fake-base64')
   })
 
   it('renders base64 encoded plaintext', () => {
@@ -76,9 +75,9 @@ describe('<Attachment>', () => {
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
-    const data = container.querySelector('details pre span')
-    assert.strictEqual(summary!.textContent, 'Attached Text (text/plain)')
-    assert.strictEqual(data!.textContent, 'hello')
+    const data = container.querySelector('details pre')
+    expect(summary).toHaveTextContent('Attached Text (text/plain)')
+    expect(data).toHaveTextContent('hello')
   })
 
   it('renders base64 encoded plaintext with a name', () => {
@@ -91,8 +90,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details pre span')
-    assert.strictEqual(summary!.textContent, 'the attachment name')
-    assert.strictEqual(data!.textContent, 'hello')
+    expect(summary).toHaveTextContent('the attachment name')
+    expect(data).toHaveTextContent('hello')
   })
 
   it('correctly renders ANSI characters', () => {
@@ -104,9 +103,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details > pre > span')
-    assert.strictEqual(summary!.textContent, 'Attached Text (text/x.cucumber.log+plain)')
-    assert.strictEqual(
-      data!.innerHTML,
+    expect(summary).toHaveTextContent('Attached Text (text/x.cucumber.log+plain)')
+    expect(data).toContainHTML(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
@@ -121,9 +119,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details > pre > span')
-    assert.strictEqual(summary!.textContent, 'the attachment name')
-    assert.strictEqual(
-      data!.innerHTML,
+    expect(summary).toHaveTextContent('the attachment name')
+    expect(data).toContainHTML(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
