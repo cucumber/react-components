@@ -5,6 +5,7 @@ import { NdjsonToMessageStream } from '@cucumber/message-streams'
 import { IdGenerator } from '@cucumber/messages'
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import assert from 'assert'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
@@ -58,9 +59,11 @@ describe('acceptance tests', () => {
     const localMessageFiles = glob.sync(`test/messages/**/*.ndjson`, {
       cwd: path.resolve(__dirname, '..'),
     })
+    assert.ok(localMessageFiles.length, 'Expected to find some files to test with')
     const cckMessageFiles = glob.sync(
       `node_modules/@cucumber/compatibility-kit/features/**/*.ndjson`
     )
+    assert.ok(cckMessageFiles.length, 'Expected to find some files to test with')
     const messageFiles = [...localMessageFiles, ...cckMessageFiles]
 
     for (const messageFile of messageFiles) {
