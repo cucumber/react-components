@@ -5,8 +5,8 @@ import { SourceReference, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import assert from 'assert'
 
-import countScenariosByStatuses from '../src/countScenariosByStatuses'
-import runFeature from './runFeature'
+import runFeature from '../test/runFeature'
+import countScenariosByStatuses from './countScenariosByStatuses'
 
 const sourceReference: SourceReference = {}
 
@@ -14,6 +14,8 @@ describe('countScenariosByStatuses', () => {
   let gherkinQuery: GherkinQuery
   let cucumberQuery: CucumberQuery
   let supportCode: SupportCode
+
+  jest.setTimeout(3000)
 
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
@@ -59,7 +61,7 @@ Feature: statuses
     ])
     assert.strictEqual(totalScenarioCount, 4)
     // Ridiculously long because runFeature (fake cucumber) seems to run very slowly with ts-node (?)
-  }).timeout(30000)
+  })
 
   it('counts different statuses with example tables', async () => {
     const feature = `
