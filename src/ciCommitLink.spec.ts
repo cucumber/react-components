@@ -1,10 +1,9 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 
-import ciCommitLink from '../src/ciCommitLink'
+import ciCommitLink from './ciCommitLink'
 
 describe('ciCommitLink(ci)', () => {
-  context('when executed on GitHubAction', () => {
+  describe('when executed on GitHubAction', () => {
     it('returns a link to the commit view on GitHub', () => {
       const ci: messages.Ci = {
         name: 'GitHub Actions',
@@ -15,14 +14,11 @@ describe('ciCommitLink(ci)', () => {
         },
       }
 
-      assert.strictEqual(
-        ciCommitLink(ci),
-        'https://github.example.com/company/repo/commit/some-sha'
-      )
+      expect(ciCommitLink(ci)).toEqual('https://github.example.com/company/repo/commit/some-sha')
     })
   })
 
-  context('when remote startss with github.com', () => {
+  describe('when remote startss with github.com', () => {
     it('returns a link to the commit view on GitHub', () => {
       const ci: messages.Ci = {
         name: 'CircleCI',
@@ -33,17 +29,17 @@ describe('ciCommitLink(ci)', () => {
         },
       }
 
-      assert.strictEqual(ciCommitLink(ci), 'https://github.com/company/repo/commit/some-sha')
+      expect(ciCommitLink(ci)).toEqual('https://github.com/company/repo/commit/some-sha')
     })
   })
 
-  context('when git is not specified', () => {
+  describe('when git is not specified', () => {
     it('returns undefined', () => {
       const ci: messages.Ci = {
         name: 'SuperCI',
       }
 
-      assert.strictEqual(ciCommitLink(ci), null)
+      expect(ciCommitLink(ci)).toBeNull()
     })
   })
 })
