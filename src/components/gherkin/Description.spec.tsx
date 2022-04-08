@@ -1,18 +1,17 @@
-import assert from 'assert'
 import React from 'react'
 
-import { Description } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { Description } from './index'
 
 describe('Description', () => {
   it('doesnt render anything if description empty', () => {
     const { container } = render(<Description description={''} />)
-    assert.strictEqual(container.innerHTML, '')
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('doesnt render anything if description is just whitespace', () => {
     const { container } = render(<Description description={'  '} />)
-    assert.strictEqual(container.innerHTML, '')
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('doesnt render anything if description is just whitespace including newlines', () => {
@@ -23,12 +22,11 @@ describe('Description', () => {
     `}
       />
     )
-    assert.strictEqual(container.innerHTML, '')
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders if we really have a description', () => {
-    const { container } = render(<Description description={'## This is a heading'} />)
-    const rendered = container.querySelector('h2')
-    assert.strictEqual(rendered!.innerHTML, 'This is a heading')
+    const { getByRole } = render(<Description description={'## This is a heading'} />)
+    expect(getByRole('heading', { name: 'This is a heading' })).toBeVisible()
   })
 })
