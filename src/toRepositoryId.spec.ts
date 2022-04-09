@@ -1,6 +1,4 @@
-import assert from 'assert'
-
-import toRepositoryId from '../src/toRepositoryId'
+import toRepositoryId from './toRepositoryId'
 
 const testData = [
   ['github.com/owner/name', 'https://github.com/owner/name'],
@@ -8,11 +6,11 @@ const testData = [
   ['github.com/owner/name', 'git@github.com:owner/name.git'],
 ]
 
-describe('#parseGitUrl', () => {
+describe('toRepositoryId', () => {
   for (const [expected, url] of testData) {
     it(`parses ${url} to ${expected}`, () => {
       const repositoryId = toRepositoryId(url)
-      assert.strictEqual(repositoryId, expected)
+      expect(repositoryId).toEqual(expected)
     })
   }
 })
