@@ -1,10 +1,9 @@
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import assert from 'assert'
 import React from 'react'
 
-import { HookStep } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { HookStep } from './HookStep'
 
 describe('<HookStep>', () => {
   class StubCucumberQuery extends CucumberQuery {
@@ -52,7 +51,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(container.textContent!.includes('Hook failed'), false)
+    expect(container).not.toHaveTextContent('Hook failed')
   })
 
   it('doesnt explode when we cant find a hook message for a failed hook', () => {
@@ -80,7 +79,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(container.textContent!.includes('Hook failed: Unknown location'), true)
+    expect(container).toHaveTextContent('Hook failed: Unknown location')
   })
 
   it('renders the uri and line number when present for a failed hook', () => {
@@ -114,10 +113,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(
-      container.textContent!.includes('Hook failed: features/support/hooks.js:4'),
-      true
-    )
+    expect(container).toHaveTextContent('Hook failed: features/support/hooks.js:4')
   })
 
   it('renders the method reference when present for a failed hook', () => {
@@ -151,6 +147,6 @@ describe('<HookStep>', () => {
       ),
     })
 
-    assert.strictEqual(container.textContent!.includes('Hook failed: MyHooks.doSetup'), true)
+    expect(container).toHaveTextContent('Hook failed: MyHooks.doSetup')
   })
 })
