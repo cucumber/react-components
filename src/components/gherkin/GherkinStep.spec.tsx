@@ -4,10 +4,10 @@ import { Query as CucumberQuery } from '@cucumber/query'
 import assert from 'assert'
 import React from 'react'
 
-import { GherkinStep } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { GherkinStep } from './GherkinStep'
 
-describe('<Step>', () => {
+describe('<GherkinStep>', () => {
   it('renders', () => {
     const step: messages.Step = {
       keyword: 'Given',
@@ -40,13 +40,11 @@ describe('<Step>', () => {
       }
     }
 
-    const { container } = render(<GherkinStep step={step} hasExamples={false} />, {
+    const { asFragment } = render(<GherkinStep step={step} hasExamples={false} />, {
       gherkinQuery: new StubGherkinQuery(),
       cucumberQuery: new StubCucumberQuery(),
     })
 
-    // TODO a bit dom-specific - can we use snapshots to test this?
-    const texts = Array.from(container.querySelectorAll('h3 > *')).map((span) => span.textContent)
-    assert.deepStrictEqual(texts, ['Given', 'the 48 pixies'])
+    expect(asFragment()).toMatchSnapshot()
   })
 })
