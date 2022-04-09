@@ -1,13 +1,12 @@
-import assert from 'assert'
 import React from 'react'
 
-import { Tags } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { Tags } from './Tags'
 
 describe('Tags', () => {
   it('doesnt render anything if no tags', () => {
     const { container } = render(<Tags tags={[]} />)
-    assert.strictEqual(container.innerHTML, '')
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders if we really have some tags', () => {
@@ -27,7 +26,7 @@ describe('Tags', () => {
         id: '2',
       },
     ]
-    const { container } = render(<Tags tags={tags} />)
-    assert.strictEqual(container.querySelectorAll('ul li').length, 2)
+    const { asFragment } = render(<Tags tags={tags} />)
+    expect(asFragment()).toMatchSnapshot()
   })
 })
