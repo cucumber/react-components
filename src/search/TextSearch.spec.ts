@@ -3,7 +3,7 @@ import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import assert from 'assert'
 
-import TextSearch from '../../src/search/TextSearch'
+import TextSearch from './TextSearch'
 
 describe('TextSearch', () => {
   let search: TextSearch
@@ -37,7 +37,7 @@ describe('TextSearch', () => {
     search.add(gherkinDocument)
   })
 
-  context('Hit found in step', () => {
+  describe('Hit found in step', () => {
     // TODO: Fix
     xit('displays just one scenario', () => {
       const searchResults = search.search('Spain')
@@ -58,7 +58,7 @@ describe('TextSearch', () => {
     })
   })
 
-  context('Hit found in scenario', () => {
+  describe('Hit found in scenario', () => {
     xit('displays just one scenario', () => {
       const searchResults = search.search('europe')
 
@@ -78,7 +78,7 @@ describe('TextSearch', () => {
     })
   })
 
-  context('Hit found in background', () => {
+  describe('Hit found in background', () => {
     it('displays all scenarios', () => {
       const searchResults = search.search('world')
 
@@ -92,7 +92,7 @@ describe('TextSearch', () => {
     })
   })
 
-  context('Hit found in rule', () => {
+  describe('Hit found in rule', () => {
     it('displays a rule', () => {
       const searchResults = search.search('uninhabited')
 
@@ -112,7 +112,7 @@ describe('TextSearch', () => {
     })
   })
 
-  context('No hit found', () => {
+  describe('No hit found', () => {
     // TODO: Fix
     xit('returns no hits', () => {
       const searchResults = search.search('saturn')
