@@ -2,10 +2,10 @@ import * as messages from '@cucumber/messages'
 import assert from 'assert'
 import React from 'react'
 
-import { CucumberReact } from '../../../src/components'
-import { Customised, TagsClasses, TagsProps } from '../../../src/components/customise'
-import { Tags } from '../../../src/components/gherkin'
-import { render } from '../utils'
+import { render } from '../../../test/components/utils'
+import { Tags } from '../gherkin'
+import { CucumberReact } from '../index'
+import { Customised, TagsClasses, TagsProps } from './index'
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
@@ -20,10 +20,10 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const { container } = render(<Tags tags={tags} />)
+    const { getByRole } = render(<Tags tags={tags} />)
 
-    assert.strictEqual(container.querySelector('ul')!.className, 'tags__generated')
-    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
+    expect(getByRole('list')).toHaveClass('tags')
+    expect(getByRole('listitem')).toHaveClass('tag')
   })
 
   it('uses the custom classnames provided via custom rendering', () => {
@@ -38,7 +38,7 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const { container } = render(
+    const { getByRole } = render(
       <CucumberReact
         customRendering={{
           Tags: {
@@ -51,8 +51,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul')!.className, 'custom-list-class')
-    assert.strictEqual(container.querySelector('ul > li')!.className, 'custom-item-class')
+    expect(getByRole('list')).toHaveClass('custom-list-class')
+    expect(getByRole('listitem')).toHaveClass('custom-item-class')
   })
 
   it('uses a partial of custom classes and falls back to built-in styles where omitted', () => {
@@ -67,7 +67,7 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const { container } = render(
+    const { getByRole } = render(
       <CucumberReact
         customRendering={{
           Tags: {
@@ -79,8 +79,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul')!.className, 'custom-list-class')
-    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
+    expect(getByRole('list')).toHaveClass('custom-list-class')
+    expect(getByRole('listitem')).toHaveClass('tag')
   })
 
   it('uses a custom component implementation where provided', () => {
@@ -109,7 +109,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('div')!.innerHTML, '<p>Totally custom!</p>')
+    expect(container).toContainHTML('<p>Totally custom!</p>')
   })
 
   it('a custom component can defer to the default renderer if it wants to', () => {
@@ -128,7 +128,7 @@ describe('custom rendering and theming', () => {
       return <props.DefaultRenderer {...props} />
     }
 
-    const { container } = render(
+    const { getByRole } = render(
       <CucumberReact
         customRendering={{
           Tags: CustomComponent,
@@ -138,7 +138,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    assert.strictEqual(container.querySelector('ul')!.className, 'tags__generated')
-    assert.strictEqual(container.querySelector('ul > li')!.className, 'tag__generated')
+    expect(getByRole('list')).toHaveClass('tags')
+    expect(getByRole('listitem')).toHaveClass('tag')
   })
 })
