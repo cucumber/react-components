@@ -1,8 +1,7 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 
-import ScenarioSearch from '../../src/search/ScenarioSearch'
-import { makeScenario } from './utils'
+import { makeScenario } from '../../test/search/utils'
+import ScenarioSearch from './ScenarioSearch'
 
 describe('ScenarioSearch', () => {
   let scenarioSearch: ScenarioSearch
@@ -22,28 +21,28 @@ describe('ScenarioSearch', () => {
     }
   })
 
-  context('#search', () => {
+  describe('#search', () => {
     it('returns an empty list when there is no hits', () => {
       const searchResults = scenarioSearch.search('no match there')
-      assert.deepStrictEqual(searchResults, [])
+      expect(searchResults).toEqual([])
     })
 
     it('returns scenario which name match the query', () => {
       const searchResults = scenarioSearch.search('failed')
-      assert.deepStrictEqual(searchResults, [scenarios[2]])
+      expect(searchResults).toEqual([scenarios[2]])
     })
 
     it('may not return results in the original order', () => {
       const searchResults = scenarioSearch.search('scenario')
 
       for (const scenario of scenarios) {
-        assert.ok(searchResults.includes(scenario))
+        expect(searchResults).toContain(scenario)
       }
     })
 
     it('returns scenario which description match the query', () => {
       const searchResults = scenarioSearch.search('little')
-      assert.deepStrictEqual(searchResults, [scenarios[0]])
+      expect(searchResults).toEqual([scenarios[0]])
     })
   })
 })
