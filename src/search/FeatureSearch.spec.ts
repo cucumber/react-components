@@ -1,8 +1,7 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 
-import FeatureSearch from '../../src/search/FeatureSearch'
-import { makeFeature } from './utils'
+import { makeFeature } from '../../test/search/utils'
+import FeatureSearch from './FeatureSearch'
 
 describe('FeatureSearch', () => {
   let featureSearch: FeatureSearch
@@ -19,29 +18,29 @@ describe('FeatureSearch', () => {
     featureSearch.add(gherkinDocument)
   })
 
-  context('#search', () => {
+  describe('#search', () => {
     it('returns an empty array when there are no hits', () => {
       const searchResult = featureSearch.search('banana')
 
-      assert.deepStrictEqual(searchResult, [])
+      expect(searchResult).toEqual([])
     })
 
     it('finds results with equal feature name', () => {
       const searchResult = featureSearch.search('this exists')
 
-      assert.deepStrictEqual(searchResult, [gherkinDocument.feature])
+      expect(searchResult).toEqual([gherkinDocument.feature])
     })
 
     it('finds results with substring of feature name', () => {
       const searchResult = featureSearch.search('exists')
 
-      assert.deepStrictEqual(searchResult, [gherkinDocument.feature])
+      expect(searchResult).toEqual([gherkinDocument.feature])
     })
 
     it('finds results with equal feature description', () => {
       const searchResult = featureSearch.search('description')
 
-      assert.deepStrictEqual(searchResult, [gherkinDocument.feature])
+      expect(searchResult).toEqual([gherkinDocument.feature])
     })
   })
 })
