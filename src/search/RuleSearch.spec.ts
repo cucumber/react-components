@@ -1,8 +1,7 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 
-import RuleSearch from '../../src/search/RuleSearch'
-import { makeRule } from './utils'
+import { makeRule } from '../../test/search/utils'
+import RuleSearch from './RuleSearch'
 
 describe('RuleSearch', () => {
   let ruleSearch: RuleSearch
@@ -22,20 +21,20 @@ describe('RuleSearch', () => {
     }
   })
 
-  context('#search', () => {
+  describe('#search', () => {
     it('returns an empty list when there is no hits', () => {
       const searchResults = ruleSearch.search('no match there')
-      assert.deepStrictEqual(searchResults, [])
+      expect(searchResults).toEqual([])
     })
 
     it('returns rule which name match the query', () => {
       const searchResults = ruleSearch.search('second')
-      assert.deepStrictEqual(searchResults, [rules[1]])
+      expect(searchResults).toEqual([rules[1]])
     })
 
     it('returns rule which name match the query in description', () => {
       const searchResults = ruleSearch.search('little')
-      assert.deepStrictEqual(searchResults, [rules[0]])
+      expect(searchResults).toEqual([rules[0]])
     })
   })
 })
