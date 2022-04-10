@@ -1,8 +1,7 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 
-import StepSearch from '../../src/search/StepSearch'
-import { makeStep } from './utils'
+import { makeStep } from '../../test/search/utils'
+import StepSearch from './StepSearch'
 
 describe('StepSearch', () => {
   let stepSearch: StepSearch
@@ -26,28 +25,28 @@ describe('StepSearch', () => {
     }
   })
 
-  context('#search', () => {
+  describe('#search', () => {
     it('returns an empty list when there is no hits', () => {
       const searchResults = stepSearch.search('no match there')
-      assert.deepStrictEqual(searchResults, [])
+      expect(searchResults).toEqual([])
     })
 
     it('returns step which text match the query', () => {
       const searchResults = stepSearch.search('failed')
-      assert.deepStrictEqual(searchResults, [steps[2]])
+      expect(searchResults).toEqual([steps[2]])
     })
 
     it('may not return results in the original order', () => {
       const searchResults = stepSearch.search('step')
 
       for (const step of steps) {
-        assert.ok(searchResults.includes(step))
+        expect(searchResults).toContain(step)
       }
     })
 
     it('returns step which keyword match the query', () => {
       const searchResults = stepSearch.search('Given')
-      assert.deepStrictEqual(searchResults, [steps[0]])
+      expect(searchResults).toEqual([steps[0]])
     })
 
     xit('it does not exclude "Then" and "When" from indexing', () => {
@@ -58,12 +57,12 @@ describe('StepSearch', () => {
 
     it('returns step which DocString matches the query', () => {
       const searchResults = stepSearch.search('docstring')
-      assert.deepStrictEqual(searchResults, [steps[0]])
+      expect(searchResults).toEqual([steps[0]])
     })
 
     it('returns step which datatable matches the query', () => {
       const searchResults = stepSearch.search('NullPointerException')
-      assert.deepStrictEqual(searchResults, [steps[2]])
+      expect(searchResults).toEqual([steps[2]])
     })
   })
 })
