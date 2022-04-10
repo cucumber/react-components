@@ -1,5 +1,4 @@
 import * as messages from '@cucumber/messages'
-import assert from 'assert'
 import React from 'react'
 
 import { render } from '../../../test/components/utils'
