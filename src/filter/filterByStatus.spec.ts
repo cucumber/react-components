@@ -4,10 +4,9 @@ import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { SourceReference } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import assert from 'assert'
 
-import filterByStatus from '../../src/filter/filterByStatus'
-import runFeature, { FailingHook } from '../runFeature'
+import runFeature, { FailingHook } from '../../test/runFeature'
+import filterByStatus from './filterByStatus'
 
 const sourceReference: SourceReference = {}
 
@@ -58,17 +57,17 @@ Feature: statuses
       messages.TestStepResultStatus.PASSED,
     ])
 
-    assert.deepStrictEqual(scenarioNames(passedScenarios!), ['passed'])
+    expect(scenarioNames(passedScenarios!)).toEqual(['passed'])
 
     const failedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
       messages.TestStepResultStatus.FAILED,
     ])
-    assert.deepStrictEqual(scenarioNames(failedScenarios!), ['failed'])
+    expect(scenarioNames(failedScenarios!)).toEqual(['failed'])
 
     const undefinedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
       messages.TestStepResultStatus.UNDEFINED,
     ])
-    assert.deepStrictEqual(scenarioNames(undefinedScenarios!), ['undefined'])
+    expect(scenarioNames(undefinedScenarios!)).toEqual(['undefined'])
   })
 
   it('can filter with multiple statuses', async () => {
@@ -80,10 +79,10 @@ Feature: statuses
       messages.TestStepResultStatus.PASSED,
       messages.TestStepResultStatus.FAILED,
     ])
-    assert.deepStrictEqual(scenarioNames(passedAndFailedScenarios!), ['passed', 'failed'])
+    expect(scenarioNames(passedAndFailedScenarios!)).toEqual(['passed', 'failed'])
   })
 
-  context('when using examples', () => {
+  describe('when using examples', () => {
     const featureWithExamples = `Feature: with examples
 
   Scenario: using examples
@@ -103,7 +102,7 @@ Feature: statuses
         messages.TestStepResultStatus.PENDING,
       ])
 
-      assert.deepStrictEqual(scenarioNames(pendingScenarios!), [])
+      expect(scenarioNames(pendingScenarios!)).toEqual([])
     })
 
     it('does not drop the lines of Example tables with the incorrect status', async () => {
@@ -116,11 +115,11 @@ Feature: statuses
         messages.TestStepResultStatus.PASSED,
       ])
 
-      assert.strictEqual(pretty(onlyPassedScenarios!), featureWithExamples)
+      expect(pretty(onlyPassedScenarios!)).toEqual(featureWithExamples)
     })
   })
 
-  context('when before hook steps fail', () => {
+  describe('when before hook steps fail', () => {
     it('takes those step statuses into account', async () => {
       supportCode.registerBeforeHook(new FailingHook('1234-5678'))
 
@@ -132,11 +131,11 @@ Feature: statuses
         messages.TestStepResultStatus.FAILED,
       ])
 
-      assert.deepStrictEqual(scenarioNames(onlyFailedScenarios!), ['passed', 'failed', 'undefined'])
+      expect(scenarioNames(onlyFailedScenarios!)).toEqual(['passed', 'failed', 'undefined'])
     })
   })
 
-  context('when after hook steps fail', () => {
+  describe('when after hook steps fail', () => {
     it('takes those step statuses into account', async () => {
       supportCode.registerAfterHook(new FailingHook('1234-5678'))
 
@@ -148,7 +147,7 @@ Feature: statuses
         messages.TestStepResultStatus.FAILED,
       ])
 
-      assert.deepStrictEqual(scenarioNames(onlyFailedScenarios!), ['passed', 'failed', 'undefined'])
+      expect(scenarioNames(onlyFailedScenarios!)).toEqual(['passed', 'failed', 'undefined'])
     })
   })
 })
