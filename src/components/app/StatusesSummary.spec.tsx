@@ -1,10 +1,9 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
-import assert from 'assert'
 import React from 'react'
 
-import { StatusesSummary } from '../../../src/components/app'
-import { makeEmptyScenarioCountsByStatus } from '../../../src/countScenariosByStatuses'
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
+import { StatusesSummary } from './StatusesSummary'
 
 describe('StatusesSummary', () => {
   it('should render correctly', () => {
@@ -22,9 +21,10 @@ describe('StatusesSummary', () => {
       />
     )
 
-    assert.deepStrictEqual(
-      getAllByRole('listitem').map((li) => li.textContent),
-      ['3 failed', '100 passed', '1 undefined']
-    )
+    expect(getAllByRole('listitem').map((li) => li.textContent)).toEqual([
+      '3 failed',
+      '100 passed',
+      '1 undefined',
+    ])
   })
 })
