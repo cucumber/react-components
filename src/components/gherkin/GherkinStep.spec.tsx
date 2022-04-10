@@ -1,10 +1,9 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import assert from 'assert'
 import React from 'react'
 
-import { render } from '../../../test/components/utils'
+import { render } from '../../../test-utils'
 import { GherkinStep } from './GherkinStep'
 
 describe('<GherkinStep>', () => {

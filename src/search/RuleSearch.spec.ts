@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import { makeRule } from '../../test/search/utils'
+import { makeRule } from '../../test-utils'
 import RuleSearch from './RuleSearch'
 
 describe('RuleSearch', () => {

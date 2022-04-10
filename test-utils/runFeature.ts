@@ -35,7 +35,7 @@ export class FailingHook implements IHook {
   }
 }
 
-export default async function runFeature(
+export async function runFeature(
   feature: string,
   gherkinQuery: GherkinQuery,
   supportCode: SupportCode = new SupportCode()

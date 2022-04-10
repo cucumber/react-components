@@ -13,9 +13,9 @@ import React from 'react'
 import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { render } from '../test/components/utils'
-import CucumberQueryStream from '../test/CucumberQueryStream'
-import { EnvelopesQuery } from './index'
+import { CucumberQueryStream } from '../test-utils'
+import { render } from '../test-utils'
+import { EnvelopesQuery } from './EnvelopesQueryContext'
 import { components } from './index'
 
 describe('acceptance tests', () => {
@@ -56,9 +56,7 @@ describe('acceptance tests', () => {
   })
 
   describe('with user-provided and compatibility kit data', () => {
-    const localMessageFiles = glob.sync(`test/messages/**/*.ndjson`, {
-      cwd: path.resolve(__dirname, '..'),
-    })
+    const localMessageFiles = glob.sync(`test-utils/messages/**/*.ndjson`)
     assert.ok(localMessageFiles.length, 'Expected to find some files to test with')
     const cckMessageFiles = glob.sync(
       `node_modules/@cucumber/compatibility-kit/features/**/*.ndjson`

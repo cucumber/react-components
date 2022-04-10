@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import React from 'react'
 
-import { render } from '../../../test/components/utils'
+import { render } from '../../../test-utils'
 import { HookStep } from './HookStep'
 
 describe('<HookStep>', () => {

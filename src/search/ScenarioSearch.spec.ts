@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import { makeScenario } from '../../test/search/utils'
+import { makeScenario } from '../../test-utils'
 import ScenarioSearch from './ScenarioSearch'
 
 describe('ScenarioSearch', () => {

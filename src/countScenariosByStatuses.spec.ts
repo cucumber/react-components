@@ -3,9 +3,8 @@ import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { SourceReference, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import assert from 'assert'
 
-import runFeature from '../test/runFeature'
+import { runFeature } from '../test-utils'
 import countScenariosByStatuses from './countScenariosByStatuses'
 
 const sourceReference: SourceReference = {}
@@ -51,15 +50,15 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery)
 
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.PASSED], 2)
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
-    assert.deepStrictEqual(statusesWithScenarios, [
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).toEqual(2)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).toEqual(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).toEqual(1)
+    expect(statusesWithScenarios).toEqual([
       TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
-    assert.strictEqual(totalScenarioCount, 4)
+    expect(totalScenarioCount).toEqual(4)
     // Ridiculously long because runFeature (fake cucumber) seems to run very slowly with ts-node (?)
   })
 
@@ -85,14 +84,14 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery)
 
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.PASSED], 1)
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.FAILED], 1)
-    assert.strictEqual(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED], 1)
-    assert.deepStrictEqual(statusesWithScenarios, [
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).toEqual(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).toEqual(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).toEqual(1)
+    expect(statusesWithScenarios).toEqual([
       TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
-    assert.strictEqual(totalScenarioCount, 3)
+    expect(totalScenarioCount).toEqual(3)
   })
 })

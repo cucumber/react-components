@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import { makeFeature } from '../../test/search/utils'
+import { makeFeature } from '../../test-utils'
 import FeatureSearch from './FeatureSearch'
 
 describe('FeatureSearch', () => {

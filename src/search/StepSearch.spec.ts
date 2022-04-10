@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import { makeStep } from '../../test/search/utils'
+import { makeStep } from '../../test-utils'
 import StepSearch from './StepSearch'
 
 describe('StepSearch', () => {

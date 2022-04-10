@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { render } from '../../../test/components/utils'
+import { render } from '../../../test-utils'
 import { Attachment } from './Attachment'
 
 describe('<Attachment>', () => {
