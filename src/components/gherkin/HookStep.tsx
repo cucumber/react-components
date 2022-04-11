@@ -29,7 +29,7 @@ const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
     return (
       <StepItem status={stepResult.status}>
         <Title header="h3" id={step.id}>
-          Hook failed: {location}
+          {hook?.name ? `Hook "${hook.name}"` : 'Hook'} failed: {location}
         </Title>
         {stepResult.message && <ErrorMessage message={stepResult.message} />}
         {attachments.map((attachment, i) => (

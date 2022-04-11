@@ -149,4 +149,39 @@ describe('<HookStep>', () => {
 
     expect(container).toHaveTextContent('Hook failed: MyHooks.doSetup')
   })
+
+  it('renders the name when present for a failed hook', () => {
+    const step: messages.TestStep = {
+      id: '123',
+      hookId: '456',
+    }
+
+    const { container } = render(<HookStep step={step} />, {
+      cucumberQuery: new StubCucumberQuery(
+        [
+          {
+            status: messages.TestStepResultStatus.FAILED,
+            message: 'whoops',
+            duration: {
+              seconds: 1,
+              nanos: 0,
+            },
+          },
+        ],
+        {
+          id: '456',
+          name: 'fancy hook!',
+          sourceReference: {
+            uri: 'features/support/hooks.js',
+            location: {
+              line: 4,
+              column: 6,
+            },
+          },
+        }
+      ),
+    })
+
+    expect(container).toHaveTextContent('Hook "fancy hook!" failed:')
+  })
 })
