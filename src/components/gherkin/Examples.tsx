@@ -3,12 +3,11 @@ import React from 'react'
 import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise'
 import { Children } from './Children'
 import { Description } from './Description'
+import defaultStyles from './Examples.module.scss'
 import { ExamplesTable } from './ExamplesTable'
 import { Keyword } from './Keyword'
 import { Tags } from './Tags'
 import { Title } from './Title'
-import defaultStyles from './Examples.module.scss'
-
 
 const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples, styles }) => {
   return (
@@ -29,6 +28,10 @@ const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples, styles }) 
 }
 
 export const Examples: React.FunctionComponent<ExamplesProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<ExamplesProps>('Examples', defaultStyles, DefaultRenderer)
+  const ResolvedRenderer = useCustomRendering<ExamplesProps>(
+    'Examples',
+    defaultStyles,
+    DefaultRenderer
+  )
   return <ResolvedRenderer {...props} />
 }
