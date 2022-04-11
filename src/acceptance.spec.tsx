@@ -39,7 +39,8 @@ describe('acceptance tests', () => {
 
           const cucumberQueryStream = new CucumberQueryStream(cucumberQuery)
           await runCucumber(supportCode, gherkinStream, gherkinQuery, cucumberQueryStream)
-          render(
+
+          const { container } = render(
             <components.app.QueriesWrapper
               gherkinQuery={gherkinQuery}
               cucumberQuery={cucumberQuery}
@@ -50,6 +51,8 @@ describe('acceptance tests', () => {
               />
             </components.app.QueriesWrapper>
           )
+
+          expect(container).not.toBeEmptyDOMElement()
         })
       }
     }
@@ -90,7 +93,7 @@ describe('acceptance tests', () => {
           })
         )
 
-        render(
+        const { container } = render(
           <components.app.QueriesWrapper
             gherkinQuery={gherkinQuery}
             cucumberQuery={cucumberQuery}
@@ -101,6 +104,8 @@ describe('acceptance tests', () => {
             />
           </components.app.QueriesWrapper>
         )
+
+        expect(container).not.toBeEmptyDOMElement()
       })
     }
   })
