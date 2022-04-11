@@ -54,7 +54,7 @@
     "@babel/core": "7.17.8",
     "@cucumber/compatibility-kit": "^9.1.2",
     "@cucumber/fake-cucumber": "^15.0.0",
-    "@cucumber/gherkin": "^22.0.0",
+    "@cucumber/gherkin": "^23.0.0",
     "@cucumber/gherkin-streams": "^5.0.0",
     "@cucumber/message-streams": "^4.0.0",
     "@storybook/addon-actions": "6.4.19",
