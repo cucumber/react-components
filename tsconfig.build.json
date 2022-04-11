@@ -13,6 +13,7 @@
     "src"
   ],
   "exclude": [
+    "src/**/*.spec.*",
     "src/stories"
   ]
 }

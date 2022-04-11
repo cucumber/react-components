@@ -42,7 +42,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**"],
+      "files": ["src/**/*.spec.*"],
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off"
       }
