@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [20.0.0] - 2022-04-12
 ### Added
 - Render hook names if present ([#137](https://github.com/cucumber/cucumber-react/pull/137))
+
 ### Changed
 - Scenario outline styling - Examples changed to H3 and aligned with steps
 - Package name is now `@cucumber/react-components` for clarity
-
 
 ## [19.2.0] - 2022-03-25
 ### Added
@@ -356,7 +358,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.0...HEAD
+[20.0.0]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...v20.0.0
 [19.2.0]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...v19.2.0
 [19.1.1]: https://github.com/cucumber/cucumber-react/compare/v19.1.0...v19.1.1
 [19.1.0]: https://github.com/cucumber/cucumber-react/compare/v19.0.0...v19.1.0
@@ -391,9 +394,6 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 [4.1.1]: https://github.com/cucumber/cucumber-react/compare/v4.0.0...v4.1.1
 [4.0.0]: https://github.com/cucumber/cucumber-react/compare/v3.3.0...v4.0.0
 [3.3.0]: https://github.com/cucumber/cucumber-react/compare/v3.2.0...v3.3.0
-
-[codemrkay]:        https://github.com/codemrkay
-[davidjgoss]:       https://github.com/davidjgoss
-[hWorblehat]:       https://github.com/hWorblehat
+blehat]:       https://github.com/hWorblehat
 [sebrose]:          https://github.com/sebrose
 [vincent-psarga]:   https://github.com/vincent-psarga
