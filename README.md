@@ -1,6 +1,6 @@
-# Cucumber-React
+# @cucumber/react-components
 
-Cucumber-React is a set of React components for rendering Gherkin documents and Cucumber results.
+> A set of React components for rendering Gherkin documents and Cucumber results.
 
 ## Screenshot
 

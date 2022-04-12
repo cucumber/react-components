@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Render hook names if present ([#137](https://github.com/cucumber/cucumber-react/pull/137))
 ### Changed
 - Scenario outline styling - Examples changed to H3 and aligned with steps
+- Package name is now `@cucumber/react-components` for clarity
 
 
 ## [19.2.0] - 2022-03-25
