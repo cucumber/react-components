@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.17.9",
-    "@cucumber/compatibility-kit": "^9.1.2",
+    "@cucumber/compatibility-kit": "^9.2.0",
     "@cucumber/fake-cucumber": "^15.0.0",
     "@cucumber/gherkin": "^23.0.1",
     "@cucumber/gherkin-streams": "^5.0.1",
@@ -103,6 +103,9 @@
     "style-loader": "3.3.1",
     "ts-jest": "^27.1.4",
     "typescript": "4.6.3"
+  },
+  "overrides": {
+    "@cucumber/messages": "^18.0.0"
   },
   "bugs": {
     "url": "https://github.com/cucumber/cucumber/issues"

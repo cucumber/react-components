@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Render hook names if present ([#137](https://github.com/cucumber/cucumber-react/pull/137))
 ### Changed
 - Scenario outline styling - Examples changed to H3 and aligned with steps
 
