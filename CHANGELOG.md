@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Downgrade `@fortawesome` packages which seemed to cause issues with html-formatter
 
 ## [20.0.0] - 2022-04-12
 ### Added
