@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [20.0.2] - 2022-04-14
+### Fixed
+- Downgrade `@fortawesome` packages which seemed to cause issues with html-formatter
+
 ## [20.0.1] - 2022-04-14
 ### Fixed
 - Downgrade `@fortawesome` packages which seemed to cause issues with html-formatter
@@ -362,7 +366,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.2...HEAD
+[20.0.2]: https://github.com/cucumber/cucumber-react/compare/v20.0.1...v20.0.2
 [20.0.1]: https://github.com/cucumber/cucumber-react/compare/v20.0.0...v20.0.1
 [20.0.0]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...v20.0.0
 [19.2.0]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...v19.2.0
