@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [20.0.1] - 2022-04-14
 ### Fixed
 - Downgrade `@fortawesome` packages which seemed to cause issues with html-formatter
 
@@ -360,7 +362,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.1...HEAD
+[20.0.1]: https://github.com/cucumber/cucumber-react/compare/v20.0.0...v20.0.1
 [20.0.0]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...v20.0.0
 [19.2.0]: https://github.com/cucumber/cucumber-react/compare/v19.1.1...v19.2.0
 [19.1.1]: https://github.com/cucumber/cucumber-react/compare/v19.1.0...v19.1.1
@@ -396,6 +399,3 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 [4.1.1]: https://github.com/cucumber/cucumber-react/compare/v4.0.0...v4.1.1
 [4.0.0]: https://github.com/cucumber/cucumber-react/compare/v3.3.0...v4.0.0
 [3.3.0]: https://github.com/cucumber/cucumber-react/compare/v3.2.0...v3.3.0
-blehat]:       https://github.com/hWorblehat
-[sebrose]:          https://github.com/sebrose
-[vincent-psarga]:   https://github.com/vincent-psarga
