@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tags renders if we really have some tags 1`] = `
+<DocumentFragment>
+  <ul
+    class="tags"
+  >
+    <li
+      class="tag"
+    >
+      <span
+        class="highlight"
+      >
+        @foo
+      </span>
+    </li>
+    <li
+      class="tag"
+    >
+      <span
+        class="highlight"
+      >
+        @bar
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
