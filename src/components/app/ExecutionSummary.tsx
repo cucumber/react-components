@@ -11,6 +11,7 @@ import { formatDistanceStrict, formatDuration, intervalToDuration } from 'date-f
 import React from 'react'
 
 import { CICommitLink } from './CICommitLink'
+import { CIJobLink } from './CIJobLink'
 import styles from './ExecutionSummary.module.scss'
 import { CucumberLogo } from './icons/CucumberLogo'
 import { OSIcon } from './OSIcon'
@@ -97,6 +98,9 @@ export const ExecutionSummary: React.FunctionComponent<IExecutionSummaryProps> =
                   )}
                   <span className={styles.gitItem}>
                     <CICommitLink ci={meta.ci} />
+                  </span>
+                  <span className={styles.gitItem}>
+                    <CIJobLink ci={meta.ci} />
                   </span>
                 </>
               ) : (

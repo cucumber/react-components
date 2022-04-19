@@ -129,5 +129,11 @@ describe('ExecutionSummary', () => {
 
       assert.ok(getByText('cucumber-js 8.0.0-rc.1'))
     })
+    it('should include the job link', () => {
+      const { getByText } = render(<ExecutionSummary {...DEFAULT_PROPS} />)
+      const jobLinkElement = getByText(DEFAULT_PROPS.meta?.ci?.buildNumber as string)
+      assert.ok(jobLinkElement)
+      assert.equal(jobLinkElement.getAttribute('href'), DEFAULT_PROPS.meta?.ci?.url)
+    })
   })
 })
