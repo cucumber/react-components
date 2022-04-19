@@ -16,13 +16,13 @@ export const CICommitLink: React.FunctionComponent<IProps> = ({ ci: ci }) => {
     return (
       <>
         <FontAwesomeIcon icon={faLink} />
-        <a href={commitLink}>{ci.git.revision.substring(0, 7)}</a>
+        Git Ref <a href={commitLink}>{ci.git.revision.substring(0, 7)}</a>
       </>
     )
   }
   return (
     <>
-      <FontAwesomeIcon icon={faLink} /> {ci.git?.revision.substring(0, 7)}
+      <FontAwesomeIcon icon={faLink} /> Git Ref {ci.git?.revision.substring(0, 7)}
     </>
   )
 }

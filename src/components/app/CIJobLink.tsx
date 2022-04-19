@@ -12,7 +12,7 @@ export const CIJobLink: React.FunctionComponent<IProps> = ({ ci: ci }) => {
     return (
       <>
         <FontAwesomeIcon icon={faLink} />
-        <a href={ci.url}>{ci.buildNumber}</a>
+        Job <a href={ci.url}> {ci.buildNumber}</a>
       </>
     )
   }
