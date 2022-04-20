@@ -128,5 +128,11 @@ describe('ExecutionSummary', () => {
 
       expect(getByText('cucumber-js 8.0.0-rc.1')).toBeVisible()
     })
+    it('should include the job link', () => {
+      const { getByText } = render(<ExecutionSummary {...DEFAULT_PROPS} />)
+      const jobLinkElement = getByText(DEFAULT_PROPS.meta?.ci?.buildNumber as string)
+      expect(jobLinkElement).toBeVisible()
+      expect(jobLinkElement.getAttribute('href')).toEqual(DEFAULT_PROPS.meta?.ci?.url)
+    })
   })
 })
