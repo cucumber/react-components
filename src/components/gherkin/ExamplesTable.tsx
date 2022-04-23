@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
-import { getWorstTestStepResult } from '@cucumber/messages'
-import React from 'react'
+import { getWorstTestStepResult, Pickle } from '@cucumber/messages'
+import React, { useContext } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
@@ -14,6 +14,7 @@ import {
 import { Attachment } from './Attachment'
 import defaultStyles from './DataTable.module.scss'
 import { ErrorMessage } from './ErrorMessage'
+import { ExamplesContext } from './ExamplesContext'
 import isNumber from './isNumber'
 import { StatusIcon } from './StatusIcon'
 
@@ -63,10 +64,14 @@ const RowOrRows: React.FunctionComponent<{
   row: messages.TableRow
   detailClass?: string
 }> = ({ row, detailClass }) => {
-  const gherkinQuery = React.useContext(GherkinQueryContext)
-  const cucumberQuery = React.useContext(CucumberQueryContext)
-  const uri = React.useContext(UriContext)
+  const gherkinQuery = useContext(GherkinQueryContext)
+  const cucumberQuery = useContext(CucumberQueryContext)
+  const uri = useContext(UriContext)
+  const { setSelectedExample } = useContext(ExamplesContext)
   const pickleIds = uri ? gherkinQuery.getPickleIds(uri, row.id) : []
+  const pickle: Pickle = gherkinQuery
+    .getPickles()
+    .find((pickle) => pickleIds.includes(pickle.id)) as Pickle
   const testStepResult = getWorstTestStepResult(cucumberQuery.getPickleTestStepResults(pickleIds))
 
   const pickleStepIds = gherkinQuery.getPickleStepIds(row.id)
@@ -77,6 +82,7 @@ const RowOrRows: React.FunctionComponent<{
       <tr>
         <td>
           <StatusIcon status={testStepResult.status} />
+          <button onClick={() => setSelectedExample(pickle)}>Detail</button>
         </td>
         {row.cells.map((cell, j) => (
           <td key={j} style={{ textAlign: isNumber(cell.value) ? 'right' : 'left' }}>
