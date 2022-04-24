@@ -32,7 +32,7 @@ export const ExampleDetail: VoidFunctionComponent<{
         <Description description={scenario.description} />
         <StepsList>
           <HookSteps hookSteps={beforeHooks} />
-          <GherkinSteps steps={scenario.steps || []} hasExamples={false} />
+          <GherkinSteps steps={scenario.steps || []} pickle={pickle} hasExamples={false} />
           <HookSteps hookSteps={afterHooks} />
         </StepsList>
       </section>

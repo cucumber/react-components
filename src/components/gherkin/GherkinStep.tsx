@@ -14,11 +14,22 @@ import { Parameter } from './Parameter'
 import { StepItem } from './StepItem'
 import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples }) => {
+const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({
+  step: originalStep,
+  pickleStep,
+  hasExamples,
+}) => {
+  const step = { ...originalStep }
+  if (pickleStep) {
+    step.text = pickleStep.text
+    // TODO datatable
+    // TODO docstring
+  }
+
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
-  const pickleStepIds = gherkinQuery.getPickleStepIds(step.id)
+  const pickleStepIds = pickleStep ? [pickleStep.id] : gherkinQuery.getPickleStepIds(step.id)
   const pickleStepTestStepResults = cucumberQuery.getPickleStepTestStepResults(pickleStepIds)
   const testStepResult = getWorstTestStepResult(pickleStepTestStepResults)
   const attachments = cucumberQuery.getPickleStepAttachments(pickleStepIds)
@@ -50,6 +61,7 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples
             stepTextElements.push(
               <Parameter
                 parameterTypeName={argument.parameterTypeName || 'anonymous'}
+                value={arg}
                 key={`param-${index}`}
               >
                 <HighLight text={arg} />

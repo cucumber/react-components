@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+import { Pickle, PickleStep } from '@cucumber/messages'
 import React, { useContext } from 'react'
 
 function mixinStyles<Classes>(
@@ -85,6 +86,7 @@ export interface GherkinDocumentProps {
 
 export interface GherkinStepProps {
   step: messages.Step
+  pickleStep?: PickleStep
   hasExamples: boolean
 }
 
@@ -98,6 +100,7 @@ export type KeywordClasses = Styles<'keyword'>
 
 export interface ParameterProps {
   parameterTypeName: string
+  value: string
 }
 
 export type ParameterClasses = Styles<'parameter'>
@@ -118,6 +121,7 @@ export type StatusIconClasses = Styles<'icon'>
 
 export interface GherkinStepsProps {
   steps: readonly messages.Step[]
+  pickle?: Pickle
   hasExamples: boolean
 }
 

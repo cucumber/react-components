@@ -3,14 +3,22 @@ import React from 'react'
 import { DefaultComponent, GherkinStepsProps, useCustomRendering } from '../customise'
 import { GherkinStep } from './GherkinStep'
 
-const DefaultRenderer: DefaultComponent<GherkinStepsProps> = ({ steps, hasExamples }) => {
+const DefaultRenderer: DefaultComponent<GherkinStepsProps> = ({ steps, pickle, hasExamples }) => {
   return (
     <>
-      {steps.map((step, index) => (
-        <li key={index}>
-          <GherkinStep key={index} step={step} hasExamples={hasExamples} />
-        </li>
-      ))}
+      {steps.map((step, index) => {
+        const pickleStep = pickle?.steps.find((item) => item.astNodeIds.includes(step.id))
+        return (
+          <li key={index}>
+            <GherkinStep
+              key={index}
+              step={step}
+              pickleStep={pickleStep}
+              hasExamples={hasExamples}
+            />
+          </li>
+        )
+      })}
     </>
   )
 }
