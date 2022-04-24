@@ -62,5 +62,38 @@ describe('<Scenario/>', () => {
       expect(getStatus(step2)).toEqual('PASSED')
       expect(getStatus(step3)).toEqual('PASSED')
     })
+
+    it('should render the results for individual examples - one failed', () => {
+      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[2])
+
+      expect(screen.getByText('@failing')).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'When I eat 20 cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Then I should have 0 cucumbers' })).toBeVisible()
+      const [step1, step2, step3] = within(
+        screen.getByRole('list', { name: 'Steps' })
+      ).getAllByRole('listitem')
+      expect(getStatus(step1)).toEqual('PASSED')
+      expect(getStatus(step2)).toEqual('PASSED')
+      expect(getStatus(step3)).toEqual('FAILED')
+      expect(screen.getByText(/Expected values to be strictly equal/)).toBeVisible()
+    })
+
+    it('should render the results for individual examples - undefined', () => {
+      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[4])
+
+      expect(screen.getByText('@undefined')).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'When I eat banana cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Then I should have 12 cucumbers' })).toBeVisible()
+      const [step1, step2, step3] = within(
+        screen.getByRole('list', { name: 'Steps' })
+      ).getAllByRole('listitem')
+      expect(getStatus(step1)).toEqual('PASSED')
+      expect(getStatus(step2)).toEqual('UNDEFINED')
+      expect(getStatus(step3)).toEqual('SKIPPED')
+    })
   })
 })
