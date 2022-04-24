@@ -14,5 +14,3 @@ export const StepItem: React.FunctionComponent<{
     </div>
   )
 }
-
-export default StepItem
