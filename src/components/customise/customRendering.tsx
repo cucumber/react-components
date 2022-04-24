@@ -73,7 +73,7 @@ export interface ExamplesTableProps {
   tableBody: readonly messages.TableRow[]
 }
 
-export type ExamplesTableClasses = Styles<'examplesTable' | 'detailRow'>
+export type ExamplesTableClasses = Styles<'examplesTable'>
 
 export interface FeatureProps {
   feature: messages.Feature
