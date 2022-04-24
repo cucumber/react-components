@@ -35,8 +35,6 @@ export interface BackgroundProps {
   background: messages.Background
 }
 
-export type BackgroundClasses = Styles<'steps'>
-
 export type ChildrenProps = Record<string, unknown>
 
 export type ChildrenClasses = Styles<'children'>
@@ -116,11 +114,9 @@ export interface ScenarioProps {
   scenario: messages.Scenario
 }
 
-export type ScenarioClasses = Styles<'steps'>
-
 export type StatusIconClasses = Styles<'icon'>
 
-export interface StepListProps {
+export interface GherkinStepsProps {
   steps: readonly messages.Step[]
   hasExamples: boolean
 }
@@ -159,7 +155,7 @@ export declare type Customised<Props, Classes = Record<string, string>> =
 
 export interface CustomRenderingSupport {
   Anchor?: Customised<AnchorProps, AnchorClasses>
-  Background?: Customised<BackgroundProps, BackgroundClasses>
+  Background?: Customised<BackgroundProps>
   Attachment?: Customised<AttachmentProps, AttachmentClasses>
   Children?: Customised<ChildrenProps, ChildrenClasses>
   DataTable?: Customised<DataTableProps, DataTableClasses>
@@ -171,13 +167,13 @@ export interface CustomRenderingSupport {
   Feature?: Customised<FeatureProps>
   GherkinDocument?: Customised<GherkinDocumentProps>
   GherkinStep?: Customised<GherkinStepProps>
+  GherkinSteps?: Customised<GherkinStepsProps>
   HookStep?: Customised<HookStepProps>
   Keyword?: Customised<unknown, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
   Rule?: Customised<RuleProps>
-  Scenario?: Customised<ScenarioProps, ScenarioClasses>
+  Scenario?: Customised<ScenarioProps>
   StatusIcon?: Customised<StatusIconProps, StatusIconClasses>
-  StepList?: Customised<StepListProps>
   Tags?: Customised<TagsProps, TagsClasses>
   Title?: Customised<TitleProps, TitleClasses>
 }

@@ -5,9 +5,10 @@ import CucumberQueryContext from '../../CucumberQueryContext'
 import { HighLight } from '../app/HighLight'
 import { Description } from './Description'
 import { ExamplesContext } from './ExamplesContext'
-import { HookList } from './HookList'
+import { GherkinSteps } from './GherkinSteps'
+import { HookSteps } from './HookSteps'
 import { Keyword } from './Keyword'
-import { StepList } from './StepList'
+import { StepsList } from './StepsList'
 import { Title } from './Title'
 
 export const ExampleDetail: VoidFunctionComponent<{
@@ -27,11 +28,11 @@ export const ExampleDetail: VoidFunctionComponent<{
           <HighLight text={pickle.name} />
         </Title>
         <Description description={scenario.description} />
-        <ol>
-          <HookList hookSteps={beforeHooks} />
-          <StepList steps={scenario.steps || []} hasExamples={false} />
-          <HookList hookSteps={afterHooks} />
-        </ol>
+        <StepsList>
+          <HookSteps hookSteps={beforeHooks} />
+          <GherkinSteps steps={scenario.steps || []} hasExamples={false} />
+          <HookSteps hookSteps={afterHooks} />
+        </StepsList>
       </section>
     </>
   )

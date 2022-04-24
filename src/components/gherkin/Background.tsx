@@ -1,21 +1,13 @@
 import React from 'react'
 
-import {
-  BackgroundClasses,
-  BackgroundProps,
-  DefaultComponent,
-  useCustomRendering,
-} from '../customise'
-import defaultStyles from './Background.module.scss'
+import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise'
 import { Description } from './Description'
+import { GherkinSteps } from './GherkinSteps'
 import { Keyword } from './Keyword'
-import { StepList } from './StepList'
+import { StepsList } from './StepsList'
 import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<BackgroundProps, BackgroundClasses> = ({
-  background,
-  styles,
-}) => {
+const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
   return (
     <section>
       <Title header="h2" id={background.id}>
@@ -23,18 +15,14 @@ const DefaultRenderer: DefaultComponent<BackgroundProps, BackgroundClasses> = ({
         <span>{background.name}</span>
       </Title>
       <Description description={background.description} />
-      <ol className={styles.steps}>
-        <StepList steps={background.steps || []} hasExamples={false} />
-      </ol>
+      <StepsList>
+        <GherkinSteps steps={background.steps || []} hasExamples={false} />
+      </StepsList>
     </section>
   )
 }
 
 export const Background: React.FunctionComponent<BackgroundProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<BackgroundProps, BackgroundClasses>(
-    'Background',
-    defaultStyles,
-    DefaultRenderer
-  )
+  const ResolvedRenderer = useCustomRendering<BackgroundProps>('Background', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

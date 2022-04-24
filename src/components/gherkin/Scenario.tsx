@@ -5,22 +5,19 @@ import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import UriContext from '../../UriContext'
 import { HighLight } from '../app/HighLight'
-import { DefaultComponent, ScenarioClasses, ScenarioProps, useCustomRendering } from '../customise'
+import { DefaultComponent, ScenarioProps, useCustomRendering } from '../customise'
 import { Description } from './Description'
 import { ExampleDetail } from './ExampleDetail'
 import { Examples } from './Examples'
 import { ExamplesContext } from './ExamplesContext'
-import { HookList } from './HookList'
+import { GherkinSteps } from './GherkinSteps'
+import { HookSteps } from './HookSteps'
 import { Keyword } from './Keyword'
-import defaultStyles from './Scenario.module.scss'
-import { StepList } from './StepList'
+import { StepsList } from './StepsList'
 import { Tags } from './Tags'
 import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
-  scenario,
-  styles,
-}) => {
+const DefaultRenderer: DefaultComponent<ScenarioProps> = ({ scenario }) => {
   const examplesList = scenario.examples || []
   const hasExamples = examplesList.length > 0
   const cucumberQuery = React.useContext(CucumberQueryContext)
@@ -43,11 +40,11 @@ const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
             <HighLight text={scenario.name} />
           </Title>
           <Description description={scenario.description} />
-          <ol className={styles.steps}>
-            <HookList hookSteps={beforeHooks} />
-            <StepList steps={scenario.steps || []} hasExamples={hasExamples} />
-            <HookList hookSteps={afterHooks} />
-          </ol>
+          <StepsList>
+            <HookSteps hookSteps={beforeHooks} />
+            <GherkinSteps steps={scenario.steps || []} hasExamples={hasExamples} />
+            <HookSteps hookSteps={afterHooks} />
+          </StepsList>
           {examplesList.map((examples, index) => (
             <Examples key={index} examples={examples} />
           ))}
@@ -58,10 +55,6 @@ const DefaultRenderer: DefaultComponent<ScenarioProps, ScenarioClasses> = ({
 }
 
 export const Scenario: React.FunctionComponent<ScenarioProps> = (props) => {
-  const ResolvedRenderer = useCustomRendering<ScenarioProps, ScenarioClasses>(
-    'Scenario',
-    defaultStyles,
-    DefaultRenderer
-  )
+  const ResolvedRenderer = useCustomRendering<ScenarioProps>('Scenario', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }
