@@ -20,7 +20,7 @@ describe('<Scenario/>', () => {
     const uri = gherkinDocument.uri!
     const scenario = gherkinDocument.feature!.children[0].scenario!
 
-    it('should render the outline with worst result for each step', () => {
+    beforeEach(() => {
       render(
         <EnvelopesWrapper envelopes={envelopes}>
           <UriContext.Provider value={uri}>
@@ -28,7 +28,9 @@ describe('<Scenario/>', () => {
           </UriContext.Provider>
         </EnvelopesWrapper>
       )
+    })
 
+    it('should render the outline with worst result for each step', () => {
       expect(
         screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })
       ).toBeVisible()
@@ -46,21 +48,16 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the results for individual examples - all passed', () => {
-      render(
-        <EnvelopesWrapper envelopes={envelopes}>
-          <UriContext.Provider value={uri}>
-            <Scenario scenario={scenario} />
-          </UriContext.Provider>
-        </EnvelopesWrapper>
-      )
-
       userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[0])
 
+      expect(screen.getByText('@passing')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
       expect(screen.getByRole('heading', { name: 'When I eat 5 cucumbers' })).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Then I should have 7 cucumbers' })).toBeVisible()
-      const [step1, step2, step3] = screen.getAllByRole('listitem')
+      const [step1, step2, step3] = within(
+        screen.getByRole('list', { name: 'Steps' })
+      ).getAllByRole('listitem')
       expect(getStatus(step1)).toEqual('PASSED')
       expect(getStatus(step2)).toEqual('PASSED')
       expect(getStatus(step3)).toEqual('PASSED')

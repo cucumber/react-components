@@ -126,7 +126,7 @@ export interface GherkinStepsProps {
 }
 
 export interface TagsProps {
-  tags: readonly messages.Tag[]
+  tags: readonly messages.Tag[] | readonly messages.PickleTag[]
 }
 
 export type TagsClasses = Styles<'tags' | 'tag'>

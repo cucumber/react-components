@@ -3,6 +3,7 @@
 exports[`Tags renders if we really have some tags 1`] = `
 <DocumentFragment>
   <ul
+    aria-label="Tags"
     class="tags"
   >
     <li

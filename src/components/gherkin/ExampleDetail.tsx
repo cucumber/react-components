@@ -9,6 +9,7 @@ import { GherkinSteps } from './GherkinSteps'
 import { HookSteps } from './HookSteps'
 import { Keyword } from './Keyword'
 import { StepsList } from './StepsList'
+import { Tags } from './Tags'
 import { Title } from './Title'
 
 export const ExampleDetail: VoidFunctionComponent<{
@@ -25,6 +26,7 @@ export const ExampleDetail: VoidFunctionComponent<{
     <>
       <button onClick={onBack}>Back</button>
       <section>
+        <Tags tags={pickle.tags} />
         <Title header="h2" id={scenario.id}>
           <Keyword>Example:</Keyword>
           <HighLight text={pickle.name} />
