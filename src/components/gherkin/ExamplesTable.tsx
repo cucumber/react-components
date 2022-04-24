@@ -1,5 +1,5 @@
 import * as messages from '@cucumber/messages'
-import { getWorstTestStepResult, Pickle } from '@cucumber/messages'
+import { getWorstTestStepResult } from '@cucumber/messages'
 import React, { useContext } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
@@ -69,9 +69,6 @@ const RowOrRows: React.FunctionComponent<{
   const uri = useContext(UriContext)
   const { setSelectedExample } = useContext(ExamplesContext)
   const pickleIds = uri ? gherkinQuery.getPickleIds(uri, row.id) : []
-  const pickle: Pickle = gherkinQuery
-    .getPickles()
-    .find((pickle) => pickleIds.includes(pickle.id)) as Pickle
   const testStepResult = getWorstTestStepResult(cucumberQuery.getPickleTestStepResults(pickleIds))
 
   const pickleStepIds = gherkinQuery.getPickleStepIds(row.id)
@@ -82,7 +79,7 @@ const RowOrRows: React.FunctionComponent<{
       <tr>
         <td>
           <StatusIcon status={testStepResult.status} />
-          <button onClick={() => setSelectedExample(pickle)}>Detail</button>
+          <button onClick={() => setSelectedExample(pickleIds[0])}>Detail</button>
         </td>
         {row.cells.map((cell, j) => (
           <td key={j} style={{ textAlign: isNumber(cell.value) ? 'right' : 'left' }}>

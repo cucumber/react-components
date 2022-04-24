@@ -2,9 +2,9 @@ import { Pickle, Scenario } from '@cucumber/messages'
 import React, { useContext, VoidFunctionComponent } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
+import GherkinQueryContext from '../../GherkinQueryContext'
 import { HighLight } from '../app/HighLight'
 import { Description } from './Description'
-import { ExamplesContext } from './ExamplesContext'
 import { GherkinSteps } from './GherkinSteps'
 import { HookSteps } from './HookSteps'
 import { Keyword } from './Keyword'
@@ -13,15 +13,17 @@ import { Title } from './Title'
 
 export const ExampleDetail: VoidFunctionComponent<{
   scenario: Scenario
-  pickle: Pickle
-}> = ({ scenario, pickle }) => {
-  const { setSelectedExample } = useContext(ExamplesContext)
+  pickleId: string
+  onBack: () => void
+}> = ({ scenario, pickleId, onBack }) => {
+  const gherkinQuery = useContext(GherkinQueryContext)
   const cucumberQuery = useContext(CucumberQueryContext)
-  const beforeHooks = cucumberQuery.getBeforeHookSteps(pickle.id)
-  const afterHooks = cucumberQuery.getAfterHookSteps(pickle.id)
+  const pickle: Pickle = gherkinQuery.getPickles().find((item) => item.id === pickleId) as Pickle
+  const beforeHooks = cucumberQuery.getBeforeHookSteps(pickleId)
+  const afterHooks = cucumberQuery.getAfterHookSteps(pickleId)
   return (
     <>
-      <button onClick={() => setSelectedExample()}>Back</button>
+      <button onClick={onBack}>Back</button>
       <section>
         <Title header="h2" id={scenario.id}>
           <Keyword>Example:</Keyword>

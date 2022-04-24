@@ -1,4 +1,3 @@
-import { Pickle } from '@cucumber/messages'
 import React, { useState } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
@@ -23,34 +22,41 @@ const DefaultRenderer: DefaultComponent<ScenarioProps> = ({ scenario }) => {
   const cucumberQuery = React.useContext(CucumberQueryContext)
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const uri = React.useContext(UriContext)
-  const [selectedExample, setSelectedExample] = useState<Pickle>()
+  const [selectedExample, setSelectedExample] = useState<string>()
   const pickleIds = uri ? gherkinQuery.getPickleIds(uri, scenario.id) : []
   const beforeHooks = cucumberQuery.getBeforeHookSteps(pickleIds[0])
   const afterHooks = cucumberQuery.getAfterHookSteps(pickleIds[0])
 
+  if (selectedExample) {
+    return (
+      <ExampleDetail
+        scenario={scenario}
+        pickleId={selectedExample}
+        onBack={() => setSelectedExample(undefined)}
+      />
+    )
+  }
   return (
-    <ExamplesContext.Provider value={{ setSelectedExample }}>
-      {selectedExample ? (
-        <ExampleDetail scenario={scenario} pickle={selectedExample} />
-      ) : (
-        <section>
-          <Tags tags={scenario.tags} />
-          <Title header="h2" id={scenario.id}>
-            <Keyword>{scenario.keyword}:</Keyword>
-            <HighLight text={scenario.name} />
-          </Title>
-          <Description description={scenario.description} />
-          <StepsList>
-            <HookSteps hookSteps={beforeHooks} />
-            <GherkinSteps steps={scenario.steps || []} hasExamples={hasExamples} />
-            <HookSteps hookSteps={afterHooks} />
-          </StepsList>
+    <section>
+      <Tags tags={scenario.tags} />
+      <Title header="h2" id={scenario.id}>
+        <Keyword>{scenario.keyword}:</Keyword>
+        <HighLight text={scenario.name} />
+      </Title>
+      <Description description={scenario.description} />
+      <StepsList>
+        <HookSteps hookSteps={beforeHooks} />
+        <GherkinSteps steps={scenario.steps || []} hasExamples={hasExamples} />
+        <HookSteps hookSteps={afterHooks} />
+      </StepsList>
+      {hasExamples && (
+        <ExamplesContext.Provider value={{ setSelectedExample }}>
           {examplesList.map((examples, index) => (
             <Examples key={index} examples={examples} />
           ))}
-        </section>
+        </ExamplesContext.Provider>
       )}
-    </ExamplesContext.Provider>
+    </section>
   )
 }
 
