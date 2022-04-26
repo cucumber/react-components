@@ -28,7 +28,7 @@ export const ExampleDetail: VoidFunctionComponent<{
   const examplesCount = scenario.examples.flatMap((examples) => examples.tableBody).length
   return (
     <>
-      <button className={styles.back} onClick={onBack}>
+      <button className={styles.backButton} onClick={onBack}>
         <FontAwesomeIcon icon={faArrowLeft} />
         Back to outline and all {examplesCount} examples
       </button>

@@ -1,5 +1,7 @@
 import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
@@ -11,8 +13,8 @@ import {
   ExamplesTableProps,
   useCustomRendering,
 } from '../customise'
-import defaultStyles from './DataTable.module.scss'
 import { ExamplesContext } from './ExamplesContext'
+import defaultStyles from './ExamplesTable.module.scss'
 import isNumber from './isNumber'
 import { StatusIcon } from './StatusIcon'
 
@@ -61,10 +63,9 @@ const ExampleRow: React.FunctionComponent<{
 
   return (
     <>
-      <tr>
+      <tr onClick={() => setSelectedExample(pickleIds[0])}>
         <td>
           <StatusIcon status={testStepResult.status} />
-          <button onClick={() => setSelectedExample(pickleIds[0])}>Detail</button>
         </td>
         {row.cells.map((cell, j) => (
           <td key={j} style={{ textAlign: isNumber(cell.value) ? 'right' : 'left' }}>

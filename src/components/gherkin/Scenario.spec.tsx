@@ -48,7 +48,7 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the results for individual examples - all passed', () => {
-      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[0])
+      userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
 
       expect(screen.getByText('@passing')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -64,7 +64,7 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the results for individual examples - one failed', () => {
-      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[2])
+      userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
 
       expect(screen.getByText('@failing')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -81,7 +81,7 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the results for individual examples - undefined', () => {
-      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[4])
+      userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
 
       expect(screen.getByText('@undefined')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -97,7 +97,7 @@ describe('<Scenario/>', () => {
     })
 
     it('should allow returning to the outline from an example detail', () => {
-      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[0])
+      userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
 
       userEvent.click(screen.getByRole('button', { name: 'Back to outline and all 6 examples' }))
