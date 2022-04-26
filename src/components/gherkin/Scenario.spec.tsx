@@ -95,5 +95,15 @@ describe('<Scenario/>', () => {
       expect(getStatus(step2)).toEqual('UNDEFINED')
       expect(getStatus(step3)).toEqual('SKIPPED')
     })
+
+    it('should allow returning to the outline from an example detail', () => {
+      userEvent.click(screen.getAllByRole('button', { name: 'Detail' })[0])
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
+
+      userEvent.click(screen.getByRole('button', { name: 'Back to outline and all 6 examples' }))
+      expect(
+        screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })
+      ).toBeVisible()
+    })
   })
 })

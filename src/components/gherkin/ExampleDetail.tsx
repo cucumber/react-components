@@ -22,9 +22,10 @@ export const ExampleDetail: VoidFunctionComponent<{
   const pickle: Pickle = gherkinQuery.getPickles().find((item) => item.id === pickleId) as Pickle
   const beforeHooks = cucumberQuery.getBeforeHookSteps(pickleId)
   const afterHooks = cucumberQuery.getAfterHookSteps(pickleId)
+  const examplesCount = scenario.examples.flatMap((examples) => examples.tableBody).length
   return (
     <>
-      <button onClick={onBack}>Back</button>
+      <button onClick={onBack}>Back to outline and all {examplesCount} examples</button>
       <section>
         <Tags tags={pickle.tags} />
         <Title header="h2" id={scenario.id}>
