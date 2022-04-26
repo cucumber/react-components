@@ -1,10 +1,13 @@
 import { Pickle, Scenario } from '@cucumber/messages'
+import { faArrowLeft, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext, VoidFunctionComponent } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import { HighLight } from '../app/HighLight'
 import { Description } from './Description'
+import styles from './ExampleDetail.module.scss'
 import { GherkinSteps } from './GherkinSteps'
 import { HookSteps } from './HookSteps'
 import { Keyword } from './Keyword'
@@ -25,7 +28,10 @@ export const ExampleDetail: VoidFunctionComponent<{
   const examplesCount = scenario.examples.flatMap((examples) => examples.tableBody).length
   return (
     <>
-      <button onClick={onBack}>Back to outline and all {examplesCount} examples</button>
+      <button className={styles.back} onClick={onBack}>
+        <FontAwesomeIcon icon={faArrowLeft} />
+        Back to outline and all {examplesCount} examples
+      </button>
       <section>
         <Tags tags={pickle.tags} />
         <Title header="h2" id={scenario.id}>
