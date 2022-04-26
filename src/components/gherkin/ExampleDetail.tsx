@@ -1,5 +1,5 @@
 import { Pickle, Scenario } from '@cucumber/messages'
-import { faArrowLeft, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext, VoidFunctionComponent } from 'react'
 
