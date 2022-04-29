@@ -41,7 +41,7 @@ export type ChildrenProps = Record<string, unknown>
 export type ChildrenClasses = Styles<'children'>
 
 export interface DataTableProps {
-  dataTable: messages.DataTable
+  dataTable: messages.DataTable | messages.PickleTable
 }
 
 export type DataTableClasses = Styles<'table'>
@@ -53,7 +53,7 @@ export interface DescriptionProps {
 export type DescriptionClasses = Styles<'content'>
 
 export interface DocStringProps {
-  docString: messages.DocString
+  docString: messages.DocString | messages.PickleDocString
 }
 
 export type DocStringClasses = Styles<'docString'>
