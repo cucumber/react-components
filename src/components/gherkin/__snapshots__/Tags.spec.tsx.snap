@@ -2,21 +2,15 @@
 
 exports[`Tags renders if we really have some tags 1`] = `
 <DocumentFragment>
-  <ul
-    class="tags"
-  >
-    <li
-      class="tag"
-    >
+  <ul>
+    <li>
       <span
         class="highlight"
       >
         @foo
       </span>
     </li>
-    <li
-      class="tag"
-    >
+    <li>
       <span
         class="highlight"
       >
