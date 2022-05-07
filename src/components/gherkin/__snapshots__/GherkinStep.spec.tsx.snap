@@ -28,9 +28,7 @@ exports[`<GherkinStep> renders 1`] = `
     <div
       class="content"
     >
-      <div
-        class="wrapper"
-      >
+      <div>
         <a
           class="anchor"
           href="#123"
@@ -52,12 +50,9 @@ exports[`<GherkinStep> renders 1`] = `
           </svg>
         </a>
         <h3
-          class="title"
           id="123"
         >
-          <span
-            class="keyword"
-          >
+          <span>
             Given
           </span>
           <span>
@@ -68,7 +63,6 @@ exports[`<GherkinStep> renders 1`] = `
             </span>
             <span
               aria-label="48"
-              class="parameter"
               title="anonymous"
             >
               <span

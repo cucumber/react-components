@@ -6,6 +6,11 @@ import { Tags } from '../gherkin'
 import { CucumberReact } from '../index'
 import { Customised, TagsClasses, TagsProps } from './index'
 
+jest.mock('../gherkin/Tags.module.scss', () => ({
+  tag: 'tag',
+  tags: 'tags',
+}))
+
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
     const tags: messages.Tag[] = [
