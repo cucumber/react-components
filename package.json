@@ -75,7 +75,7 @@
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
     "babel-loader": "8.2.5",
-    "core-js": "3.22.4",
+    "core-js": "3.22.5",
     "cpy-cli": "4.1.0",
     "eslint": "8.15.0",
     "eslint-config-prettier": "8.5.0",
