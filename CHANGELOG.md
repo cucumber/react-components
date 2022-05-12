@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Allow showing detail of every example, simplify examples table ([#159](https://github.com/cucumber/react-components/pull/159))
 
 ## [20.0.2] - 2022-04-14
 ### Fixed
