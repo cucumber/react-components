@@ -62,6 +62,7 @@ exports[`<GherkinStep> renders 1`] = `
               the 
             </span>
             <span
+              aria-label="48"
               title="anonymous"
             >
               <span

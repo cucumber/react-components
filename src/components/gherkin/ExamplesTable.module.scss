@@ -1,0 +1,14 @@
+@import '../../styles/theming';
+@import '../../styles/tables';
+
+.examplesTable {
+    @include cucumber-table-style;
+
+    th:first-child, td:first-child {
+        border-left: none;
+    }
+
+    tbody tr {
+        cursor: pointer;
+    }
+}

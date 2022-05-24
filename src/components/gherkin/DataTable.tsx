@@ -12,7 +12,7 @@ import defaultStyles from './DataTable.module.scss'
 import isNumber from './isNumber'
 
 const TableBody: React.FunctionComponent<{
-  rows: readonly messages.TableRow[]
+  rows: readonly messages.TableRow[] | readonly messages.PickleTableRow[]
 }> = ({ rows }) => {
   return (
     <tbody>
