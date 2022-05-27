@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [20.1.0] - 2022-05-27
 ### Changed
 - Allow showing detail of every example, simplify examples table ([#159](https://github.com/cucumber/react-components/pull/159))
 
@@ -368,7 +370,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.0.2...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v20.1.0...HEAD
+[20.1.0]: https://github.com/cucumber/cucumber-react/compare/v20.0.2...v20.1.0
 [20.0.2]: https://github.com/cucumber/cucumber-react/compare/v20.0.1...v20.0.2
 [20.0.1]: https://github.com/cucumber/cucumber-react/compare/v20.0.0...v20.0.1
 [20.0.0]: https://github.com/cucumber/cucumber-react/compare/v19.2.0...v20.0.0
