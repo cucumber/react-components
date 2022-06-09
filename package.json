@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.18.2",
-    "@cucumber/compatibility-kit": "^9.2.0",
+    "@cucumber/compatibility-kit": "^10.0.0",
     "@cucumber/fake-cucumber": "^15.0.0",
     "@cucumber/gherkin": "^23.0.1",
     "@cucumber/gherkin-streams": "^5.0.1",
