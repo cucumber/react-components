@@ -29,4 +29,14 @@ describe('Description', () => {
     const { getByRole } = render(<Description description={'## This is a heading'} />)
     expect(getByRole('heading', { name: 'This is a heading' })).toBeVisible()
   })
+
+  it('honours single line breaks in descriptions', () => {
+    const description = `As a user
+I want to do stuff
+So that I can be happy`
+    const { container } = render(<Description description={description} />)
+    expect(container).toContainHTML(
+      '<p>As a user<br>I want to do stuff<br>So that I can be happy</p>'
+    )
+  })
 })
