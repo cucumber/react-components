@@ -36,7 +36,7 @@ I want to do stuff
 So that I can be happy`
     const { container } = render(<Description description={description} />)
     expect(container).toContainHTML(
-      '<p>As a user<br>I want to do stuff<br>So that I can be happy</p>'
+      '<p>As a user<br/>\nI want to do stuff<br/>\nSo that I can be happy</p>'
     )
   })
 })
