@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Single line breaks in descriptions are rendered less surprisingly ([#227](https://github.com/cucumber/react-components/pull/227))
 
 ## [20.1.0] - 2022-05-27
 ### Changed
