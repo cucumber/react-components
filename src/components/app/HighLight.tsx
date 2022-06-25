@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 
 import SearchQueryContext from '../../SearchQueryContext'
 import rehypePlugins from './rehypePlugins'
+import remarkPlugins from './remarkPlugins'
 
 interface IProps {
   text: string
@@ -44,7 +45,9 @@ export const HighLight: React.FunctionComponent<IProps> = ({
 
     return (
       <div className={appliedClassName}>
-        <ReactMarkdown rehypePlugins={rehypePlugins}>{highlightedText}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}>
+          {highlightedText}
+        </ReactMarkdown>
       </div>
     )
   }
