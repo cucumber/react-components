@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 
 import SearchQueryContext, { SearchQueryCtx, SearchQueryProps } from '../../SearchQueryContext'
 import { SearchWrapper } from './SearchWrapper'
@@ -34,8 +35,10 @@ describe('SearchWrapper', () => {
     const sq1 = searchQueryCapture.mock.calls[0][0]
     searchQueryCapture.mockReset()
 
-    // When the query is updated
-    sq1.update({ query: 'foo' })
+    act(() => {
+      // When the query is updated
+      sq1.update({ query: 'foo' })
+    })
 
     // Then...
     expect(searchQueryCapture).toHaveBeenCalledTimes(1)
@@ -50,8 +53,10 @@ describe('SearchWrapper', () => {
 
     expect(sq1.query).toEqual('foo')
 
-    // When the query is updated
-    sq1.update({ query: 'bar' })
+    act(() => {
+      // When the query is updated
+      sq1.update({ query: 'bar' })
+    })
 
     // Then...
     expect(searchQueryCapture).toHaveBeenCalledTimes(1)
