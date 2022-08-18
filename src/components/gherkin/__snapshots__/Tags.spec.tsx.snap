@@ -3,20 +3,16 @@
 exports[`Tags renders if we really have some tags 1`] = `
 <DocumentFragment>
   <ul
-    class="tags"
+    aria-label="Tags"
   >
-    <li
-      class="tag"
-    >
+    <li>
       <span
         class="highlight"
       >
         @foo
       </span>
     </li>
-    <li
-      class="tag"
-    >
+    <li>
       <span
         class="highlight"
       >

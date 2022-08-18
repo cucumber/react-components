@@ -1,4 +1,12 @@
-import { getWorstTestStepResult } from '@cucumber/messages'
+import {
+  DataTable,
+  DocString,
+  getWorstTestStepResult,
+  PickleDocString,
+  PickleStep,
+  PickleTable,
+  Step,
+} from '@cucumber/messages'
 import React from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
@@ -6,19 +14,43 @@ import GherkinQueryContext from '../../GherkinQueryContext'
 import { HighLight } from '../app/HighLight'
 import { DefaultComponent, GherkinStepProps, useCustomRendering } from '../customise'
 import { Attachment } from './Attachment'
-import { DataTable } from './DataTable'
-import { DocString } from './DocString'
+import { DataTable as DataTableComponent } from './DataTable'
+import { DocString as DocStringComponent } from './DocString'
 import { ErrorMessage } from './ErrorMessage'
 import { Keyword } from './Keyword'
 import { Parameter } from './Parameter'
 import { StepItem } from './StepItem'
 import { Title } from './Title'
 
-const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples }) => {
+interface RenderableStep {
+  id: string
+  keyword: string
+  text: string
+  dataTable?: DataTable | PickleTable
+  docString?: DocString | PickleDocString
+}
+
+function resolveStep(gherkinStep: Step, pickleStep?: PickleStep): RenderableStep {
+  const step: RenderableStep = { ...gherkinStep }
+  if (pickleStep) {
+    step.text = pickleStep.text
+    step.dataTable = pickleStep.argument?.dataTable
+    step.docString = pickleStep.argument?.docString
+  }
+  return step
+}
+
+const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({
+  step: gherkinStep,
+  pickleStep,
+  hasExamples,
+}) => {
+  const step = resolveStep(gherkinStep, pickleStep)
+
   const gherkinQuery = React.useContext(GherkinQueryContext)
   const cucumberQuery = React.useContext(CucumberQueryContext)
 
-  const pickleStepIds = gherkinQuery.getPickleStepIds(step.id)
+  const pickleStepIds = pickleStep ? [pickleStep.id] : gherkinQuery.getPickleStepIds(step.id)
   const pickleStepTestStepResults = cucumberQuery.getPickleStepTestStepResults(pickleStepIds)
   const testStepResult = getWorstTestStepResult(pickleStepTestStepResults)
   const attachments = cucumberQuery.getPickleStepAttachments(pickleStepIds)
@@ -50,6 +82,7 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples
             stepTextElements.push(
               <Parameter
                 parameterTypeName={argument.parameterTypeName || 'anonymous'}
+                value={arg}
                 key={`param-${index}`}
               >
                 <HighLight text={arg} />
@@ -81,8 +114,8 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({ step, hasExamples
         <Keyword>{step.keyword.trim()}</Keyword>
         <span>{stepTextElements}</span>
       </Title>
-      {step.dataTable && <DataTable dataTable={step.dataTable} />}
-      {step.docString && <DocString docString={step.docString} />}
+      {step.dataTable && <DataTableComponent dataTable={step.dataTable} />}
+      {step.docString && <DocStringComponent docString={step.docString} />}
       {!hasExamples && testStepResult.message && <ErrorMessage message={testStepResult.message} />}
       {!hasExamples &&
         attachments.map((attachment, i) => <Attachment key={i} attachment={attachment} />)}

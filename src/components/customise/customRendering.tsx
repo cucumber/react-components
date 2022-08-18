@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+import { Pickle, PickleStep } from '@cucumber/messages'
 import React, { useContext } from 'react'
 
 function mixinStyles<Classes>(
@@ -35,14 +36,12 @@ export interface BackgroundProps {
   background: messages.Background
 }
 
-export type BackgroundClasses = Styles<'steps'>
-
 export type ChildrenProps = Record<string, unknown>
 
 export type ChildrenClasses = Styles<'children'>
 
 export interface DataTableProps {
-  dataTable: messages.DataTable
+  dataTable: messages.DataTable | messages.PickleTable
 }
 
 export type DataTableClasses = Styles<'table'>
@@ -54,7 +53,7 @@ export interface DescriptionProps {
 export type DescriptionClasses = Styles<'content'>
 
 export interface DocStringProps {
-  docString: messages.DocString
+  docString: messages.DocString | messages.PickleDocString
 }
 
 export type DocStringClasses = Styles<'docString'>
@@ -74,7 +73,7 @@ export interface ExamplesTableProps {
   tableBody: readonly messages.TableRow[]
 }
 
-export type ExamplesTableClasses = Styles<'examplesTable' | 'detailRow'>
+export type ExamplesTableClasses = Styles<'examplesTable'>
 
 export interface FeatureProps {
   feature: messages.Feature
@@ -87,6 +86,7 @@ export interface GherkinDocumentProps {
 
 export interface GherkinStepProps {
   step: messages.Step
+  pickleStep?: PickleStep
   hasExamples: boolean
 }
 
@@ -100,6 +100,7 @@ export type KeywordClasses = Styles<'keyword'>
 
 export interface ParameterProps {
   parameterTypeName: string
+  value: string
 }
 
 export type ParameterClasses = Styles<'parameter'>
@@ -116,17 +117,16 @@ export interface ScenarioProps {
   scenario: messages.Scenario
 }
 
-export type ScenarioClasses = Styles<'steps'>
-
 export type StatusIconClasses = Styles<'icon'>
 
-export interface StepListProps {
+export interface GherkinStepsProps {
   steps: readonly messages.Step[]
+  pickle?: Pickle
   hasExamples: boolean
 }
 
 export interface TagsProps {
-  tags: readonly messages.Tag[]
+  tags: readonly messages.Tag[] | readonly messages.PickleTag[]
 }
 
 export type TagsClasses = Styles<'tags' | 'tag'>
@@ -159,7 +159,7 @@ export declare type Customised<Props, Classes = Record<string, string>> =
 
 export interface CustomRenderingSupport {
   Anchor?: Customised<AnchorProps, AnchorClasses>
-  Background?: Customised<BackgroundProps, BackgroundClasses>
+  Background?: Customised<BackgroundProps>
   Attachment?: Customised<AttachmentProps, AttachmentClasses>
   Children?: Customised<ChildrenProps, ChildrenClasses>
   DataTable?: Customised<DataTableProps, DataTableClasses>
@@ -171,13 +171,13 @@ export interface CustomRenderingSupport {
   Feature?: Customised<FeatureProps>
   GherkinDocument?: Customised<GherkinDocumentProps>
   GherkinStep?: Customised<GherkinStepProps>
+  GherkinSteps?: Customised<GherkinStepsProps>
   HookStep?: Customised<HookStepProps>
   Keyword?: Customised<unknown, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
   Rule?: Customised<RuleProps>
-  Scenario?: Customised<ScenarioProps, ScenarioClasses>
+  Scenario?: Customised<ScenarioProps>
   StatusIcon?: Customised<StatusIconProps, StatusIconClasses>
-  StepList?: Customised<StepListProps>
   Tags?: Customised<TagsProps, TagsClasses>
   Title?: Customised<TitleProps, TitleClasses>
 }

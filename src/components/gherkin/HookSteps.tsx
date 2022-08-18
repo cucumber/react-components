@@ -7,7 +7,7 @@ interface IProps {
   hookSteps: readonly messages.TestStep[]
 }
 
-export const HookList: React.FunctionComponent<IProps> = ({ hookSteps }) => {
+export const HookSteps: React.FunctionComponent<IProps> = ({ hookSteps }) => {
   return (
     <>
       {hookSteps.map((step, index) => (

@@ -9,7 +9,7 @@ const DefaultRenderer: DefaultComponent<TagsProps, TagsClasses> = ({ tags, style
     return null
   }
   return (
-    <ul className={styles.tags}>
+    <ul aria-label="Tags" className={styles.tags}>
       {tags.map((tag, index) => (
         <li className={styles.tag} key={index}>
           <HighLight text={tag.name} />
