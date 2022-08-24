@@ -42,7 +42,7 @@ describe('FilteredResults', () => {
 
       userEvent.type(getByRole('textbox', { name: 'Search' }), 'json')
       userEvent.keyboard('{Enter}')
-      userEvent.click(getByRole('button', { name: 'features/attachments/attachments.feature' }))
+      userEvent.click(getByRole('button', { name: 'samples/attachments/attachments.feature' }))
 
       expect(getByRole('heading', { name: 'Scenario: Log JSON' })).toBeVisible()
       expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.toBeInTheDocument()
@@ -82,18 +82,18 @@ describe('FilteredResults', () => {
       )
 
       expect(
-        getByRole('heading', { name: 'features/examples-tables/examples-tables.feature' })
+        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
       ).toBeVisible()
-      expect(getByRole('heading', { name: 'features/minimal/minimal.feature' })).toBeVisible()
+      expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).toBeVisible()
 
       userEvent.click(getByRole('checkbox', { name: 'passed' }))
 
       expect(
-        getByRole('heading', { name: 'features/examples-tables/examples-tables.feature' })
+        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
       ).toBeVisible()
       expect(
         queryByRole('heading', {
-          name: 'features/minimal/minimal.feature',
+          name: 'samples/minimal/minimal.feature',
         })
       ).not.toBeInTheDocument()
     })
@@ -104,7 +104,7 @@ describe('FilteredResults', () => {
       )
 
       expect(
-        getByRole('heading', { name: 'features/examples-tables/examples-tables.feature' })
+        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
       ).toBeVisible()
 
       userEvent.click(getByRole('checkbox', { name: 'passed' }))
@@ -113,7 +113,7 @@ describe('FilteredResults', () => {
 
       expect(
         queryByRole('heading', {
-          name: 'features/examples-tables/examples-tables.feature',
+          name: 'samples/examples-tables/examples-tables.feature',
         })
       ).not.toBeInTheDocument()
       expect(getByText('No matches found for your filters')).toBeVisible()
