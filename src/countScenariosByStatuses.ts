@@ -33,11 +33,11 @@ export default function countScenariosByStatuses(
           const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
           pickleIds.forEach((pickleId) => {
-            const status = getWorstTestStepResult(
-              cucumberQuery.getPickleTestStepResults([pickleId])
-            ).status
-
-            scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
+            const pickleTestStepResults = cucumberQuery.getPickleTestStepResults([pickleId])
+            if (pickleTestStepResults.length > 0) {
+              const status = getWorstTestStepResult(pickleTestStepResults).status
+              scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
+            }
           })
         },
       }
