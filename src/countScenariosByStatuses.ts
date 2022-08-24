@@ -34,6 +34,7 @@ export default function countScenariosByStatuses(
 
           pickleIds.forEach((pickleId) => {
             const pickleTestStepResults = cucumberQuery.getPickleTestStepResults([pickleId])
+            // if no step results then this pickle wasnt taken forward as a test case
             if (pickleTestStepResults.length > 0) {
               const status = getWorstTestStepResult(pickleTestStepResults).status
               scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
