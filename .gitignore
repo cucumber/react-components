@@ -4,6 +4,5 @@ node_modules/
 *.log
 .codegen
 acceptance/
-storybook-static
 *.iml
 .vscode-test
