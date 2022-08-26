@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, PropsWithChildren } from 'react'
 
 import styles from './CucumberReact.module.scss'
 import { CustomRenderingContext, CustomRenderingSupport, IncludedTheme } from './customise'
@@ -9,7 +9,7 @@ interface IProps {
   className?: string
 }
 
-export const CucumberReact: FunctionComponent<IProps> = ({
+export const CucumberReact: FunctionComponent<PropsWithChildren<IProps>> = ({
   children,
   theme = 'light',
   customRendering = {},

@@ -9,7 +9,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import {
   DefaultComponent,
@@ -33,7 +33,7 @@ const DefaultRenderer: DefaultComponent<StatusIconProps, StatusIconClasses> = ({
   )
 }
 
-export const StatusIcon: React.FunctionComponent<StatusIconProps> = (props) => {
+export const StatusIcon: FunctionComponent<StatusIconProps> = (props) => {
   const Customised = useCustomRendering<StatusIconProps, StatusIconClasses>(
     'StatusIcon',
     defaultStyles,

@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Pickle, PickleStep } from '@cucumber/messages'
-import React, { useContext } from 'react'
+import React, { PropsWithChildren, useContext } from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
@@ -20,7 +20,7 @@ function mixinStyles<Classes>(
 
 type Styles<C extends string> = Record<C, string>
 
-export interface AnchorProps {
+export interface AnchorProps extends PropsWithChildren {
   id: string
 }
 
@@ -36,7 +36,7 @@ export interface BackgroundProps {
   background: messages.Background
 }
 
-export type ChildrenProps = Record<string, unknown>
+export type ChildrenProps = PropsWithChildren
 
 export type ChildrenClasses = Styles<'children'>
 
@@ -96,16 +96,18 @@ export interface HookStepProps {
   step: messages.TestStep
 }
 
+export type KeywordProps = PropsWithChildren
+
 export type KeywordClasses = Styles<'keyword'>
 
-export interface ParameterProps {
+export interface ParameterProps extends PropsWithChildren {
   parameterTypeName: string
   value: string
 }
 
 export type ParameterClasses = Styles<'parameter'>
 
-export interface StatusIconProps {
+export interface StatusIconProps extends PropsWithChildren {
   status: messages.TestStepResultStatus
 }
 
@@ -131,7 +133,7 @@ export interface TagsProps {
 
 export type TagsClasses = Styles<'tags' | 'tag'>
 
-export interface TitleProps {
+export interface TitleProps extends PropsWithChildren {
   header: Header
   id: string
 }
@@ -173,7 +175,7 @@ export interface CustomRenderingSupport {
   GherkinStep?: Customised<GherkinStepProps>
   GherkinSteps?: Customised<GherkinStepsProps>
   HookStep?: Customised<HookStepProps>
-  Keyword?: Customised<unknown, KeywordClasses>
+  Keyword?: Customised<KeywordProps, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
   Rule?: Customised<RuleProps>
   Scenario?: Customised<ScenarioProps>

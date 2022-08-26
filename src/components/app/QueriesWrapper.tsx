@@ -1,6 +1,6 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { Query as CucumberQuery } from '@cucumber/query'
-import React from 'react'
+import React, { FunctionComponent, PropsWithChildren } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext'
 import EnvelopesQueryContext, { EnvelopesQuery } from '../../EnvelopesQueryContext'
@@ -12,7 +12,7 @@ interface IProps {
   envelopesQuery: EnvelopesQuery
 }
 
-export const QueriesWrapper: React.FunctionComponent<IProps> = (props) => (
+export const QueriesWrapper: FunctionComponent<PropsWithChildren<IProps>> = (props) => (
   <CucumberQueryContext.Provider value={props.cucumberQuery}>
     <GherkinQueryContext.Provider value={props.gherkinQuery}>
       <EnvelopesQueryContext.Provider value={props.envelopesQuery}>
