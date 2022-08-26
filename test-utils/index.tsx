@@ -1,7 +1,7 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
-import React, { ReactElement } from 'react'
+import React, { FunctionComponent, PropsWithChildren, ReactElement } from 'react'
 
 import CucumberQueryContext from '../src/CucumberQueryContext'
 import GherkinQueryContext from '../src/GherkinQueryContext'
@@ -13,7 +13,7 @@ export interface TestRenderOptions {
   cucumberQuery?: CucumberQuery
 }
 
-const AllTheProviders: React.FunctionComponent<{ options: TestRenderOptions }> = ({
+const AllTheProviders: FunctionComponent<PropsWithChildren<{ options: TestRenderOptions }>> = ({
   children,
   options,
 }) => {
@@ -29,7 +29,7 @@ const AllTheProviders: React.FunctionComponent<{ options: TestRenderOptions }> =
 }
 
 const customRender = (ui: ReactElement, options: Partial<TestRenderOptions> = {}) => {
-  const WrappedWithOptions: React.FunctionComponent = ({ children }) => (
+  const WrappedWithOptions: FunctionComponent<PropsWithChildren> = ({ children }) => (
     <AllTheProviders options={options}>{children}</AllTheProviders>
   )
   return render(ui, { wrapper: WrappedWithOptions })
