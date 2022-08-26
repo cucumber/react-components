@@ -26,3 +26,4 @@ jobs:
       - run: npm test
       - run: npm run eslint
       - run: npm run compile
+      - run: npm run build-storybook
