@@ -24,31 +24,33 @@ describe('FilteredResults', () => {
   }
 
   describe('searching', () => {
-    it('shows a message for a search term that yields no results', () => {
+    it('shows a message for a search term that yields no results', async () => {
       const { getByRole, getByText } = render(
         <TestableFilteredResults envelopes={attachments as Envelope[]} />
       )
 
-      userEvent.type(getByRole('textbox', { name: 'Search' }), 'nope!')
-      userEvent.keyboard('{Enter}')
+      await userEvent.type(getByRole('textbox', { name: 'Search' }), 'nope!')
+      await userEvent.keyboard('{Enter}')
 
       expect(getByText('No matches found for your query "nope!" and/or filters')).toBeVisible()
     })
 
-    it('narrows the results with a valid search term, and restores when we clear the search', () => {
+    it('narrows the results with a valid search term, and restores when we clear the search', async () => {
       const { getByRole, queryByRole } = render(
         <TestableFilteredResults envelopes={attachments as Envelope[]} />
       )
 
-      userEvent.type(getByRole('textbox', { name: 'Search' }), 'json')
-      userEvent.keyboard('{Enter}')
-      userEvent.click(getByRole('button', { name: 'samples/attachments/attachments.feature' }))
+      await userEvent.type(getByRole('textbox', { name: 'Search' }), 'json')
+      await userEvent.keyboard('{Enter}')
+      await userEvent.click(
+        getByRole('button', { name: 'samples/attachments/attachments.feature' })
+      )
 
       expect(getByRole('heading', { name: 'Scenario: Log JSON' })).toBeVisible()
       expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.toBeInTheDocument()
 
-      userEvent.clear(getByRole('textbox', { name: 'Search' }))
-      userEvent.keyboard('{Enter}')
+      await userEvent.clear(getByRole('textbox', { name: 'Search' }))
+      await userEvent.keyboard('{Enter}')
 
       expect(getByRole('heading', { name: 'Scenario: Log JSON' })).toBeVisible()
       expect(getByRole('heading', { name: 'Scenario: Log text' })).toBeVisible()
@@ -76,7 +78,7 @@ describe('FilteredResults', () => {
       })
     })
 
-    it('should hide features with a certain status when we uncheck it', () => {
+    it('should hide features with a certain status when we uncheck it', async () => {
       const { getByRole, queryByRole } = render(
         <TestableFilteredResults envelopes={[...examplesTables, ...minimal] as Envelope[]} />
       )
@@ -86,7 +88,7 @@ describe('FilteredResults', () => {
       ).toBeVisible()
       expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).toBeVisible()
 
-      userEvent.click(getByRole('checkbox', { name: 'passed' }))
+      await userEvent.click(getByRole('checkbox', { name: 'passed' }))
 
       expect(
         getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
@@ -98,7 +100,7 @@ describe('FilteredResults', () => {
       ).not.toBeInTheDocument()
     })
 
-    it('should show a message if we filter all statuses out', () => {
+    it('should show a message if we filter all statuses out', async () => {
       const { getByRole, queryByRole, getByText } = render(
         <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
       )
@@ -107,9 +109,9 @@ describe('FilteredResults', () => {
         getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
       ).toBeVisible()
 
-      userEvent.click(getByRole('checkbox', { name: 'passed' }))
-      userEvent.click(getByRole('checkbox', { name: 'failed' }))
-      userEvent.click(getByRole('checkbox', { name: 'undefined' }))
+      await userEvent.click(getByRole('checkbox', { name: 'passed' }))
+      await userEvent.click(getByRole('checkbox', { name: 'failed' }))
+      await userEvent.click(getByRole('checkbox', { name: 'undefined' }))
 
       expect(
         queryByRole('heading', {

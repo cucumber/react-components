@@ -21,7 +21,7 @@ describe('SearchBar', () => {
       expect(getByRole('textbox', { name: 'Search' })).toHaveValue('keyword')
     })
 
-    it('fires an event with the query when the form is submitted', () => {
+    it('fires an event with the query when the form is submitted', async () => {
       const onChange = jest.fn()
       const { getByRole } = render(
         <SearchBar
@@ -33,15 +33,15 @@ describe('SearchBar', () => {
         />
       )
 
-      userEvent.clear(getByRole('textbox', { name: 'Search' }))
-      userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
-      userEvent.keyboard('{Enter}')
+      await userEvent.clear(getByRole('textbox', { name: 'Search' }))
+      await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
+      await userEvent.keyboard('{Enter}')
 
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith('search text')
     })
 
-    it("doesn't perform the default form action when submitting", () => {
+    it("doesn't perform the default form action when submitting", async () => {
       const eventListener = jest.fn()
       const { getByRole, baseElement } = render(
         <SearchBar
@@ -55,8 +55,8 @@ describe('SearchBar', () => {
 
       baseElement.ownerDocument.addEventListener('submit', eventListener)
 
-      userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
-      userEvent.keyboard('{Enter}')
+      await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
+      await userEvent.keyboard('{Enter}')
 
       expect(eventListener).toHaveBeenCalledTimes(1)
       expect(eventListener.mock.calls[0][0]).toMatchObject({
@@ -64,7 +64,7 @@ describe('SearchBar', () => {
       })
     })
 
-    it('fires an event with empty string when empty search is submitted', () => {
+    it('fires an event with empty string when empty search is submitted', async () => {
       const onChange = jest.fn()
       const { getByRole } = render(
         <SearchBar
@@ -76,8 +76,8 @@ describe('SearchBar', () => {
         />
       )
 
-      userEvent.clear(getByRole('textbox', { name: 'Search' }))
-      userEvent.keyboard('{Enter}')
+      await userEvent.clear(getByRole('textbox', { name: 'Search' }))
+      await userEvent.keyboard('{Enter}')
 
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith('')
@@ -132,7 +132,7 @@ describe('SearchBar', () => {
       })
     })
 
-    it('should fire an event to hide a status when unchecked', () => {
+    it('should fire an event to hide a status when unchecked', async () => {
       const onFilter = jest.fn()
       const { getByRole } = render(
         <SearchBar
@@ -148,7 +148,7 @@ describe('SearchBar', () => {
         />
       )
 
-      userEvent.click(getByRole('checkbox', { name: 'pending' }))
+      await userEvent.click(getByRole('checkbox', { name: 'pending' }))
 
       expect(onFilter).toHaveBeenCalledTimes(1)
       expect(onFilter).toHaveBeenCalledWith([TestStepResultStatus.PENDING])
@@ -174,7 +174,7 @@ describe('SearchBar', () => {
       expect(getByRole('checkbox', { name: 'pending' })).not.toBeChecked()
     })
 
-    it('should fire to unhide a status when rechecked', () => {
+    it('should fire to unhide a status when rechecked', async () => {
       const onFilter = jest.fn()
       const { getByRole } = render(
         <SearchBar
@@ -190,7 +190,7 @@ describe('SearchBar', () => {
         />
       )
 
-      userEvent.click(getByRole('checkbox', { name: 'failed' }))
+      await userEvent.click(getByRole('checkbox', { name: 'failed' }))
 
       expect(onFilter).toHaveBeenCalledTimes(1)
       expect(onFilter).toHaveBeenCalledWith([TestStepResultStatus.PENDING])
