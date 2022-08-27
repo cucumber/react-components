@@ -152,7 +152,7 @@ Run tests
 
 Interactive development
 
-    npm run storybook
+    npm start
 
 ## Ideas
 
