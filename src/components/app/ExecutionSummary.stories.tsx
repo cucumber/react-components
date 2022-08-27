@@ -8,12 +8,9 @@ import {
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { components } from '../../src'
-import { CucumberReact } from '../components'
-import { IExecutionSummaryProps } from '../components/app'
-import { makeEmptyScenarioCountsByStatus } from '../countScenariosByStatuses'
-
-const { ExecutionSummary } = components.app
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
+import { CucumberReact } from '../CucumberReact'
+import { ExecutionSummary, IExecutionSummaryProps } from './ExecutionSummary'
 
 const scenarioCountByStatus = {
   ...makeEmptyScenarioCountsByStatus(),

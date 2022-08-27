@@ -2,16 +2,9 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { components } from '..'
-import {
-  CustomisedComponent,
-  CustomRenderable,
-  CustomRenderingSupport,
-  FeatureProps,
-} from '../components/customise'
-
-const { Tags, Feature } = components.gherkin
-const { CucumberReact } = components
+import { CucumberReact } from '../CucumberReact'
+import { Feature, Tags } from '../gherkin'
+import { CustomRenderingSupport, TagsProps } from './customRendering'
 
 export default {
   title: 'Customisation/Components',
@@ -60,7 +53,7 @@ CustomTagComponent.args = {
   ],
   support: {
     // eslint-disable-next-line react/display-name
-    Tags: (props: components.customise.TagsProps) => (
+    Tags: (props: TagsProps) => (
       <ul>
         {props.tags.map((tag, i) => {
           if (tag.name.match(/^@[A-Z]+-[0-9]+$/)) {

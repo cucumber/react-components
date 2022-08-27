@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install && node generate-fixtures.js",
-    "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.scss' 'dist/src'",
+    "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.module.scss' 'dist/src'",
     "test": "jest",
     "start": "ladle serve",
     "build": "ladle build",
