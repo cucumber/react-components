@@ -1,5 +1,5 @@
 import { TestStepResultStatus } from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import { components } from '../../src'
@@ -11,8 +11,7 @@ const { StatusesSummary } = components.app
 
 export default {
   title: 'App/StatusesSummary',
-  component: components.app.StatusesSummary,
-} as Meta
+}
 
 const Template: Story<IStatusesSummaryProps> = (props) => {
   return (

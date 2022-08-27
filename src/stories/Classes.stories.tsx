@@ -1,7 +1,7 @@
 import './custom-classes.scss'
 
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import { components } from '..'
@@ -12,8 +12,7 @@ const { CucumberReact } = components
 
 export default {
   title: 'Customisation/Classes',
-  component: components.CucumberReact,
-} as Meta
+}
 
 export const Classes: Story<{ support: CustomRenderingSupport; docString: messages.DocString }> = ({
   support,

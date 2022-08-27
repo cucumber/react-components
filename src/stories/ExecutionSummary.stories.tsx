@@ -5,7 +5,7 @@ import {
   TestStepResultStatus,
   TimeConversion,
 } from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import { components } from '../../src'
@@ -58,8 +58,7 @@ const testRunFinished: TestRunFinished = {
 
 export default {
   title: 'App/ExecutionSummary',
-  component: components.app.ExecutionSummary,
-} as Meta
+}
 
 const Template: Story<IExecutionSummaryProps> = (props) => {
   return (

@@ -1,5 +1,5 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import markdown from '../../acceptance/markdown/markdown.feature.md'
@@ -12,8 +12,7 @@ const { MDG } = components.gherkin
 
 export default {
   title: 'Gherkin/MDG',
-  component: components.gherkin.GherkinDocument,
-} as Meta
+}
 
 type TemplateArgs = { envelopes: readonly messages.Envelope[] }
 

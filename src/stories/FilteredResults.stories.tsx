@@ -1,5 +1,5 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import testData from '../../acceptance/examples-tables/examples-tables.feature'
@@ -10,8 +10,7 @@ const { EnvelopesWrapper, SearchWrapper, FilteredResults } = components.app
 
 export default {
   title: 'App/FilteredResults',
-  component: components.app.FilteredResults,
-} as Meta
+}
 
 type TemplateArgs = {
   envelopes: readonly messages.Envelope[]

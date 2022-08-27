@@ -1,5 +1,5 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import attachments from '../../acceptance/attachments/attachments.feature'
@@ -12,8 +12,7 @@ const { CucumberReact } = components
 
 export default {
   title: 'Customisation/Themes',
-  component: components.CucumberReact,
-} as Meta
+}
 
 export const Themes: Story<{ envelopes: messages.Envelope[]; theme: IncludedTheme }> = ({
   envelopes,

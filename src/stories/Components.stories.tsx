@@ -1,17 +1,21 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import { components } from '..'
-import { CustomRenderingSupport } from '../components/customise'
+import {
+  CustomisedComponent,
+  CustomRenderable,
+  CustomRenderingSupport,
+  FeatureProps,
+} from '../components/customise'
 
 const { Tags, Feature } = components.gherkin
 const { CucumberReact } = components
 
 export default {
   title: 'Customisation/Components',
-  component: components.CucumberReact,
-} as Meta
+}
 
 export const CustomTagComponent: Story<{
   support: CustomRenderingSupport
@@ -101,8 +105,8 @@ CustomFeatureComponent.args = {
     language: 'en',
   },
   support: {
-    // eslint-disable-next-line react/display-name
-    Feature: (props) => (
+    // eslint-disable-next-line react/display-name, @typescript-eslint/no-explicit-any
+    Feature: (props: any) => (
       <div>
         <button>Click me</button>
         <props.DefaultRenderer {...props} />

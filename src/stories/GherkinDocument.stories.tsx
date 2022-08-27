@@ -1,5 +1,5 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
 import attachments from '../../acceptance/attachments/attachments.feature'
@@ -23,8 +23,7 @@ const { EnvelopesWrapper, GherkinDocumentList } = components.app
 
 export default {
   title: 'Gherkin/GherkinDocument',
-  component: components.gherkin.GherkinDocument,
-} as Meta
+}
 
 type TemplateArgs = {
   envelopes: readonly messages.Envelope[]
