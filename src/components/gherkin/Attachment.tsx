@@ -89,15 +89,7 @@ function video(attachment: messages.Attachment) {
 }
 
 function base64Decode(body: string) {
-  // @ts-ignore
-  if (typeof global.atob === 'function') {
-    // @ts-ignore
-    return global.atob(body)
-  } else if (typeof global.Buffer === 'function') {
-    return global.Buffer.from(body, 'base64').toString('utf8')
-  } else {
-    throw new Error()
-  }
+  return atob(body)
 }
 
 function text(
