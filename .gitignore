@@ -1,8 +1,9 @@
+acceptance/
+build/
 dist/
 .idea/
 node_modules/
 *.log
 .codegen
-acceptance/
 *.iml
 .vscode-test
