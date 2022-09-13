@@ -23,7 +23,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
   const allDocuments = gherkinQuery.getGherkinDocuments()
 
   const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
-    countScenariosByStatuses(gherkinQuery, cucumberQuery)
+    countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
 
   const search = new Search(gherkinQuery)
   for (const gherkinDocument of allDocuments) {

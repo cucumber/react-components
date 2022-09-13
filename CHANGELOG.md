@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Single line breaks in descriptions are rendered less surprisingly ([#227](https://github.com/cucumber/react-components/pull/227))
 
+### Fixed
+- Omit filtered-out pickles from counts, filters ([#273](https://github.com/cucumber/react-components/pull/273))
+
 ## [20.1.0] - 2022-05-27
 ### Changed
 - Allow showing detail of every example, simplify examples table ([#159](https://github.com/cucumber/react-components/pull/159))
