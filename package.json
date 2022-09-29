@@ -104,7 +104,7 @@
     "source-map-support": "0.5.21",
     "style-loader": "3.3.1",
     "ts-jest": "^28.0.4",
-    "typescript": "4.8.3"
+    "typescript": "4.8.4"
   },
   "overrides": {
     "@cucumber/messages": "^19.0.0",
