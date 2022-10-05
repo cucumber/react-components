@@ -108,7 +108,7 @@
   },
   "overrides": {
     "@cucumber/messages": "^19.0.0",
-    "uuid": "8.1.0"
+    "uuid": "9.0.0"
   },
   "bugs": {
     "url": "https://github.com/cucumber/cucumber/issues"
