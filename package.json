@@ -39,7 +39,7 @@
     "date-fns": "2.29.3",
     "elasticlunr": "0.9.5",
     "hast-util-sanitize": "3.0.2",
-    "highlight-words": "1.2.0",
+    "highlight-words": "1.2.1",
     "react-accessible-accordion": "5.0.0",
     "react-markdown": "6.0.3",
     "rehype-raw": "5.1.0",
