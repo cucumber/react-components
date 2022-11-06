@@ -57,7 +57,7 @@
     "@cucumber/gherkin": "^24.0.0",
     "@cucumber/gherkin-streams": "^5.0.1",
     "@cucumber/message-streams": "^4.0.1",
-    "@ladle/react": "^2.2.2",
+    "@ladle/react": "^2.4.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
