@@ -78,7 +78,7 @@
     "babel-loader": "9.1.0",
     "core-js": "3.26.0",
     "cpy-cli": "4.2.0",
-    "eslint": "8.26.0",
+    "eslint": "8.27.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
