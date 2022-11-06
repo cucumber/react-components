@@ -2,6 +2,8 @@ import { GherkinDocumentWalker, Query as GherkinQuery } from '@cucumber/gherkin-
 import { getWorstTestStepResult, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
+import { EnvelopesQuery } from './EnvelopesQueryContext'
+
 export function makeEmptyScenarioCountsByStatus(): Record<TestStepResultStatus, number> {
   return {
     [TestStepResultStatus.UNKNOWN]: 0,
@@ -16,7 +18,8 @@ export function makeEmptyScenarioCountsByStatus(): Record<TestStepResultStatus, 
 
 export default function countScenariosByStatuses(
   gherkinQuery: GherkinQuery,
-  cucumberQuery: CucumberQuery
+  cucumberQuery: CucumberQuery,
+  envelopesQuery: EnvelopesQuery
 ): {
   scenarioCountByStatus: Record<TestStepResultStatus, number>
   statusesWithScenarios: readonly TestStepResultStatus[]
@@ -33,11 +36,13 @@ export default function countScenariosByStatuses(
           const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
           pickleIds.forEach((pickleId) => {
-            const status = getWorstTestStepResult(
-              cucumberQuery.getPickleTestStepResults([pickleId])
-            ).status
-
-            scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
+            // if no test case then this pickle was omitted by filtering e.g. tags
+            if (envelopesQuery.hasTestCase(pickleId)) {
+              const status = getWorstTestStepResult(
+                cucumberQuery.getPickleTestStepResults([pickleId])
+              ).status
+              scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
+            }
           })
         },
       }

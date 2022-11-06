@@ -27,6 +27,11 @@ export class EnvelopesQuery {
   public getTestRunFinished(): messages.TestRunFinished | undefined {
     return this.find((envelope) => !!envelope.testRunFinished)?.testRunFinished
   }
+
+  // TODO add to cucumber query
+  public hasTestCase(pickleId: string): boolean {
+    return !!this.find((envelope) => envelope.testCase?.pickleId === pickleId)
+  }
 }
 
 export default React.createContext(new EnvelopesQuery())
