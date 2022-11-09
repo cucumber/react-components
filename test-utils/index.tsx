@@ -29,7 +29,7 @@ const AllTheProviders: FunctionComponent<PropsWithChildren<{ options: TestRender
 }
 
 const customRender = (ui: ReactElement, options: Partial<TestRenderOptions> = {}) => {
-  const WrappedWithOptions: FunctionComponent<PropsWithChildren> = ({ children }) => (
+  const WrappedWithOptions: FunctionComponent<PropsWithChildren<{}>> = ({ children }) => (
     <AllTheProviders options={options}>{children}</AllTheProviders>
   )
   return render(ui, { wrapper: WrappedWithOptions })

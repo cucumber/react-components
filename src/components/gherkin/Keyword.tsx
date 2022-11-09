@@ -3,10 +3,7 @@ import React, { FunctionComponent } from 'react'
 import { DefaultComponent, KeywordClasses, KeywordProps, useCustomRendering } from '../customise'
 import defaultStyles from './Keyword.module.scss'
 
-const DefaultRenderer: DefaultComponent<Record<string, never>, KeywordClasses> = ({
-  children,
-  styles,
-}) => {
+const DefaultRenderer: DefaultComponent<KeywordProps, KeywordClasses> = ({ children, styles }) => {
   return <span className={styles.keyword}>{children}</span>
 }
 

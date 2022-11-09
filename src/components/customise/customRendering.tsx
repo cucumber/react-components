@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Pickle, PickleStep } from '@cucumber/messages'
-import React, { PropsWithChildren, useContext } from 'react'
+import React, { FunctionComponent, ReactNode, useContext } from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
@@ -20,8 +20,9 @@ function mixinStyles<Classes>(
 
 type Styles<C extends string> = Record<C, string>
 
-export interface AnchorProps extends PropsWithChildren {
+export interface AnchorProps {
   id: string
+  children: ReactNode
 }
 
 export type AnchorClasses = Styles<'wrapper' | 'anchor'>
@@ -36,7 +37,9 @@ export interface BackgroundProps {
   background: messages.Background
 }
 
-export type ChildrenProps = PropsWithChildren
+export interface ChildrenProps {
+  children: ReactNode
+}
 
 export type ChildrenClasses = Styles<'children'>
 
@@ -96,18 +99,21 @@ export interface HookStepProps {
   step: messages.TestStep
 }
 
-export type KeywordProps = PropsWithChildren
+export interface KeywordProps {
+  children: ReactNode
+}
 
 export type KeywordClasses = Styles<'keyword'>
 
-export interface ParameterProps extends PropsWithChildren {
+export interface ParameterProps {
   parameterTypeName: string
   value: string
+  children: ReactNode
 }
 
 export type ParameterClasses = Styles<'parameter'>
 
-export interface StatusIconProps extends PropsWithChildren {
+export interface StatusIconProps {
   status: messages.TestStepResultStatus
 }
 
@@ -133,9 +139,10 @@ export interface TagsProps {
 
 export type TagsClasses = Styles<'tags' | 'tag'>
 
-export interface TitleProps extends PropsWithChildren {
+export interface TitleProps {
   header: Header
   id: string
+  children: ReactNode
 }
 
 export type TitleClasses = Styles<'title'>
@@ -143,7 +150,7 @@ export type TitleClasses = Styles<'title'>
 export declare type DefaultComponent<
   Props,
   Classes extends Styles<string> = Record<string, string>
-> = React.FunctionComponent<Props & { styles: Classes }>
+> = FunctionComponent<Props & { styles: Classes }>
 
 export declare type CustomisedComponent<
   Props,
@@ -192,7 +199,7 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
   component: CustomRenderable,
   defaultStyles: Record<string, string>,
   DefaultRenderer: DefaultComponent<Props, Classes>
-): React.FunctionComponent<Props> {
+): FunctionComponent<Props> {
   const { [component]: Custom } = useContext(CustomRenderingContext)
   // @ts-ignore
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
