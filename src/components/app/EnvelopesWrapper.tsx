@@ -1,7 +1,7 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { FunctionComponent, PropsWithChildren, useMemo } from 'react'
 
 import { EnvelopesQuery } from '../../EnvelopesQueryContext'
 import { QueriesWrapper } from './QueriesWrapper'
@@ -10,7 +10,10 @@ interface IProps {
   envelopes: readonly messages.Envelope[]
 }
 
-export const EnvelopesWrapper: FunctionComponent<IProps> = ({ envelopes, children }) => {
+export const EnvelopesWrapper: FunctionComponent<PropsWithChildren<IProps>> = ({
+  envelopes,
+  children,
+}) => {
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useMemo(() => {
     const gherkinQuery = new GherkinQuery()
     const cucumberQuery = new CucumberQuery()

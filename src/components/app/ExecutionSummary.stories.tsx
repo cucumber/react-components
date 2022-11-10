@@ -5,15 +5,12 @@ import {
   TestStepResultStatus,
   TimeConversion,
 } from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
-import { components } from '../../src'
-import { CucumberReact } from '../components'
-import { IExecutionSummaryProps } from '../components/app'
-import { makeEmptyScenarioCountsByStatus } from '../countScenariosByStatuses'
-
-const { ExecutionSummary } = components.app
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
+import { CucumberReact } from '../CucumberReact'
+import { ExecutionSummary, IExecutionSummaryProps } from './ExecutionSummary'
 
 const scenarioCountByStatus = {
   ...makeEmptyScenarioCountsByStatus(),
@@ -58,8 +55,7 @@ const testRunFinished: TestRunFinished = {
 
 export default {
   title: 'App/ExecutionSummary',
-  component: components.app.ExecutionSummary,
-} as Meta
+}
 
 const Template: Story<IExecutionSummaryProps> = (props) => {
   return (

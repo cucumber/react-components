@@ -1,17 +1,16 @@
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
-import testData from '../../acceptance/examples-tables/examples-tables.feature'
-import { components } from '../../src'
-import { CucumberReact } from '../components'
-
-const { EnvelopesWrapper, SearchWrapper, FilteredResults } = components.app
+import testData from '../../../acceptance/examples-tables/examples-tables.feature'
+import { CucumberReact } from '../CucumberReact'
+import { EnvelopesWrapper } from './EnvelopesWrapper'
+import { FilteredResults } from './FilteredResults'
+import { SearchWrapper } from './SearchWrapper'
 
 export default {
   title: 'App/FilteredResults',
-  component: components.app.FilteredResults,
-} as Meta
+}
 
 type TemplateArgs = {
   envelopes: readonly messages.Envelope[]

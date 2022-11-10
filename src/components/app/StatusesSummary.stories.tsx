@@ -1,18 +1,14 @@
 import { TestStepResultStatus } from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
-import { components } from '../../src'
-import { CucumberReact } from '../components'
-import { IStatusesSummaryProps } from '../components/app'
-import { makeEmptyScenarioCountsByStatus } from '../countScenariosByStatuses'
-
-const { StatusesSummary } = components.app
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
+import { CucumberReact } from '../CucumberReact'
+import { IStatusesSummaryProps, StatusesSummary } from './StatusesSummary'
 
 export default {
   title: 'App/StatusesSummary',
-  component: components.app.StatusesSummary,
-} as Meta
+}
 
 const Template: Story<IStatusesSummaryProps> = (props) => {
   return (

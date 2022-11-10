@@ -47,8 +47,8 @@ describe('<Scenario/>', () => {
       expect(getStatus(step3)).toEqual('FAILED')
     })
 
-    it('should render the results for individual examples - all passed', () => {
-      userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
+    it('should render the results for individual examples - all passed', async () => {
+      await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
 
       expect(screen.getByText('@passing')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -63,8 +63,8 @@ describe('<Scenario/>', () => {
       expect(getStatus(step3)).toEqual('PASSED')
     })
 
-    it('should render the results for individual examples - one failed', () => {
-      userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
+    it('should render the results for individual examples - one failed', async () => {
+      await userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
 
       expect(screen.getByText('@failing')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -80,8 +80,8 @@ describe('<Scenario/>', () => {
       expect(screen.getByText(/Expected values to be strictly equal/)).toBeVisible()
     })
 
-    it('should render the results for individual examples - undefined', () => {
-      userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
+    it('should render the results for individual examples - undefined', async () => {
+      await userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
 
       expect(screen.getByText('@undefined')).toBeVisible()
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
@@ -96,11 +96,13 @@ describe('<Scenario/>', () => {
       expect(getStatus(step3)).toEqual('SKIPPED')
     })
 
-    it('should allow returning to the outline from an example detail', () => {
-      userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
+    it('should allow returning to the outline from an example detail', async () => {
+      await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
       expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
 
-      userEvent.click(screen.getByRole('button', { name: 'Back to outline and all 6 examples' }))
+      await userEvent.click(
+        screen.getByRole('button', { name: 'Back to outline and all 6 examples' })
+      )
       expect(
         screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })
       ).toBeVisible()

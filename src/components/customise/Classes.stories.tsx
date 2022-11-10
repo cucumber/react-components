@@ -1,19 +1,16 @@
-import './custom-classes.scss'
+import './custom-classes.stories.scss'
 
 import * as messages from '@cucumber/messages'
-import { Meta, Story } from '@storybook/react'
+import { Story } from '@ladle/react'
 import React from 'react'
 
-import { components } from '..'
-import { CustomRenderingSupport } from '../components/customise'
-
-const { DocString } = components.gherkin
-const { CucumberReact } = components
+import { CucumberReact } from '../CucumberReact'
+import { DocString } from '../gherkin'
+import { CustomRenderingSupport } from './customRendering'
 
 export default {
   title: 'Customisation/Classes',
-  component: components.CucumberReact,
-} as Meta
+}
 
 export const Classes: Story<{ support: CustomRenderingSupport; docString: messages.DocString }> = ({
   support,

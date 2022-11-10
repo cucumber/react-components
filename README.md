@@ -8,6 +8,8 @@
 
 ## Usage
 
+React 18 or above is required.
+
 The source code for screenshots above is:
 
 ```jsx
@@ -152,7 +154,7 @@ Run tests
 
 Interactive development
 
-    npm run storybook
+    npm start
 
 ## Ideas
 

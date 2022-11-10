@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Pickle, PickleStep } from '@cucumber/messages'
-import React, { useContext } from 'react'
+import React, { FunctionComponent, ReactNode, useContext } from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
@@ -22,6 +22,7 @@ type Styles<C extends string> = Record<C, string>
 
 export interface AnchorProps {
   id: string
+  children: ReactNode
 }
 
 export type AnchorClasses = Styles<'wrapper' | 'anchor'>
@@ -36,7 +37,9 @@ export interface BackgroundProps {
   background: messages.Background
 }
 
-export type ChildrenProps = Record<string, unknown>
+export interface ChildrenProps {
+  children: ReactNode
+}
 
 export type ChildrenClasses = Styles<'children'>
 
@@ -96,11 +99,16 @@ export interface HookStepProps {
   step: messages.TestStep
 }
 
+export interface KeywordProps {
+  children: ReactNode
+}
+
 export type KeywordClasses = Styles<'keyword'>
 
 export interface ParameterProps {
   parameterTypeName: string
   value: string
+  children: ReactNode
 }
 
 export type ParameterClasses = Styles<'parameter'>
@@ -134,6 +142,7 @@ export type TagsClasses = Styles<'tags' | 'tag'>
 export interface TitleProps {
   header: Header
   id: string
+  children: ReactNode
 }
 
 export type TitleClasses = Styles<'title'>
@@ -141,7 +150,7 @@ export type TitleClasses = Styles<'title'>
 export declare type DefaultComponent<
   Props,
   Classes extends Styles<string> = Record<string, string>
-> = React.FunctionComponent<Props & { styles: Classes }>
+> = FunctionComponent<Props & { styles: Classes }>
 
 export declare type CustomisedComponent<
   Props,
@@ -173,7 +182,7 @@ export interface CustomRenderingSupport {
   GherkinStep?: Customised<GherkinStepProps>
   GherkinSteps?: Customised<GherkinStepsProps>
   HookStep?: Customised<HookStepProps>
-  Keyword?: Customised<unknown, KeywordClasses>
+  Keyword?: Customised<KeywordProps, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
   Rule?: Customised<RuleProps>
   Scenario?: Customised<ScenarioProps>
@@ -190,7 +199,7 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
   component: CustomRenderable,
   defaultStyles: Record<string, string>,
   DefaultRenderer: DefaultComponent<Props, Classes>
-): React.FunctionComponent<Props> {
+): FunctionComponent<Props> {
   const { [component]: Custom } = useContext(CustomRenderingContext)
   // @ts-ignore
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
