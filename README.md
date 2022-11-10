@@ -8,6 +8,8 @@
 
 ## Usage
 
+React 18 or above is required.
+
 The source code for screenshots above is:
 
 ```jsx
