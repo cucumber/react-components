@@ -6,7 +6,6 @@ import { Query as CucumberQuery } from '@cucumber/query'
 
 import targetedRun from '../samples/targeted-run'
 import { runFeature } from '../test-utils'
-
 import countScenariosByStatuses from './countScenariosByStatuses'
 import { EnvelopesQuery } from './EnvelopesQueryContext'
 

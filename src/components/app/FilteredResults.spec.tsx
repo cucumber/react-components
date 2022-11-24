@@ -1,5 +1,5 @@
 import { Envelope } from '@cucumber/messages'
-import { queryByRole, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React, { VoidFunctionComponent } from 'react'
 
