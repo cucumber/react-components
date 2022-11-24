@@ -3,7 +3,7 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import testData from '../../../acceptance/examples-tables/examples-tables.feature'
-import targetedRun from '../../../test-utils/messages/filtered-pickles'
+import targetedRun from '../../../samples/targeted-run'
 import { CucumberReact } from '../CucumberReact'
 import { EnvelopesWrapper } from './EnvelopesWrapper'
 import { FilteredResults } from './FilteredResults'
