@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - BREAKING CHANGE: React 18+ is now required ([#279](https://github.com/cucumber/react-components/pull/279))
 
+### Fixed
+- Omit filtered-out pickles from rendered documents ([#321](https://github.com/cucumber/react-components/pull/321))
+
 ## [20.2.0] - 2022-09-13
 ### Changed
 - Single line breaks in descriptions are rendered less surprisingly ([#227](https://github.com/cucumber/react-components/pull/227))
