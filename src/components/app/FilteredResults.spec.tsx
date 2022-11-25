@@ -6,6 +6,7 @@ import React, { VoidFunctionComponent } from 'react'
 import attachments from '../../../acceptance/attachments/attachments.feature'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature'
 import minimal from '../../../acceptance/minimal/minimal.feature'
+import targetedRun from '../../../samples/targeted-run'
 import SearchQueryContext, { useSearchQueryCtx } from '../../SearchQueryContext'
 import { EnvelopesWrapper } from './EnvelopesWrapper'
 import { FilteredResults } from './FilteredResults'
@@ -22,6 +23,30 @@ describe('FilteredResults', () => {
       </EnvelopesWrapper>
     )
   }
+
+  describe('with a targeted run', () => {
+    it('doesnt include features where no scenarios became test cases', () => {
+      const { getByRole, queryByRole } = render(
+        <TestableFilteredResults envelopes={targetedRun as Envelope[]} />
+      )
+
+      expect(
+        getByRole('heading', {
+          name: 'features/adding.feature',
+        })
+      ).toBeVisible()
+      expect(
+        queryByRole('heading', {
+          name: 'features/editing.feature',
+        })
+      ).not.toBeInTheDocument()
+      expect(
+        queryByRole('heading', {
+          name: 'features/empty.feature',
+        })
+      ).not.toBeInTheDocument()
+    })
+  })
 
   describe('searching', () => {
     it('shows a message for a search term that yields no results', async () => {

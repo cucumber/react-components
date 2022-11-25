@@ -10,7 +10,6 @@ import styles from './FilteredResults.module.scss'
 import { GherkinDocumentList } from './GherkinDocumentList'
 import { NoMatchResult } from './NoMatchResult'
 import { SearchBar } from './SearchBar'
-import statuses from './statuses'
 import { StatusesSummary } from './StatusesSummary'
 
 interface IProps {
@@ -30,7 +29,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
     search.add(gherkinDocument)
   }
 
-  const onlyShowStatuses = statuses.filter((s) => !hideStatuses.includes(s))
+  const onlyShowStatuses = statusesWithScenarios.filter((s) => !hideStatuses.includes(s))
 
   const matches = query ? search.search(query) : allDocuments
   const filtered = matches

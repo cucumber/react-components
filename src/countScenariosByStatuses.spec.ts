@@ -3,9 +3,8 @@ import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Envelope, SourceReference, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import fs from 'fs'
-import path from 'path'
 
+import targetedRun from '../samples/targeted-run'
 import { runFeature } from '../test-utils'
 import countScenariosByStatuses from './countScenariosByStatuses'
 import { EnvelopesQuery } from './EnvelopesQueryContext'
@@ -103,15 +102,9 @@ Feature: statuses
   })
 
   it('only includes pickles that were slated for execution as test cases', () => {
-    const raw = fs.readFileSync(
-      path.join(__dirname, '../test-utils/messages/filtered-pickles.ndjson'),
-      {
-        encoding: 'utf-8',
-      }
-    )
-    const envelopes: Envelope[] = JSON.parse('[' + raw.trim().split('\n').join(',') + ']')
     const gherkinQuery = new GherkinQuery()
     const cucumberQuery = new CucumberQuery()
+    const envelopes = targetedRun as Envelope[]
     envelopes.forEach((envelope) => {
       gherkinQuery.update(envelope)
       cucumberQuery.update(envelope)
