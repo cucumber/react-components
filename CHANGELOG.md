@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Fix missing stylesheets in npm package
 
 ## [21.0.0] - 2022-11-25
 ### Changed
