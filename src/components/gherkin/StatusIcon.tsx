@@ -39,7 +39,7 @@ export const StatusIcon: FunctionComponent<StatusIconProps> = (props) => {
     defaultStyles,
     DefaultRenderer
   )
-  return <Customised {...props}>{props.children}</Customised>
+  return <Customised {...props} />
 }
 
 const statusIcon = (status: messages.TestStepResultStatus): IconDefinition => {
