@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base",
+    ":disableDependencyDashboard"
+  ],
+  "rebaseWhen": "never",
+  "schedule": [
+    "on the first day of the month"
+  ]
+}
