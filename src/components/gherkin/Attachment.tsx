@@ -1,7 +1,7 @@
+import React, { FC, useEffect, useState } from 'react'
 import * as messages from '@cucumber/messages'
 // @ts-ignore
 import Convert from 'ansi-to-html'
-import React from 'react'
 
 import {
   AttachmentClasses,
@@ -27,11 +27,7 @@ export const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasse
   } else if (attachment.mediaType.match(/^application\/json/)) {
     return text(attachment, prettyJSON, false, styles)
   } else {
-    return (
-      <ErrorMessage
-        message={`Couldn't display ${attachment.mediaType} attachment because the media type is unsupported. Please submit a feature request at https://github.com/cucumber/cucumber/issues`}
-      />
-    )
+    return <Unknown attachment={attachment} />
   }
 }
 
@@ -42,6 +38,38 @@ export const Attachment: React.FunctionComponent<AttachmentProps> = (props) => {
     DefaultRenderer
   )
   return <ResolvedRenderer {...props} />
+}
+
+const Unknown: FC<AttachmentProps> = ({ attachment }) => {
+  const [url, setUrl] = useState<string>()
+  useEffect(() => {
+    if (attachment.contentEncoding !== 'BASE64') {
+      return
+    }
+    console.log('creating object url')
+    const bytes = Uint8Array.from<string>(atob(attachment.body), (m) => m.codePointAt(0) as number)
+    const file = new File([bytes], attachment.fileName ?? 'attachment', {
+      type: attachment.mediaType,
+    })
+    const objectUrl = URL.createObjectURL(file)
+    setUrl(objectUrl)
+    return () => {
+      console.log('revoking object url')
+      URL.revokeObjectURL(objectUrl)
+    }
+  }, [attachment])
+  if (attachment.contentEncoding !== 'BASE64') {
+    return (
+      <ErrorMessage
+        message={`Couldn't display ${attachment.mediaType} attachment because it wasn't base64 encoded`}
+      />
+    )
+  }
+  return (
+    <a href={url} download>
+      Download
+    </a>
+  )
 }
 
 function image(attachment: messages.Attachment, classes: AttachmentClasses) {
