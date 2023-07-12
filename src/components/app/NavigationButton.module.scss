@@ -1,0 +1,20 @@
+@import '../../styles/theming';
+
+.navigationButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: transparent;
+    color: $anchorColor;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    border: 0;
+    margin: 0 0 0.5em 0;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}

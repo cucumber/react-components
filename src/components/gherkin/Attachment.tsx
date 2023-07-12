@@ -1,9 +1,12 @@
 import * as messages from '@cucumber/messages'
 import { AttachmentContentEncoding } from '@cucumber/messages'
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // @ts-ignore
 import Convert from 'ansi-to-html'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 
+import { NavigationButton } from '../app/NavigationButton'
 import {
   AttachmentClasses,
   AttachmentProps,
@@ -61,7 +64,12 @@ const Unknown: FC<AttachmentProps> = ({ attachment }) => {
     anchor.download = filename
     anchor.click()
   }, [attachment, filename, downloadUrl])
-  return <button onClick={onClick}>Download {filename}</button>
+  return (
+    <NavigationButton onClick={onClick}>
+      <FontAwesomeIcon icon={faPaperclip} />
+      Download {filename}
+    </NavigationButton>
+  )
 }
 
 function createDownloadUrl(attachment: messages.Attachment) {
