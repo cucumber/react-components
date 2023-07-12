@@ -1,13 +1,23 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { render } from '../../../test-utils'
+import { render, screen } from '../../../test-utils'
 import { Attachment } from './Attachment'
 
 describe('<Attachment>', () => {
+  it('renders a download button for a file that isnt video, image or text', () => {
+    const attachment: messages.Attachment = {
+      body: 'test content',
+      mediaType: 'application/pdf',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      fileName: 'document.pdf',
+    }
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('button', { name: 'Download document.pdf' })).toBeVisible()
+  })
+
   it('renders a video', () => {
-    const binary = new Uint8Array(10)
-    binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'video/mp4',
       body: 'fake-base64',
@@ -21,8 +31,6 @@ describe('<Attachment>', () => {
   })
 
   it('renders a video with a name', () => {
-    const binary = new Uint8Array(10)
-    binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'video/mp4',
       fileName: 'the attachment name',
@@ -37,8 +45,6 @@ describe('<Attachment>', () => {
   })
 
   it('renders an image', () => {
-    const binary = new Uint8Array(10)
-    binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'image/png',
       body: 'fake-base64',
@@ -52,8 +58,6 @@ describe('<Attachment>', () => {
   })
 
   it('renders an image with a name', () => {
-    const binary = new Uint8Array(10)
-    binary.fill(255, 0, binary.length)
     const attachment: messages.Attachment = {
       mediaType: 'image/png',
       fileName: 'the attachment name',
