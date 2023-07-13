@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Switch out `mime-types` for `mime` ([#334](https://github.com/cucumber/react-components/pull/334))
 
 ## [21.1.0] - 2023-07-13
 ### Added
