@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [21.1.0] - 2023-07-13
 ### Added
 - Add ability to download unsupported attachments ([#333](https://github.com/cucumber/react-components/pull/333))
 
@@ -390,7 +392,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v21.0.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v21.1.0...HEAD
+[21.1.0]: https://github.com/cucumber/cucumber-react/compare/v21.0.1...v21.1.0
 [21.0.1]: https://github.com/cucumber/cucumber-react/compare/v21.0.0...v21.0.1
 [21.0.0]: https://github.com/cucumber/cucumber-react/compare/v20.2.0...v21.0.0
 [20.2.0]: https://github.com/cucumber/cucumber-react/compare/v20.1.0...v20.2.0
