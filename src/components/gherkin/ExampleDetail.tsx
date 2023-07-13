@@ -6,6 +6,7 @@ import React, { useContext, VoidFunctionComponent } from 'react'
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import { HighLight } from '../app/HighLight'
+import { NavigationButton } from '../app/NavigationButton'
 import { Description } from './Description'
 import styles from './ExampleDetail.module.scss'
 import { GherkinSteps } from './GherkinSteps'
@@ -28,10 +29,10 @@ export const ExampleDetail: VoidFunctionComponent<{
   const examplesCount = scenario.examples.flatMap((examples) => examples.tableBody).length
   return (
     <>
-      <button className={styles.backButton} onClick={onBack}>
-        <FontAwesomeIcon icon={faArrowLeft} />
+      <NavigationButton onClick={onBack}>
+        <FontAwesomeIcon icon={faArrowLeft} className={styles.backIcon} />
         Back to outline and all {examplesCount} examples
-      </button>
+      </NavigationButton>
       <section>
         <Tags tags={pickle.tags} />
         <Title header="h2" id={scenario.id}>

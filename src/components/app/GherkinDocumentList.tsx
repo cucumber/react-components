@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { FunctionComponent, useContext, useMemo, useState } from 'react'
 import {
   Accordion,
   AccordionItem,
@@ -14,9 +14,7 @@ import {
 import CucumberQueryContext from '../../CucumberQueryContext'
 import GherkinQueryContext from '../../GherkinQueryContext'
 import UriContext from '../../UriContext'
-import { GherkinDocument } from '../gherkin/GherkinDocument'
-import { MDG } from '../gherkin/MDG'
-import { StatusIcon } from '../gherkin/StatusIcon'
+import { GherkinDocument, MDG, StatusIcon } from '../gherkin'
 import styles from './GherkinDocumentList.module.scss'
 
 interface IProps {
@@ -25,44 +23,43 @@ interface IProps {
   preExpand?: boolean
 }
 
-export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
-  gherkinDocuments,
-  preExpand,
-}) => {
-  const gherkinQuery = React.useContext(GherkinQueryContext)
-  const cucumberQuery = React.useContext(CucumberQueryContext)
-
+export const GherkinDocumentList: FunctionComponent<IProps> = ({ gherkinDocuments, preExpand }) => {
+  const gherkinQuery = useContext(GherkinQueryContext)
+  const cucumberQuery = useContext(CucumberQueryContext)
   const gherkinDocs = gherkinDocuments || gherkinQuery.getGherkinDocuments()
-
-  const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
-    (gherkinDocument) => {
-      if (!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
-      const gherkinDocumentStatus = gherkinDocument.feature
-        ? getWorstTestStepResult(
-            cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
-          ).status
-        : messages.TestStepResultStatus.UNDEFINED
-      return [gherkinDocument.uri, gherkinDocumentStatus]
-    }
-  )
-  const gherkinDocumentStatusByUri = new Map(entries)
-
-  // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
-  const preExpanded = preExpand
-    ? (gherkinDocs
-        .filter(
-          (doc) =>
-            doc.uri &&
-            gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
-        )
-        .map((doc) => doc.uri) as string[])
-    : []
+  const gherkinDocumentStatusByUri = useMemo(() => {
+    const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
+      (gherkinDocument) => {
+        if (!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
+        const gherkinDocumentStatus = gherkinDocument.feature
+          ? getWorstTestStepResult(
+              cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
+            ).status
+          : messages.TestStepResultStatus.UNDEFINED
+        return [gherkinDocument.uri, gherkinDocumentStatus]
+      }
+    )
+    return new Map(entries)
+  }, [gherkinDocs, gherkinQuery, cucumberQuery])
+  const [expanded, setExpanded] = useState<Array<string | number>>(() => {
+    // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
+    return preExpand
+      ? (gherkinDocs
+          .filter(
+            (doc) =>
+              doc.uri &&
+              gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
+          )
+          .map((doc) => doc.uri) as string[])
+      : []
+  })
 
   return (
     <Accordion
       allowMultipleExpanded={true}
       allowZeroExpanded={true}
-      preExpanded={preExpanded}
+      preExpanded={expanded}
+      onChange={setExpanded}
       className={styles.accordion}
     >
       {gherkinDocs.map((doc) => {
@@ -73,7 +70,7 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
         if (!source) throw new Error(`No source for ${doc.uri}`)
 
         return (
-          <AccordionItem key={doc.uri} className={styles.accordionItem}>
+          <AccordionItem key={doc.uri} uuid={doc.uri} className={styles.accordionItem}>
             <AccordionItemHeading>
               <AccordionItemButton className={styles.accordionButton}>
                 <FontAwesomeIcon
@@ -87,15 +84,17 @@ export const GherkinDocumentList: React.FunctionComponent<IProps> = ({
                 <span>{doc.uri}</span>
               </AccordionItemButton>
             </AccordionItemHeading>
-            <AccordionItemPanel className={styles.accordionPanel}>
-              <UriContext.Provider value={doc.uri}>
-                {source.mediaType === messages.SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN ? (
-                  <GherkinDocument gherkinDocument={doc} source={source} />
-                ) : (
-                  <MDG uri={doc.uri}>{source.data}</MDG>
-                )}
-              </UriContext.Provider>
-            </AccordionItemPanel>
+            {expanded.includes(doc.uri) && (
+              <AccordionItemPanel className={styles.accordionPanel}>
+                <UriContext.Provider value={doc.uri}>
+                  {source.mediaType === messages.SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN ? (
+                    <GherkinDocument gherkinDocument={doc} source={source} />
+                  ) : (
+                    <MDG uri={doc.uri}>{source.data}</MDG>
+                  )}
+                </UriContext.Provider>
+              </AccordionItemPanel>
+            )}
           </AccordionItem>
         )
       })}

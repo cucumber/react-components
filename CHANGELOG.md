@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add ability to download unsupported attachments ([#333](https://github.com/cucumber/react-components/pull/333))
 
 ## [21.0.1] - 2022-11-26
 ### Fixed
