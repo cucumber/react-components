@@ -52,10 +52,10 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
         />
         <SearchBar
           query={query}
-          onSearch={(query) => update({ query })}
+          onSearch={(newValue) => update({ query: newValue })}
           statusesWithScenarios={statusesWithScenarios}
           hideStatuses={hideStatuses}
-          onFilter={(hideStatuses) => update({ hideStatuses })}
+          onFilter={(newValue) => update({ hideStatuses: newValue })}
         />
       </div>
 
