@@ -4,6 +4,7 @@ import React from 'react'
 import countScenariosByStatuses from '../../countScenariosByStatuses'
 import filterByStatus from '../../filter/filterByStatus'
 import { useQueries, useSearch } from '../../hooks'
+import { useFilteredDocuments } from '../../hooks/useFilteredDocuments'
 import Search from '../../search/Search'
 import { ExecutionSummary } from './ExecutionSummary'
 import styles from './FilteredResults.module.scss'
@@ -19,22 +20,11 @@ interface IProps {
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
   const { cucumberQuery, gherkinQuery, envelopesQuery } = useQueries()
   const { query, hideStatuses, update } = useSearch()
-  const allDocuments = gherkinQuery.getGherkinDocuments()
 
   const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
     countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
 
-  const search = new Search(gherkinQuery)
-  for (const gherkinDocument of allDocuments) {
-    search.add(gherkinDocument)
-  }
-
-  const onlyShowStatuses = statusesWithScenarios.filter((s) => !hideStatuses.includes(s))
-
-  const matches = query ? search.search(query) : allDocuments
-  const filtered = matches
-    .map((document) => filterByStatus(document, gherkinQuery, cucumberQuery, onlyShowStatuses))
-    .filter((document) => document !== null) as GherkinDocument[]
+  const filtered = useFilteredDocuments(query, hideStatuses)
 
   return (
     <div className={className}>
