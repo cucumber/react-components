@@ -1,11 +1,8 @@
-import { GherkinDocument } from '@cucumber/messages'
 import React from 'react'
 
-import countScenariosByStatuses from '../../countScenariosByStatuses'
-import filterByStatus from '../../filter/filterByStatus'
 import { useQueries, useSearch } from '../../hooks'
 import { useFilteredDocuments } from '../../hooks/useFilteredDocuments'
-import Search from '../../search/Search'
+import { useResultStatistics } from '../../hooks/useResultStatistics'
 import { ExecutionSummary } from './ExecutionSummary'
 import styles from './FilteredResults.module.scss'
 import { GherkinDocumentList } from './GherkinDocumentList'
@@ -18,12 +15,9 @@ interface IProps {
 }
 
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { cucumberQuery, gherkinQuery, envelopesQuery } = useQueries()
+  const { envelopesQuery } = useQueries()
+  const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
-
-  const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
-    countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
-
   const filtered = useFilteredDocuments(query, hideStatuses)
 
   return (
