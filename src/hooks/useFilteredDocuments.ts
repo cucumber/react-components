@@ -2,7 +2,7 @@ import { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
 
 import { allStatuses } from '../countScenariosByStatuses'
 import filterByStatus from '../filter/filterByStatus'
-import Search from '../search/Search'
+import { createSearch } from '../search'
 import { useQueries } from './useQueries'
 
 export function useFilteredDocuments(
@@ -11,10 +11,7 @@ export function useFilteredDocuments(
 ): GherkinDocument[] {
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()
   const allDocuments = gherkinQuery.getGherkinDocuments()
-  const search = new Search(gherkinQuery)
-  for (const gherkinDocument of allDocuments) {
-    search.add(gherkinDocument)
-  }
+  const search = createSearch(gherkinQuery)
   const matches = query ? search.search(query) : allDocuments
   return matches
     .map((document) =>
