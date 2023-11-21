@@ -43,8 +43,15 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
         />
       </div>
 
-      {filtered.length > 0 && <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />}
-      {filtered.length < 1 && <NoMatchResult query={query} />}
+      {filtered !== undefined && (
+        <>
+          {filtered.length > 0 ? (
+            <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />
+          ) : (
+            <NoMatchResult query={query} />
+          )}
+        </>
+      )}
     </div>
   )
 }

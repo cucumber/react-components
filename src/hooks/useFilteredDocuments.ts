@@ -1,27 +1,36 @@
 import { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
+import { useEffect, useState } from 'react'
 
 import { allStatuses } from '../countScenariosByStatuses'
 import filterByStatus from '../filter/filterByStatus'
-import { createSearch } from '../search'
+import { createSearch, SearchableDocuments } from '../search'
 import { useQueries } from './useQueries'
 
 export function useFilteredDocuments(
   query: string,
   hideStatuses: readonly TestStepResultStatus[]
-): GherkinDocument[] {
+): GherkinDocument[] | undefined {
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()
-  const allDocuments = gherkinQuery.getGherkinDocuments()
-  const search = createSearch(gherkinQuery)
-  const matches = query ? search.search(query) : allDocuments
-  return matches
-    .map((document) =>
-      filterByStatus(
-        document,
-        gherkinQuery,
-        cucumberQuery,
-        envelopesQuery,
-        allStatuses.filter((s) => !hideStatuses.includes(s))
+  const [searchable, setSearchable] = useState<SearchableDocuments>()
+  const [results, setResults] = useState<GherkinDocument[]>()
+  useEffect(() => setSearchable(createSearch(gherkinQuery)), [gherkinQuery])
+  useEffect(() => {
+    if (!searchable) {
+      return
+    }
+    const searched = query ? searchable.search(query) : gherkinQuery.getGherkinDocuments()
+    const filtered = searched
+      .map((document) =>
+        filterByStatus(
+          document,
+          gherkinQuery,
+          cucumberQuery,
+          envelopesQuery,
+          allStatuses.filter((s) => !hideStatuses.includes(s))
+        )
       )
-    )
-    .filter((document) => document !== null) as GherkinDocument[]
+      .filter((document) => document !== null) as GherkinDocument[]
+    setResults(filtered)
+  }, [query, hideStatuses, gherkinQuery, cucumberQuery, envelopesQuery, searchable])
+  return results
 }
