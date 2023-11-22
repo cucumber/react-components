@@ -7,7 +7,7 @@ export interface SearchableDocuments {
   search: (query: string) => readonly GherkinDocument[]
 }
 
-export function createSearch(gherkinQuery: GherkinQuery): SearchableDocuments {
+export async function createSearch(gherkinQuery: GherkinQuery): Promise<SearchableDocuments> {
   const search = new Search(gherkinQuery)
   gherkinQuery.getGherkinDocuments().forEach((document) => {
     search.add(document)

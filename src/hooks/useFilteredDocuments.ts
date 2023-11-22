@@ -13,7 +13,9 @@ export function useFilteredDocuments(
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()
   const [searchable, setSearchable] = useState<SearchableDocuments>()
   const [results, setResults] = useState<GherkinDocument[]>()
-  useEffect(() => setSearchable(createSearch(gherkinQuery)), [gherkinQuery])
+  useEffect(() => {
+    createSearch(gherkinQuery).then((created) => setSearchable(created))
+  }, [gherkinQuery])
   useEffect(() => {
     if (!searchable) {
       return
