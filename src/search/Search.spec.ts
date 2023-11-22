@@ -24,7 +24,7 @@ describe('Search', () => {
     search = new Search(gherkinQuery)
   })
 
-  function prettyResults(feature: string, query: string): string {
+  async function prettyResults(feature: string, query: string): Promise<string> {
     const envelopes = generateMessages(
       feature,
       'test.feature',
@@ -44,13 +44,13 @@ describe('Search', () => {
         search.add(envelope.gherkinDocument)
       }
     }
-    return pretty(search.search(query)[0])
+    return pretty((await search.search(query))[0])
   }
 
   describe('search', () => {
     describe('when using a tag expression query', () => {
-      it('uses TagSearch to filter the results', () => {
-        const results = prettyResults(feature, '@planet')
+      it('uses TagSearch to filter the results', async () => {
+        const results = await prettyResults(feature, '@planet')
         expect(results).toEqual(
           `Feature: Solar System
 
@@ -61,8 +61,8 @@ describe('Search', () => {
         )
       })
 
-      it('does not raises error when tag expression is incorrect', () => {
-        const results = prettyResults(feature, '(@planet or @dwarf))')
+      it('does not raises error when tag expression is incorrect', async () => {
+        const results = await prettyResults(feature, '(@planet or @dwarf))')
         expect(results).toEqual(
           `Feature: Solar System
 
@@ -79,8 +79,8 @@ describe('Search', () => {
     })
 
     describe('when using a query which is not a tag expression', () => {
-      it('uses TextSearch to filter the results', () => {
-        const results = prettyResults(feature, 'not really (')
+      it('uses TextSearch to filter the results', async () => {
+        const results = await prettyResults(feature, 'not really (')
         expect(results).toEqual(
           `Feature: Solar System
 

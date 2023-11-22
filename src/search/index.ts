@@ -4,7 +4,7 @@ import { GherkinDocument } from '@cucumber/messages'
 import Search from './Search'
 
 export interface SearchableDocuments {
-  search: (query: string) => readonly GherkinDocument[]
+  search: (query: string) => Promise<readonly GherkinDocument[]>
 }
 
 export async function createSearch(gherkinQuery: GherkinQuery): Promise<SearchableDocuments> {

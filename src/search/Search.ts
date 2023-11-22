@@ -13,7 +13,7 @@ export default class Search {
     this.tagSearch = new TagSearch(gherkinQuery)
   }
 
-  public search(query: string): messages.GherkinDocument[] {
+  public async search(query: string): Promise<messages.GherkinDocument[]> {
     if (isTagExpression(query)) {
       try {
         return this.tagSearch.search(query)
