@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { allStatuses } from '../countScenariosByStatuses'
 import filterByStatus from '../filter/filterByStatus'
-import { createSearch, SearchableDocuments } from '../search'
+import { createSearch, Searchable } from '../search'
 import { useQueries } from './useQueries'
 
 export function useFilteredDocuments(
@@ -11,7 +11,7 @@ export function useFilteredDocuments(
   hideStatuses: readonly TestStepResultStatus[]
 ): GherkinDocument[] | undefined {
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()
-  const [searchable, setSearchable] = useState<SearchableDocuments>()
+  const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
   useEffect(() => {
     createSearch(gherkinQuery).then((created) => setSearchable(created))

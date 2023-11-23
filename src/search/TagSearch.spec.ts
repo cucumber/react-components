@@ -2,11 +2,10 @@ import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import TagSearch from './TagSearch'
+import { createTagSearch } from './TagSearch'
 
-describe('TagSearchTest', () => {
+describe('TagSearch', () => {
   let gherkinQuery: GherkinQuery
-  let tagSearch: TagSearch
 
   const feature = `@system
 Feature: Solar System
@@ -22,10 +21,9 @@ Feature: Solar System
 
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
-    tagSearch = new TagSearch(gherkinQuery)
   })
 
-  function prettyResults(feature: string, query: string): string {
+  async function prettyResults(feature: string, query: string): Promise<string> {
     const envelopes = generateMessages(
       feature,
       'test.feature',
@@ -39,32 +37,29 @@ Feature: Solar System
     for (const envelope of envelopes) {
       gherkinQuery.update(envelope)
     }
-    for (const envelope of envelopes) {
-      if (envelope.gherkinDocument) {
-        tagSearch.add(envelope.gherkinDocument)
-      }
-    }
-    return pretty(tagSearch.search(query)[0])
+    const tagSearch = await createTagSearch(gherkinQuery)
+    return pretty((await tagSearch.search(query))[0])
   }
 
   describe('search', () => {
-    it('returns an empty list when no documents have been added', () => {
-      expect(tagSearch.search('@any')).toEqual([])
+    it('returns an empty list when no documents have been added', async () => {
+      const tagSearch = await createTagSearch(gherkinQuery)
+      expect(await tagSearch.search('@any')).toEqual([])
     })
 
-    it('finds matching scenarios', () => {
-      expect(prettyResults(feature, '@planet')).toContain('Scenario: Earth')
+    it('finds matching scenarios', async () => {
+      expect(await prettyResults(feature, '@planet')).toContain('Scenario: Earth')
     })
 
-    it('takes into account feature tags', () => {
-      const results = prettyResults(feature, '@system')
+    it('takes into account feature tags', async () => {
+      const results = await prettyResults(feature, '@system')
 
       expect(results).toContain('Scenario: Earth')
       expect(results).toContain('Scenario: Pluto')
     })
 
-    it('supports complex search', () => {
-      const results = prettyResults(feature, '@system and not @dwarf')
+    it('supports complex search', async () => {
+      const results = await prettyResults(feature, '@system and not @dwarf')
 
       expect(results).toContain('Scenario: Earth')
       expect(results).not.toContain('Scenario: Pluto')
@@ -91,16 +86,16 @@ Feature: Solar system
     Examples: giant gas planets
       | jupiter | Io, Europe, Ganymède, Callisto |
 `
-    it('does not filter non-matching examples', () => {
-      const results = prettyResults(exampleFeature, '@solid')
+    it('does not filter non-matching examples', async () => {
+      const results = await prettyResults(exampleFeature, '@solid')
 
       expect(results).toContain('Scenario: a planet may have sattelites')
       expect(results).toContain('Examples: solid planets')
       expect(results).toContain('Examples: giant gas planets')
     })
 
-    it('does not filter examples which should be excluded', () => {
-      const results = prettyResults(exampleFeature, '@solid and not @gas')
+    it('does not filter examples which should be excluded', async () => {
+      const results = await prettyResults(exampleFeature, '@solid and not @gas')
 
       expect(results).toContain('Scenario: a planet may have sattelites')
       expect(results).toContain('Examples: solid planets')

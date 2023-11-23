@@ -2,10 +2,9 @@ import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import Search from './Search'
+import { createSearch } from './Search'
 
 describe('Search', () => {
-  let search: Search
   let gherkinQuery: GherkinQuery
 
   const feature = `Feature: Solar System
@@ -21,7 +20,6 @@ describe('Search', () => {
 
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
-    search = new Search(gherkinQuery)
   })
 
   async function prettyResults(feature: string, query: string): Promise<string> {
@@ -39,11 +37,7 @@ describe('Search', () => {
     for (const envelope of envelopes) {
       gherkinQuery.update(envelope)
     }
-    for (const envelope of envelopes) {
-      if (envelope.gherkinDocument) {
-        search.add(envelope.gherkinDocument)
-      }
-    }
+    const search = await createSearch(gherkinQuery)
     return pretty((await search.search(query))[0])
   }
 
