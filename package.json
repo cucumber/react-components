@@ -16,7 +16,7 @@
   "scripts": {
     "prepare": "husky install && node generate-fixtures.js",
     "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.scss' 'dist/src'",
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "start": "ladle serve",
     "build": "ladle build",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test-utils",
@@ -32,6 +32,7 @@
     "@fortawesome/fontawesome-svg-core": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
+    "@orama/orama": "^2.0.0-beta.7",
     "@teppeis/multimaps": "2.0.0",
     "@types/elasticlunr": "0.9.5",
     "ansi-to-html": "0.7.2",

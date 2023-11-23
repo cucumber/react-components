@@ -56,10 +56,14 @@ describe('FilteredResults', () => {
         <TestableFilteredResults envelopes={attachments as Envelope[]} />
       )
 
+      await waitFor(() => getByText('samples/attachments/attachments.feature'))
+
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'nope!')
       await userEvent.keyboard('{Enter}')
 
-      expect(getByText('No matches found for your query "nope!" and/or filters')).toBeVisible()
+      await waitFor(() => {
+        expect(getByText('No matches found for your query "nope!" and/or filters')).toBeVisible()
+      })
     })
 
     it('narrows the results with a valid search term, and restores when we clear the search', async () => {

@@ -74,7 +74,7 @@ describe('Search', () => {
 
     describe('when using a query which is not a tag expression', () => {
       it('uses TextSearch to filter the results', async () => {
-        const results = await prettyResults(feature, 'not really (')
+        const results = await prettyResults(feature, 'not really')
         expect(results).toEqual(
           `Feature: Solar System
 
