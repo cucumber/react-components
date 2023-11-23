@@ -1,44 +1,45 @@
-import * as messages from '@cucumber/messages'
-import elasticlunr from 'elasticlunr'
+import { Rule } from '@cucumber/messages'
+import { create, insert, Orama, search } from '@orama/orama'
 
-interface SearchableRule {
-  id: string
-  name: string
-  description: string
-}
+import { TypedIndex } from './types'
 
-export default class RuleSearch {
-  private readonly index = elasticlunr<SearchableRule>((ctx) => {
-    ctx.setRef('id')
-    ctx.addField('name')
-    ctx.addField('description')
-    ctx.saveDocument(true)
-  })
-  private ruleById = new Map<string, messages.Rule>()
+const schema = {
+  name: 'string',
+  description: 'string',
+} as const
 
-  public add(rule: messages.Rule): void {
-    this.index.addDoc({
+class RuleSearch implements TypedIndex<Rule> {
+  private ruleById = new Map<string, Rule>()
+  private readonly index: Orama<typeof schema>
+
+  constructor(index: Orama<typeof schema>) {
+    this.index = index
+  }
+
+  async search(term: string): Promise<Array<Rule>> {
+    const { hits } = await search(this.index, {
+      term,
+    })
+    return hits.map((hit) => this.ruleById.get(hit.id)) as Rule[]
+  }
+
+  async add(rule: Rule): Promise<this> {
+    this.ruleById.set(rule.id, rule)
+    await insert(this.index, {
       id: rule.id,
       name: rule.name,
       description: rule.description,
     })
-    this.ruleById.set(rule.id, rule)
+    return this
   }
+}
 
-  public search(query: string): messages.Rule[] {
-    const results = this.index.search(query, {
-      fields: {
-        name: { bool: 'OR', boost: 1 },
-        description: { bool: 'OR', boost: 1 },
-      },
-    })
-
-    return results.map((result) => this.get(result.ref))
-  }
-
-  private get(ref: string): messages.Rule {
-    const rule = this.ruleById.get(ref)
-    if (!rule) throw new Error(`No rule for ref ${ref}`)
-    return rule
-  }
+export async function createRuleSearch() {
+  const index: Orama<typeof schema> = await create({
+    schema,
+    sort: {
+      enabled: false,
+    },
+  })
+  return new RuleSearch(index)
 }

@@ -1,9 +1,9 @@
 import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
-import { GherkinDocument, Step } from '@cucumber/messages'
+import { GherkinDocument, Rule, Step } from '@cucumber/messages'
 
 import FeatureSearch from './FeatureSearch'
-import RuleSearch from './RuleSearch'
+import { createRuleSearch } from './RuleSearch'
 import ScenarioSearch from './ScenarioSearch'
 import { createStepSearch } from './StepSearch'
 import { Searchable, TypedIndex } from './types'
@@ -14,17 +14,18 @@ class TextSearch {
   private readonly backgroundSearch = new ScenarioSearch()
   private readonly scenarioSearch = new ScenarioSearch()
   private readonly stepSearch: TypedIndex<Step>
-  private readonly ruleSearch = new RuleSearch()
+  private readonly ruleSearch: TypedIndex<Rule>
 
-  constructor(stepSearch: TypedIndex<Step>) {
+  constructor(stepSearch: TypedIndex<Step>, ruleSearch: TypedIndex<Rule>) {
     this.stepSearch = stepSearch
+    this.ruleSearch = ruleSearch
   }
 
   public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
     const matchingSteps = await this.stepSearch.search(query)
     const matchingBackgrounds = this.backgroundSearch.search(query)
     const matchingScenarios = this.scenarioSearch.search(query)
-    const matchingRules = this.ruleSearch.search(query)
+    const matchingRules = await this.ruleSearch.search(query)
     const matchingFeatures = this.featureSearch.search(query)
 
     const walker = new GherkinDocumentWalker({
@@ -53,7 +54,7 @@ class TextSearch {
         handleScenario: (scenario) => this.scenarioSearch.add(scenario),
         handleBackground: (background) =>
           this.backgroundSearch.add(background as messages.Scenario),
-        handleRule: (rule) => this.ruleSearch.add(rule),
+        handleRule: (rule) => promises.push(this.ruleSearch.add(rule)),
       }
     )
     this.featureSearch.add(gherkinDocument)
@@ -66,8 +67,8 @@ class TextSearch {
 export async function createTextSearch(
   gherkinDocuments: readonly GherkinDocument[]
 ): Promise<Searchable> {
-  const stepSearch = await createStepSearch()
-  const textSearchImpl = new TextSearch(stepSearch)
+  const [stepSearch, ruleSearch] = await Promise.all([createStepSearch(), createRuleSearch()])
+  const textSearchImpl = new TextSearch(stepSearch, ruleSearch)
   for (const document of gherkinDocuments) {
     await textSearchImpl.add(document)
   }
