@@ -5,7 +5,7 @@ export interface Searchable {
   add: (document: GherkinDocument) => Promise<Searchable>
 }
 
-export interface TypedIndex<T> {
-  search: (query: string) => Promise<Array<T>>
-  add: (item: T) => Promise<this>
+export interface TypedIndex<ReturnedType, SourceType = ReturnedType> {
+  search: (query: string) => Promise<Array<ReturnedType>>
+  add: (item: SourceType) => Promise<this>
 }
