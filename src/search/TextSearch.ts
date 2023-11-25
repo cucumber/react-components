@@ -1,64 +1,66 @@
 import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { Feature, GherkinDocument, Rule, Step } from '@cucumber/messages'
+import { Background, Feature, GherkinDocument, Rule, Scenario, Step } from '@cucumber/messages'
 
 import { createFeatureSearch } from './FeatureSearch'
-import { createRuleSearch } from './RuleSearch'
-import ScenarioSearch from './ScenarioSearch'
+import { createScenarioLikeSearch } from './ScenarioLikeSearch'
 import { createStepSearch } from './StepSearch'
 import { Searchable, TypedIndex } from './types'
 
 class TextSearch {
-  private readonly gherkinDocuments: messages.GherkinDocument[] = []
-  private readonly backgroundSearch = new ScenarioSearch()
-  private readonly scenarioSearch = new ScenarioSearch()
+  private readonly gherkinDocuments: GherkinDocument[] = []
+
   private readonly stepSearch: TypedIndex<Step>
+  private readonly backgroundSearch: TypedIndex<Background>
+  private readonly scenarioSearch: TypedIndex<Scenario>
   private readonly ruleSearch: TypedIndex<Rule>
   private readonly featureSearch: TypedIndex<Feature, GherkinDocument>
 
   constructor(
     stepSearch: TypedIndex<Step>,
+    backgroundSearch: TypedIndex<Background>,
+    scenarioSearch: TypedIndex<Scenario>,
     ruleSearch: TypedIndex<Rule>,
     featureSearch: TypedIndex<Feature, GherkinDocument>
   ) {
     this.stepSearch = stepSearch
+    this.backgroundSearch = backgroundSearch
+    this.scenarioSearch = scenarioSearch
     this.ruleSearch = ruleSearch
     this.featureSearch = featureSearch
   }
 
-  public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
-    const matchingSteps = await this.stepSearch.search(query)
-    const matchingBackgrounds = this.backgroundSearch.search(query)
-    const matchingScenarios = this.scenarioSearch.search(query)
-    const matchingRules = await this.ruleSearch.search(query)
-    const matchingFeatures = await this.featureSearch.search(query)
+  public async search(query: string): Promise<readonly GherkinDocument[]> {
+    const [matchingSteps, matchingBackgrounds, matchingScenarios, matchingRules, matchingFeatures] =
+      await Promise.all([
+        this.stepSearch.search(query),
+        this.backgroundSearch.search(query),
+        this.scenarioSearch.search(query),
+        this.ruleSearch.search(query),
+        this.featureSearch.search(query),
+      ])
 
     const walker = new GherkinDocumentWalker({
       acceptStep: (step) => matchingSteps.includes(step),
+      acceptBackground: (background) => matchingBackgrounds.includes(background),
       acceptScenario: (scenario) => matchingScenarios.includes(scenario),
-      // TODO: This is an ugly hack to work around the fact that Scenario and Background are no longer interchangeable,
-      // because tags is now mandatory.
-      acceptBackground: (background) =>
-        matchingBackgrounds.includes(background as messages.Scenario),
       acceptRule: (rule) => matchingRules.includes(rule),
       acceptFeature: (feature) => matchingFeatures.includes(feature),
     })
 
     return this.gherkinDocuments
       .map((gherkinDocument) => walker.walkGherkinDocument(gherkinDocument))
-      .filter((gherkinDocument) => gherkinDocument !== null) as GherkinDocument[]
+      .filter((gherkinDocument) => !!gherkinDocument) as readonly GherkinDocument[]
   }
 
-  public async add(gherkinDocument: messages.GherkinDocument) {
+  public async add(gherkinDocument: GherkinDocument) {
     this.gherkinDocuments.push(gherkinDocument)
     const promises: Promise<unknown>[] = []
     const walker = new GherkinDocumentWalker(
       {},
       {
         handleStep: (step) => promises.push(this.stepSearch.add(step)),
-        handleScenario: (scenario) => this.scenarioSearch.add(scenario),
-        handleBackground: (background) =>
-          this.backgroundSearch.add(background as messages.Scenario),
+        handleBackground: (background) => promises.push(this.backgroundSearch.add(background)),
+        handleScenario: (scenario) => promises.push(this.scenarioSearch.add(scenario)),
         handleRule: (rule) => promises.push(this.ruleSearch.add(rule)),
       }
     )
@@ -72,12 +74,21 @@ class TextSearch {
 export async function createTextSearch(
   gherkinDocuments: readonly GherkinDocument[]
 ): Promise<Searchable> {
-  const [stepSearch, ruleSearch, featureSearch] = await Promise.all([
-    createStepSearch(),
-    createRuleSearch(),
-    createFeatureSearch(),
-  ])
-  const textSearchImpl = new TextSearch(stepSearch, ruleSearch, featureSearch)
+  const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
+    await Promise.all([
+      createStepSearch(),
+      createScenarioLikeSearch<Background>(),
+      createScenarioLikeSearch<Scenario>(),
+      createScenarioLikeSearch<Rule>(),
+      createFeatureSearch(),
+    ])
+  const textSearchImpl = new TextSearch(
+    stepSearch,
+    backgroundSearch,
+    scenarioSearch,
+    ruleSearch,
+    featureSearch
+  )
   for (const document of gherkinDocuments) {
     await textSearchImpl.add(document)
   }
