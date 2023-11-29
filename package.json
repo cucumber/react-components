@@ -41,7 +41,7 @@
     "date-fns": "2.29.3",
     "elasticlunr": "0.9.5",
     "hast-util-sanitize": "3.0.2",
-    "highlight-words": "1.2.1",
+    "highlight-words": "1.2.2",
     "mime": "^3.0.0",
     "react-accessible-accordion": "5.0.0",
     "react-markdown": "6.0.3",
