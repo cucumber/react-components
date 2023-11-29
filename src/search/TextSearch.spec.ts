@@ -3,7 +3,7 @@ import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import assert from 'assert'
 
-import TextSearch from './TextSearch'
+import TextSearch from './TextSearch.js'
 
 describe('TextSearch', () => {
   let search: TextSearch

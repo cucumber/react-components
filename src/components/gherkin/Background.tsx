@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise'
-import { Description } from './Description'
-import { GherkinSteps } from './GherkinSteps'
-import { Keyword } from './Keyword'
-import { StepsList } from './StepsList'
-import { Title } from './Title'
+import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise/index.js'
+import { Description } from './Description.js'
+import { GherkinSteps } from './GherkinSteps.js'
+import { Keyword } from './Keyword.js'
+import { StepsList } from './StepsList.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
   return (

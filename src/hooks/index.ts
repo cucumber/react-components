@@ -1,2 +1,2 @@
-export * from './useQueries'
-export * from './useSearch'
+export * from './useQueries.js'
+export * from './useSearch.js'

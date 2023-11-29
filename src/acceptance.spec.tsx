@@ -13,10 +13,10 @@ import React from 'react'
 import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { CucumberQueryStream } from '../test-utils'
-import { render } from '../test-utils'
-import { EnvelopesQuery } from './EnvelopesQueryContext'
-import { components } from './index'
+import { CucumberQueryStream } from '../test-utils/index.js'
+import { render } from '../test-utils/index.js'
+import { EnvelopesQuery } from './EnvelopesQueryContext.js'
+import { components } from './index.js'
 
 describe('acceptance tests', () => {
   jest.setTimeout(30000)

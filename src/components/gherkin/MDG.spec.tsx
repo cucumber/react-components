@@ -4,11 +4,11 @@ import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import markdown from '../../../acceptance/markdown/markdown.feature.md'
-import { EnvelopesQuery } from '../../EnvelopesQueryContext'
-import UriContext from '../../UriContext'
-import { QueriesWrapper } from '../app'
-import { MDG } from './MDG'
+import markdown from '../../../acceptance/markdown/markdown.feature.md.js'
+import { EnvelopesQuery } from '../../EnvelopesQueryContext.js'
+import UriContext from '../../UriContext.js'
+import { QueriesWrapper } from '../app/index.js'
+import { MDG } from './MDG.js'
 
 describe('<MDG/>', () => {
   it(`can render markdown as MDG`, async () => {

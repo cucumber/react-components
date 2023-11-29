@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 import React, { FunctionComponent, PropsWithChildren } from 'react'
 
-import { StatusIcon } from './StatusIcon'
+import { StatusIcon } from './StatusIcon.js'
 import styles from './StepItem.module.scss'
 
 export const StepItem: FunctionComponent<

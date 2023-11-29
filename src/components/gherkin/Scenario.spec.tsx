@@ -3,11 +3,11 @@ import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 
-import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature'
-import { render } from '../../../test-utils'
-import UriContext from '../../UriContext'
-import { EnvelopesWrapper } from '../app/EnvelopesWrapper'
-import { Scenario } from './Scenario'
+import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import { render } from '../../../test-utils/index.js'
+import UriContext from '../../UriContext.js'
+import { EnvelopesWrapper } from '../app/EnvelopesWrapper.js'
+import { Scenario } from './Scenario.js'
 
 describe('<Scenario/>', () => {
   const getStatus = (element: HTMLElement) =>

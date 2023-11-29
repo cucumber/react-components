@@ -2,9 +2,9 @@ import { TestStepResultStatus } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
-import { CucumberReact } from '../CucumberReact'
-import { IStatusesSummaryProps, StatusesSummary } from './StatusesSummary'
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses.js'
+import { CucumberReact } from '../CucumberReact.js'
+import { IStatusesSummaryProps, StatusesSummary } from './StatusesSummary.js'
 
 export default {
   title: 'App/StatusesSummary',

@@ -5,8 +5,8 @@ import * as messages from '@cucumber/messages'
 import { SourceReference } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
-import { FailingHook, runFeature } from '../../test-utils'
-import filterByStatus from './filterByStatus'
+import { FailingHook, runFeature } from '../../test-utils/index.js'
+import filterByStatus from './filterByStatus.js'
 
 const sourceReference: SourceReference = {}
 

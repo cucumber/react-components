@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GherkinDocumentProps, useCustomRendering } from '../customise'
-import { Feature } from './Feature'
+import { GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
+import { Feature } from './Feature.js'
 
 const DefaultRenderer: React.FunctionComponent<GherkinDocumentProps> = ({ gherkinDocument }) => {
   return gherkinDocument.feature ? <Feature feature={gherkinDocument.feature} /> : null

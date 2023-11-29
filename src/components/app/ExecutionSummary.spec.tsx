@@ -3,8 +3,8 @@ import { render } from '@testing-library/react'
 import { add, addMilliseconds } from 'date-fns'
 import React from 'react'
 
-import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
-import { ExecutionSummary, IExecutionSummaryProps } from './ExecutionSummary'
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses.js'
+import { ExecutionSummary, IExecutionSummaryProps } from './ExecutionSummary.js'
 
 const startDate = new Date(1639753096000)
 const finishDate = new Date(1639753197000)

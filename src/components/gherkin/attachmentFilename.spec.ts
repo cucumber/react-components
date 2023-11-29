@@ -1,6 +1,6 @@
 import { Attachment, AttachmentContentEncoding } from '@cucumber/messages'
 
-import { attachmentFilename } from './attachmentFilename'
+import { attachmentFilename } from './attachmentFilename.js'
 
 describe('attachmentFilename', () => {
   it('should return the filename from the message if present', () => {

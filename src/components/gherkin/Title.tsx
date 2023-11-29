@@ -1,7 +1,12 @@
 import React from 'react'
 
-import { DefaultComponent, TitleClasses, TitleProps, useCustomRendering } from '../customise'
-import { Anchor } from './Anchor'
+import {
+  DefaultComponent,
+  TitleClasses,
+  TitleProps,
+  useCustomRendering,
+} from '../customise/index.js'
+import { Anchor } from './Anchor.js'
 import defaultStyles from './Title.module.scss'
 
 const DefaultRenderer: DefaultComponent<TitleProps, TitleClasses> = ({

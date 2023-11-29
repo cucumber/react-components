@@ -2,8 +2,8 @@ import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import React from 'react'
 
-import { render } from '../../../test-utils'
-import { HookStep } from './HookStep'
+import { render } from '../../../test-utils/index.js'
+import { HookStep } from './HookStep.js'
 
 describe('<HookStep>', () => {
   class StubCucumberQuery extends CucumberQuery {

@@ -1,8 +1,8 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import statusName from '../gherkin/statusName'
-import statuses from './statuses'
+import statusName from '../gherkin/statusName.js'
+import statuses from './statuses.js'
 import styles from './StatusesSummary.module.scss'
 
 export interface IStatusesSummaryProps {

@@ -2,7 +2,7 @@ import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import TagSearch from './TagSearch'
+import TagSearch from './TagSearch.js'
 
 describe('TagSearchTest', () => {
   let gherkinQuery: GherkinQuery

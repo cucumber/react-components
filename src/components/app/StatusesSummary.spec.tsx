@@ -2,8 +2,8 @@ import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses'
-import { StatusesSummary } from './StatusesSummary'
+import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses.js'
+import { StatusesSummary } from './StatusesSummary.js'
 
 describe('StatusesSummary', () => {
   it('should render correctly', () => {

@@ -1,6 +1,9 @@
 import React, { FunctionComponent, PropsWithChildren } from 'react'
 
-import SearchQueryContext, { SearchQueryProps, useSearchQueryCtx } from '../../SearchQueryContext'
+import SearchQueryContext, {
+  SearchQueryProps,
+  useSearchQueryCtx,
+} from '../../SearchQueryContext.js'
 
 export const SearchWrapper: FunctionComponent<PropsWithChildren<SearchQueryProps>> = ({
   children,

@@ -2,12 +2,12 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import testData from '../../../acceptance/examples-tables/examples-tables.feature'
-import targetedRun from '../../../samples/targeted-run'
-import { CucumberReact } from '../CucumberReact'
-import { EnvelopesWrapper } from './EnvelopesWrapper'
-import { FilteredResults } from './FilteredResults'
-import { SearchWrapper } from './SearchWrapper'
+import testData from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import targetedRun from '../../../samples/targeted-run.js'
+import { CucumberReact } from '../CucumberReact.js'
+import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { FilteredResults } from './FilteredResults.js'
+import { SearchWrapper } from './SearchWrapper.js'
 
 export default {
   title: 'App/FilteredResults',

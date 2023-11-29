@@ -3,8 +3,8 @@ import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import React from 'react'
 
-import { render } from '../../../test-utils'
-import { GherkinStep } from './GherkinStep'
+import { render } from '../../../test-utils/index.js'
+import { GherkinStep } from './GherkinStep.js'
 
 describe('<GherkinStep>', () => {
   it('renders', () => {

@@ -2,7 +2,12 @@ import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-import { AnchorClasses, AnchorProps, DefaultComponent, useCustomRendering } from '../customise'
+import {
+  AnchorClasses,
+  AnchorProps,
+  DefaultComponent,
+  useCustomRendering,
+} from '../customise/index.js'
 import defaultStyles from './Anchor.module.scss'
 
 const DefaultRenderer: DefaultComponent<AnchorProps, AnchorClasses> = ({

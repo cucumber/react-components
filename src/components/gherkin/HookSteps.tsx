@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { HookStep } from './HookStep'
+import { HookStep } from './HookStep.js'
 
 interface IProps {
   hookSteps: readonly messages.TestStep[]

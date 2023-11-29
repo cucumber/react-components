@@ -6,16 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Convert from 'ansi-to-html'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 
-import { NavigationButton } from '../app/NavigationButton'
+import { NavigationButton } from '../app/NavigationButton.js'
 import {
   AttachmentClasses,
   AttachmentProps,
   DefaultComponent,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './Attachment.module.scss'
-import { attachmentFilename } from './attachmentFilename'
-import { ErrorMessage } from './ErrorMessage'
+import { attachmentFilename } from './attachmentFilename.js'
+import { ErrorMessage } from './ErrorMessage.js'
 
 export const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   attachment,

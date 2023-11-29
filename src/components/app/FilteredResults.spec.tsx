@@ -3,13 +3,13 @@ import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React, { VoidFunctionComponent } from 'react'
 
-import attachments from '../../../acceptance/attachments/attachments.feature'
-import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature'
-import minimal from '../../../acceptance/minimal/minimal.feature'
-import targetedRun from '../../../samples/targeted-run'
-import SearchQueryContext, { useSearchQueryCtx } from '../../SearchQueryContext'
-import { EnvelopesWrapper } from './EnvelopesWrapper'
-import { FilteredResults } from './FilteredResults'
+import attachments from '../../../acceptance/attachments/attachments.feature.js'
+import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import minimal from '../../../acceptance/minimal/minimal.feature.js'
+import targetedRun from '../../../samples/targeted-run.js'
+import SearchQueryContext, { useSearchQueryCtx } from '../../SearchQueryContext.js'
+import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { FilteredResults } from './FilteredResults.js'
 
 describe('FilteredResults', () => {
   const TestableFilteredResults: VoidFunctionComponent<{ envelopes: Envelope[] }> = ({

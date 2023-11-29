@@ -1,9 +1,8 @@
-import { render } from '@testing-library/react'
+import { act, render } from '@testing-library/react'
 import React from 'react'
-import { act } from 'react-dom/test-utils'
 
-import SearchQueryContext, { SearchQueryCtx, SearchQueryProps } from '../../SearchQueryContext'
-import { SearchWrapper } from './SearchWrapper'
+import SearchQueryContext, { SearchQueryCtx, SearchQueryProps } from '../../SearchQueryContext.js'
+import { SearchWrapper } from './SearchWrapper.js'
 
 describe('SearchWrapper', () => {
   function renderSearchWrapper(opts?: SearchQueryProps): ReturnType<typeof render> & {

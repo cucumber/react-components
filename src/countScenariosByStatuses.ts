@@ -2,7 +2,7 @@ import { GherkinDocumentWalker, Query as GherkinQuery } from '@cucumber/gherkin-
 import { getWorstTestStepResult, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
-import { EnvelopesQuery } from './EnvelopesQueryContext'
+import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 
 export function makeEmptyScenarioCountsByStatus(): Record<TestStepResultStatus, number> {
   return {

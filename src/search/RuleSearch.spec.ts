@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 
-import { makeRule } from '../../test-utils'
-import RuleSearch from './RuleSearch'
+import { makeRule } from '../../test-utils/index.js'
+import RuleSearch from './RuleSearch.js'
 
 describe('RuleSearch', () => {
   let ruleSearch: RuleSearch
