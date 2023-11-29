@@ -1,6 +1,6 @@
 import { Envelope } from '@cucumber/messages'
 import { render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 import React, { VoidFunctionComponent } from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'

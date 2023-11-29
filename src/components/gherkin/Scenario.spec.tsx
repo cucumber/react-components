@@ -1,6 +1,6 @@
 import { Envelope, GherkinDocument } from '@cucumber/messages'
 import { screen, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 import React from 'react'
 
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
