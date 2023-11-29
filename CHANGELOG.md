@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- BREAKING CHANGE: Switch to ESM ([#338](https://github.com/cucumber/react-components/pull/338))
 
 ## [21.1.1] - 2023-07-13
 ### Fixed
