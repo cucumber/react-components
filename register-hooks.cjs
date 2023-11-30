@@ -5,4 +5,4 @@ register('ts-node/esm', pathToFileURL(__filename))
 register('esm-loader-css', pathToFileURL(__filename))
 
 require('global-jsdom/register')
-require('chai').use(require('chai-dom'))
+require('chai').use(require('chai-dom')).use(require('sinon-chai'))
