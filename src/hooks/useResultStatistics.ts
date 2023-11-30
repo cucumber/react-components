@@ -1,5 +1,5 @@
-import countScenariosByStatuses from '../countScenariosByStatuses'
-import { useQueries } from './useQueries'
+import countScenariosByStatuses from '../countScenariosByStatuses.js'
+import { useQueries } from './useQueries.js'
 
 export function useResultStatistics() {
   const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()

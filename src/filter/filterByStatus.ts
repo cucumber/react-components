@@ -4,7 +4,7 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
-import { EnvelopesQuery } from '../EnvelopesQueryContext'
+import { EnvelopesQuery } from '../EnvelopesQueryContext.js'
 
 export default function filterByStatus(
   gherkinDocument: messages.GherkinDocument,
