@@ -1,11 +1,14 @@
+import * as url from 'node:url'
+
 import { runCucumber, SupportCode } from '@cucumber/fake-cucumber'
 import { GherkinStreams } from '@cucumber/gherkin-streams'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
-import { IdGenerator } from '@cucumber/messages'
 import * as messages from '@cucumber/messages'
+import { IdGenerator } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import assert from 'assert'
+import { expect } from 'chai'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
@@ -13,16 +16,15 @@ import React from 'react'
 import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { CucumberQueryStream } from '../test-utils/index.js'
-import { render } from '../test-utils/index.js'
+import { CucumberQueryStream, render } from '../test-utils/index.js'
 import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 import { components } from './index.js'
 
-describe('acceptance tests', () => {
-  jest.setTimeout(30000)
+describe('acceptance tests', function () {
+  this.timeout('30s')
 
   describe('with test data', () => {
-    const dir = __dirname + '/../testdata/good'
+    const dir = url.fileURLToPath(new URL('../testdata/good', import.meta.url))
     const files = fs.readdirSync(dir)
 
     for (const file of files) {
@@ -52,7 +54,7 @@ describe('acceptance tests', () => {
             </components.app.QueriesWrapper>
           )
 
-          expect(container).not.toBeEmptyDOMElement()
+          expect(container.textContent).to.not.eq(null)
         })
       }
     }
@@ -105,7 +107,7 @@ describe('acceptance tests', () => {
           </components.app.QueriesWrapper>
         )
 
-        expect(container).not.toBeEmptyDOMElement()
+        expect(container.textContent).not.to.eq(null)
       })
     }
   })
