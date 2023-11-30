@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "husky install && node generate-fixtures.cjs",
     "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.scss' 'dist/src'",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "jest",
     "start": "ladle serve",
     "build": "ladle build",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test-utils",
