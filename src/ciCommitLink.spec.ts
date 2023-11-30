@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 
 import ciCommitLink from './ciCommitLink.js'
 
@@ -14,7 +15,7 @@ describe('ciCommitLink(ci)', () => {
         },
       }
 
-      expect(ciCommitLink(ci)).toEqual('https://github.example.com/company/repo/commit/some-sha')
+      expect(ciCommitLink(ci)).to.eq('https://github.example.com/company/repo/commit/some-sha')
     })
   })
 
@@ -29,7 +30,7 @@ describe('ciCommitLink(ci)', () => {
         },
       }
 
-      expect(ciCommitLink(ci)).toEqual('https://github.com/company/repo/commit/some-sha')
+      expect(ciCommitLink(ci)).to.eq('https://github.com/company/repo/commit/some-sha')
     })
   })
 
@@ -39,7 +40,7 @@ describe('ciCommitLink(ci)', () => {
         name: 'SuperCI',
       }
 
-      expect(ciCommitLink(ci)).toBeNull()
+      expect(ciCommitLink(ci)).to.eq(null)
     })
   })
 })
