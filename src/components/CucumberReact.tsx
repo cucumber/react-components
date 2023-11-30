@@ -1,7 +1,7 @@
 import React, { FunctionComponent, PropsWithChildren } from 'react'
 
 import styles from './CucumberReact.module.scss'
-import { CustomRenderingContext, CustomRenderingSupport, IncludedTheme } from './customise'
+import { CustomRenderingContext, CustomRenderingSupport, IncludedTheme } from './customise/index.js'
 
 interface IProps {
   theme?: IncludedTheme

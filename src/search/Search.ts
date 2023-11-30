@@ -1,9 +1,9 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import isTagExpression from '../../src/isTagExpression'
-import TagSearch from '../../src/search/TagSearch'
-import TextSearch from '../../src/search/TextSearch'
+import isTagExpression from '../../src/isTagExpression.js'
+import TagSearch from '../../src/search/TagSearch.js'
+import TextSearch from '../../src/search/TextSearch.js'
 
 export default class Search {
   private readonly tagSearch: TagSearch

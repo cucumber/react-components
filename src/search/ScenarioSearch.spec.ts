@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 
-import { makeScenario } from '../../test-utils'
-import ScenarioSearch from './ScenarioSearch'
+import { makeScenario } from '../../test-utils/index.js'
+import ScenarioSearch from './ScenarioSearch.js'
 
 describe('ScenarioSearch', () => {
   let scenarioSearch: ScenarioSearch

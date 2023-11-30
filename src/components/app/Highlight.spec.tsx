@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext'
-import { HighLight } from './HighLight'
+import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext.js'
+import { HighLight } from './HighLight.js'
 
 describe('HighLight', () => {
   function renderHighlight(text: string, query: string, markdown: boolean) {

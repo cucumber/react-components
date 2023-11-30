@@ -1,6 +1,11 @@
 import React, { FunctionComponent } from 'react'
 
-import { DefaultComponent, KeywordClasses, KeywordProps, useCustomRendering } from '../customise'
+import {
+  DefaultComponent,
+  KeywordClasses,
+  KeywordProps,
+  useCustomRendering,
+} from '../customise/index.js'
 import defaultStyles from './Keyword.module.scss'
 
 const DefaultRenderer: DefaultComponent<KeywordProps, KeywordClasses> = ({ children, styles }) => {

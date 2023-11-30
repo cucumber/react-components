@@ -1,18 +1,18 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Element } from 'react-markdown/src/ast-to-react'
+import { Element } from 'react-markdown/src/ast-to-react.js'
 
-import GherkinQueryContext from '../../GherkinQueryContext'
-import { HighLight } from '../app/HighLight'
-import rehypePlugins from '../app/rehypePlugins'
-import { Header } from '../customise'
+import GherkinQueryContext from '../../GherkinQueryContext.js'
+import { HighLight } from '../app/HighLight.js'
+import rehypePlugins from '../app/rehypePlugins.js'
+import { Header } from '../customise/index.js'
 import dataTableStyles from './DataTable.module.scss'
-import { ExamplesTable } from './ExamplesTable'
-import { GherkinStep } from './GherkinStep'
-import { Keyword } from './Keyword'
+import { ExamplesTable } from './ExamplesTable.js'
+import { GherkinStep } from './GherkinStep.js'
+import { Keyword } from './Keyword.js'
 import styles from './MDG.module.scss'
-import { Title } from './Title'
+import { Title } from './Title.js'
 
 interface IProps {
   uri: string

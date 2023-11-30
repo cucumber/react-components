@@ -1,9 +1,9 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 import React from 'react'
 
-import { SearchBar } from './SearchBar'
+import { SearchBar } from './SearchBar.js'
 
 describe('SearchBar', () => {
   describe('searching', () => {

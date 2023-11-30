@@ -2,11 +2,11 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import attachments from '../../../acceptance/attachments/attachments.feature'
-import rules from '../../../acceptance/rules/rules.feature'
-import { EnvelopesWrapper, GherkinDocumentList } from '../app'
-import { CucumberReact } from '../CucumberReact'
-import { IncludedTheme } from './theming'
+import attachments from '../../../acceptance/attachments/attachments.feature.js'
+import rules from '../../../acceptance/rules/rules.feature.js'
+import { EnvelopesWrapper, GherkinDocumentList } from '../app/index.js'
+import { CucumberReact } from '../CucumberReact.js'
+import { IncludedTheme } from './theming.js'
 
 export default {
   title: 'Customisation/Themes',

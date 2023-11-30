@@ -1,7 +1,7 @@
 import * as messages from '@cucumber/messages'
 
-import { makeStep } from '../../test-utils'
-import StepSearch from './StepSearch'
+import { makeStep } from '../../test-utils/index.js'
+import StepSearch from './StepSearch.js'
 
 describe('StepSearch', () => {
   let stepSearch: StepSearch

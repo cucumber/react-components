@@ -5,7 +5,7 @@ import {
   ParameterClasses,
   ParameterProps,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './Parameter.module.scss'
 
 const DefaultRenderer: DefaultComponent<ParameterProps, ParameterClasses> = ({

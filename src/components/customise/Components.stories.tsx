@@ -2,9 +2,9 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { CucumberReact } from '../CucumberReact'
-import { Feature, Tags } from '../gherkin'
-import { CustomRenderingSupport, TagsProps } from './customRendering'
+import { CucumberReact } from '../CucumberReact.js'
+import { Feature, Tags } from '../gherkin/index.js'
+import { CustomRenderingSupport, TagsProps } from './customRendering.js'
 
 export default {
   title: 'Customisation/Components',

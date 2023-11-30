@@ -2,7 +2,7 @@ import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import Search from './Search'
+import Search from './Search.js'
 
 describe('Search', () => {
   let search: Search

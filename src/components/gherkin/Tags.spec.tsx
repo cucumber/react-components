@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { render } from '../../../test-utils'
-import { Tags } from './Tags'
+import { render } from '../../../test-utils/index.js'
+import { Tags } from './Tags.js'
 
 describe('Tags', () => {
   it('doesnt render anything if no tags', () => {

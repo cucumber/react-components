@@ -1,4 +1,4 @@
-import isTagExpression from './isTagExpression'
+import isTagExpression from './isTagExpression.js'
 
 describe('isTagExpression', () => {
   it('returns false with empty string', () => {

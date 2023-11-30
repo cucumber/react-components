@@ -3,9 +3,9 @@ import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
 import React, { FunctionComponent, PropsWithChildren, ReactElement } from 'react'
 
-import CucumberQueryContext from '../src/CucumberQueryContext'
-import GherkinQueryContext from '../src/GherkinQueryContext'
-import UriContext from '../src/UriContext'
+import CucumberQueryContext from '../src/CucumberQueryContext.js'
+import GherkinQueryContext from '../src/GherkinQueryContext.js'
+import UriContext from '../src/UriContext.js'
 
 export interface TestRenderOptions {
   uri?: string
@@ -35,9 +35,9 @@ const customRender = (ui: ReactElement, options: Partial<TestRenderOptions> = {}
   return render(ui, { wrapper: WrappedWithOptions })
 }
 
-export * from './CucumberQueryStream'
-export * from './runFeature'
-export * from './search'
+export * from './CucumberQueryStream.js'
+export * from './runFeature.js'
+export * from './search.js'
 export * from '@testing-library/react'
 
 export { customRender as render }

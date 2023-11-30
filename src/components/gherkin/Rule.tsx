@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { HighLight } from '../app/HighLight'
-import { DefaultComponent, RuleProps, useCustomRendering } from '../customise'
-import { Background } from './Background'
-import { Children } from './Children'
-import { Description } from './Description'
-import { Keyword } from './Keyword'
-import { Scenario } from './Scenario'
-import { Tags } from './Tags'
-import { Title } from './Title'
+import { HighLight } from '../app/HighLight.js'
+import { DefaultComponent, RuleProps, useCustomRendering } from '../customise/index.js'
+import { Background } from './Background.js'
+import { Children } from './Children.js'
+import { Description } from './Description.js'
+import { Keyword } from './Keyword.js'
+import { Scenario } from './Scenario.js'
+import { Tags } from './Tags.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<RuleProps> = ({ rule }) => {
   return (
