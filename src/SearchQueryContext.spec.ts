@@ -1,6 +1,6 @@
 import { TestStepResultStatus as Status } from '@cucumber/messages'
 
-import { searchFromURLParams, SearchQueryCtx } from './SearchQueryContext'
+import { searchFromURLParams, SearchQueryCtx } from './SearchQueryContext.js'
 
 describe('SearchQueryCtx', () => {
   it('uses the given values in its initial value', () => {

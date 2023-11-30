@@ -8,7 +8,8 @@
 
 ## Usage
 
-React 18 or above is required.
+- This package is distributed in ES module format only.
+- React 18 or above is required.
 
 The source code for screenshots above is:
 

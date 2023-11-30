@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { render } from '../../../test-utils'
-import { Description } from './index'
+import { render } from '../../../test-utils/index.js'
+import { Description } from './index.js'
 
 describe('Description', () => {
   it('doesnt render anything if description empty', () => {

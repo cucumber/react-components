@@ -4,9 +4,9 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { CucumberReact } from '../CucumberReact'
-import { DocString } from '../gherkin'
-import { CustomRenderingSupport } from './customRendering'
+import { CucumberReact } from '../CucumberReact.js'
+import { DocString } from '../gherkin/index.js'
+import { CustomRenderingSupport } from './customRendering.js'
 
 export default {
   title: 'Customisation/Classes',

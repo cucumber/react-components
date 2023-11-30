@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 
-import ciCommitLink from './ciCommitLink'
+import ciCommitLink from './ciCommitLink.js'
 
 describe('ciCommitLink(ci)', () => {
   describe('when executed on GitHubAction', () => {

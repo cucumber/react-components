@@ -1,2 +1,2 @@
-export { createSearch } from './Search'
-export * from './types'
+export { createSearch } from './Search.js'
+export * from './types.js'

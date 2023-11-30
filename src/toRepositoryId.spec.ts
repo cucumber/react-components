@@ -1,4 +1,4 @@
-import toRepositoryId from './toRepositoryId'
+import toRepositoryId from './toRepositoryId.js'
 
 const testData = [
   ['github.com/owner/name', 'https://github.com/owner/name'],

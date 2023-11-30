@@ -4,10 +4,10 @@ import * as messages from '@cucumber/messages'
 import { Envelope, SourceReference, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
-import targetedRun from '../samples/targeted-run'
-import { runFeature } from '../test-utils'
-import countScenariosByStatuses from './countScenariosByStatuses'
-import { EnvelopesQuery } from './EnvelopesQueryContext'
+import targetedRun from '../samples/targeted-run.js'
+import { runFeature } from '../test-utils/index.js'
+import countScenariosByStatuses from './countScenariosByStatuses.js'
+import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 
 const sourceReference: SourceReference = {}
 

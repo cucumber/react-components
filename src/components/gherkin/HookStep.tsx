@@ -2,12 +2,12 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import React from 'react'
 
-import CucumberQueryContext from '../../CucumberQueryContext'
-import { HookStepProps, useCustomRendering } from '../customise'
-import { Attachment } from './Attachment'
-import { ErrorMessage } from './ErrorMessage'
-import { StepItem } from './StepItem'
-import { Title } from './Title'
+import CucumberQueryContext from '../../CucumberQueryContext.js'
+import { HookStepProps, useCustomRendering } from '../customise/index.js'
+import { Attachment } from './Attachment.js'
+import { ErrorMessage } from './ErrorMessage.js'
+import { StepItem } from './StepItem.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
   if (!step.hookId) throw new Error('Expected step to have a hookId')

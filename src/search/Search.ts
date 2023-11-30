@@ -1,10 +1,10 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 
-import isTagExpression from '../../src/isTagExpression'
-import { createTagSearch } from './TagSearch'
-import { createTextSearch } from './TextSearch'
-import { Searchable } from './types'
+import isTagExpression from '../isTagExpression.js'
+import { createTagSearch } from './TagSearch.js'
+import { createTextSearch } from './TextSearch.js'
+import { Searchable } from './types.js'
 
 class Search {
   constructor(private readonly tagSearch: Searchable, private readonly textSearch: Searchable) {}

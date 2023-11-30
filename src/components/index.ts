@@ -1,4 +1,4 @@
-export * as app from './app'
-export * from './CucumberReact'
-export * as customise from './customise'
-export * as gherkin from './gherkin'
+export * as app from './app/index.js'
+export * from './CucumberReact.js'
+export * as customise from './customise/index.js'
+export * as gherkin from './gherkin/index.js'

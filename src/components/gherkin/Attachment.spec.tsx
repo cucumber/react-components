@@ -1,8 +1,8 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { render, screen } from '../../../test-utils'
-import { Attachment } from './Attachment'
+import { render, screen } from '../../../test-utils/index.js'
+import { Attachment } from './Attachment.js'
 
 describe('<Attachment>', () => {
   it('renders a download button for a file that isnt video, image or text', () => {

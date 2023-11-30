@@ -1,9 +1,9 @@
 import * as messages from '@cucumber/messages'
 import { Feature, GherkinDocument } from '@cucumber/messages'
 
-import { makeFeature } from '../../test-utils'
-import { createFeatureSearch } from './FeatureSearch'
-import { TypedIndex } from './types'
+import { makeFeature } from '../../test-utils/index.js'
+import { createFeatureSearch } from './FeatureSearch.js'
+import { TypedIndex } from './types.js'
 
 describe('FeatureSearch', () => {
   let featureSearch: TypedIndex<Feature, GherkinDocument>

@@ -1,10 +1,10 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
 
-import { render } from '../../../test-utils'
-import { Tags } from '../gherkin'
-import { CucumberReact } from '../index'
-import { Customised, TagsClasses, TagsProps } from './index'
+import { render } from '../../../test-utils/index.js'
+import { Tags } from '../gherkin/index.js'
+import { CucumberReact } from '../index.js'
+import { Customised, TagsClasses, TagsProps } from './index.js'
 
 jest.mock('../gherkin/Tags.module.scss', () => ({
   tag: 'tag',

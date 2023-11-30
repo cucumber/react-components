@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { HighLight } from '../app/HighLight'
-import { DefaultComponent, FeatureProps, useCustomRendering } from '../customise'
-import { Background } from './Background'
-import { Children } from './Children'
-import { Description } from './Description'
-import { Keyword } from './Keyword'
-import { Rule } from './Rule'
-import { Scenario } from './Scenario'
-import { Tags } from './Tags'
-import { Title } from './Title'
+import { HighLight } from '../app/HighLight.js'
+import { DefaultComponent, FeatureProps, useCustomRendering } from '../customise/index.js'
+import { Background } from './Background.js'
+import { Children } from './Children.js'
+import { Description } from './Description.js'
+import { Keyword } from './Keyword.js'
+import { Rule } from './Rule.js'
+import { Scenario } from './Scenario.js'
+import { Tags } from './Tags.js'
+import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<FeatureProps> = ({ feature }) => {
   return (

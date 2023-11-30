@@ -27,6 +27,7 @@
   "rules": {
     "import/no-cycle": "error",
     "node/no-extraneous-import": "error",
+    "node/file-extension-in-import": "error",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",

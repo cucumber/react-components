@@ -8,7 +8,7 @@ import { GherkinDocument } from '@cucumber/messages'
 import parse from '@cucumber/tag-expressions'
 import { ArrayMultimap } from '@teppeis/multimaps'
 
-import { Searchable } from './types'
+import { Searchable } from './types.js'
 
 class TagSearch {
   private readonly pickleById = new Map<string, messages.Pickle>()

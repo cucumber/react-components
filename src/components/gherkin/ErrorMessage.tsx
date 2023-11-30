@@ -5,7 +5,7 @@ import {
   ErrorMessageClasses,
   ErrorMessageProps,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './ErrorMessage.module.scss'
 
 const DefaultRenderer: DefaultComponent<ErrorMessageProps, ErrorMessageClasses> = ({

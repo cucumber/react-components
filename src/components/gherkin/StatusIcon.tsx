@@ -16,7 +16,7 @@ import {
   StatusIconClasses,
   StatusIconProps,
   useCustomRendering,
-} from '../customise'
+} from '../customise/index.js'
 import defaultStyles from './StatusIcon.module.scss'
 
 const DefaultRenderer: DefaultComponent<StatusIconProps, StatusIconClasses> = ({

@@ -1,6 +1,4 @@
-import { Background, GherkinDocument, Rule, Scenario } from '@cucumber/messages'
-
-import { ScenarioProps } from '../components/customise'
+import { GherkinDocument } from '@cucumber/messages'
 
 export interface Searchable {
   search: (query: string) => Promise<readonly GherkinDocument[]>

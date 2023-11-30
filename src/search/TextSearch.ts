@@ -1,10 +1,10 @@
 import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
 import { Background, Feature, GherkinDocument, Rule, Scenario, Step } from '@cucumber/messages'
 
-import { createFeatureSearch } from './FeatureSearch'
-import { createScenarioLikeSearch } from './ScenarioLikeSearch'
-import { createStepSearch } from './StepSearch'
-import { Searchable, TypedIndex } from './types'
+import { createFeatureSearch } from './FeatureSearch.js'
+import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
+import { createStepSearch } from './StepSearch.js'
+import { Searchable, TypedIndex } from './types.js'
 
 class TextSearch {
   private readonly gherkinDocuments: GherkinDocument[] = []
