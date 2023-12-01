@@ -1,15 +1,11 @@
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 import React from 'react'
 
 import { render } from '../../../test-utils/index.js'
 import { Tags } from '../gherkin/index.js'
 import { CucumberReact } from '../index.js'
 import { Customised, TagsClasses, TagsProps } from './index.js'
-
-jest.mock('../gherkin/Tags.module.scss', () => ({
-  tag: 'tag',
-  tags: 'tags',
-}))
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
@@ -26,8 +22,8 @@ describe('custom rendering and theming', () => {
 
     const { getByRole } = render(<Tags tags={tags} />)
 
-    expect(getByRole('list')).toHaveClass('tags')
-    expect(getByRole('listitem')).toHaveClass('tag')
+    expect(getByRole('list')).to.have.class('tags')
+    expect(getByRole('listitem')).to.have.class('tag')
   })
 
   it('uses the custom classnames provided via custom rendering', () => {
@@ -55,8 +51,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    expect(getByRole('list')).toHaveClass('custom-list-class')
-    expect(getByRole('listitem')).toHaveClass('custom-item-class')
+    expect(getByRole('list')).to.have.class('custom-list-class')
+    expect(getByRole('listitem')).to.have.class('custom-item-class')
   })
 
   it('uses a partial of custom classes and falls back to built-in styles where omitted', () => {
@@ -83,8 +79,8 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    expect(getByRole('list')).toHaveClass('custom-list-class')
-    expect(getByRole('listitem')).toHaveClass('tag')
+    expect(getByRole('list')).to.have.class('custom-list-class')
+    expect(getByRole('listitem')).to.have.class('tag')
   })
 
   it('uses a custom component implementation where provided', () => {
@@ -113,7 +109,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    expect(container).toContainHTML('<p>Totally custom!</p>')
+    expect(container).to.contain.html('<p>Totally custom!</p>')
   })
 
   it('a custom component can defer to the default renderer if it wants to', () => {
@@ -142,7 +138,7 @@ describe('custom rendering and theming', () => {
       </CucumberReact>
     )
 
-    expect(getByRole('list')).toHaveClass('tags')
-    expect(getByRole('listitem')).toHaveClass('tag')
+    expect(getByRole('list')).to.have.class('tags')
+    expect(getByRole('listitem')).to.have.class('tag')
   })
 })
