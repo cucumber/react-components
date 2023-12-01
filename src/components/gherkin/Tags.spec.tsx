@@ -1,3 +1,4 @@
+import { expect } from 'chai'
 import React from 'react'
 
 import { render } from '../../../test-utils/index.js'
@@ -6,7 +7,7 @@ import { Tags } from './Tags.js'
 describe('Tags', () => {
   it('doesnt render anything if no tags', () => {
     const { container } = render(<Tags tags={[]} />)
-    expect(container).toBeEmptyDOMElement()
+    expect(container).to.be.empty
   })
 
   it('renders if we really have some tags', () => {
@@ -26,7 +27,8 @@ describe('Tags', () => {
         id: '2',
       },
     ]
-    const { asFragment } = render(<Tags tags={tags} />)
-    expect(asFragment()).toMatchSnapshot()
+    const { container } = render(<Tags tags={tags} />)
+    expect(container).to.contain.text('@foo')
+    expect(container).to.contain.text('@bar')
   })
 })

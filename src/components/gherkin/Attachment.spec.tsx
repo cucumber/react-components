@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 import React from 'react'
 
 import { render, screen } from '../../../test-utils/index.js'
@@ -14,7 +15,7 @@ describe('<Attachment>', () => {
     }
     render(<Attachment attachment={attachment} />)
 
-    expect(screen.getByRole('button', { name: 'Download document.pdf' })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
   })
 
   it('renders a video', () => {
@@ -26,8 +27,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const video = container.querySelector('video source')
-    expect(summary).toHaveTextContent('Attached Video (video/mp4)')
-    expect(video).toHaveAttribute('src', 'data:video/mp4;base64,fake-base64')
+    expect(summary).to.have.text('Attached Video (video/mp4)')
+    expect(video).to.have.attr('src', 'data:video/mp4;base64,fake-base64')
   })
 
   it('renders a video with a name', () => {
@@ -40,8 +41,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const video = container.querySelector('video source')
-    expect(summary).toHaveTextContent('the attachment name')
-    expect(video).toHaveAttribute('src', 'data:video/mp4;base64,fake-base64')
+    expect(summary).to.have.text('the attachment name')
+    expect(video).to.have.attr('src', 'data:video/mp4;base64,fake-base64')
   })
 
   it('renders an image', () => {
@@ -53,8 +54,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
-    expect(summary).toHaveTextContent('Attached Image (image/png)')
-    expect(img).toHaveAttribute('src', 'data:image/png;base64,fake-base64')
+    expect(summary).to.have.text('Attached Image (image/png)')
+    expect(img).to.have.attr('src', 'data:image/png;base64,fake-base64')
   })
 
   it('renders an image with a name', () => {
@@ -67,8 +68,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const img = container.querySelector('img')
-    expect(summary).toHaveTextContent('the attachment name')
-    expect(img).toHaveAttribute('src', 'data:image/png;base64,fake-base64')
+    expect(summary).to.have.text('the attachment name')
+    expect(img).to.have.attr('src', 'data:image/png;base64,fake-base64')
   })
 
   it('renders base64 encoded plaintext', () => {
@@ -80,8 +81,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details pre')
-    expect(summary).toHaveTextContent('Attached Text (text/plain)')
-    expect(data).toHaveTextContent('hello')
+    expect(summary).to.have.text('Attached Text (text/plain)')
+    expect(data).to.have.text('hello')
   })
 
   it('renders base64 encoded plaintext with a name', () => {
@@ -94,8 +95,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details pre span')
-    expect(summary).toHaveTextContent('the attachment name')
-    expect(data).toHaveTextContent('hello')
+    expect(summary).to.have.text('the attachment name')
+    expect(data).to.have.text('hello')
   })
 
   it('correctly renders ANSI characters', () => {
@@ -107,8 +108,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details > pre > span')
-    expect(summary).toHaveTextContent('Attached Text (text/x.cucumber.log+plain)')
-    expect(data).toContainHTML(
+    expect(summary).to.have.text('Attached Text (text/x.cucumber.log+plain)')
+    expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
@@ -123,8 +124,8 @@ describe('<Attachment>', () => {
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
     const data = container.querySelector('details > pre > span')
-    expect(summary).toHaveTextContent('the attachment name')
-    expect(data).toContainHTML(
+    expect(summary).to.have.text('the attachment name')
+    expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
