@@ -1,4 +1,5 @@
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 
 import { makeRule } from '../../test-utils/index.js'
 import RuleSearch from './RuleSearch.js'
@@ -24,17 +25,17 @@ describe('RuleSearch', () => {
   describe('#search', () => {
     it('returns an empty list when there is no hits', () => {
       const searchResults = ruleSearch.search('no match there')
-      expect(searchResults).toEqual([])
+      expect(searchResults).to.deep.eq([])
     })
 
     it('returns rule which name match the query', () => {
       const searchResults = ruleSearch.search('second')
-      expect(searchResults).toEqual([rules[1]])
+      expect(searchResults).to.deep.eq([rules[1]])
     })
 
     it('returns rule which name match the query in description', () => {
       const searchResults = ruleSearch.search('little')
-      expect(searchResults).toEqual([rules[0]])
+      expect(searchResults).to.deep.eq([rules[0]])
     })
   })
 })

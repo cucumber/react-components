@@ -1,6 +1,7 @@
 import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 
 import TagSearch from './TagSearch.js'
 
@@ -49,25 +50,25 @@ Feature: Solar System
 
   describe('search', () => {
     it('returns an empty list when no documents have been added', () => {
-      expect(tagSearch.search('@any')).toEqual([])
+      expect(tagSearch.search('@any')).to.deep.eq([])
     })
 
     it('finds matching scenarios', () => {
-      expect(prettyResults(feature, '@planet')).toContain('Scenario: Earth')
+      expect(prettyResults(feature, '@planet')).to.contain('Scenario: Earth')
     })
 
     it('takes into account feature tags', () => {
       const results = prettyResults(feature, '@system')
 
-      expect(results).toContain('Scenario: Earth')
-      expect(results).toContain('Scenario: Pluto')
+      expect(results).to.contain('Scenario: Earth')
+      expect(results).to.contain('Scenario: Pluto')
     })
 
     it('supports complex search', () => {
       const results = prettyResults(feature, '@system and not @dwarf')
 
-      expect(results).toContain('Scenario: Earth')
-      expect(results).not.toContain('Scenario: Pluto')
+      expect(results).to.contain('Scenario: Earth')
+      expect(results).not.to.contain('Scenario: Pluto')
     })
   })
 
@@ -94,17 +95,17 @@ Feature: Solar system
     it('does not filter non-matching examples', () => {
       const results = prettyResults(exampleFeature, '@solid')
 
-      expect(results).toContain('Scenario: a planet may have sattelites')
-      expect(results).toContain('Examples: solid planets')
-      expect(results).toContain('Examples: giant gas planets')
+      expect(results).to.contain('Scenario: a planet may have sattelites')
+      expect(results).to.contain('Examples: solid planets')
+      expect(results).to.contain('Examples: giant gas planets')
     })
 
     it('does not filter examples which should be excluded', () => {
       const results = prettyResults(exampleFeature, '@solid and not @gas')
 
-      expect(results).toContain('Scenario: a planet may have sattelites')
-      expect(results).toContain('Examples: solid planets')
-      expect(results).toContain('Examples: giant gas planets')
+      expect(results).to.contain('Scenario: a planet may have sattelites')
+      expect(results).to.contain('Examples: solid planets')
+      expect(results).to.contain('Examples: giant gas planets')
     })
   })
 })
