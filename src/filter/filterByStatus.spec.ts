@@ -4,6 +4,7 @@ import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { SourceReference } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import { expect } from 'chai'
 
 import { FailingHook, runFeature } from '../../test-utils/index.js'
 import filterByStatus from './filterByStatus.js'
@@ -57,17 +58,17 @@ Feature: statuses
       messages.TestStepResultStatus.PASSED,
     ])
 
-    expect(scenarioNames(passedScenarios!)).toEqual(['passed'])
+    expect(scenarioNames(passedScenarios!)).to.deep.eq(['passed'])
 
     const failedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
       messages.TestStepResultStatus.FAILED,
     ])
-    expect(scenarioNames(failedScenarios!)).toEqual(['failed'])
+    expect(scenarioNames(failedScenarios!)).to.deep.eq(['failed'])
 
     const undefinedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
       messages.TestStepResultStatus.UNDEFINED,
     ])
-    expect(scenarioNames(undefinedScenarios!)).toEqual(['undefined'])
+    expect(scenarioNames(undefinedScenarios!)).to.deep.eq(['undefined'])
   })
 
   it('can filter with multiple statuses', async () => {
@@ -79,7 +80,7 @@ Feature: statuses
       messages.TestStepResultStatus.PASSED,
       messages.TestStepResultStatus.FAILED,
     ])
-    expect(scenarioNames(passedAndFailedScenarios!)).toEqual(['passed', 'failed'])
+    expect(scenarioNames(passedAndFailedScenarios!)).to.deep.eq(['passed', 'failed'])
   })
 
   describe('when using examples', () => {
@@ -102,7 +103,7 @@ Feature: statuses
         messages.TestStepResultStatus.PENDING,
       ])
 
-      expect(scenarioNames(pendingScenarios!)).toEqual([])
+      expect(scenarioNames(pendingScenarios!)).to.deep.eq([])
     })
 
     it('does not drop the lines of Example tables with the incorrect status', async () => {
@@ -115,7 +116,7 @@ Feature: statuses
         messages.TestStepResultStatus.PASSED,
       ])
 
-      expect(pretty(onlyPassedScenarios!)).toEqual(featureWithExamples)
+      expect(pretty(onlyPassedScenarios!)).to.deep.eq(featureWithExamples)
     })
   })
 
@@ -131,7 +132,7 @@ Feature: statuses
         messages.TestStepResultStatus.FAILED,
       ])
 
-      expect(scenarioNames(onlyFailedScenarios!)).toEqual(['passed', 'failed', 'undefined'])
+      expect(scenarioNames(onlyFailedScenarios!)).to.deep.eq(['passed', 'failed', 'undefined'])
     })
   })
 
@@ -147,7 +148,7 @@ Feature: statuses
         messages.TestStepResultStatus.FAILED,
       ])
 
-      expect(scenarioNames(onlyFailedScenarios!)).toEqual(['passed', 'failed', 'undefined'])
+      expect(scenarioNames(onlyFailedScenarios!)).to.deep.eq(['passed', 'failed', 'undefined'])
     })
   })
 })
