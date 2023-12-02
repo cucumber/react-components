@@ -2,6 +2,7 @@ import { TestStepResultStatus as Status } from '@cucumber/messages'
 import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
 
 import statusName from '../gherkin/statusName.js'
 import styles from './SearchBar.module.scss'
@@ -22,11 +23,12 @@ export const SearchBar: FunctionComponent<IProps> = ({
   onSearch,
   onFilter,
 }) => {
+  const debouncedSearchChange = useDebouncedCallback((newValue) => {
+    onSearch(newValue)
+  }, 500)
   const searchSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new window.FormData(event.currentTarget)
-    const query = formData.get('query')
-    onSearch((query || '').toString())
+    debouncedSearchChange.flush()
   }
   const filterChanged = (name: Status, show: boolean) => {
     onFilter(show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name))
@@ -42,6 +44,7 @@ export const SearchBar: FunctionComponent<IProps> = ({
           name="query"
           placeholder="Search with text or @tags"
           defaultValue={query}
+          onChange={(e) => debouncedSearchChange(e.target.value)}
         />
         <small className={styles.searchHelp}>
           You can search with plain text or{' '}

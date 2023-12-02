@@ -23,6 +23,27 @@ describe('SearchBar', () => {
       expect(getByRole('textbox', { name: 'Search' })).to.have.value('keyword')
     })
 
+    it('fires an event after half a second when the user types a query', async () => {
+      const onChange = sinon.fake()
+      const { getByRole } = render(
+        <SearchBar
+          query={''}
+          onSearch={onChange}
+          hideStatuses={[]}
+          statusesWithScenarios={[]}
+          onFilter={sinon.fake()}
+        />
+      )
+
+      await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
+
+      expect(onChange).not.to.have.been.called
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      expect(onChange).to.have.been.called
+    })
+
     it('fires an event with the query when the form is submitted', async () => {
       const onChange = sinon.fake()
       const { getByRole } = render(
