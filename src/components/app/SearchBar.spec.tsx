@@ -1,7 +1,9 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import { expect } from 'chai'
 import React from 'react'
+import sinon from 'sinon'
 
 import { SearchBar } from './SearchBar.js'
 
@@ -11,25 +13,25 @@ describe('SearchBar', () => {
       const { getByRole } = render(
         <SearchBar
           query={'keyword'}
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           hideStatuses={[]}
           statusesWithScenarios={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
-      expect(getByRole('textbox', { name: 'Search' })).toHaveValue('keyword')
+      expect(getByRole('textbox', { name: 'Search' })).to.have.value('keyword')
     })
 
     it('fires an event with the query when the form is submitted', async () => {
-      const onChange = jest.fn()
+      const onChange = sinon.fake()
       const { getByRole } = render(
         <SearchBar
           query={'keyword'}
           onSearch={onChange}
           hideStatuses={[]}
           statusesWithScenarios={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
@@ -37,19 +39,18 @@ describe('SearchBar', () => {
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
       await userEvent.keyboard('{Enter}')
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith('search text')
+      expect(onChange).to.have.been.calledOnceWith('search text')
     })
 
     it("doesn't perform the default form action when submitting", async () => {
-      const eventListener = jest.fn()
+      const eventListener = sinon.fake()
       const { getByRole, baseElement } = render(
         <SearchBar
           query={''}
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           hideStatuses={[]}
           statusesWithScenarios={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
@@ -58,29 +59,26 @@ describe('SearchBar', () => {
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
       await userEvent.keyboard('{Enter}')
 
-      expect(eventListener).toHaveBeenCalledTimes(1)
-      expect(eventListener.mock.calls[0][0]).toMatchObject({
-        defaultPrevented: true,
-      })
+      expect(eventListener).to.have.callCount(1)
+      expect(eventListener.firstCall.firstArg.defaultPrevented).to.eq(true)
     })
 
     it('fires an event with empty string when empty search is submitted', async () => {
-      const onChange = jest.fn()
+      const onChange = sinon.fake()
       const { getByRole } = render(
         <SearchBar
           query={'keyword'}
           onSearch={onChange}
           hideStatuses={[]}
           statusesWithScenarios={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.keyboard('{Enter}')
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith('')
+      expect(onChange).to.have.been.calledOnceWith('')
     })
   })
 
@@ -89,55 +87,55 @@ describe('SearchBar', () => {
       const { queryByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[]}
           hideStatuses={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
-      expect(queryByRole('checkbox')).not.toBeInTheDocument()
+      expect(queryByRole('checkbox')).not.to.exist
     })
 
     it('should not show status filters when just one status', () => {
       const { queryByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[TestStepResultStatus.PASSED]}
           hideStatuses={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
-      expect(queryByRole('checkbox')).not.toBeInTheDocument()
+      expect(queryByRole('checkbox')).not.to.exist
     })
 
     it('should show named status filters, all checked by default, when multiple statuses', () => {
       const { getAllByRole, getByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[TestStepResultStatus.PASSED, TestStepResultStatus.FAILED]}
           hideStatuses={[]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
-      expect(getAllByRole('checkbox')).toHaveLength(2)
-      expect(getByRole('checkbox', { name: 'passed' })).toBeVisible()
-      expect(getByRole('checkbox', { name: 'failed' })).toBeVisible()
+      expect(getAllByRole('checkbox')).to.have.length(2)
+      expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
       getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
-        expect(checkbox).toBeChecked()
+        expect(checkbox).to.be.checked
       })
     })
 
     it('should fire an event to hide a status when unchecked', async () => {
-      const onFilter = jest.fn()
+      const onFilter = sinon.fake()
       const { getByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[
             TestStepResultStatus.PASSED,
             TestStepResultStatus.FAILED,
@@ -150,36 +148,35 @@ describe('SearchBar', () => {
 
       await userEvent.click(getByRole('checkbox', { name: 'pending' }))
 
-      expect(onFilter).toHaveBeenCalledTimes(1)
-      expect(onFilter).toHaveBeenCalledWith([TestStepResultStatus.PENDING])
+      expect(onFilter).to.have.been.calledOnceWith([TestStepResultStatus.PENDING])
     })
 
     it('should show filtered out statuses as unchecked', () => {
       const { getByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[
             TestStepResultStatus.PASSED,
             TestStepResultStatus.FAILED,
             TestStepResultStatus.PENDING,
           ]}
           hideStatuses={[TestStepResultStatus.PENDING]}
-          onFilter={jest.fn()}
+          onFilter={sinon.fake()}
         />
       )
 
-      expect(getByRole('checkbox', { name: 'passed' })).toBeChecked()
-      expect(getByRole('checkbox', { name: 'failed' })).toBeChecked()
-      expect(getByRole('checkbox', { name: 'pending' })).not.toBeChecked()
+      expect(getByRole('checkbox', { name: 'passed' })).to.be.checked
+      expect(getByRole('checkbox', { name: 'failed' })).to.be.checked
+      expect(getByRole('checkbox', { name: 'pending' })).not.to.be.checked
     })
 
     it('should fire to unhide a status when rechecked', async () => {
-      const onFilter = jest.fn()
+      const onFilter = sinon.fake()
       const { getByRole } = render(
         <SearchBar
           query=""
-          onSearch={jest.fn()}
+          onSearch={sinon.fake()}
           statusesWithScenarios={[
             TestStepResultStatus.PASSED,
             TestStepResultStatus.FAILED,
@@ -192,8 +189,7 @@ describe('SearchBar', () => {
 
       await userEvent.click(getByRole('checkbox', { name: 'failed' }))
 
-      expect(onFilter).toHaveBeenCalledTimes(1)
-      expect(onFilter).toHaveBeenCalledWith([TestStepResultStatus.PENDING])
+      expect(onFilter).to.have.been.calledOnceWith([TestStepResultStatus.PENDING])
     })
   })
 })

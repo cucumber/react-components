@@ -1,6 +1,7 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import { expect } from 'chai'
 import React from 'react'
 
 import { render } from '../../../test-utils/index.js'
@@ -39,11 +40,12 @@ describe('<GherkinStep>', () => {
       }
     }
 
-    const { asFragment } = render(<GherkinStep step={step} hasExamples={false} />, {
+    const { container } = render(<GherkinStep step={step} hasExamples={false} />, {
       gherkinQuery: new StubGherkinQuery(),
       cucumberQuery: new StubCucumberQuery(),
     })
 
-    expect(asFragment()).toMatchSnapshot()
+    expect(container).to.contain.text('Given')
+    expect(container).to.contain.text('the 48 pixies')
   })
 })

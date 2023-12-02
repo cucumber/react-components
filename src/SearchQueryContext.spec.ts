@@ -1,4 +1,6 @@
 import { TestStepResultStatus as Status } from '@cucumber/messages'
+import { expect } from 'chai'
+import sinon from 'sinon'
 
 import { searchFromURLParams, SearchQueryCtx } from './SearchQueryContext.js'
 
@@ -9,20 +11,20 @@ describe('SearchQueryCtx', () => {
       hideStatuses: [Status.PASSED],
     })
 
-    expect(sq.query).toEqual('foo bar')
-    expect(sq.hideStatuses).toEqual([Status.PASSED])
+    expect(sq.query).to.eq('foo bar')
+    expect(sq.hideStatuses).to.deep.eq([Status.PASSED])
   })
 
   it('has a blank initial query by default', () => {
     const sq = SearchQueryCtx.withDefaults({})
 
-    expect(sq.query).toEqual('')
+    expect(sq.query).to.eq('')
   })
 
   it('hides no statuses by default', () => {
     const sq = SearchQueryCtx.withDefaults({})
 
-    expect(sq.hideStatuses).toEqual([])
+    expect(sq.hideStatuses).to.deep.eq([])
   })
 
   it('does not change its value on update by default', () => {
@@ -33,12 +35,12 @@ describe('SearchQueryCtx', () => {
       hideStatuses: [Status.PASSED],
     })
 
-    expect(sq.query).toEqual('foo')
-    expect(sq.hideStatuses).toEqual([])
+    expect(sq.query).to.eq('foo')
+    expect(sq.hideStatuses).to.deep.eq([])
   })
 
   it('notifies its listener when the query is updated', () => {
-    const onSearchQueryUpdated = jest.fn()
+    const onSearchQueryUpdated = sinon.fake()
 
     const sq = SearchQueryCtx.withDefaults(
       { query: 'bar', hideStatuses: [Status.FAILED] },
@@ -47,27 +49,27 @@ describe('SearchQueryCtx', () => {
 
     sq.update({ query: 'foo' })
 
-    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
+    expect(onSearchQueryUpdated).to.have.been.calledWith({
       query: 'foo',
       hideStatuses: [Status.FAILED],
     })
   })
 
   it('notifies its listener when the filters are updated', () => {
-    const onSearchQueryUpdated = jest.fn()
+    const onSearchQueryUpdated = sinon.fake()
 
     const sq = SearchQueryCtx.withDefaults({}, onSearchQueryUpdated)
 
     sq.update({ hideStatuses: [Status.PENDING] })
 
-    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
+    expect(onSearchQueryUpdated).to.have.been.calledWith({
       query: '',
       hideStatuses: [Status.PENDING],
     })
   })
 
   it("notifies its listener when it's updated with blank values", () => {
-    const onSearchQueryUpdated = jest.fn()
+    const onSearchQueryUpdated = sinon.fake()
 
     const sq = SearchQueryCtx.withDefaults(
       { query: 'foo', hideStatuses: [Status.FAILED] },
@@ -76,7 +78,7 @@ describe('SearchQueryCtx', () => {
 
     sq.update({ query: '', hideStatuses: [] })
 
-    expect(onSearchQueryUpdated).toHaveBeenCalledWith({
+    expect(onSearchQueryUpdated).to.have.been.calledWith({
       query: '',
       hideStatuses: [],
     })
@@ -96,8 +98,8 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    expect(ret.query).toEqual('search text')
-    expect(ret.hideStatuses).toEqual([Status.PASSED, Status.FAILED])
+    expect(ret.query).to.eq('search text')
+    expect(ret.hideStatuses).to.deep.eq([Status.PASSED, Status.FAILED])
   })
 
   it('uses null values when no search parameters are present', () => {
@@ -112,12 +114,12 @@ describe('searchFromURLParams()', () => {
       },
     })
 
-    expect(ret.query).toBeNull()
-    expect(ret.hideStatuses).toEqual([])
+    expect(ret.query).to.eq(null)
+    expect(ret.hideStatuses).to.deep.eq([])
   })
 
   it('creates an update function that adds parameters to the given URL', () => {
-    const setURL = jest.fn()
+    const setURL = sinon.fake()
     const ret = searchFromURLParams({
       querySearchParam: 'foo',
       hideStatusesSearchParam: 'bar',
@@ -132,7 +134,7 @@ describe('searchFromURLParams()', () => {
       hideStatuses: [Status.FAILED, Status.PENDING],
     })
 
-    expect(setURL).toHaveBeenCalledWith(
+    expect(setURL).to.have.been.calledWith(
       'http://example.org/?foo=%40slow&baz=sausage&bar=FAILED&bar=PENDING'
     )
   })

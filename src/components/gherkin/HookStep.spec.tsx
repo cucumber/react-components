@@ -1,5 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import { expect } from 'chai'
 import React from 'react'
 
 import { render } from '../../../test-utils/index.js'
@@ -51,7 +52,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    expect(container).not.toHaveTextContent('Hook failed')
+    expect(container).not.to.contain.text('Hook failed')
   })
 
   it('doesnt explode when we cant find a hook message for a failed hook', () => {
@@ -79,7 +80,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    expect(container).toHaveTextContent('Hook failed: Unknown location')
+    expect(container).to.contain.text('Hook failed: Unknown location')
   })
 
   it('renders the uri and line number when present for a failed hook', () => {
@@ -113,7 +114,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    expect(container).toHaveTextContent('Hook failed: features/support/hooks.js:4')
+    expect(container).to.contain.text('Hook failed: features/support/hooks.js:4')
   })
 
   it('renders the method reference when present for a failed hook', () => {
@@ -147,7 +148,7 @@ describe('<HookStep>', () => {
       ),
     })
 
-    expect(container).toHaveTextContent('Hook failed: MyHooks.doSetup')
+    expect(container).to.contain.text('Hook failed: MyHooks.doSetup')
   })
 
   it('renders the name when present for a failed hook', () => {
@@ -182,6 +183,6 @@ describe('<HookStep>', () => {
       ),
     })
 
-    expect(container).toHaveTextContent('Hook "fancy hook!" failed:')
+    expect(container).to.contain.text('Hook "fancy hook!" failed:')
   })
 })

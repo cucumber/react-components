@@ -1,6 +1,7 @@
 import { generateMessages } from '@cucumber/gherkin'
 import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
+import { expect } from 'chai'
 
 import Search from './Search.js'
 
@@ -51,7 +52,7 @@ describe('Search', () => {
     describe('when using a tag expression query', () => {
       it('uses TagSearch to filter the results', () => {
         const results = prettyResults(feature, '@planet')
-        expect(results).toEqual(
+        expect(results).to.eq(
           `Feature: Solar System
 
   @planet
@@ -63,7 +64,7 @@ describe('Search', () => {
 
       it('does not raises error when tag expression is incorrect', () => {
         const results = prettyResults(feature, '(@planet or @dwarf))')
-        expect(results).toEqual(
+        expect(results).to.eq(
           `Feature: Solar System
 
   @planet
@@ -81,7 +82,7 @@ describe('Search', () => {
     describe('when using a query which is not a tag expression', () => {
       it('uses TextSearch to filter the results', () => {
         const results = prettyResults(feature, 'not really (')
-        expect(results).toEqual(
+        expect(results).to.eq(
           `Feature: Solar System
 
   @dwarf

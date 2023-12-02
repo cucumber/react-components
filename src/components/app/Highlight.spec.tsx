@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { expect } from 'chai'
 import React from 'react'
 
 import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext.js'
@@ -19,7 +20,7 @@ describe('HighLight', () => {
       (span) => span.textContent
     )
 
-    expect(highlighted).toEqual(['keyword'])
+    expect(highlighted).to.deep.eq(['keyword'])
   })
 
   it('puts <mark> around stemmed query words', () => {
@@ -35,7 +36,7 @@ describe('HighLight', () => {
     // The first one is the exact match.
     // The second one corresponds to the "failure" word, which stem is "fail"
     // The third one corresponds to the "fails" word
-    expect(highlighted).toEqual(['failed', 'fail', 'fail'])
+    expect(highlighted).to.deep.eq(['failed', 'fail', 'fail'])
   })
 
   it('puts <mark> around multiple words and stems', () => {
@@ -48,7 +49,7 @@ describe('HighLight', () => {
       (span) => span.textContent
     )
 
-    expect(highlighted).toEqual(['pass', 'step', 'fail', 'step', 'skipped', 'step'])
+    expect(highlighted).to.deep.eq(['pass', 'step', 'fail', 'step', 'skipped', 'step'])
   })
 
   it('puts <mark> around matches in markdown', () => {
@@ -57,7 +58,7 @@ describe('HighLight', () => {
       (span) => span.textContent
     )
 
-    expect(highlighted).toEqual(['bullet'])
+    expect(highlighted).to.deep.eq(['bullet'])
   })
 
   it('does not render <script> tags in markdown', () => {
@@ -67,7 +68,7 @@ describe('HighLight', () => {
       true
     )
     // Script tags will be removed (rather than escaped). Ideally we'd *escape* them to &lt;script&gt;.
-    expect(container).toContainHTML(
+    expect(container).to.contain.html(
       `<div class="highlight"><p>Failed XSS: ("<mark>hello</mark>")</p></div>`
     )
   })
@@ -78,7 +79,7 @@ describe('HighLight', () => {
       '',
       true
     )
-    expect(container).toContainHTML(
+    expect(container).to.contain.html(
       `<div class="highlight"><p>We <em>like</em> other HTML tags:</p>\n<section>hello</section></div>`
     )
   })
@@ -89,7 +90,7 @@ describe('HighLight', () => {
       '',
       true
     )
-    expect(container).toContainHTML(
+    expect(container).to.contain.html(
       '<div class="highlight"><p>Failed XSS: <small class="supersmall">hello</small></p></div>'
     )
   })

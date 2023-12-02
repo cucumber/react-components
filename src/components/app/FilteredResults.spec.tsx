@@ -1,6 +1,7 @@
 import { Envelope } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import { expect } from 'chai'
 import React, { VoidFunctionComponent } from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'
@@ -34,17 +35,17 @@ describe('FilteredResults', () => {
         getByRole('heading', {
           name: 'features/adding.feature',
         })
-      ).toBeVisible()
+      ).to.be.visible
       expect(
         queryByRole('heading', {
           name: 'features/editing.feature',
         })
-      ).not.toBeInTheDocument()
+      ).not.to.exist
       expect(
         queryByRole('heading', {
           name: 'features/empty.feature',
         })
-      ).not.toBeInTheDocument()
+      ).not.to.exist
     })
   })
 
@@ -57,7 +58,7 @@ describe('FilteredResults', () => {
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'nope!')
       await userEvent.keyboard('{Enter}')
 
-      expect(getByText('No matches found for your query "nope!" and/or filters')).toBeVisible()
+      expect(getByText('No matches found for your query "nope!" and/or filters')).to.be.visible
     })
 
     it('narrows the results with a valid search term, and restores when we clear the search', async () => {
@@ -71,14 +72,14 @@ describe('FilteredResults', () => {
         getByRole('button', { name: 'samples/attachments/attachments.feature' })
       )
 
-      expect(getByRole('heading', { name: 'Scenario: Log JSON' })).toBeVisible()
-      expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.toBeInTheDocument()
+      expect(getByRole('heading', { name: 'Scenario: Log JSON' })).to.be.visible
+      expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.to.exist
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.keyboard('{Enter}')
 
-      expect(getByRole('heading', { name: 'Scenario: Log JSON' })).toBeVisible()
-      expect(getByRole('heading', { name: 'Scenario: Log text' })).toBeVisible()
+      expect(getByRole('heading', { name: 'Scenario: Log JSON' })).to.be.visible
+      expect(getByRole('heading', { name: 'Scenario: Log text' })).to.be.visible
     })
   })
 
@@ -86,7 +87,7 @@ describe('FilteredResults', () => {
     it('should not show filters when only one status', () => {
       const { queryByRole } = render(<TestableFilteredResults envelopes={minimal as Envelope[]} />)
 
-      expect(queryByRole('checkbox')).not.toBeInTheDocument()
+      expect(queryByRole('checkbox')).not.to.exist
     })
 
     it('should show named status filters, all checked by default', () => {
@@ -94,12 +95,12 @@ describe('FilteredResults', () => {
         <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
       )
 
-      expect(getAllByRole('checkbox')).toHaveLength(3)
-      expect(getByRole('checkbox', { name: 'passed' })).toBeVisible()
-      expect(getByRole('checkbox', { name: 'failed' })).toBeVisible()
-      expect(getByRole('checkbox', { name: 'undefined' })).toBeVisible()
+      expect(getAllByRole('checkbox')).to.have.length(3)
+      expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
       getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
-        expect(checkbox).toBeChecked()
+        expect(checkbox).to.be.checked
       })
     })
 
@@ -108,21 +109,19 @@ describe('FilteredResults', () => {
         <TestableFilteredResults envelopes={[...examplesTables, ...minimal] as Envelope[]} />
       )
 
-      expect(
-        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
-      ).toBeVisible()
-      expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).toBeVisible()
+      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
+        .be.visible
+      expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).to.be.visible
 
       await userEvent.click(getByRole('checkbox', { name: 'passed' }))
 
-      expect(
-        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
-      ).toBeVisible()
+      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
+        .be.visible
       expect(
         queryByRole('heading', {
           name: 'samples/minimal/minimal.feature',
         })
-      ).not.toBeInTheDocument()
+      ).not.to.exist
     })
 
     it('should show a message if we filter all statuses out', async () => {
@@ -130,9 +129,8 @@ describe('FilteredResults', () => {
         <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
       )
 
-      expect(
-        getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })
-      ).toBeVisible()
+      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
+        .be.visible
 
       await userEvent.click(getByRole('checkbox', { name: 'passed' }))
       await userEvent.click(getByRole('checkbox', { name: 'failed' }))
@@ -142,8 +140,8 @@ describe('FilteredResults', () => {
         queryByRole('heading', {
           name: 'samples/examples-tables/examples-tables.feature',
         })
-      ).not.toBeInTheDocument()
-      expect(getByText('No matches found for your filters')).toBeVisible()
+      ).not.to.exist
+      expect(getByText('No matches found for your filters')).to.be.visible
     })
   })
 })

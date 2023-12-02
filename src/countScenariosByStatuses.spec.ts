@@ -3,6 +3,7 @@ import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Envelope, SourceReference, TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import { expect } from 'chai'
 
 import targetedRun from '../samples/targeted-run.js'
 import { runFeature } from '../test-utils/index.js'
@@ -16,8 +17,6 @@ describe('countScenariosByStatuses', () => {
   let cucumberQuery: CucumberQuery
   let envelopesQuery: EnvelopesQuery
   let supportCode: SupportCode
-
-  jest.setTimeout(3000)
 
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
@@ -55,15 +54,15 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
 
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).toEqual(2)
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).toEqual(1)
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).toEqual(1)
-    expect(statusesWithScenarios).toEqual([
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).to.eq(2)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).to.eq(1)
+    expect(statusesWithScenarios).to.deep.eq([
       TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
-    expect(totalScenarioCount).toEqual(4)
+    expect(totalScenarioCount).to.eq(4)
     // Ridiculously long because runFeature (fake cucumber) seems to run very slowly with ts-node (?)
   })
 
@@ -90,15 +89,15 @@ Feature: statuses
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
       countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
 
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).toEqual(1)
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).toEqual(1)
-    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).toEqual(1)
-    expect(statusesWithScenarios).toEqual([
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).to.eq(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
+    expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).to.eq(1)
+    expect(statusesWithScenarios).to.deep.eq([
       TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
     ])
-    expect(totalScenarioCount).toEqual(3)
+    expect(totalScenarioCount).to.eq(3)
   })
 
   it('only includes pickles that were slated for execution as test cases', () => {
@@ -117,6 +116,6 @@ Feature: statuses
       envelopesQuery
     )
 
-    expect(totalScenarioCount).toEqual(1)
+    expect(totalScenarioCount).to.eq(1)
   })
 })
