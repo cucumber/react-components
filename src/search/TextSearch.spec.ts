@@ -34,7 +34,8 @@ describe('TextSearch', () => {
   beforeEach(async () => {
     const gherkinDocument = parse(source)
 
-    search = await createTextSearch([gherkinDocument])
+    search = await createTextSearch()
+    await search.add(gherkinDocument)
   })
 
   describe('Hit found in step', () => {

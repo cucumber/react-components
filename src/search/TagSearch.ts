@@ -70,9 +70,5 @@ class TagSearch {
 }
 
 export async function createTagSearch(gherkinQuery: GherkinQuery): Promise<Searchable> {
-  const tagSearchImpl = new TagSearch(gherkinQuery)
-  for (const document of gherkinQuery.getGherkinDocuments()) {
-    await tagSearchImpl.add(document)
-  }
-  return tagSearchImpl
+  return new TagSearch(gherkinQuery)
 }

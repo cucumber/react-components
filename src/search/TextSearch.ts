@@ -71,9 +71,7 @@ class TextSearch {
   }
 }
 
-export async function createTextSearch(
-  gherkinDocuments: readonly GherkinDocument[]
-): Promise<Searchable> {
+export async function createTextSearch(): Promise<Searchable> {
   const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
     await Promise.all([
       createStepSearch(),
@@ -82,15 +80,5 @@ export async function createTextSearch(
       createScenarioLikeSearch<Rule>(),
       createFeatureSearch(),
     ])
-  const textSearchImpl = new TextSearch(
-    stepSearch,
-    backgroundSearch,
-    scenarioSearch,
-    ruleSearch,
-    featureSearch
-  )
-  for (const document of gherkinDocuments) {
-    await textSearchImpl.add(document)
-  }
-  return textSearchImpl
+  return new TextSearch(stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch)
 }

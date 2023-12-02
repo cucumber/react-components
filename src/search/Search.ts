@@ -28,10 +28,21 @@ class Search {
   }
 }
 
+/**
+ * Creates a search index that supports querying by term or tag expression, and
+ * returns an array of abridged Gherkin documents matching the query.
+ *
+ * @param gherkinQuery - query instance used internally for searching, with any
+ * documents already present being pre-populated in the search index
+ */
 export async function createSearch(gherkinQuery: GherkinQuery): Promise<Searchable> {
   const [tagSearch, textSearch] = await Promise.all([
     createTagSearch(gherkinQuery),
-    createTextSearch(gherkinQuery.getGherkinDocuments()),
+    createTextSearch(),
   ])
-  return new Search(tagSearch, textSearch)
+  const searchImpl = new Search(tagSearch, textSearch)
+  for (const doc of gherkinQuery.getGherkinDocuments()) {
+    await searchImpl.add(doc)
+  }
+  return searchImpl
 }

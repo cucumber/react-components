@@ -35,10 +35,13 @@ Feature: Solar System
         newId: messages.IdGenerator.incrementing(),
       }
     )
+    const tagSearch = await createTagSearch(gherkinQuery)
     for (const envelope of envelopes) {
       gherkinQuery.update(envelope)
     }
-    const tagSearch = await createTagSearch(gherkinQuery)
+    for (const document of gherkinQuery.getGherkinDocuments()) {
+      await tagSearch.add(document)
+    }
     return pretty((await tagSearch.search(query))[0])
   }
 
