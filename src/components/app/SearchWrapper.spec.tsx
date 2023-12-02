@@ -1,14 +1,16 @@
 import { act, render } from '@testing-library/react'
+import { expect } from 'chai'
 import React from 'react'
+import sinon, { SinonSpy } from 'sinon'
 
 import SearchQueryContext, { SearchQueryCtx, SearchQueryProps } from '../../SearchQueryContext.js'
 import { SearchWrapper } from './SearchWrapper.js'
 
 describe('SearchWrapper', () => {
   function renderSearchWrapper(opts?: SearchQueryProps): ReturnType<typeof render> & {
-    searchQueryCapture: jest.Mock<SearchQueryCtx[]>
+    searchQueryCapture: SinonSpy<SearchQueryCtx[]>
   } {
-    const searchQueryCapture = jest.fn()
+    const searchQueryCapture = sinon.fake()
     const app = render(
       <SearchWrapper {...opts}>
         <SearchQueryContext.Consumer>
@@ -28,11 +30,11 @@ describe('SearchWrapper', () => {
   it('creates a search context given no query prop', () => {
     const { searchQueryCapture } = renderSearchWrapper()
 
-    expect(searchQueryCapture).toHaveBeenCalledTimes(1)
-    expect(searchQueryCapture.mock.calls[0][0].query).toEqual('')
+    expect(searchQueryCapture).to.have.been.calledOnce
+    expect(searchQueryCapture.firstCall.firstArg.query).to.eq('')
 
-    const sq1 = searchQueryCapture.mock.calls[0][0]
-    searchQueryCapture.mockReset()
+    const sq1 = searchQueryCapture.firstCall.firstArg
+    searchQueryCapture.resetHistory()
 
     act(() => {
       // When the query is updated
@@ -40,17 +42,17 @@ describe('SearchWrapper', () => {
     })
 
     // Then...
-    expect(searchQueryCapture).toHaveBeenCalledTimes(1)
-    expect(searchQueryCapture.mock.calls[0][0].query).toEqual('foo')
+    expect(searchQueryCapture).to.have.been.calledOnce
+    expect(searchQueryCapture.firstCall.firstArg.query).to.eq('foo')
   })
 
   it('creates a search context given a string query prop', () => {
     const { searchQueryCapture } = renderSearchWrapper({ query: 'foo' })
 
-    const sq1 = searchQueryCapture.mock.calls[0][0]
-    searchQueryCapture.mockReset()
+    const sq1 = searchQueryCapture.firstCall.firstArg
+    searchQueryCapture.resetHistory()
 
-    expect(sq1.query).toEqual('foo')
+    expect(sq1.query).to.eq('foo')
 
     act(() => {
       // When the query is updated
@@ -58,7 +60,7 @@ describe('SearchWrapper', () => {
     })
 
     // Then...
-    expect(searchQueryCapture).toHaveBeenCalledTimes(1)
-    expect(searchQueryCapture.mock.calls[0][0].query).toEqual('bar')
+    expect(searchQueryCapture).to.have.been.calledOnce
+    expect(searchQueryCapture.firstCall.firstArg.query).to.eq('bar')
   })
 })

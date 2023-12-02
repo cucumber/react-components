@@ -1,5 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Step } from '@cucumber/messages'
+import { expect } from 'chai'
 
 import { makeStep } from '../../test-utils/index.js'
 import { createStepSearch } from './StepSearch.js'
@@ -31,25 +32,25 @@ describe('StepSearch', () => {
     // TODO 'there' is being matched against 'here'
     xit('returns an empty list when there is no hits', async () => {
       const searchResults = await stepSearch.search('no match there')
-      expect(searchResults).toEqual([])
+      expect(searchResults).to.deep.eq([])
     })
 
     it('returns step which text match the query', async () => {
       const searchResults = await stepSearch.search('failed')
-      expect(searchResults).toEqual([steps[2]])
+      expect(searchResults).to.deep.eq([steps[2]])
     })
 
     it('may not return results in the original order', async () => {
       const searchResults = await stepSearch.search('step')
 
       for (const step of steps) {
-        expect(searchResults).toContain(step)
+        expect(searchResults).to.contain(step)
       }
     })
 
     it('returns step which keyword match the query', async () => {
       const searchResults = await stepSearch.search('Given')
-      expect(searchResults).toEqual([steps[0]])
+      expect(searchResults).to.deep.eq([steps[0]])
     })
 
     xit('it does not exclude "Then" and "When" from indexing', () => {
@@ -60,12 +61,12 @@ describe('StepSearch', () => {
 
     it('returns step which DocString matches the query', async () => {
       const searchResults = await stepSearch.search('docstring')
-      expect(searchResults).toEqual([steps[0]])
+      expect(searchResults).to.deep.eq([steps[0]])
     })
 
     it('returns step which datatable matches the query', async () => {
       const searchResults = await stepSearch.search('NullPointerException')
-      expect(searchResults).toEqual([steps[2]])
+      expect(searchResults).to.deep.eq([steps[2]])
     })
   })
 })

@@ -1,5 +1,6 @@
 import { TestStepResultStatus, TimeConversion } from '@cucumber/messages'
 import { render } from '@testing-library/react'
+import { expect } from 'chai'
 import { add, addMilliseconds } from 'date-fns'
 import React from 'react'
 
@@ -62,8 +63,8 @@ describe('ExecutionSummary', () => {
           <ExecutionSummary {...DEFAULT_PROPS} referenceDate={referenceDate} />
         )
 
-        expect(getByText(text)).toBeVisible()
-        expect(getByText('last run')).toBeVisible()
+        expect(getByText(text)).to.be.visible
+        expect(getByText('last run')).to.be.visible
       })
     }
   })
@@ -89,8 +90,8 @@ describe('ExecutionSummary', () => {
           />
         )
 
-        expect(getByText(text)).toBeVisible()
-        expect(getByText('duration')).toBeVisible()
+        expect(getByText(text)).to.be.visible
+        expect(getByText('duration')).to.be.visible
       })
     }
   })
@@ -116,8 +117,8 @@ describe('ExecutionSummary', () => {
           />
         )
 
-        expect(getByText(`${percentage} passed`)).toBeVisible()
-        expect(getByText(`${total} executed`)).toBeVisible()
+        expect(getByText(`${percentage} passed`)).to.be.visible
+        expect(getByText(`${total} executed`)).to.be.visible
       })
     }
   })
@@ -126,13 +127,13 @@ describe('ExecutionSummary', () => {
     it('should include the implementation name and version', () => {
       const { getByText } = render(<ExecutionSummary {...DEFAULT_PROPS} />)
 
-      expect(getByText('cucumber-js 8.0.0-rc.1')).toBeVisible()
+      expect(getByText('cucumber-js 8.0.0-rc.1')).to.be.visible
     })
     it('should include the job link', () => {
       const { getByText } = render(<ExecutionSummary {...DEFAULT_PROPS} />)
       const jobLinkElement = getByText(DEFAULT_PROPS.meta?.ci?.buildNumber as string)
-      expect(jobLinkElement).toBeVisible()
-      expect(jobLinkElement.getAttribute('href')).toEqual(DEFAULT_PROPS.meta?.ci?.url)
+      expect(jobLinkElement).to.be.visible
+      expect(jobLinkElement.getAttribute('href')).to.eq(DEFAULT_PROPS.meta?.ci?.url)
     })
   })
 })

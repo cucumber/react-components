@@ -1,0 +1,9 @@
+{
+  "exit": true,
+  "extension": ["ts", "tsx"],
+  "recursive": true,
+  "require": [
+    "./register-hooks.cjs"
+  ],
+  "timeout": 10000
+}

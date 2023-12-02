@@ -1,9 +1,13 @@
+import url from 'node:url'
+
 import { IHook, ISupportCodeExecutor, runCucumber, SupportCode } from '@cucumber/fake-cucumber'
 import { makeSourceEnvelope } from '@cucumber/gherkin'
 import { GherkinStreams } from '@cucumber/gherkin-streams'
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { Writable } from 'stream'
+
+const dir = url.fileURLToPath(new URL('.', import.meta.url))
 
 export class FailingCodeSupport implements ISupportCodeExecutor {
   constructor(readonly stepDefinitionId: string) {}
@@ -28,7 +32,7 @@ export class FailingHook implements IHook {
       hook: {
         id: this.id,
         sourceReference: {
-          uri: __dirname,
+          uri: dir,
         },
       },
     }

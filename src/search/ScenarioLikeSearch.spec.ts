@@ -1,5 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Scenario } from '@cucumber/messages'
+import { expect } from 'chai'
 
 import { makeScenario } from '../../test-utils/index.js'
 import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
@@ -26,25 +27,25 @@ describe('ScenarioLikeSearch', () => {
   describe('#search', () => {
     it('returns an empty list when there is no hits', async () => {
       const searchResults = await scenarioSearch.search('no match there')
-      expect(searchResults).toEqual([])
+      expect(searchResults).to.deep.eq([])
     })
 
     it('returns scenario which name match the query', async () => {
       const searchResults = await scenarioSearch.search('failed')
-      expect(searchResults).toEqual([scenarios[2]])
+      expect(searchResults).to.deep.eq([scenarios[2]])
     })
 
     it('may not return results in the original order', async () => {
       const searchResults = await scenarioSearch.search('scenario')
 
       for (const scenario of scenarios) {
-        expect(searchResults).toContain(scenario)
+        expect(searchResults).to.contain(scenario)
       }
     })
 
     it('returns scenario which description match the query', async () => {
       const searchResults = await scenarioSearch.search('little')
-      expect(searchResults).toEqual([scenarios[0]])
+      expect(searchResults).to.deep.eq([scenarios[0]])
     })
   })
 })

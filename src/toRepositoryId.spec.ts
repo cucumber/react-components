@@ -1,3 +1,5 @@
+import { expect } from 'chai'
+
 import toRepositoryId from './toRepositoryId.js'
 
 const testData = [
@@ -10,7 +12,7 @@ describe('toRepositoryId', () => {
   for (const [expected, url] of testData) {
     it(`parses ${url} to ${expected}`, () => {
       const repositoryId = toRepositoryId(url)
-      expect(repositoryId).toEqual(expected)
+      expect(repositoryId).to.eq(expected)
     })
   }
 })

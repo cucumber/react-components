@@ -1,5 +1,6 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
+import { expect } from 'chai'
 import React from 'react'
 
 import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses.js'
@@ -21,7 +22,7 @@ describe('StatusesSummary', () => {
       />
     )
 
-    expect(getAllByRole('listitem').map((li) => li.textContent)).toEqual([
+    expect(getAllByRole('listitem').map((li) => li.textContent)).to.deep.eq([
       '3 failed',
       '100 passed',
       '1 undefined',

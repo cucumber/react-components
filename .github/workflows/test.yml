@@ -15,13 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.19.0, 20.x]
     steps:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - run: npm ci

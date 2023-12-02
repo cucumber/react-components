@@ -1,5 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Feature, GherkinDocument } from '@cucumber/messages'
+import { expect } from 'chai'
 
 import { makeFeature } from '../../test-utils/index.js'
 import { createFeatureSearch } from './FeatureSearch.js'
@@ -23,25 +24,25 @@ describe('FeatureSearch', () => {
     it('returns an empty array when there are no hits', async () => {
       const searchResult = await featureSearch.search('banana')
 
-      expect(searchResult).toEqual([])
+      expect(searchResult).to.deep.eq([])
     })
 
     it('finds results with equal feature name', async () => {
       const searchResult = await featureSearch.search('this exists')
 
-      expect(searchResult).toEqual([gherkinDocument.feature])
+      expect(searchResult).to.deep.eq([gherkinDocument.feature])
     })
 
     it('finds results with substring of feature name', async () => {
       const searchResult = await featureSearch.search('exists')
 
-      expect(searchResult).toEqual([gherkinDocument.feature])
+      expect(searchResult).to.deep.eq([gherkinDocument.feature])
     })
 
     it('finds results with equal feature description', async () => {
       const searchResult = await featureSearch.search('description')
 
-      expect(searchResult).toEqual([gherkinDocument.feature])
+      expect(searchResult).to.deep.eq([gherkinDocument.feature])
     })
   })
 })

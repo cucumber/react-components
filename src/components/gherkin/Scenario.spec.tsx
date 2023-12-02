@@ -1,6 +1,7 @@
 import { Envelope, GherkinDocument } from '@cucumber/messages'
 import { screen, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import { expect } from 'chai'
 import React from 'react'
 
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
@@ -31,81 +32,77 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the outline with worst result for each step', () => {
-      expect(
-        screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })
-      ).toBeVisible()
-      expect(
-        screen.getByRole('heading', { name: 'Given there are <start> cucumbers' })
-      ).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'When I eat <eat> cucumbers' })).toBeVisible()
-      expect(
-        screen.getByRole('heading', { name: 'Then I should have <left> cucumbers' })
-      ).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })).to.be
+        .visible
+      expect(screen.getByRole('heading', { name: 'Given there are <start> cucumbers' })).to.be
+        .visible
+      expect(screen.getByRole('heading', { name: 'When I eat <eat> cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Then I should have <left> cucumbers' })).to.be
+        .visible
       const [step1, step2, step3] = screen.getAllByRole('listitem')
-      expect(getStatus(step1)).toEqual('PASSED')
-      expect(getStatus(step2)).toEqual('UNDEFINED')
-      expect(getStatus(step3)).toEqual('FAILED')
+      expect(getStatus(step1)).to.eq('PASSED')
+      expect(getStatus(step2)).to.eq('UNDEFINED')
+      expect(getStatus(step3)).to.eq('FAILED')
     })
 
     it('should render the results for individual examples - all passed', async () => {
       await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
 
-      expect(screen.getByText('@passing')).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'When I eat 5 cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Then I should have 7 cucumbers' })).toBeVisible()
+      expect(screen.getByText('@passing')).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'When I eat 5 cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
       const [step1, step2, step3] = within(
         screen.getByRole('list', { name: 'Steps' })
       ).getAllByRole('listitem')
-      expect(getStatus(step1)).toEqual('PASSED')
-      expect(getStatus(step2)).toEqual('PASSED')
-      expect(getStatus(step3)).toEqual('PASSED')
+      expect(getStatus(step1)).to.eq('PASSED')
+      expect(getStatus(step2)).to.eq('PASSED')
+      expect(getStatus(step3)).to.eq('PASSED')
     })
 
     it('should render the results for individual examples - one failed', async () => {
       await userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
 
-      expect(screen.getByText('@failing')).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'When I eat 20 cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Then I should have 0 cucumbers' })).toBeVisible()
+      expect(screen.getByText('@failing')).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'When I eat 20 cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Then I should have 0 cucumbers' })).to.be.visible
       const [step1, step2, step3] = within(
         screen.getByRole('list', { name: 'Steps' })
       ).getAllByRole('listitem')
-      expect(getStatus(step1)).toEqual('PASSED')
-      expect(getStatus(step2)).toEqual('PASSED')
-      expect(getStatus(step3)).toEqual('FAILED')
-      expect(screen.getByText(/Expected values to be strictly equal/)).toBeVisible()
+      expect(getStatus(step1)).to.eq('PASSED')
+      expect(getStatus(step2)).to.eq('PASSED')
+      expect(getStatus(step3)).to.eq('FAILED')
+      expect(screen.getByText(/Expected values to be strictly equal/)).to.be.visible
     })
 
     it('should render the results for individual examples - undefined', async () => {
       await userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
 
-      expect(screen.getByText('@undefined')).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'When I eat banana cucumbers' })).toBeVisible()
-      expect(screen.getByRole('heading', { name: 'Then I should have 12 cucumbers' })).toBeVisible()
+      expect(screen.getByText('@undefined')).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'When I eat banana cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Then I should have 12 cucumbers' })).to.be.visible
       const [step1, step2, step3] = within(
         screen.getByRole('list', { name: 'Steps' })
       ).getAllByRole('listitem')
-      expect(getStatus(step1)).toEqual('PASSED')
-      expect(getStatus(step2)).toEqual('UNDEFINED')
-      expect(getStatus(step3)).toEqual('SKIPPED')
+      expect(getStatus(step1)).to.eq('PASSED')
+      expect(getStatus(step2)).to.eq('UNDEFINED')
+      expect(getStatus(step3)).to.eq('SKIPPED')
     })
 
     it('should allow returning to the outline from an example detail', async () => {
       await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
 
       await userEvent.click(
         screen.getByRole('button', { name: 'Back to outline and all 6 examples' })
       )
-      expect(
-        screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })
-      ).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })).to.be
+        .visible
     })
   })
 })
