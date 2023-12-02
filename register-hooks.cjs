@@ -1,5 +1,5 @@
-const { register } = require('node:module');
-const { pathToFileURL } = require('node:url');
+const { register } = require('node:module')
+const { pathToFileURL } = require('node:url')
 
 register('ts-node/esm', pathToFileURL(__filename))
 register('./css-loader.mjs', pathToFileURL(__filename))
