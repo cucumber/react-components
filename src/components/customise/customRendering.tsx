@@ -6,6 +6,9 @@ function mixinStyles<Classes>(
   builtIn: Record<string, string>,
   custom?: Record<string, string> | React.FunctionComponent
 ): Classes {
+  if (!custom) {
+    return builtIn as Classes
+  }
   const mixed: Record<string, unknown> = {}
   Object.keys(builtIn).forEach((key) => {
     if (builtIn[key]) {

@@ -22,7 +22,8 @@ describe('custom rendering and theming', () => {
 
     const { getByRole } = render(<Tags tags={tags} />)
 
-    expect(getByRole('list')).to.have.class('tags')
+    const byRole = getByRole('list')
+    expect(byRole).to.have.class('tags')
     expect(getByRole('listitem')).to.have.class('tag')
   })
 

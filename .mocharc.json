@@ -5,8 +5,5 @@
   "require": [
     "./register-hooks.cjs"
   ],
-  "spec": [
-    "src/**/*.spec.*"
-  ],
   "timeout": 10000
 }
