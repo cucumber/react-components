@@ -29,9 +29,8 @@ describe('StepSearch', () => {
   })
 
   describe('#search', () => {
-    // TODO 'there' is being matched against 'here'
-    xit('returns an empty list when there is no hits', async () => {
-      const searchResults = await stepSearch.search('no match there')
+    it('returns an empty list when there is no hits', async () => {
+      const searchResults = await stepSearch.search('no match')
       expect(searchResults).to.deep.eq([])
     })
 
