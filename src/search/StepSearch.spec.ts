@@ -48,14 +48,10 @@ describe('StepSearch', () => {
     })
 
     it('returns step which keyword match the query', async () => {
-      const searchResults = await stepSearch.search('Given')
-      expect(searchResults).to.deep.eq([steps[0]])
-    })
-
-    xit('it does not exclude "Then" and "When" from indexing', () => {
-      // By default, ElasticLurn exclude some words from indexing/searching,
-      // amongst them are 'Then' and 'When'.
-      // See: http://elasticlunr.com/docs/stop_word_filter.js.html#resetStopWords
+      for (const step of steps) {
+        const searchResults = await stepSearch.search(step.keyword)
+        expect(searchResults).to.deep.eq([step])
+      }
     })
 
     it('returns step which DocString matches the query', async () => {
