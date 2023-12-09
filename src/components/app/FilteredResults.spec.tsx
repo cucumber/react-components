@@ -1,5 +1,5 @@
 import { Envelope } from '@cucumber/messages'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
 import React, { VoidFunctionComponent } from 'react'
@@ -26,26 +26,28 @@ describe('FilteredResults', () => {
   }
 
   describe('with a targeted run', () => {
-    it('doesnt include features where no scenarios became test cases', () => {
+    it('doesnt include features where no scenarios became test cases', async () => {
       const { getByRole, queryByRole } = render(
         <TestableFilteredResults envelopes={targetedRun as Envelope[]} />
       )
 
-      expect(
-        getByRole('heading', {
-          name: 'features/adding.feature',
-        })
-      ).to.be.visible
-      expect(
-        queryByRole('heading', {
-          name: 'features/editing.feature',
-        })
-      ).not.to.exist
-      expect(
-        queryByRole('heading', {
-          name: 'features/empty.feature',
-        })
-      ).not.to.exist
+      await waitFor(() => {
+        expect(
+          getByRole('heading', {
+            name: 'features/adding.feature',
+          })
+        ).to.be.visible
+        expect(
+          queryByRole('heading', {
+            name: 'features/editing.feature',
+          })
+        ).not.to.exist
+        expect(
+          queryByRole('heading', {
+            name: 'features/empty.feature',
+          })
+        ).not.to.exist
+      })
     })
   })
 
@@ -55,10 +57,14 @@ describe('FilteredResults', () => {
         <TestableFilteredResults envelopes={attachments as Envelope[]} />
       )
 
+      await waitFor(() => getByText('samples/attachments/attachments.feature'))
+
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'nope!')
       await userEvent.keyboard('{Enter}')
 
-      expect(getByText('No matches found for your query "nope!" and/or filters')).to.be.visible
+      await waitFor(() => {
+        expect(getByText('No matches found for your query "nope!" and/or filters')).to.be.visible
+      })
     })
 
     it('narrows the results with a valid search term, and restores when we clear the search', async () => {
@@ -84,64 +90,76 @@ describe('FilteredResults', () => {
   })
 
   describe('filtering by status', () => {
-    it('should not show filters when only one status', () => {
+    it('should not show filters when only one status', async () => {
       const { queryByRole } = render(<TestableFilteredResults envelopes={minimal as Envelope[]} />)
 
-      expect(queryByRole('checkbox')).not.to.exist
+      await waitFor(() => {
+        expect(queryByRole('checkbox')).not.to.exist
+      })
     })
 
-    it('should show named status filters, all checked by default', () => {
+    it('should show named status filters, all checked by default', async () => {
       const { getAllByRole, getByRole } = render(
         <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
       )
 
-      expect(getAllByRole('checkbox')).to.have.length(3)
-      expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
-      expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
-      expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
-      getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
-        expect(checkbox).to.be.checked
+      await waitFor(() => {
+        expect(getAllByRole('checkbox')).to.have.length(3)
+        expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
+        expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
+        expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
+        getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
+          expect(checkbox).to.be.checked
+        })
       })
-    })
 
-    it('should hide features with a certain status when we uncheck it', async () => {
-      const { getByRole, queryByRole } = render(
-        <TestableFilteredResults envelopes={[...examplesTables, ...minimal] as Envelope[]} />
-      )
+      it('should hide features with a certain status when we uncheck it', async () => {
+        const { getByRole, queryByRole } = render(
+          <TestableFilteredResults envelopes={[...examplesTables, ...minimal] as Envelope[]} />
+        )
 
-      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
-        .be.visible
-      expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).to.be.visible
-
-      await userEvent.click(getByRole('checkbox', { name: 'passed' }))
-
-      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
-        .be.visible
-      expect(
-        queryByRole('heading', {
-          name: 'samples/minimal/minimal.feature',
+        await waitFor(() => {
+          expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' }))
+            .to.be.visible
+          expect(getByRole('heading', { name: 'samples/minimal/minimal.feature' })).to.be.visible
         })
-      ).not.to.exist
-    })
 
-    it('should show a message if we filter all statuses out', async () => {
-      const { getByRole, queryByRole, getByText } = render(
-        <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
-      )
+        await userEvent.click(getByRole('checkbox', { name: 'passed' }))
 
-      expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' })).to
-        .be.visible
-
-      await userEvent.click(getByRole('checkbox', { name: 'passed' }))
-      await userEvent.click(getByRole('checkbox', { name: 'failed' }))
-      await userEvent.click(getByRole('checkbox', { name: 'undefined' }))
-
-      expect(
-        queryByRole('heading', {
-          name: 'samples/examples-tables/examples-tables.feature',
+        await waitFor(() => {
+          expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' }))
+            .to.be.visible
+          expect(
+            queryByRole('heading', {
+              name: 'samples/minimal/minimal.feature',
+            })
+          ).not.to.exist
         })
-      ).not.to.exist
-      expect(getByText('No matches found for your filters')).to.be.visible
+      })
+
+      it('should show a message if we filter all statuses out', async () => {
+        const { getByRole, queryByRole, getByText } = render(
+          <TestableFilteredResults envelopes={examplesTables as Envelope[]} />
+        )
+
+        await waitFor(() => {
+          expect(getByRole('heading', { name: 'samples/examples-tables/examples-tables.feature' }))
+            .to.be.visible
+        })
+
+        await userEvent.click(getByRole('checkbox', { name: 'passed' }))
+        await userEvent.click(getByRole('checkbox', { name: 'failed' }))
+        await userEvent.click(getByRole('checkbox', { name: 'undefined' }))
+
+        await waitFor(() => {
+          expect(
+            queryByRole('heading', {
+              name: 'samples/examples-tables/examples-tables.feature',
+            })
+          ).not.to.exist
+          expect(getByText('No matches found for your filters')).to.be.visible
+        })
+      })
     })
   })
 })

@@ -29,5 +29,4 @@ jobs:
       - run: npm test
       - run: npm run eslint
       - run: npm run compile
-# not running ladle build due to elasticlunr bundling issue
-#      - run: npm run build
+      - run: npm run build

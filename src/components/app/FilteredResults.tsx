@@ -1,10 +1,8 @@
-import { GherkinDocument } from '@cucumber/messages'
 import React from 'react'
 
-import countScenariosByStatuses from '../../countScenariosByStatuses.js'
-import filterByStatus from '../../filter/filterByStatus.js'
 import { useQueries, useSearch } from '../../hooks/index.js'
-import Search from '../../search/Search.js'
+import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
+import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 import styles from './FilteredResults.module.scss'
 import { GherkinDocumentList } from './GherkinDocumentList.js'
@@ -17,24 +15,10 @@ interface IProps {
 }
 
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { cucumberQuery, gherkinQuery, envelopesQuery } = useQueries()
+  const { envelopesQuery } = useQueries()
+  const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
-  const allDocuments = gherkinQuery.getGherkinDocuments()
-
-  const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
-    countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
-
-  const search = new Search(gherkinQuery)
-  for (const gherkinDocument of allDocuments) {
-    search.add(gherkinDocument)
-  }
-
-  const onlyShowStatuses = statusesWithScenarios.filter((s) => !hideStatuses.includes(s))
-
-  const matches = query ? search.search(query) : allDocuments
-  const filtered = matches
-    .map((document) => filterByStatus(document, gherkinQuery, cucumberQuery, onlyShowStatuses))
-    .filter((document) => document !== null) as GherkinDocument[]
+  const filtered = useFilteredDocuments(query, hideStatuses)
 
   return (
     <div className={className}>
@@ -52,15 +36,22 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
         />
         <SearchBar
           query={query}
-          onSearch={(query) => update({ query })}
+          onSearch={(newValue) => update({ query: newValue })}
           statusesWithScenarios={statusesWithScenarios}
           hideStatuses={hideStatuses}
-          onFilter={(hideStatuses) => update({ hideStatuses })}
+          onFilter={(newValue) => update({ hideStatuses: newValue })}
         />
       </div>
 
-      {filtered.length > 0 && <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />}
-      {filtered.length < 1 && <NoMatchResult query={query} />}
+      {filtered !== undefined && (
+        <>
+          {filtered.length > 0 ? (
+            <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />
+          ) : (
+            <NoMatchResult query={query} />
+          )}
+        </>
+      )}
     </div>
   )
 }

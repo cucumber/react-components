@@ -1,15 +1,17 @@
 import * as messages from '@cucumber/messages'
+import { Step } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeStep } from '../../test-utils/index.js'
-import StepSearch from './StepSearch.js'
+import { createStepSearch } from './StepSearch.js'
+import { TypedIndex } from './types.js'
 
 describe('StepSearch', () => {
-  let stepSearch: StepSearch
+  let stepSearch: TypedIndex<Step>
   let steps: messages.Step[]
 
-  beforeEach(() => {
-    stepSearch = new StepSearch()
+  beforeEach(async () => {
+    stepSearch = await createStepSearch()
 
     steps = [
       makeStep('Given', 'a passed step', 'There is a docstring here'),
@@ -22,47 +24,43 @@ describe('StepSearch', () => {
     ]
 
     for (const step of steps) {
-      stepSearch.add(step)
+      await stepSearch.add(step)
     }
   })
 
   describe('#search', () => {
-    it('returns an empty list when there is no hits', () => {
-      const searchResults = stepSearch.search('no match there')
+    it('returns an empty list when there is no hits', async () => {
+      const searchResults = await stepSearch.search('no match')
       expect(searchResults).to.deep.eq([])
     })
 
-    it('returns step which text match the query', () => {
-      const searchResults = stepSearch.search('failed')
+    it('returns step which text match the query', async () => {
+      const searchResults = await stepSearch.search('failed')
       expect(searchResults).to.deep.eq([steps[2]])
     })
 
-    it('may not return results in the original order', () => {
-      const searchResults = stepSearch.search('step')
+    it('may not return results in the original order', async () => {
+      const searchResults = await stepSearch.search('step')
 
       for (const step of steps) {
         expect(searchResults).to.contain(step)
       }
     })
 
-    it('returns step which keyword match the query', () => {
-      const searchResults = stepSearch.search('Given')
+    it('returns step which keyword match the query', async () => {
+      for (const step of steps) {
+        const searchResults = await stepSearch.search(step.keyword)
+        expect(searchResults).to.deep.eq([step])
+      }
+    })
+
+    it('returns step which DocString matches the query', async () => {
+      const searchResults = await stepSearch.search('docstring')
       expect(searchResults).to.deep.eq([steps[0]])
     })
 
-    xit('it does not exclude "Then" and "When" from indexing', () => {
-      // By default, ElasticLurn exclude some words from indexing/searching,
-      // amongst them are 'Then' and 'When'.
-      // See: http://elasticlunr.com/docs/stop_word_filter.js.html#resetStopWords
-    })
-
-    it('returns step which DocString matches the query', () => {
-      const searchResults = stepSearch.search('docstring')
-      expect(searchResults).to.deep.eq([steps[0]])
-    })
-
-    it('returns step which datatable matches the query', () => {
-      const searchResults = stepSearch.search('NullPointerException')
+    it('returns step which datatable matches the query', async () => {
+      const searchResults = await stepSearch.search('NullPointerException')
       expect(searchResults).to.deep.eq([steps[2]])
     })
   })

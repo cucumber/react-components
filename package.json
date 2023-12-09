@@ -33,13 +33,12 @@
     "@fortawesome/fontawesome-svg-core": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
+    "@orama/orama": "^2.0.0-beta.7",
     "@orama/stemmers": "^2.0.0-beta.7",
     "@teppeis/multimaps": "2.0.0",
-    "@types/elasticlunr": "0.9.5",
     "ansi-to-html": "0.7.2",
     "color": "4.2.3",
     "date-fns": "2.29.3",
-    "elasticlunr": "0.9.5",
     "hast-util-sanitize": "^5.0.1",
     "highlight-words": "1.2.2",
     "mime": "^3.0.0",
@@ -48,7 +47,8 @@
     "rehype-raw": "5.1.0",
     "rehype-sanitize": "4.0.0",
     "remark-breaks": "2.0.2",
-    "remark-gfm": "1.0.0"
+    "remark-gfm": "1.0.0",
+    "use-debounce": "^10.0.0"
   },
   "peerDependencies": {
     "react": "~18",

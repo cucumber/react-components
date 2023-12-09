@@ -3,10 +3,11 @@ import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import assert from 'assert'
 
-import TextSearch from './TextSearch.js'
+import { createTextSearch } from './TextSearch.js'
+import { Searchable } from './types.js'
 
 describe('TextSearch', () => {
-  let search: TextSearch
+  let search: Searchable
   const source = `Feature: Continents
 
   Background: World
@@ -30,17 +31,17 @@ describe('TextSearch', () => {
       Given some scientific bases
 `
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const gherkinDocument = parse(source)
 
-    search = new TextSearch()
-    search.add(gherkinDocument)
+    search = await createTextSearch()
+    await search.add(gherkinDocument)
   })
 
   describe('Hit found in step', () => {
     // TODO: Fix
-    xit('displays just one scenario', () => {
-      const searchResults = search.search('Spain')
+    xit('displays just one scenario', async () => {
+      const searchResults = await search.search('Spain')
 
       assert.deepStrictEqual(
         pretty(searchResults[0]),
@@ -59,8 +60,8 @@ describe('TextSearch', () => {
   })
 
   describe('Hit found in scenario', () => {
-    xit('displays just one scenario', () => {
-      const searchResults = search.search('europe')
+    xit('displays just one scenario', async () => {
+      const searchResults = await search.search('europe')
 
       assert.deepStrictEqual(
         pretty(searchResults[0]),
@@ -79,22 +80,22 @@ describe('TextSearch', () => {
   })
 
   describe('Hit found in background', () => {
-    it('displays all scenarios', () => {
-      const searchResults = search.search('world')
+    it('displays all scenarios', async () => {
+      const searchResults = await search.search('world')
 
       assert.deepStrictEqual(pretty(searchResults[0]), source)
     })
 
-    it('finds hits in background steps', () => {
-      const searchResults = search.search('exists')
+    it('finds hits in background steps', async () => {
+      const searchResults = await search.search('exists')
 
       assert.deepStrictEqual(pretty(searchResults[0]), source)
     })
   })
 
   describe('Hit found in rule', () => {
-    it('displays a rule', () => {
-      const searchResults = search.search('uninhabited')
+    it('displays a rule', async () => {
+      const searchResults = await search.search('uninhabited')
 
       assert.deepStrictEqual(
         pretty(searchResults[0]),
@@ -114,8 +115,8 @@ describe('TextSearch', () => {
 
   describe('No hit found', () => {
     // TODO: Fix
-    xit('returns no hits', () => {
-      const searchResults = search.search('saturn')
+    xit('returns no hits', async () => {
+      const searchResults = await search.search('saturn')
 
       assert.deepStrictEqual(searchResults, [])
     })

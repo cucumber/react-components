@@ -1,4 +1,4 @@
-import elasticlunr from 'elasticlunr'
+import { stemmer } from '@orama/stemmers/english'
 import highlightWords from 'highlight-words'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -15,7 +15,7 @@ interface IProps {
 
 const allQueryWords = (queryWords: string[]): string[] => {
   return queryWords.reduce((allWords, word) => {
-    const stem = elasticlunr.stemmer(word)
+    const stem = stemmer(word)
     allWords.push(word)
 
     if (stem !== word) {

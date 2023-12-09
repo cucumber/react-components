@@ -4,10 +4,13 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 
+import { EnvelopesQuery } from '../EnvelopesQueryContext.js'
+
 export default function filterByStatus(
   gherkinDocument: messages.GherkinDocument,
   gherkinQuery: GherkinQuery,
   cucumberQuery: CucumberQuery,
+  envelopesQuery: EnvelopesQuery,
   statuses: readonly messages.TestStepResultStatus[]
 ): messages.GherkinDocument | null {
   const filters = {
@@ -16,12 +19,12 @@ export default function filterByStatus(
       const pickleIds = gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
       return pickleIds
-        .map((pickleId) =>
+        .filter((pickleId) => envelopesQuery.hasTestCase(pickleId))
+        .some((pickleId) =>
           statuses.includes(
             getWorstTestStepResult(cucumberQuery.getPickleTestStepResults([pickleId])).status
           )
         )
-        .includes(true)
     },
   }
 
