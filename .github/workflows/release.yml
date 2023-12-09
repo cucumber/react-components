@@ -6,12 +6,11 @@ on:
       - release/*
 
 jobs:
-
   pre-release-check:
-    uses: cucumber/cucumber-react/.github/workflows/prerelease-checks.yml@add-release-workflow
+    uses: ./.github/workflows/prerelease-checks.yml
 
   test:
-    uses: cucumber/cucumber-react/.github/workflows/test.yml@add-release-workflow
+    uses: ./.github/workflows/test.yml
 
   publish-npm:
     name: Publish NPM module
@@ -21,17 +20,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: 20.x
           cache: 'npm'
           cache-dependency-path: package-lock.json
-
-      - run: npm install-ci-test
-
+      - run: npm ci
       - run: npm run compile
-
       - uses: cucumber/action-publish-npm@v1.1.0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}

@@ -4,7 +4,6 @@ on:
   workflow_call:
 
 jobs:
-
   check-commit-ancestor:
     name: Check commit ancestor
     runs-on: ubuntu-latest
