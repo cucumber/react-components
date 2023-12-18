@@ -82,7 +82,7 @@
     "core-js": "3.27.1",
     "cpy-cli": "4.2.0",
     "eslint": "8.32.0",
-    "eslint-config-prettier": "8.6.0",
+    "eslint-config-prettier": "8.10.0",
     "eslint-plugin-import": "2.27.4",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
