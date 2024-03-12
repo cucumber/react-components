@@ -13,10 +13,10 @@ import CucumberQueryContext from '../../CucumberQueryContext.js'
 import GherkinQueryContext from '../../GherkinQueryContext.js'
 import { HighLight } from '../app/HighLight.js'
 import { DefaultComponent, GherkinStepProps, useCustomRendering } from '../customise/index.js'
+import { TestStepResultDetails } from '../results/index.js'
 import { Attachment } from './Attachment.js'
 import { DataTable as DataTableComponent } from './DataTable.js'
 import { DocString as DocStringComponent } from './DocString.js'
-import { ErrorMessage } from './ErrorMessage.js'
 import { Keyword } from './Keyword.js'
 import { Parameter } from './Parameter.js'
 import { StepItem } from './StepItem.js'
@@ -116,7 +116,7 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({
       </Title>
       {step.dataTable && <DataTableComponent dataTable={step.dataTable} />}
       {step.docString && <DocStringComponent docString={step.docString} />}
-      {!hasExamples && testStepResult.message && <ErrorMessage message={testStepResult.message} />}
+      {!hasExamples && <TestStepResultDetails {...testStepResult} />}
       {!hasExamples &&
         attachments.map((attachment, i) => <Attachment key={i} attachment={attachment} />)}
     </StepItem>

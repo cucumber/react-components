@@ -62,7 +62,8 @@ export interface DocStringProps {
 export type DocStringClasses = Styles<'docString'>
 
 export interface ErrorMessageProps {
-  message: string
+  message?: string
+  children?: ReactNode
 }
 
 export type ErrorMessageClasses = Styles<'message'>

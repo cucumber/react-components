@@ -4,8 +4,8 @@ import React from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext.js'
 import { HookStepProps, useCustomRendering } from '../customise/index.js'
+import { TestStepResultDetails } from '../results/index.js'
 import { Attachment } from './Attachment.js'
-import { ErrorMessage } from './ErrorMessage.js'
 import { StepItem } from './StepItem.js'
 import { Title } from './Title.js'
 
@@ -31,7 +31,7 @@ const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
         <Title header="h3" id={step.id}>
           {hook?.name ? `Hook "${hook.name}"` : 'Hook'} failed: {location}
         </Title>
-        {stepResult.message && <ErrorMessage message={stepResult.message} />}
+        <TestStepResultDetails {...stepResult} />
         {attachments.map((attachment, i) => (
           <Attachment key={i} attachment={attachment} />
         ))}
