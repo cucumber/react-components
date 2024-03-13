@@ -32,7 +32,7 @@ describe('<Scenario/>', () => {
     })
 
     it('should render the outline with worst result for each step', () => {
-      expect(screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })).to.be
+      expect(screen.getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be
         .visible
       expect(screen.getByRole('heading', { name: 'Given there are <start> cucumbers' })).to.be
         .visible
@@ -49,7 +49,7 @@ describe('<Scenario/>', () => {
       await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
 
       expect(screen.getByText('@passing')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'When I eat 5 cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
@@ -65,7 +65,7 @@ describe('<Scenario/>', () => {
       await userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
 
       expect(screen.getByText('@failing')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'When I eat 20 cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Then I should have 0 cucumbers' })).to.be.visible
@@ -82,7 +82,7 @@ describe('<Scenario/>', () => {
       await userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
 
       expect(screen.getByText('@undefined')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'When I eat banana cucumbers' })).to.be.visible
       expect(screen.getByRole('heading', { name: 'Then I should have 12 cucumbers' })).to.be.visible
@@ -96,12 +96,12 @@ describe('<Scenario/>', () => {
 
     it('should allow returning to the outline from an example detail', async () => {
       await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
-      expect(screen.getByRole('heading', { name: 'Example: eating cucumbers' })).to.be.visible
+      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
 
       await userEvent.click(
         screen.getByRole('button', { name: 'Back to outline and all 6 examples' })
       )
-      expect(screen.getByRole('heading', { name: 'Scenario Outline: eating cucumbers' })).to.be
+      expect(screen.getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be
         .visible
     })
   })
