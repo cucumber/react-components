@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Support `TestStepResult.exception` in results ([#345](https://github.com/cucumber/react-components/pull/345))
 
 ## [22.0.0] - 2023-12-09
 ### Changed
