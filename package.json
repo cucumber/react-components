@@ -22,7 +22,6 @@
     "build": "ladle build",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test-utils",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test-utils",
-    "upgrade": "npm-check-updates --upgrade",
     "pretty-quick-staged": "pretty-quick --staged"
   },
   "dependencies": {
