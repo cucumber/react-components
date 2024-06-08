@@ -1,5 +1,4 @@
 import * as messages from '@cucumber/messages'
-// @ts-ignore
 import Convert from 'ansi-to-html'
 import React from 'react'
 
