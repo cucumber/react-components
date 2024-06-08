@@ -46,6 +46,20 @@ describe('<Attachment>', () => {
     expect(video).to.have.attr('src', 'data:video/mp4;base64,fake-base64')
   })
 
+  it('renders an externalised video', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'video/mp4',
+      body: '',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      url: './path-to-video.mp4',
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const video = container.querySelector('video source')
+    expect(summary).to.have.text('Attached Video (video/mp4)')
+    expect(video).to.have.attr('src', './path-to-video.mp4')
+  })
+
   it('renders an image', () => {
     const attachment: messages.Attachment = {
       mediaType: 'image/png',

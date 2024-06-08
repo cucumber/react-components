@@ -17,6 +17,7 @@ import { attachmentFilename } from '../attachmentFilename.js'
 import { ErrorMessage } from '../ErrorMessage.js'
 import defaultStyles from './Attachment.module.scss'
 import { Image } from './Image.js'
+import { Video } from './Video.js'
 
 const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   attachment,
@@ -25,7 +26,7 @@ const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   if (attachment.mediaType.match(/^image\//)) {
     return <Image attachment={attachment} classes={styles} />
   } else if (attachment.mediaType.match(/^video\//)) {
-    return video(attachment)
+    return <Video attachment={attachment} />
   } else if (attachment.mediaType == 'text/x.cucumber.log+plain') {
     return text(attachment, prettyANSI, true, styles)
   } else if (attachment.mediaType.match(/^text\//)) {
@@ -91,27 +92,6 @@ function cleanupDownloadUrl(url?: string) {
     console.debug('Revoking download url')
     URL.revokeObjectURL(url)
   }
-}
-
-function video(attachment: messages.Attachment) {
-  const attachmentTitle = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')'
-
-  if (attachment.contentEncoding !== 'BASE64') {
-    return (
-      <ErrorMessage
-        message={`Couldn't display ${attachment.mediaType} video because it wasn't base64 encoded`}
-      />
-    )
-  }
-  return (
-    <details>
-      <summary>{attachmentTitle}</summary>
-      <video controls>
-        <source src={`data:${attachment.mediaType};base64,${attachment.body}`} />
-        Your browser is unable to display video
-      </video>
-    </details>
-  )
 }
 
 function base64Decode(body: string) {
