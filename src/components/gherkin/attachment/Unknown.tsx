@@ -6,10 +6,34 @@ import React, { FC, useCallback, useEffect, useState } from 'react'
 
 import { NavigationButton } from '../../app/NavigationButton.js'
 import { AttachmentProps } from '../../customise/index.js'
-import { attachmentFilename } from '../attachmentFilename.js'
+import { attachmentFilename } from './attachmentFilename.js'
 import { base64Decode } from './base64Decode.js'
 
 export const Unknown: FC<AttachmentProps> = ({ attachment }) => {
+  if (attachment.url) {
+    return <UnknownExternalised attachment={attachment} />
+  }
+  return <UnknownEmbedded attachment={attachment} />
+}
+
+const UnknownExternalised: FC<AttachmentProps> = ({ attachment }) => {
+  const filename = attachmentFilename(attachment)
+  const onClick = () => {
+    const anchor = document.createElement('a')
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    anchor.href = attachment.url!
+    anchor.download = filename
+    anchor.click()
+  }
+  return (
+    <NavigationButton onClick={onClick}>
+      <FontAwesomeIcon icon={faPaperclip} />
+      Download {filename}
+    </NavigationButton>
+  )
+}
+
+const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   const [downloadUrl, setDownloadUrl] = useState<string>()
   useEffect(() => () => cleanupDownloadUrl(downloadUrl), [downloadUrl])
   const filename = attachmentFilename(attachment)

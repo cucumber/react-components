@@ -19,6 +19,18 @@ describe('<Attachment>', () => {
     expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
   })
 
+  it('renders a download button for an unknown externalised attachment', () => {
+    const attachment: messages.Attachment = {
+      body: '',
+      mediaType: 'application/pdf',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      fileName: 'document.pdf',
+    }
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
+  })
+
   it('renders a video', () => {
     const attachment: messages.Attachment = {
       mediaType: 'video/mp4',
