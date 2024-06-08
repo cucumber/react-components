@@ -1,8 +1,9 @@
 import * as messages from '@cucumber/messages'
+import { AttachmentContentEncoding } from '@cucumber/messages'
 import { expect } from 'chai'
 import React from 'react'
 
-import { render, screen } from '../../../test-utils/index.js'
+import { render, screen } from '../../../../test-utils/index.js'
 import { Attachment } from './Attachment.js'
 
 describe('<Attachment>', () => {
@@ -70,6 +71,20 @@ describe('<Attachment>', () => {
     const img = container.querySelector('img')
     expect(summary).to.have.text('the attachment name')
     expect(img).to.have.attr('src', 'data:image/png;base64,fake-base64')
+  })
+
+  it('renders an externalised image ', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'image/png',
+      body: '',
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
+      url: './path-to-image.png',
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const img = container.querySelector('img')
+    expect(summary).to.have.text('Attached Image (image/png)')
+    expect(img).to.have.attr('src', './path-to-image.png')
   })
 
   it('renders base64 encoded plaintext', () => {

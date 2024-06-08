@@ -6,23 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Convert from 'ansi-to-html'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 
-import { NavigationButton } from '../app/NavigationButton.js'
+import { NavigationButton } from '../../app/NavigationButton.js'
 import {
   AttachmentClasses,
   AttachmentProps,
   DefaultComponent,
   useCustomRendering,
-} from '../customise/index.js'
+} from '../../customise/index.js'
+import { attachmentFilename } from '../attachmentFilename.js'
+import { ErrorMessage } from '../ErrorMessage.js'
 import defaultStyles from './Attachment.module.scss'
-import { attachmentFilename } from './attachmentFilename.js'
-import { ErrorMessage } from './ErrorMessage.js'
+import { Image } from './Image.js'
 
-export const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
+const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   attachment,
   styles,
 }) => {
   if (attachment.mediaType.match(/^image\//)) {
-    return image(attachment, styles)
+    return <Image attachment={attachment} classes={styles} />
   } else if (attachment.mediaType.match(/^video\//)) {
     return video(attachment)
   } else if (attachment.mediaType == 'text/x.cucumber.log+plain') {
@@ -90,29 +91,6 @@ function cleanupDownloadUrl(url?: string) {
     console.debug('Revoking download url')
     URL.revokeObjectURL(url)
   }
-}
-
-function image(attachment: messages.Attachment, classes: AttachmentClasses) {
-  if (attachment.contentEncoding !== 'BASE64') {
-    return (
-      <ErrorMessage
-        message={`Couldn't display ${attachment.mediaType} image because it wasn't base64 encoded`}
-      />
-    )
-  }
-
-  const attachmentTitle = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')'
-
-  return (
-    <details>
-      <summary>{attachmentTitle}</summary>
-      <img
-        alt="Embedded Image"
-        src={`data:${attachment.mediaType};base64,${attachment.body}`}
-        className={classes.image}
-      />
-    </details>
-  )
 }
 
 function video(attachment: messages.Attachment) {
