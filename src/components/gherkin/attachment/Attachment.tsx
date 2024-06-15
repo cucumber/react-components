@@ -1,5 +1,6 @@
 import * as messages from '@cucumber/messages'
 import React from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import {
   AttachmentClasses,
@@ -7,6 +8,7 @@ import {
   DefaultComponent,
   useCustomRendering,
 } from '../../customise/index.js'
+import { ErrorMessage } from '../ErrorMessage.js'
 import defaultStyles from './Attachment.module.scss'
 import { base64Decode } from './base64Decode.js'
 import { Image } from './Image.js'
@@ -41,7 +43,11 @@ export const Attachment: React.FunctionComponent<AttachmentProps> = (props) => {
     defaultStyles,
     DefaultRenderer
   )
-  return <ResolvedRenderer {...props} />
+  return (
+    <ErrorBoundary fallback={<ErrorMessage message={`Attachment couldn't be rendered`} />}>
+      <ResolvedRenderer {...props} />
+    </ErrorBoundary>
+  )
 }
 
 function text(
