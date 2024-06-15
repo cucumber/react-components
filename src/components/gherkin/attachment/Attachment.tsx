@@ -11,6 +11,7 @@ import {
 import defaultStyles from './Attachment.module.scss'
 import { base64Decode } from './base64Decode.js'
 import { Image } from './Image.js'
+import { Text } from './Text.js'
 import { Unknown } from './Unknown.js'
 import { Video } from './Video.js'
 
@@ -53,23 +54,13 @@ function text(
 
   const attachmentTitle = attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')'
 
-  if (dangerouslySetInnerHTML) {
-    return (
-      <details>
-        <summary>{attachmentTitle}</summary>
-        <pre className={classes.text}>
-          <span dangerouslySetInnerHTML={{ __html: prettify(body) }} />
-        </pre>
-      </details>
-    )
-  }
   return (
-    <details>
-      <summary>{attachmentTitle}</summary>
-      <pre className={classes.text}>
-        <span>{prettify(body)}</span>
-      </pre>
-    </details>
+    <Text
+      title={attachmentTitle}
+      content={prettify(body)}
+      html={dangerouslySetInnerHTML}
+      classes={classes}
+    />
   )
 }
 
