@@ -11,6 +11,7 @@ import {
 import defaultStyles from './Attachment.module.scss'
 import { base64Decode } from './base64Decode.js'
 import { Image } from './Image.js'
+import { Json } from './Json.js'
 import { Log } from './Log.js'
 import { Text } from './Text.js'
 import { Unknown } from './Unknown.js'
@@ -29,7 +30,7 @@ const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   } else if (attachment.mediaType.match(/^text\//)) {
     return text(attachment, (s) => s, false, styles)
   } else if (attachment.mediaType.match(/^application\/json/)) {
-    return text(attachment, prettyJSON, false, styles)
+    return <Json attachment={attachment} classes={styles} />
   } else {
     return <Unknown attachment={attachment} />
   }
