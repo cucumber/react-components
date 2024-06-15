@@ -11,6 +11,7 @@ import {
 import defaultStyles from './Attachment.module.scss'
 import { base64Decode } from './base64Decode.js'
 import { Image } from './Image.js'
+import { Log } from './Log.js'
 import { Text } from './Text.js'
 import { Unknown } from './Unknown.js'
 import { Video } from './Video.js'
@@ -24,7 +25,7 @@ const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   } else if (attachment.mediaType.match(/^video\//)) {
     return <Video attachment={attachment} />
   } else if (attachment.mediaType == 'text/x.cucumber.log+plain') {
-    return text(attachment, prettyANSI, true, styles)
+    return <Log attachment={attachment} classes={styles} />
   } else if (attachment.mediaType.match(/^text\//)) {
     return text(attachment, (s) => s, false, styles)
   } else if (attachment.mediaType.match(/^application\/json/)) {
@@ -70,8 +71,4 @@ function prettyJSON(s: string) {
   } catch (ignore) {
     return s
   }
-}
-
-function prettyANSI(s: string) {
-  return new Convert().toHtml(s)
 }
