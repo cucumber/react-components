@@ -147,9 +147,7 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('details summary')
-    const data = container.querySelector('details > pre > span')
-    expect(summary).to.have.text('Attached Text (text/x.cucumber.log+plain)')
+    const data = container.querySelector('pre > span')
     expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
@@ -163,9 +161,7 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('details summary')
-    const data = container.querySelector('details > pre > span')
-    expect(summary).to.have.text('the attachment name')
+    const data = container.querySelector('pre > span')
     expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )

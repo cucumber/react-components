@@ -1,6 +1,7 @@
 @import '../../../styles/theming';
 
 .text {
+  position: relative;
   white-space: pre-wrap;
   font-family: $monoFamily;
   font-size: 0.875em;
@@ -10,6 +11,21 @@
   overflow-x: auto;
   background-color: $codeBackgroundColor;
   color: $codeTextColor;
+}
+
+.log {
+  padding-left: 3.25em;
+
+  &::before {
+    content: 'Log';
+    position: absolute;
+    top: 0.666em;
+    left: 0.75em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $parameterColor;
+    opacity: 0.75;
+  }
 }
 
 .icon {

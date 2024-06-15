@@ -3,15 +3,18 @@ import Convert from 'ansi-to-html'
 import React, { FC } from 'react'
 
 import { AttachmentClasses } from '../../customise/index.js'
-import { Text } from './Text.js'
 import { useText } from './useText.js'
 
 export const Log: FC<{
   attachment: Attachment
   classes: AttachmentClasses
 }> = ({ attachment, classes }) => {
-  const { title, content } = useText(attachment)
-  return <Text title={title} content={prettyANSI(content)} html={true} classes={classes} />
+  const { content } = useText(attachment)
+  return (
+    <pre className={`${classes.text} ${classes.log}`}>
+      <span dangerouslySetInnerHTML={{ __html: prettyANSI(content) }} />
+    </pre>
+  )
 }
 
 function prettyANSI(s: string) {
