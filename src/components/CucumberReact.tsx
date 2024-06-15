@@ -11,7 +11,7 @@ interface IProps {
 
 export const CucumberReact: FunctionComponent<PropsWithChildren<IProps>> = ({
   children,
-  theme = 'light',
+  theme = 'auto',
   customRendering = {},
   className,
 }) => {
