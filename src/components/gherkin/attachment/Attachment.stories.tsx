@@ -52,3 +52,13 @@ ExternalisedText.args = {
     url: externalisedTextUrl,
   },
 } satisfies AttachmentProps
+
+export const Error = Template.bind({})
+Error.args = {
+  attachment: {
+    mediaType: 'application/json',
+    contentEncoding: AttachmentContentEncoding.IDENTITY,
+    body: '',
+    url: '/this-leads-nowhere.json',
+  },
+} satisfies AttachmentProps
