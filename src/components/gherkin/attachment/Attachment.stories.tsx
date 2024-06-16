@@ -11,7 +11,7 @@ import externalisedImageUrl from './fixture-image.svg?url'
 import externalisedTextUrl from './fixture-text.json?url'
 
 export default {
-  title: 'Attachments/Attachments',
+  title: 'Gherkin/Attachment',
 }
 
 type TemplateArgs = AttachmentProps
@@ -53,8 +53,8 @@ ExternalisedText.args = {
   },
 } satisfies AttachmentProps
 
-export const Error = Template.bind({})
-Error.args = {
+export const ExternalisedError = Template.bind({})
+ExternalisedError.args = {
   attachment: {
     mediaType: 'application/json',
     contentEncoding: AttachmentContentEncoding.IDENTITY,
