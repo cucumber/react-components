@@ -5,7 +5,7 @@ import React from 'react'
 import CucumberQueryContext from '../../CucumberQueryContext.js'
 import { HookStepProps, useCustomRendering } from '../customise/index.js'
 import { TestStepResultDetails } from '../results/index.js'
-import { Attachment } from './Attachment.js'
+import { Attachment } from './attachment/index.js'
 import { StepItem } from './StepItem.js'
 import { Title } from './Title.js'
 

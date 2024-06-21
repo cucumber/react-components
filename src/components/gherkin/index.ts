@@ -1,5 +1,5 @@
 export * from './Anchor.js'
-export * from './Attachment.js'
+export * from './attachment/Attachment.js'
 export * from './Background.js'
 export * from './Children.js'
 export * from './DataTable.js'

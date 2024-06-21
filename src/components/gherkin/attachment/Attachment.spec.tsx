@@ -1,14 +1,27 @@
 import * as messages from '@cucumber/messages'
+import { AttachmentContentEncoding } from '@cucumber/messages'
 import { expect } from 'chai'
 import React from 'react'
 
-import { render, screen } from '../../../test-utils/index.js'
+import { render, screen } from '../../../../test-utils/index.js'
 import { Attachment } from './Attachment.js'
 
 describe('<Attachment>', () => {
   it('renders a download button for a file that isnt video, image or text', () => {
     const attachment: messages.Attachment = {
       body: 'test content',
+      mediaType: 'application/pdf',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      fileName: 'document.pdf',
+    }
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
+  })
+
+  it('renders a download button for an unknown externalised attachment', () => {
+    const attachment: messages.Attachment = {
+      body: '',
       mediaType: 'application/pdf',
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
       fileName: 'document.pdf',
@@ -45,6 +58,20 @@ describe('<Attachment>', () => {
     expect(video).to.have.attr('src', 'data:video/mp4;base64,fake-base64')
   })
 
+  it('renders an externalised video', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'video/mp4',
+      body: '',
+      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      url: './path-to-video.mp4',
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const video = container.querySelector('video source')
+    expect(summary).to.have.text('Attached Video (video/mp4)')
+    expect(video).to.have.attr('src', './path-to-video.mp4')
+  })
+
   it('renders an image', () => {
     const attachment: messages.Attachment = {
       mediaType: 'image/png',
@@ -70,6 +97,20 @@ describe('<Attachment>', () => {
     const img = container.querySelector('img')
     expect(summary).to.have.text('the attachment name')
     expect(img).to.have.attr('src', 'data:image/png;base64,fake-base64')
+  })
+
+  it('renders an externalised image ', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'image/png',
+      body: '',
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
+      url: './path-to-image.png',
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const img = container.querySelector('img')
+    expect(summary).to.have.text('Attached Image (image/png)')
+    expect(img).to.have.attr('src', './path-to-image.png')
   })
 
   it('renders base64 encoded plaintext', () => {
@@ -106,9 +147,7 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('details summary')
-    const data = container.querySelector('details > pre > span')
-    expect(summary).to.have.text('Attached Text (text/x.cucumber.log+plain)')
+    const data = container.querySelector('pre > span')
     expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
@@ -122,9 +161,7 @@ describe('<Attachment>', () => {
       contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
-    const summary = container.querySelector('details summary')
-    const data = container.querySelector('details > pre > span')
-    expect(summary).to.have.text('the attachment name')
+    const data = container.querySelector('pre > span')
     expect(data).to.contain.html(
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
