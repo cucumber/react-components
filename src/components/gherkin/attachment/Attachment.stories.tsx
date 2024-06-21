@@ -34,6 +34,7 @@ Log.args = {
 } satisfies AttachmentProps
 
 export const ExternalisedImage = Template.bind({})
+ExternalisedImage.storyName = 'Externalised image'
 ExternalisedImage.args = {
   attachment: {
     mediaType: 'image/svg+xml',
@@ -44,6 +45,7 @@ ExternalisedImage.args = {
 } satisfies AttachmentProps
 
 export const ExternalisedText = Template.bind({})
+ExternalisedText.storyName = 'Externalised text'
 ExternalisedText.args = {
   attachment: {
     mediaType: 'application/json',
@@ -53,12 +55,24 @@ ExternalisedText.args = {
   },
 } satisfies AttachmentProps
 
-export const ExternalisedError = Template.bind({})
-ExternalisedError.args = {
+export const Externalised404 = Template.bind({})
+Externalised404.storyName = 'Externalised 404'
+Externalised404.args = {
   attachment: {
     mediaType: 'application/json',
     contentEncoding: AttachmentContentEncoding.IDENTITY,
     body: '',
     url: '/this-leads-nowhere.json',
+  },
+} satisfies AttachmentProps
+
+export const ExternalisedCors = Template.bind({})
+ExternalisedCors.storyName = 'Externalised CORS error'
+ExternalisedCors.args = {
+  attachment: {
+    mediaType: 'application/json',
+    contentEncoding: AttachmentContentEncoding.IDENTITY,
+    body: '',
+    url: 'https://cucumber.io',
   },
 } satisfies AttachmentProps
