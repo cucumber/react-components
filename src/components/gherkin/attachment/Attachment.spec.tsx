@@ -166,4 +166,37 @@ describe('<Attachment>', () => {
       '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
     )
   })
+
+  it('renders a link', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/uri-list',
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
+      body: 'https://cucumber.io',
+    }
+
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.be.visible
+    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.have.attr(
+      'href',
+      'https://cucumber.io'
+    )
+  })
+
+  it('renders a link with a fileName as the text', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/uri-list',
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
+      body: 'https://cucumber.io',
+      fileName: 'Cucumber website',
+    }
+
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('link', { name: 'Cucumber website' })).to.be.visible
+    expect(screen.getByRole('link', { name: 'Cucumber website' })).to.have.attr(
+      'href',
+      'https://cucumber.io'
+    )
+  })
 })
