@@ -6,17 +6,23 @@ import React, { FC } from 'react'
 import { AttachmentClasses } from '../../customise/index.js'
 import { useText } from './useText.js'
 
-export const Link: FC<{
+export const Links: FC<{
   attachment: Attachment
   classes: AttachmentClasses
 }> = ({ attachment, classes }) => {
   const { content } = useText(attachment)
   return (
-    <div>
-      <a className={classes.link} href={content} target="_blank" rel="noreferrer">
-        <FontAwesomeIcon icon={faLink} />
-        {content}
-      </a>
-    </div>
+    <ul className={classes.links}>
+      {content.split('\n').map((line, index) => {
+        return (
+          <li key={index}>
+            <a href={line} target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faLink} />
+              {line}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
   )
 }

@@ -182,4 +182,23 @@ describe('<Attachment>', () => {
       'https://cucumber.io'
     )
   })
+
+  it('renders multiple links', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/uri-list',
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
+      body: `https://github.com/cucumber/cucumber-js
+https://github.com/cucumber/cucumber-jvm
+https://github.com/cucumber/cucumber-ruby`,
+    }
+
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-js' })).to.be
+      .visible
+    expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-jvm' })).to.be
+      .visible
+    expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-ruby' })).to.be
+      .visible
+  })
 })
