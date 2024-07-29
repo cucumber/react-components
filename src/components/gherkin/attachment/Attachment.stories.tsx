@@ -42,17 +42,6 @@ Link.args = {
   },
 } satisfies AttachmentProps
 
-export const NamedLink = Template.bind({})
-NamedLink.storyName = 'Link (named)'
-NamedLink.args = {
-  attachment: {
-    mediaType: 'text/uri-list',
-    contentEncoding: AttachmentContentEncoding.IDENTITY,
-    body: 'https://cucumber.io',
-    fileName: 'Cucumber website',
-  },
-} satisfies AttachmentProps
-
 export const ExternalisedImage = Template.bind({})
 ExternalisedImage.storyName = 'Externalised image'
 ExternalisedImage.args = {

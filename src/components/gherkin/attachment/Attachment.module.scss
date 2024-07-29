@@ -37,3 +37,12 @@
   max-width: 100%;
   margin-top: 0.5em;
 }
+
+.link {
+  text-decoration: none;
+  color: $anchorColor;
+
+  svg {
+    margin-right: 0.5em;
+  }
+}

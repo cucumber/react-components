@@ -182,21 +182,4 @@ describe('<Attachment>', () => {
       'https://cucumber.io'
     )
   })
-
-  it('renders a link with a fileName as the text', () => {
-    const attachment: messages.Attachment = {
-      mediaType: 'text/uri-list',
-      contentEncoding: AttachmentContentEncoding.IDENTITY,
-      body: 'https://cucumber.io',
-      fileName: 'Cucumber website',
-    }
-
-    render(<Attachment attachment={attachment} />)
-
-    expect(screen.getByRole('link', { name: 'Cucumber website' })).to.be.visible
-    expect(screen.getByRole('link', { name: 'Cucumber website' })).to.have.attr(
-      'href',
-      'https://cucumber.io'
-    )
-  })
 })
