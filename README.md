@@ -37,6 +37,17 @@ This is fine for simple use cases where results are not important.
 To render a `<GherkinDocument>` with results and highlighted [Cucumber Expression parameters](https://cucumber.io/docs/cucumber/cucumber-expressions/) parameters it must be nested inside a 
 [`<Wrapper>`](src/components/app/Wrapper.tsx) component.
 
+## Attachments
+
+Attachments from test runs are shown with their corresponding steps. The baseline behaviour for attachments is a download button. However, we have some special handling for very common MIME types to make them more useful without leaving the report:
+
+- `image/*` - images are rendered with an `<img/>` tag
+- `video/*` - videos are rendered with a `<video/` tag
+- `text/x.cucumber.log+plain` - logs (from calls to the `log` function in Cucumber) are rendered as monospace text, and support ANSI colors
+- `text/uri-list` - one or more URLs are rendered as links that open in a new tab
+- `application/json` - JSON is rendered as monospace text and prettified
+- `text/*` - other text types are rendered as monospace text
+
 ## Styling
 
 The standard styling comes from wrapping your top-level usage with the `CucumberReact` component (sans-props). There are several ways you can apply different styling to the components.
