@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Support text/uri-list attachments ([#355](https://github.com/cucumber/react-components/pull/355))
 
 ## [22.2.0] - 2024-06-21
 ### Added
