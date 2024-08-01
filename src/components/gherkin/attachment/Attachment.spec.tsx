@@ -183,17 +183,19 @@ describe('<Attachment>', () => {
     )
   })
 
-  it('renders multiple links', () => {
+  it('renders multiple links and ignores blank lines', () => {
     const attachment: messages.Attachment = {
       mediaType: 'text/uri-list',
       contentEncoding: AttachmentContentEncoding.IDENTITY,
       body: `https://github.com/cucumber/cucumber-js
 https://github.com/cucumber/cucumber-jvm
-https://github.com/cucumber/cucumber-ruby`,
+https://github.com/cucumber/cucumber-ruby
+`,
     }
 
     render(<Attachment attachment={attachment} />)
 
+    expect(screen.getAllByRole('link').length).to.eq(3)
     expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-js' })).to.be
       .visible
     expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-jvm' })).to.be

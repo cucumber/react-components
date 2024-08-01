@@ -13,16 +13,19 @@ export const Links: FC<{
   const { content } = useText(attachment)
   return (
     <ul className={classes.links}>
-      {content.split('\n').map((line, index) => {
-        return (
-          <li key={index}>
-            <a href={line} target="_blank" rel="noreferrer">
-              <FontAwesomeIcon icon={faLink} />
-              {line}
-            </a>
-          </li>
-        )
-      })}
+      {content
+        .split('\n')
+        .filter((line) => !!line)
+        .map((line, index) => {
+          return (
+            <li key={index}>
+              <a href={line} target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={faLink} />
+                {line}
+              </a>
+            </li>
+          )
+        })}
     </ul>
   )
 }
