@@ -31,7 +31,7 @@ export interface AttachmentProps {
   attachment: messages.Attachment
 }
 
-export type AttachmentClasses = Styles<'text' | 'log' | 'icon' | 'image'>
+export type AttachmentClasses = Styles<'text' | 'log' | 'icon' | 'image' | 'links'>
 
 export interface BackgroundProps {
   background: messages.Background

@@ -10,6 +10,7 @@ import {
 import { ErrorMessage } from '../ErrorMessage.js'
 import defaultStyles from './Attachment.module.scss'
 import { Image } from './Image.js'
+import { Links } from './Links.js'
 import { Log } from './Log.js'
 import { Text } from './Text.js'
 import { Unknown } from './Unknown.js'
@@ -25,6 +26,8 @@ const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
     return <Video attachment={attachment} />
   } else if (attachment.mediaType == 'text/x.cucumber.log+plain') {
     return <Log attachment={attachment} classes={styles} />
+  } else if (attachment.mediaType == 'text/uri-list') {
+    return <Links attachment={attachment} classes={styles} />
   } else if (attachment.mediaType.match(/^text\//)) {
     return <Text attachment={attachment} classes={styles} />
   } else if (attachment.mediaType.match(/^application\/json/)) {

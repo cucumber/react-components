@@ -37,3 +37,21 @@
   max-width: 100%;
   margin-top: 0.5em;
 }
+
+.links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+
+  a {
+    text-decoration: none;
+    color: $anchorColor;
+  }
+
+  svg {
+    margin-right: 0.5em;
+  }
+}

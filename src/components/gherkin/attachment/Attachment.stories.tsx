@@ -33,6 +33,26 @@ Log.args = {
   },
 } satisfies AttachmentProps
 
+export const Link = Template.bind({})
+Link.args = {
+  attachment: {
+    mediaType: 'text/uri-list',
+    contentEncoding: AttachmentContentEncoding.IDENTITY,
+    body: 'https://cucumber.io',
+  },
+} satisfies AttachmentProps
+
+export const MultipleLinks = Template.bind({})
+MultipleLinks.args = {
+  attachment: {
+    mediaType: 'text/uri-list',
+    contentEncoding: AttachmentContentEncoding.IDENTITY,
+    body: `https://github.com/cucumber/cucumber-js
+https://github.com/cucumber/cucumber-jvm
+https://github.com/cucumber/cucumber-ruby`,
+  },
+} satisfies AttachmentProps
+
 export const ExternalisedImage = Template.bind({})
 ExternalisedImage.storyName = 'Externalised image'
 ExternalisedImage.args = {
