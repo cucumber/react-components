@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [22.3.0] - 2024-08-02
 ### Added
 - Support text/uri-list attachments ([#355](https://github.com/cucumber/react-components/pull/355))
 
@@ -412,7 +414,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v22.2.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v22.3.0...HEAD
+[22.3.0]: https://github.com/cucumber/cucumber-react/compare/v22.2.0...v22.3.0
 [22.2.0]: https://github.com/cucumber/cucumber-react/compare/v22.1.0...v22.2.0
 [22.1.0]: https://github.com/cucumber/cucumber-react/compare/v22.0.0...v22.1.0
 [22.0.0]: https://github.com/cucumber/cucumber-react/compare/v21.1.1...v22.0.0
