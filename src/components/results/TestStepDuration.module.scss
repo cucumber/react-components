@@ -1,0 +1,11 @@
+@import '../../styles/theming';
+
+.duration {
+    display: inline-block;
+    background-color: $panelBackgroundColor;
+    color: $panelTextColor;
+    font-size: 0.75em;
+    padding: 0.1em 0.2em;
+    border: 1px solid $panelAccentColor;
+    border-radius: 0.25em;
+}

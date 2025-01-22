@@ -1,34 +1,27 @@
 import React, { FC } from 'react'
 
 import { useQueries, useSearch } from '../../hooks/index.js'
-import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
+import { TestCaseOutcomes } from '../results/TestCaseOutcomes.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 import styles from './FilteredResults.module.scss'
-import { FilteredResultsExperimental } from './FilteredResultsExperimental.js'
-import { GherkinDocumentList } from './GherkinDocumentList.js'
 import { NoMatchResult } from './NoMatchResult.js'
 import { SearchBar } from './SearchBar.js'
 import { StatusesSummary } from './StatusesSummary.js'
 
 interface Props {
   className?: string
-  experimental?: boolean
 }
 
-export const FilteredResults: FC<Props> = ({ className, experimental }) => {
-  return experimental ? (
-    <FilteredResultsExperimental className={className} />
-  ) : (
-    <FilteredResultsCurrent className={className} />
-  )
-}
-
-const FilteredResultsCurrent: FC<Omit<Props, 'experimental'>> = ({ className }) => {
-  const { envelopesQuery } = useQueries()
+export const FilteredResultsExperimental: FC<Props> = ({ className }) => {
+  const { cucumberQuery, envelopesQuery } = useQueries()
   const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
-  const filtered = useFilteredDocuments(query, hideStatuses)
+  const testCases = cucumberQuery.findAllTestCaseStarted()
+  const filtered = testCases.filter((testCaseStarted) => {
+    const mostSevereResult = cucumberQuery.findMostSevereTestStepResultBy(testCaseStarted)
+    return !(mostSevereResult && hideStatuses.includes(mostSevereResult.status))
+  })
 
   return (
     <div className={className}>
@@ -56,7 +49,7 @@ const FilteredResultsCurrent: FC<Omit<Props, 'experimental'>> = ({ className }) 
       {filtered !== undefined && (
         <>
           {filtered.length > 0 ? (
-            <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />
+            <TestCaseOutcomes testCases={filtered} />
           ) : (
             <NoMatchResult query={query} />
           )}

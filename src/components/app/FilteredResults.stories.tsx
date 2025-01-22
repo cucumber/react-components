@@ -15,14 +15,15 @@ export default {
 
 type TemplateArgs = {
   envelopes: readonly messages.Envelope[]
+  experimental?: boolean
 }
 
-const Template: Story<TemplateArgs> = ({ envelopes }) => {
+const Template: Story<TemplateArgs> = ({ envelopes, experimental }) => {
   return (
     <CucumberReact>
       <EnvelopesWrapper envelopes={envelopes}>
         <SearchWrapper>
-          <FilteredResults />
+          <FilteredResults experimental={experimental} />
         </SearchWrapper>
       </EnvelopesWrapper>
     </CucumberReact>
@@ -37,4 +38,16 @@ Default.args = {
 export const TargetedRun = Template.bind({})
 TargetedRun.args = {
   envelopes: targetedRun,
+}
+
+export const Experimental = Template.bind({})
+Experimental.args = {
+  envelopes: testData,
+  experimental: true,
+}
+
+export const TargetedRunExperimental = Template.bind({})
+TargetedRunExperimental.args = {
+  envelopes: targetedRun,
+  experimental: true,
 }
