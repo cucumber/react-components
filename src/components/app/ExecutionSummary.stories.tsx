@@ -83,3 +83,14 @@ WithCi.args = {
   testRunFinished,
   meta: metaWithCi,
 } as IExecutionSummaryProps
+
+export const NoTestCases = Template.bind({})
+NoTestCases.args = {
+  scenarioCountByStatus: {
+    ...makeEmptyScenarioCountsByStatus(),
+  },
+  totalScenarioCount: 0,
+  testRunStarted,
+  testRunFinished,
+  meta: metaMinimal,
+}
