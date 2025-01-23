@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+- Avoid NaN percentage passed when nothing ran ([#363](https://github.com/cucumber/react-components/pull/363))
 - Don't render hook steps with no content ([#361](https://github.com/cucumber/react-components/pull/361))
 
 ## [22.3.0] - 2024-08-02
