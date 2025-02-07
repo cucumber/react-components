@@ -102,6 +102,7 @@ describe('ExecutionSummary', () => {
       [5, 45, '11%'],
       [45, 45, '100%'],
       [0, 45, '0%'],
+      [0, 0, '0%'],
     ]
 
     for (const [passed, total, percentage] of examples) {

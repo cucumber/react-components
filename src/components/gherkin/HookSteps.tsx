@@ -10,11 +10,12 @@ interface IProps {
 export const HookSteps: React.FunctionComponent<IProps> = ({ hookSteps }) => {
   return (
     <>
-      {hookSteps.map((step, index) => (
-        <li key={index}>
-          <HookStep key={index} step={step} />
-        </li>
-      ))}
+      {hookSteps
+        .map((step, index) => <HookStep key={index} step={step} />)
+        .filter((el) => !!el.props.children?.length)
+        .map((el, index) => (
+          <li key={index}>{el}</li>
+        ))}
     </>
   )
 }

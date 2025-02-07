@@ -48,7 +48,11 @@ export const ExecutionSummary: React.FunctionComponent<IExecutionSummaryProps> =
   const percentagePassed: string =
     new Intl.NumberFormat(undefined, {
       style: 'percent',
-    }).format(scenarioCountByStatus[TestStepResultStatus.PASSED] / totalScenarioCount) + ' passed'
+    }).format(
+      totalScenarioCount > 0
+        ? scenarioCountByStatus[TestStepResultStatus.PASSED] / totalScenarioCount
+        : 0
+    ) + ' passed'
   const startDate = testRunStarted?.timestamp
     ? new Date(TimeConversion.timestampToMillisecondsSinceEpoch(testRunStarted.timestamp))
     : undefined
