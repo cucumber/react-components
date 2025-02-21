@@ -7,11 +7,7 @@ export class CucumberQueryStream extends Writable {
     super({ objectMode: true })
   }
 
-  _write(
-    envelope: messages.Envelope,
-    encoding: string,
-    callback: (error?: Error | null) => void
-  ): void {
+  _write(envelope: messages.Envelope, _: string, callback: (error?: Error | null) => void): void {
     this.query.update(envelope)
     callback(null)
   }

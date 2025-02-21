@@ -1,34 +1,34 @@
 $statusColors:
-        'PASSED' #2CB14A,
-        'SKIPPED' #00A0CC,
-        'PENDING' #FFAD33,
-        'UNDEFINED' #FFAD33,
-        'AMBIGUOUS' #F4EBFD,
-        'FAILED' #BB0000,
-        'UNKNOWN' #B6BECB;
+  'PASSED' #2cb14a,
+  'SKIPPED' #00a0cc,
+  'PENDING' #ffad33,
+  'UNDEFINED' #ffad33,
+  'AMBIGUOUS' #f4ebfd,
+  'FAILED' #bb0000,
+  'UNKNOWN' #b6becb;
 
 .statusesList {
-    list-style: none;
-    display: flex;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .statusesItem {
-    box-sizing: border-box;
-    flex-grow: 1;
-    min-width: 11em;
-    padding: 0.333em 2.5em;
-    background-color: black;
-    color: white;
-    white-space: nowrap;
-    text-align: center;
-    text-transform: uppercase;
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-width: 11em;
+  padding: 0.333em 2.5em;
+  background-color: black;
+  color: white;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
 
-    @each $name, $color in $statusColors {
-        &[data-status='#{$name}'] {
-            background-color: $color
-        }
+  @each $name, $color in $statusColors {
+    &[data-status='#{$name}'] {
+      background-color: $color;
     }
+  }
 }
