@@ -21,8 +21,7 @@
     "plugin:react-hooks/recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "import/no-cycle": "error",

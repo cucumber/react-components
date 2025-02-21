@@ -8,7 +8,10 @@ import { HookStep } from './HookStep.js'
 
 describe('<HookStep>', () => {
   class StubCucumberQuery extends CucumberQuery {
-    constructor(private results: messages.TestStepResult[], private hook: messages.Hook) {
+    constructor(
+      private results: messages.TestStepResult[],
+      private hook: messages.Hook
+    ) {
       super()
     }
 

@@ -7,7 +7,10 @@ import { createTextSearch } from './TextSearch.js'
 import { Searchable } from './types.js'
 
 class Search {
-  constructor(private readonly tagSearch: Searchable, private readonly textSearch: Searchable) {}
+  constructor(
+    private readonly tagSearch: Searchable,
+    private readonly textSearch: Searchable
+  ) {}
 
   public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
     if (isTagExpression(query)) {

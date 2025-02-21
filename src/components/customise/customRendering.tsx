@@ -150,12 +150,12 @@ export type TitleClasses = Styles<'title'>
 
 export declare type DefaultComponent<
   Props,
-  Classes extends Styles<string> = Record<string, string>
+  Classes extends Styles<string> = Record<string, string>,
 > = FunctionComponent<Props & { styles: Classes }>
 
 export declare type CustomisedComponent<
   Props,
-  Classes = Record<string, string>
+  Classes = Record<string, string>,
 > = React.FunctionComponent<
   Props & {
     styles: Classes

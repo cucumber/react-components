@@ -52,7 +52,6 @@ CustomTagComponent.args = {
     },
   ],
   support: {
-    // eslint-disable-next-line react/display-name
     Tags: (props: TagsProps) => (
       <ul>
         {props.tags.map((tag, i) => {
@@ -98,7 +97,7 @@ CustomFeatureComponent.args = {
     language: 'en',
   },
   support: {
-    // eslint-disable-next-line react/display-name, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Feature: (props: any) => (
       <div>
         <button>Click me</button>
