@@ -1,21 +1,7 @@
-$sansFamily:
-  'Inter var',
-  ui-sans-serif,
-  system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  'Noto Sans',
-  sans-serif,
-  'Apple Color Emoji',
-  'Segoe UI Emoji',
-  'Segoe UI Symbol',
-  'Noto Color Emoji';
-$monoFamily:
-  ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+@import './fonts';
+
+$sansFamily: var(--cucumber-sans-font-family, $defaultSansFamily);
+$monoFamily: var(--cucumber-mono-font-family, $defaultMonoFamily);
 $backgroundColor: var(--cucumber-background-color, white);
 $textColor: var(--cucumber-text-color, #222);
 $anchorColor: var(--cucumber-anchor-color, #297bde);
