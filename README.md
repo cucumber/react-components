@@ -99,6 +99,13 @@ In your CSS for the `acme-widgets` class, you can override the supported [custom
 }
 ```
 
+### Fonts
+
+By default, web-safe default font stacks are used, but you can override these so the components use your preferred fonts. These custom properties are supported:
+
+- `--cucumber-sans-font-family` - the font used for the text
+- `--cucumber-mono-font-family` - the font used for doc strings and attachments
+
 ### Custom styles
 
 For more control over the styling, you can override the CSS used by individual components.
