@@ -77,7 +77,7 @@ const DefaultRenderer: DefaultComponent<GherkinStepProps> = ({
           stepTextElements.push(<HighLight key={`plain-${index}`} text={plain} />)
         }
         const arg = argument.group.value
-        if (arg) {
+        if (arg !== undefined && arg !== null) {
           if (arg.length > 0) {
             stepTextElements.push(
               <Parameter
