@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Remove duplications in steps due to empty parameters ([#373](https://github.com/cucumber/react-components/pull/373))
 
 ## [22.4.0] - 2025-03-26
 ### Added
