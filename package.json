@@ -1,6 +1,6 @@
 {
   "name": "@cucumber/react-components",
-  "version": "22.4.0",
+  "version": "22.4.1",
   "description": "React components for Cucumber",
   "type": "module",
   "main": "dist/src/index.js",
