@@ -1,38 +1,29 @@
 import { TestStepResultStatus as Status } from '@cucumber/messages'
 import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { FC } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 
+import { useSearch } from '../../hooks/index.js'
+import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import statusName from '../gherkin/statusName.js'
 import styles from './SearchBar.module.scss'
 import statuses from './statuses.js'
 
-interface IProps {
-  query: string
-  hideStatuses: readonly Status[]
-  statusesWithScenarios: readonly Status[]
-  onSearch: (query: string) => void
-  onFilter: (hideStatuses: Status[]) => void
-}
 
-export const SearchBar: FunctionComponent<IProps> = ({
-  query,
-  hideStatuses,
-  statusesWithScenarios,
-  onSearch,
-  onFilter,
-}) => {
-  const debouncedSearchChange = useDebouncedCallback((newValue) => {
-    onSearch(newValue)
-  }, 500)
+export const SearchBar: FC = () => {
+  const { statusesWithScenarios } = useResultStatistics()
+  const { query, hideStatuses, update } = useSearch()
+
+  const debouncedSearchChange = useDebouncedCallback((newValue) => update({ query: newValue }), 500)
   const searchSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     debouncedSearchChange.flush()
   }
   const filterChanged = (name: Status, show: boolean) => {
-    onFilter(show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name))
+    update({ hideStatuses: show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name) })
   }
+
   return (
     <div className={styles.layout}>
       <form className={styles.searchForm} onSubmit={searchSubmitted}>

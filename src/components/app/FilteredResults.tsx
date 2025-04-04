@@ -15,8 +15,7 @@ interface IProps {
 }
 
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { statusesWithScenarios } = useResultStatistics()
-  const { query, hideStatuses, update } = useSearch()
+  const { query, hideStatuses } = useSearch()
   const filtered = useFilteredDocuments(query, hideStatuses)
 
   return (
@@ -24,13 +23,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
       <div className={styles.reportHeader}>
         <StatusesSummary />
         <ExecutionSummary />
-        <SearchBar
-          query={query}
-          onSearch={(newValue) => update({ query: newValue })}
-          statusesWithScenarios={statusesWithScenarios}
-          hideStatuses={hideStatuses}
-          onFilter={(newValue) => update({ hideStatuses: newValue })}
-        />
+        <SearchBar />
       </div>
 
       {filtered !== undefined && (
