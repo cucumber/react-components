@@ -1,8 +1,5 @@
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { getWorstTestStepResult, TestStepResultStatus } from '@cucumber/messages'
+import { TestStepResultStatus } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-
-import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 
 export const allStatuses = [
   TestStepResultStatus.UNKNOWN,
@@ -26,26 +23,12 @@ export function makeEmptyScenarioCountsByStatus(): Record<TestStepResultStatus, 
   }
 }
 
-export default function countScenariosByStatuses(
-  gherkinQuery: GherkinQuery,
-  cucumberQuery: CucumberQuery,
-  envelopesQuery: EnvelopesQuery
-): {
+export default function countScenariosByStatuses(cucumberQuery: CucumberQuery): {
   scenarioCountByStatus: Record<TestStepResultStatus, number>
   statusesWithScenarios: readonly TestStepResultStatus[]
   totalScenarioCount: number
 } {
-  const scenarioCountByStatus = makeEmptyScenarioCountsByStatus()
-
-  gherkinQuery
-    .getPickles()
-    .filter((pickle) => envelopesQuery.hasTestCase(pickle.id))
-    .forEach((pickle) => {
-      const status = getWorstTestStepResult(
-        cucumberQuery.getPickleTestStepResults([pickle.id])
-      ).status
-      scenarioCountByStatus[status] = scenarioCountByStatus[status] + 1
-    })
+  const scenarioCountByStatus = cucumberQuery.countMostSevereTestStepResultStatus()
 
   const statusesWithScenarios = Object.entries(scenarioCountByStatus)
     .filter(([, value]) => {

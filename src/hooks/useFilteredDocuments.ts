@@ -10,7 +10,7 @@ export function useFilteredDocuments(
   query: string,
   hideStatuses: readonly TestStepResultStatus[]
 ): GherkinDocument[] | undefined {
-  const { gherkinQuery, cucumberQuery, envelopesQuery } = useQueries()
+  const { gherkinQuery, cucumberQuery } = useQueries()
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
   useEffect(() => {
@@ -28,7 +28,6 @@ export function useFilteredDocuments(
               document,
               gherkinQuery,
               cucumberQuery,
-              envelopesQuery,
               allStatuses.filter((s) => !hideStatuses.includes(s))
             )
           )
@@ -36,6 +35,6 @@ export function useFilteredDocuments(
         setResults(filtered)
       }
     )
-  }, [query, hideStatuses, gherkinQuery, cucumberQuery, envelopesQuery, searchable])
+  }, [query, hideStatuses, gherkinQuery, cucumberQuery, searchable])
   return results
 }

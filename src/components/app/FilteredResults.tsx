@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { envelopesQuery } = useQueries()
+  const { cucumberQuery } = useQueries()
   const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
   const filtered = useFilteredDocuments(query, hideStatuses)
@@ -30,9 +30,9 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
         <ExecutionSummary
           scenarioCountByStatus={scenarioCountByStatus}
           totalScenarioCount={totalScenarioCount}
-          testRunStarted={envelopesQuery.getTestRunStarted()}
-          testRunFinished={envelopesQuery.getTestRunFinished()}
-          meta={envelopesQuery.getMeta()}
+          testRunStarted={cucumberQuery.findTestRunStarted()}
+          testRunFinished={cucumberQuery.findTestRunFinished()}
+          meta={cucumberQuery.findMeta()}
         />
         <SearchBar
           query={query}

@@ -5,7 +5,6 @@ import { render } from '@testing-library/react'
 import React from 'react'
 
 import markdown from '../../../acceptance/markdown/markdown.feature.md.js'
-import { EnvelopesQuery } from '../../EnvelopesQueryContext.js'
 import UriContext from '../../UriContext.js'
 import { QueriesWrapper } from '../app/index.js'
 import { MDG } from './MDG.js'
@@ -28,11 +27,9 @@ describe('<MDG/>', () => {
 function props(envelopes: readonly messages.Envelope[]) {
   const gherkinQuery = new GherkinQuery()
   const cucumberQuery = new CucumberQuery()
-  const envelopesQuery = new EnvelopesQuery()
   for (const envelope of envelopes) {
     gherkinQuery.update(envelope)
     cucumberQuery.update(envelope)
-    envelopesQuery.update(envelope)
   }
-  return { gherkinQuery, cucumberQuery, envelopesQuery }
+  return { gherkinQuery, cucumberQuery }
 }
