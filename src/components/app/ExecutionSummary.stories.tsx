@@ -1,25 +1,12 @@
 import * as messages from '@cucumber/messages'
-import {
-  TestRunFinished,
-  TestRunStarted,
-  TestStepResultStatus,
-  TimeConversion,
-} from '@cucumber/messages'
+import { TestRunFinished, TestRunStarted, TimeConversion } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { makeEmptyScenarioCountsByStatus } from '../../countScenariosByStatuses.js'
+import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import { CucumberReact } from '../CucumberReact.js'
-import { ExecutionSummary, IExecutionSummaryProps } from './ExecutionSummary.js'
-
-const scenarioCountByStatus = {
-  ...makeEmptyScenarioCountsByStatus(),
-  ...{
-    [TestStepResultStatus.PASSED]: 100,
-    [TestStepResultStatus.FAILED]: 3,
-    [TestStepResultStatus.UNDEFINED]: 1,
-  },
-}
+import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { ExecutionSummary } from './ExecutionSummary.js'
 
 const metaMinimal: messages.Meta = {
   protocolVersion: '17.1.1',
@@ -57,40 +44,31 @@ export default {
   title: 'App/ExecutionSummary',
 }
 
-const Template: Story<IExecutionSummaryProps> = (props) => {
+type TemplateArgs = {
+  envelopes: readonly messages.Envelope[]
+}
+
+const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <CucumberReact>
-      <ExecutionSummary {...props} />
+      <EnvelopesWrapper envelopes={envelopes}>
+        <ExecutionSummary />
+      </EnvelopesWrapper>
     </CucumberReact>
   )
 }
 
 export const Default = Template.bind({})
-
 Default.args = {
-  scenarioCountByStatus,
-  totalScenarioCount: 104,
-  testRunStarted,
-  testRunFinished,
-  meta: metaMinimal,
-} as IExecutionSummaryProps
+  envelopes: [...examplesTablesFeature, { meta: metaMinimal }],
+} as TemplateArgs
 
 export const WithCi = Template.bind({})
 WithCi.args = {
-  scenarioCountByStatus,
-  totalScenarioCount: 104,
-  testRunStarted,
-  testRunFinished,
-  meta: metaWithCi,
-} as IExecutionSummaryProps
+  envelopes: [...examplesTablesFeature, { meta: metaWithCi }],
+} as TemplateArgs
 
 export const NoTestCases = Template.bind({})
 NoTestCases.args = {
-  scenarioCountByStatus: {
-    ...makeEmptyScenarioCountsByStatus(),
-  },
-  totalScenarioCount: 0,
-  testRunStarted,
-  testRunFinished,
-  meta: metaMinimal,
-}
+  envelopes: [{ testRunStarted }, { testRunFinished }, { meta: metaMinimal }],
+} as TemplateArgs

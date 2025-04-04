@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useQueries, useSearch } from '../../hooks/index.js'
+import { useSearch } from '../../hooks/index.js'
 import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
@@ -15,8 +15,7 @@ interface IProps {
 }
 
 export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { cucumberQuery } = useQueries()
-  const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } = useResultStatistics()
+  const { statusesWithScenarios } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
   const filtered = useFilteredDocuments(query, hideStatuses)
 
@@ -24,13 +23,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
     <div className={className}>
       <div className={styles.reportHeader}>
         <StatusesSummary />
-        <ExecutionSummary
-          scenarioCountByStatus={scenarioCountByStatus}
-          totalScenarioCount={totalScenarioCount}
-          testRunStarted={cucumberQuery.findTestRunStarted()}
-          testRunFinished={cucumberQuery.findTestRunFinished()}
-          meta={cucumberQuery.findMeta()}
-        />
+        <ExecutionSummary />
         <SearchBar
           query={query}
           onSearch={(newValue) => update({ query: newValue })}

@@ -1,15 +1,13 @@
-import * as messages from '@cucumber/messages'
-import {
-  TestRunFinished,
-  TestRunStarted,
-  TestStepResultStatus,
-  TimeConversion,
-} from '@cucumber/messages'
+import { TestStepResultStatus, TimeConversion } from '@cucumber/messages'
 import { faCodeBranch, faTag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatDistanceStrict, formatDuration, intervalToDuration } from 'date-fns'
-import React from 'react'
+import React, { FC } from 'react'
 
+import { formatExecutionDistance } from '../../formatExecutionDistance.js'
+import { formatExecutionDuration } from '../../formatExecutionDuration.js'
+import { formatPassRate } from '../../formatPassRate.js'
+import { useQueries } from '../../hooks/index.js'
+import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { CICommitLink } from './CICommitLink.js'
 import { CIJobLink } from './CIJobLink.js'
 import styles from './ExecutionSummary.module.scss'
@@ -17,42 +15,17 @@ import { CucumberLogo } from './icons/CucumberLogo.js'
 import { OSIcon } from './OSIcon.js'
 import { RuntimeIcon } from './RuntimeIcon.js'
 
-function formatDurationNicely(startDate: Date, finishDate: Date) {
-  const inMilllis = finishDate.getTime() - startDate.getTime()
-  // if under 10s, use 0.01s precision, otherwise 1s is fine
-  if (inMilllis < 10000) {
-    return `${new Intl.NumberFormat(undefined, {
-      maximumFractionDigits: 2,
-    }).format(inMilllis / 1000)} seconds`
-  }
-  return formatDuration(intervalToDuration({ start: startDate, end: finishDate }), {})
-}
+export const ExecutionSummary: FC = () => {
+  const { cucumberQuery } = useQueries()
+  const testRunStarted = cucumberQuery.findTestRunStarted()
+  const testRunFinished = cucumberQuery.findTestRunFinished()
+  const meta = cucumberQuery.findMeta()
+  const { scenarioCountByStatus, totalScenarioCount } = useResultStatistics()
 
-export interface IExecutionSummaryProps {
-  scenarioCountByStatus: Record<messages.TestStepResultStatus, number>
-  totalScenarioCount: number
-  testRunStarted?: TestRunStarted
-  testRunFinished?: TestRunFinished
-  referenceDate?: Date
-  meta?: messages.Meta
-}
-
-export const ExecutionSummary: React.FunctionComponent<IExecutionSummaryProps> = ({
-  scenarioCountByStatus,
-  totalScenarioCount,
-  testRunStarted,
-  testRunFinished,
-  referenceDate,
-  meta,
-}) => {
   const percentagePassed: string =
-    new Intl.NumberFormat(undefined, {
-      style: 'percent',
-    }).format(
-      totalScenarioCount > 0
-        ? scenarioCountByStatus[TestStepResultStatus.PASSED] / totalScenarioCount
-        : 0
-    ) + ' passed'
+    formatPassRate(scenarioCountByStatus[TestStepResultStatus.PASSED], totalScenarioCount) +
+    ' passed'
+
   const startDate = testRunStarted?.timestamp
     ? new Date(TimeConversion.timestampToMillisecondsSinceEpoch(testRunStarted.timestamp))
     : undefined
@@ -61,13 +34,9 @@ export const ExecutionSummary: React.FunctionComponent<IExecutionSummaryProps> =
     ? new Date(TimeConversion.timestampToMillisecondsSinceEpoch(testRunFinished.timestamp))
     : undefined
 
-  const formattedTimestamp = startDate
-    ? formatDistanceStrict(startDate, referenceDate ?? new Date(), {
-        addSuffix: true,
-      })
-    : 'Unknown start time'
+  const formattedTimestamp = startDate ? formatExecutionDistance(startDate) : 'Unknown start time'
   const formattedDuration =
-    startDate && finishDate ? formatDurationNicely(startDate, finishDate) : 'Unknown duration'
+    startDate && finishDate ? formatExecutionDuration(startDate, finishDate) : 'Unknown duration'
   return (
     <div className={styles.backdrop}>
       <dl className={styles.list}>
