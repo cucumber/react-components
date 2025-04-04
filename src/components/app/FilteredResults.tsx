@@ -23,10 +23,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
   return (
     <div className={className}>
       <div className={styles.reportHeader}>
-        <StatusesSummary
-          scenarioCountByStatus={scenarioCountByStatus}
-          totalScenarioCount={totalScenarioCount}
-        />
+        <StatusesSummary />
         <ExecutionSummary
           scenarioCountByStatus={scenarioCountByStatus}
           totalScenarioCount={totalScenarioCount}
