@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 
-import { formatPassRate } from './formatPassRate.js'
+import { formatStatusRate } from './formatStatusRate.js'
 
-describe('formatPassRate', () => {
+describe('formatStatusRate', () => {
   const examples: [passed: number, total: number, percentage: string][] = [
     [13, 45, '29%'],
     [5, 45, '11%'],
@@ -12,8 +12,8 @@ describe('formatPassRate', () => {
   ]
 
   for (const [passed, total, percentage] of examples) {
-    it(`should render correctly for ${percentage} passed`, () => {
-      expect(formatPassRate(passed, total)).to.eq(percentage)
+    it(`should render correctly for ${percentage}`, () => {
+      expect(formatStatusRate(passed, total)).to.eq(percentage)
     })
   }
 })

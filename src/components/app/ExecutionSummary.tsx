@@ -5,7 +5,7 @@ import React, { FC } from 'react'
 
 import { formatExecutionDistance } from '../../formatExecutionDistance.js'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
-import { formatPassRate } from '../../formatPassRate.js'
+import { formatStatusRate } from '../../formatStatusRate.js'
 import { useQueries } from '../../hooks/index.js'
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { CICommitLink } from './CICommitLink.js'
@@ -23,7 +23,7 @@ export const ExecutionSummary: FC = () => {
   const { scenarioCountByStatus, totalScenarioCount } = useResultStatistics()
 
   const percentagePassed: string =
-    formatPassRate(scenarioCountByStatus[TestStepResultStatus.PASSED], totalScenarioCount) +
+    formatStatusRate(scenarioCountByStatus[TestStepResultStatus.PASSED], totalScenarioCount) +
     ' passed'
 
   const startDate = testRunStarted?.timestamp
