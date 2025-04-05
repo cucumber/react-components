@@ -84,7 +84,7 @@ describe('acceptance tests', function () {
             objectMode: true,
             write(
               envelope: messages.Envelope,
-              encoding: string,
+              _: string,
               callback: (error?: Error | null) => void
             ) {
               gherkinQuery.update(envelope)

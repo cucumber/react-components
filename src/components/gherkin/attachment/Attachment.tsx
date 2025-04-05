@@ -53,7 +53,7 @@ export const Attachment: React.FunctionComponent<AttachmentProps> = (props) => {
 function prettyJSON(s: string) {
   try {
     return JSON.stringify(JSON.parse(s), null, 2)
-  } catch (ignore) {
+  } catch (_) {
     return s
   }
 }

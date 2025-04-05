@@ -48,4 +48,43 @@ describe('<GherkinStep>', () => {
     expect(container).to.contain.text('Given')
     expect(container).to.contain.text('the 48 pixies')
   })
+  it('empty parameters are respected correctly', () => {
+    const step: messages.Step = {
+      keyword: 'Given',
+      text: 'the order is placed',
+      location: { column: 1, line: 1 },
+      id: '123',
+    }
+
+    class StubCucumberQuery extends CucumberQuery {
+      public getStepMatchArgumentsLists(): messages.StepMatchArgumentsList[] {
+        return [
+          {
+            stepMatchArguments: [
+              {
+                group: {
+                  start: 9,
+                  value: '',
+                  children: [],
+                },
+              },
+            ],
+          },
+        ]
+      }
+    }
+
+    class StubGherkinQuery extends GherkinQuery {
+      getPickleStepIds(): string[] {
+        return ['dummy-id']
+      }
+    }
+
+    const { container } = render(<GherkinStep step={step} hasExamples={false} />, {
+      gherkinQuery: new StubGherkinQuery(),
+      cucumberQuery: new StubCucumberQuery(),
+    })
+
+    expect(container).to.not.contain.text('the orderthe order is placed')
+  })
 })

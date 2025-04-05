@@ -19,10 +19,10 @@ jobs:
     environment: Release
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - run: npm ci
@@ -40,7 +40,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: cucumber/action-create-github-release@v1.1.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

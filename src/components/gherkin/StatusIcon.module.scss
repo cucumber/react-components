@@ -1,11 +1,11 @@
 $statusColors:
-  'PASSED' #2CB14A,
-  'SKIPPED' #00A0CC,
-  'PENDING' #FFAD33,
-  'UNDEFINED' #FFAD33,
-  'AMBIGUOUS' #F4EBFD,
-  'FAILED' #BB0000,
-  'UNKNOWN' #B6BECB;
+  'PASSED' #2cb14a,
+  'SKIPPED' #00a0cc,
+  'PENDING' #ffad33,
+  'UNDEFINED' #ffad33,
+  'AMBIGUOUS' #f4ebfd,
+  'FAILED' #bb0000,
+  'UNKNOWN' #b6becb;
 
 .icon {
   @each $name, $color in $statusColors {

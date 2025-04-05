@@ -47,11 +47,7 @@ export async function runFeature(
   const emitted: messages.Envelope[] = []
   const out = new Writable({
     objectMode: true,
-    write(
-      envelope: messages.Envelope,
-      encoding: string,
-      callback: (error?: Error | null) => void
-    ): void {
+    write(envelope: messages.Envelope, _: string, callback: (error?: Error | null) => void): void {
       emitted.push(envelope)
       try {
         callback()

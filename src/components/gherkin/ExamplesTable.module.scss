@@ -2,13 +2,14 @@
 @import '../../styles/tables';
 
 .examplesTable {
-    @include cucumber-table-style;
+  @include cucumber-table-style;
 
-    th:first-child, td:first-child {
-        border-left: none;
-    }
+  th:first-child,
+  td:first-child {
+    border-left: none;
+  }
 
-    tbody tr {
-        cursor: pointer;
-    }
+  tbody tr {
+    cursor: pointer;
+  }
 }
