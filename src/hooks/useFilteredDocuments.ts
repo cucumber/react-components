@@ -1,15 +1,14 @@
-import { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
+import { GherkinDocument } from '@cucumber/messages'
 import { useEffect, useState } from 'react'
 
 import { allStatuses } from '../countScenariosByStatuses.js'
 import filterByStatus from '../filter/filterByStatus.js'
 import { createSearch, Searchable } from '../search/index.js'
 import { useQueries } from './useQueries.js'
+import { useSearch } from './useSearch.js'
 
-export function useFilteredDocuments(
-  query: string,
-  hideStatuses: readonly TestStepResultStatus[]
-): GherkinDocument[] | undefined {
+export function useFilteredDocuments(): GherkinDocument[] | undefined {
+  const { query, hideStatuses } = useSearch()
   const { gherkinQuery, cucumberQuery } = useQueries()
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()

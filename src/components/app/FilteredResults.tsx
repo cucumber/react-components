@@ -1,23 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-import { useSearch } from '../../hooks/index.js'
-import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
-import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
+import { FilteredDocuments } from './FilteredDocuments.js'
 import styles from './FilteredResults.module.scss'
-import { GherkinDocumentList } from './GherkinDocumentList.js'
-import { NoMatchResult } from './NoMatchResult.js'
 import { SearchBar } from './SearchBar.js'
 import { StatusesSummary } from './StatusesSummary.js'
 
-interface IProps {
+export const FilteredResults: FC<{
   className?: string
-}
-
-export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) => {
-  const { query, hideStatuses } = useSearch()
-  const filtered = useFilteredDocuments(query, hideStatuses)
-
+}> = ({ className }) => {
   return (
     <div className={className}>
       <div className={styles.reportHeader}>
@@ -25,16 +16,7 @@ export const FilteredResults: React.FunctionComponent<IProps> = ({ className }) 
         <ExecutionSummary />
         <SearchBar />
       </div>
-
-      {filtered !== undefined && (
-        <>
-          {filtered.length > 0 ? (
-            <GherkinDocumentList gherkinDocuments={filtered} preExpand={true} />
-          ) : (
-            <NoMatchResult query={query} />
-          )}
-        </>
-      )}
+      <FilteredDocuments />
     </div>
   )
 }

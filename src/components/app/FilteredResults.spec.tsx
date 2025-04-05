@@ -63,7 +63,7 @@ describe('FilteredResults', () => {
       await userEvent.keyboard('{Enter}')
 
       await waitFor(() => {
-        expect(getByText('No matches found for your query "nope!" and/or filters')).to.be.visible
+        expect(getByText('No matches found for your query and/or filters')).to.be.visible
       })
     })
 

@@ -10,7 +10,6 @@ import statusName from '../gherkin/statusName.js'
 import styles from './SearchBar.module.scss'
 import statuses from './statuses.js'
 
-
 export const SearchBar: FC = () => {
   const { statusesWithScenarios } = useResultStatistics()
   const { query, hideStatuses, update } = useSearch()
@@ -21,7 +20,9 @@ export const SearchBar: FC = () => {
     debouncedSearchChange.flush()
   }
   const filterChanged = (name: Status, show: boolean) => {
-    update({ hideStatuses: show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name) })
+    update({
+      hideStatuses: show ? hideStatuses.filter((s) => s !== name) : hideStatuses.concat(name),
+    })
   }
 
   return (
