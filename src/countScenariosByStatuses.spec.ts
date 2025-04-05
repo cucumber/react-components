@@ -8,20 +8,17 @@ import { expect } from 'chai'
 import targetedRun from '../samples/targeted-run.js'
 import { runFeature } from '../test-utils/index.js'
 import countScenariosByStatuses from './countScenariosByStatuses.js'
-import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 
 const sourceReference: SourceReference = {}
 
 describe('countScenariosByStatuses', () => {
   let gherkinQuery: GherkinQuery
   let cucumberQuery: CucumberQuery
-  let envelopesQuery: EnvelopesQuery
   let supportCode: SupportCode
 
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
     cucumberQuery = new CucumberQuery()
-    envelopesQuery = new EnvelopesQuery()
     supportCode = new SupportCode()
     supportCode.defineStepDefinition(sourceReference, 'a passed step', () => null)
     supportCode.defineStepDefinition(sourceReference, 'a failed step', () => {
@@ -48,11 +45,10 @@ Feature: statuses
     const envelopes = await runFeature(feature, gherkinQuery, supportCode)
     for (const envelope of envelopes) {
       cucumberQuery.update(envelope)
-      envelopesQuery.update(envelope)
     }
 
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
-      countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
+      countScenariosByStatuses(cucumberQuery)
 
     expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).to.eq(2)
     expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
@@ -83,11 +79,10 @@ Feature: statuses
     const envelopes = await runFeature(feature, gherkinQuery, supportCode)
     for (const envelope of envelopes) {
       cucumberQuery.update(envelope)
-      envelopesQuery.update(envelope)
     }
 
     const { scenarioCountByStatus, statusesWithScenarios, totalScenarioCount } =
-      countScenariosByStatuses(gherkinQuery, cucumberQuery, envelopesQuery)
+      countScenariosByStatuses(cucumberQuery)
 
     expect(scenarioCountByStatus[messages.TestStepResultStatus.PASSED]).to.eq(1)
     expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
@@ -107,14 +102,9 @@ Feature: statuses
     envelopes.forEach((envelope) => {
       gherkinQuery.update(envelope)
       cucumberQuery.update(envelope)
-      envelopesQuery.update(envelope)
     })
 
-    const { totalScenarioCount } = countScenariosByStatuses(
-      gherkinQuery,
-      cucumberQuery,
-      envelopesQuery
-    )
+    const { totalScenarioCount } = countScenariosByStatuses(cucumberQuery)
 
     expect(totalScenarioCount).to.eq(1)
   })

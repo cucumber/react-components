@@ -13,7 +13,9 @@ for (const ndjsonPath of glob.sync(
   const [suiteName, ...suffixes] = filename.split('.')
   const content = fs.readFileSync(ndjsonPath, { encoding: 'utf-8' })
   const asTs = `// Generated file. Do not edit.
-export default [${content.split('\n').join(',')}]
+import { Envelope } from '@cucumber/messages'
+
+export default [${content.split('\n').join(',')}] as ReadonlyArray<Envelope>
 `
   const targetPath = `acceptance/${suiteName}/${suiteName}.${suffixes
     .filter((s) => s !== 'ndjson')

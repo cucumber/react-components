@@ -11,6 +11,7 @@ import targetedRun from '../../../samples/targeted-run.js'
 import SearchQueryContext, { useSearchQueryCtx } from '../../SearchQueryContext.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { FilteredResults } from './FilteredResults.js'
+import { TestRunReport } from './TestRunReport.js'
 
 describe('FilteredResults', () => {
   const TestableFilteredResults: FC<{ envelopes: Envelope[]; experimental?: boolean }> = ({
@@ -20,7 +21,7 @@ describe('FilteredResults', () => {
     return (
       <EnvelopesWrapper envelopes={envelopes}>
         <SearchQueryContext.Provider value={useSearchQueryCtx({})}>
-          <FilteredResults experimental={experimental} />
+          {experimental ? <TestRunReport/> : <FilteredResults />}
         </SearchQueryContext.Provider>
       </EnvelopesWrapper>
     )
@@ -65,7 +66,7 @@ describe('FilteredResults', () => {
         await userEvent.keyboard('{Enter}')
 
         await waitFor(() => {
-          expect(getByText('No matches found for your query "nope!" and/or filters')).to.be.visible
+          expect(getByText('No matches found for your query and/or filters')).to.be.visible
         })
       })
 
@@ -162,7 +163,7 @@ describe('FilteredResults', () => {
               name: 'samples/examples-tables/examples-tables.feature',
             })
           ).not.to.exist
-          expect(getByText('No matches found for your filters')).to.be.visible
+          expect(getByText('No matches found for your query and/or filters')).to.be.visible
         })
       })
     })
@@ -269,7 +270,7 @@ describe('FilteredResults', () => {
               name: 'Examples Tables - Eating cucumbers - These are passing - #1.1',
             })
           ).not.to.exist
-          expect(getByText('No matches found for your filters')).to.be.visible
+          expect(getByText('No matches found for your query and/or filters')).to.be.visible
         })
       })
     })

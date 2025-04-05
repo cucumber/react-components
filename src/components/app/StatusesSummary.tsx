@@ -1,19 +1,13 @@
-import * as messages from '@cucumber/messages'
-import React from 'react'
+import React, { FC } from 'react'
 
+import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import statusName from '../gherkin/statusName.js'
 import statuses from './statuses.js'
 import styles from './StatusesSummary.module.scss'
 
-export interface IStatusesSummaryProps {
-  scenarioCountByStatus: Record<messages.TestStepResultStatus, number>
-  totalScenarioCount: number
-}
+export const StatusesSummary: FC = () => {
+  const { scenarioCountByStatus, totalScenarioCount } = useResultStatistics()
 
-export const StatusesSummary: React.FunctionComponent<IStatusesSummaryProps> = ({
-  scenarioCountByStatus,
-  totalScenarioCount,
-}) => {
   return (
     <ol className={styles.statusesList}>
       {statuses.map((status) => {
