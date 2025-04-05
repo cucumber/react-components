@@ -7,7 +7,6 @@ import { Query as CucumberQuery } from '@cucumber/query'
 import { expect } from 'chai'
 
 import { FailingHook, runFeature } from '../../test-utils/index.js'
-import { EnvelopesQuery } from '../EnvelopesQueryContext.js'
 import filterByStatus from './filterByStatus.js'
 
 const sourceReference: SourceReference = {}
@@ -25,7 +24,6 @@ function scenarioNames(gherkinDocument: messages.GherkinDocument): string[] {
 describe('filterByStatus', () => {
   let gherkinQuery: GherkinQuery
   let cucumberQuery: CucumberQuery
-  let envelopesQuery: EnvelopesQuery
   let supportCode: SupportCode
 
   const feature = `
@@ -44,7 +42,6 @@ Feature: statuses
   beforeEach(() => {
     gherkinQuery = new GherkinQuery()
     cucumberQuery = new CucumberQuery()
-    envelopesQuery = new EnvelopesQuery()
     supportCode = new SupportCode()
     supportCode.defineStepDefinition(sourceReference, 'a passed step', () => null)
     supportCode.defineStepDefinition(sourceReference, 'a failed step', () => {
@@ -57,35 +54,22 @@ Feature: statuses
     const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
     emitted.forEach((message) => {
       cucumberQuery.update(message)
-      envelopesQuery.update(message)
     })
 
-    const passedScenarios = filterByStatus(
-      gherkinDocument!,
-      gherkinQuery,
-      cucumberQuery,
-      envelopesQuery,
-      [messages.TestStepResultStatus.PASSED]
-    )
+    const passedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+      messages.TestStepResultStatus.PASSED,
+    ])
 
     expect(scenarioNames(passedScenarios!)).to.deep.eq(['passed'])
 
-    const failedScenarios = filterByStatus(
-      gherkinDocument!,
-      gherkinQuery,
-      cucumberQuery,
-      envelopesQuery,
-      [messages.TestStepResultStatus.FAILED]
-    )
+    const failedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+      messages.TestStepResultStatus.FAILED,
+    ])
     expect(scenarioNames(failedScenarios!)).to.deep.eq(['failed'])
 
-    const undefinedScenarios = filterByStatus(
-      gherkinDocument!,
-      gherkinQuery,
-      cucumberQuery,
-      envelopesQuery,
-      [messages.TestStepResultStatus.UNDEFINED]
-    )
+    const undefinedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+      messages.TestStepResultStatus.UNDEFINED,
+    ])
     expect(scenarioNames(undefinedScenarios!)).to.deep.eq(['undefined'])
   })
 
@@ -94,16 +78,12 @@ Feature: statuses
     const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
     emitted.forEach((message) => {
       cucumberQuery.update(message)
-      envelopesQuery.update(message)
     })
 
-    const passedAndFailedScenarios = filterByStatus(
-      gherkinDocument!,
-      gherkinQuery,
-      cucumberQuery,
-      envelopesQuery,
-      [messages.TestStepResultStatus.PASSED, messages.TestStepResultStatus.FAILED]
-    )
+    const passedAndFailedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+      messages.TestStepResultStatus.PASSED,
+      messages.TestStepResultStatus.FAILED,
+    ])
     expect(scenarioNames(passedAndFailedScenarios!)).to.deep.eq(['passed', 'failed'])
   })
 
@@ -123,16 +103,11 @@ Feature: statuses
       const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
       emitted.forEach((message) => {
         cucumberQuery.update(message)
-        envelopesQuery.update(message)
       })
 
-      const pendingScenarios = filterByStatus(
-        gherkinDocument!,
-        gherkinQuery,
-        cucumberQuery,
-        envelopesQuery,
-        [messages.TestStepResultStatus.PENDING]
-      )
+      const pendingScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+        messages.TestStepResultStatus.PENDING,
+      ])
 
       expect(scenarioNames(pendingScenarios!)).to.deep.eq([])
     })
@@ -143,16 +118,11 @@ Feature: statuses
       const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
       emitted.forEach((message) => {
         cucumberQuery.update(message)
-        envelopesQuery.update(message)
       })
 
-      const onlyPassedScenarios = filterByStatus(
-        gherkinDocument!,
-        gherkinQuery,
-        cucumberQuery,
-        envelopesQuery,
-        [messages.TestStepResultStatus.PASSED]
-      )
+      const onlyPassedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+        messages.TestStepResultStatus.PASSED,
+      ])
 
       expect(pretty(onlyPassedScenarios!)).to.deep.eq(featureWithExamples)
     })
@@ -166,16 +136,11 @@ Feature: statuses
       const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
       emitted.forEach((message) => {
         cucumberQuery.update(message)
-        envelopesQuery.update(message)
       })
 
-      const onlyFailedScenarios = filterByStatus(
-        gherkinDocument!,
-        gherkinQuery,
-        cucumberQuery,
-        envelopesQuery,
-        [messages.TestStepResultStatus.FAILED]
-      )
+      const onlyFailedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+        messages.TestStepResultStatus.FAILED,
+      ])
 
       expect(scenarioNames(onlyFailedScenarios!)).to.deep.eq(['passed', 'failed', 'undefined'])
     })
@@ -189,16 +154,11 @@ Feature: statuses
       const gherkinDocument = emitted.find((envelope) => envelope.gherkinDocument)!.gherkinDocument
       emitted.forEach((message) => {
         cucumberQuery.update(message)
-        envelopesQuery.update(message)
       })
 
-      const onlyFailedScenarios = filterByStatus(
-        gherkinDocument!,
-        gherkinQuery,
-        cucumberQuery,
-        envelopesQuery,
-        [messages.TestStepResultStatus.FAILED]
-      )
+      const onlyFailedScenarios = filterByStatus(gherkinDocument!, gherkinQuery, cucumberQuery, [
+        messages.TestStepResultStatus.FAILED,
+      ])
 
       expect(scenarioNames(onlyFailedScenarios!)).to.deep.eq(['passed', 'failed', 'undefined'])
     })

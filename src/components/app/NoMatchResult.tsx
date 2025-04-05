@@ -1,22 +1,14 @@
 import { faGrimace } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { FC } from 'react'
 
 import styles from './NoMatchResult.module.scss'
 
-interface IProps {
-  query: string
-}
-
-export const NoMatchResult: React.FunctionComponent<IProps> = ({ query }) => {
+export const NoMatchResult: FC = () => {
   return (
     <p className={styles.message}>
       <FontAwesomeIcon className={styles.icon} aria-hidden="true" icon={faGrimace} />
-      <span>
-        {query
-          ? `No matches found for your query "${query}" and/or filters`
-          : 'No matches found for your filters'}
-      </span>
+      <span>No matches found for your query and/or filters</span>
     </p>
   )
 }

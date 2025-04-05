@@ -17,7 +17,6 @@ import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
 import { CucumberQueryStream, render } from '../test-utils/index.js'
-import { EnvelopesQuery } from './EnvelopesQueryContext.js'
 import { components } from './index.js'
 
 describe('acceptance tests', function () {
@@ -37,7 +36,6 @@ describe('acceptance tests', function () {
           })
           const gherkinQuery = new GherkinQuery()
           const cucumberQuery = new CucumberQuery()
-          const envelopesQuery = new EnvelopesQuery()
 
           const cucumberQueryStream = new CucumberQueryStream(cucumberQuery)
           await runCucumber(supportCode, gherkinStream, gherkinQuery, cucumberQueryStream)
@@ -46,7 +44,6 @@ describe('acceptance tests', function () {
             <components.app.QueriesWrapper
               gherkinQuery={gherkinQuery}
               cucumberQuery={cucumberQuery}
-              envelopesQuery={envelopesQuery}
             >
               <components.app.GherkinDocumentList
                 gherkinDocuments={gherkinQuery.getGherkinDocuments()}
@@ -73,7 +70,6 @@ describe('acceptance tests', function () {
       it(`can render ${messageFile}`, async () => {
         const gherkinQuery = new GherkinQuery()
         const cucumberQuery = new CucumberQuery()
-        const envelopesQuery = new EnvelopesQuery()
 
         const messageStream = new NdjsonToMessageStream()
 
@@ -89,18 +85,13 @@ describe('acceptance tests', function () {
             ) {
               gherkinQuery.update(envelope)
               cucumberQuery.update(envelope)
-              envelopesQuery.update(envelope)
               callback()
             },
           })
         )
 
         const { container } = render(
-          <components.app.QueriesWrapper
-            gherkinQuery={gherkinQuery}
-            cucumberQuery={cucumberQuery}
-            envelopesQuery={envelopesQuery}
-          >
+          <components.app.QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
             <components.app.GherkinDocumentList
               gherkinDocuments={gherkinQuery.getGherkinDocuments()}
             />

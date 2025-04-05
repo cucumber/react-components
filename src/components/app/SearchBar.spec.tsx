@@ -5,74 +5,72 @@ import { expect } from 'chai'
 import React from 'react'
 import sinon from 'sinon'
 
+import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import minimalFeature from '../../../acceptance/minimal/minimal.feature.js'
+import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext.js'
+import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { SearchBar } from './SearchBar.js'
 
 describe('SearchBar', () => {
   describe('searching', () => {
     it('puts the current query as the initial search text', () => {
+      const searchQueryContext = SearchQueryCtx.withDefaults({
+        query: 'keyword',
+      })
       const { getByRole } = render(
-        <SearchBar
-          query={'keyword'}
-          onSearch={sinon.fake()}
-          hideStatuses={[]}
-          statusesWithScenarios={[]}
-          onFilter={sinon.fake()}
-        />
+        <SearchQueryContext.Provider value={searchQueryContext}>
+          <SearchBar />
+        </SearchQueryContext.Provider>
       )
 
       expect(getByRole('textbox', { name: 'Search' })).to.have.value('keyword')
     })
 
-    it('fires an event after half a second when the user types a query', async () => {
-      const onChange = sinon.fake()
+    it('updates the search context after half a second when the user types a query', async () => {
+      const onUpdate = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
       const { getByRole } = render(
-        <SearchBar
-          query={''}
-          onSearch={onChange}
-          hideStatuses={[]}
-          statusesWithScenarios={[]}
-          onFilter={sinon.fake()}
-        />
+        <SearchQueryContext.Provider value={searchQueryContext}>
+          <SearchBar />
+        </SearchQueryContext.Provider>
       )
 
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
-
-      expect(onChange).not.to.have.been.called
+      expect(onUpdate).not.to.have.been.called
 
       await new Promise((resolve) => setTimeout(resolve, 500))
-
-      expect(onChange).to.have.been.called
+      expect(onUpdate).to.have.been.calledOnceWithExactly({
+        query: 'search text',
+        hideStatuses: [],
+      })
     })
 
-    it('fires an event with the query when the form is submitted', async () => {
-      const onChange = sinon.fake()
+    it('updates the search context with the query when the form is submitted', async () => {
+      const onUpdate = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
       const { getByRole } = render(
-        <SearchBar
-          query={'keyword'}
-          onSearch={onChange}
-          hideStatuses={[]}
-          statusesWithScenarios={[]}
-          onFilter={sinon.fake()}
-        />
+        <SearchQueryContext.Provider value={searchQueryContext}>
+          <SearchBar />
+        </SearchQueryContext.Provider>
       )
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
       await userEvent.keyboard('{Enter}')
 
-      expect(onChange).to.have.been.calledOnceWith('search text')
+      expect(onUpdate).to.have.been.calledOnceWithExactly({
+        query: 'search text',
+        hideStatuses: [],
+      })
     })
 
     it("doesn't perform the default form action when submitting", async () => {
       const eventListener = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { getByRole, baseElement } = render(
-        <SearchBar
-          query={''}
-          onSearch={sinon.fake()}
-          hideStatuses={[]}
-          statusesWithScenarios={[]}
-          onFilter={sinon.fake()}
-        />
+        <SearchQueryContext.Provider value={searchQueryContext}>
+          <SearchBar />
+        </SearchQueryContext.Provider>
       )
 
       baseElement.ownerDocument.addEventListener('submit', eventListener)
@@ -84,133 +82,131 @@ describe('SearchBar', () => {
       expect(eventListener.firstCall.firstArg.defaultPrevented).to.eq(true)
     })
 
-    it('fires an event with empty string when empty search is submitted', async () => {
-      const onChange = sinon.fake()
+    it('updates the search context with empty string when empty search is submitted', async () => {
+      const onUpdate = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults(
+        {
+          query: 'keyword',
+        },
+        onUpdate
+      )
       const { getByRole } = render(
-        <SearchBar
-          query={'keyword'}
-          onSearch={onChange}
-          hideStatuses={[]}
-          statusesWithScenarios={[]}
-          onFilter={sinon.fake()}
-        />
+        <SearchQueryContext.Provider value={searchQueryContext}>
+          <SearchBar />
+        </SearchQueryContext.Provider>
       )
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.keyboard('{Enter}')
 
-      expect(onChange).to.have.been.calledOnceWith('')
+      expect(onUpdate).to.have.been.calledOnceWith({ query: '', hideStatuses: [] })
     })
   })
 
   describe('filtering by status', () => {
     it('should not show status filters when no statuses', () => {
+      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { queryByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[]}
-          hideStatuses={[]}
-          onFilter={sinon.fake()}
-        />
+        <EnvelopesWrapper envelopes={[]}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
       expect(queryByRole('checkbox')).not.to.exist
     })
 
     it('should not show status filters when just one status', () => {
+      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { queryByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[TestStepResultStatus.PASSED]}
-          hideStatuses={[]}
-          onFilter={sinon.fake()}
-        />
+        <EnvelopesWrapper envelopes={minimalFeature}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
       expect(queryByRole('checkbox')).not.to.exist
     })
 
     it('should show named status filters, all checked by default, when multiple statuses', () => {
+      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { getAllByRole, getByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[TestStepResultStatus.PASSED, TestStepResultStatus.FAILED]}
-          hideStatuses={[]}
-          onFilter={sinon.fake()}
-        />
+        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
-      expect(getAllByRole('checkbox')).to.have.length(2)
+      expect(getAllByRole('checkbox')).to.have.length(3)
       expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
       expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
       getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
         expect(checkbox).to.be.checked
       })
     })
 
-    it('should fire an event to hide a status when unchecked', async () => {
-      const onFilter = sinon.fake()
+    it('updates the search context with a hidden status when unchecked', async () => {
+      const onUpdate = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
       const { getByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[
-            TestStepResultStatus.PASSED,
-            TestStepResultStatus.FAILED,
-            TestStepResultStatus.PENDING,
-          ]}
-          hideStatuses={[]}
-          onFilter={onFilter}
-        />
+        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
-      await userEvent.click(getByRole('checkbox', { name: 'pending' }))
+      await userEvent.click(getByRole('checkbox', { name: 'undefined' }))
 
-      expect(onFilter).to.have.been.calledOnceWith([TestStepResultStatus.PENDING])
+      expect(onUpdate).to.have.been.calledOnceWithExactly({
+        query: '',
+        hideStatuses: [TestStepResultStatus.UNDEFINED],
+      })
     })
 
-    it('should show filtered out statuses as unchecked', () => {
+    it('should show hidden statuses as unchecked', () => {
+      const searchQueryContext = SearchQueryCtx.withDefaults({
+        hideStatuses: [TestStepResultStatus.UNDEFINED],
+      })
       const { getByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[
-            TestStepResultStatus.PASSED,
-            TestStepResultStatus.FAILED,
-            TestStepResultStatus.PENDING,
-          ]}
-          hideStatuses={[TestStepResultStatus.PENDING]}
-          onFilter={sinon.fake()}
-        />
+        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
       expect(getByRole('checkbox', { name: 'passed' })).to.be.checked
       expect(getByRole('checkbox', { name: 'failed' })).to.be.checked
-      expect(getByRole('checkbox', { name: 'pending' })).not.to.be.checked
+      expect(getByRole('checkbox', { name: 'undefined' })).not.to.be.checked
     })
 
-    it('should fire to unhide a status when rechecked', async () => {
-      const onFilter = sinon.fake()
+    it('updates the search context when a status is rechecked', async () => {
+      const onUpdate = sinon.fake()
+      const searchQueryContext = SearchQueryCtx.withDefaults(
+        {
+          hideStatuses: [TestStepResultStatus.FAILED, TestStepResultStatus.UNDEFINED],
+        },
+        onUpdate
+      )
       const { getByRole } = render(
-        <SearchBar
-          query=""
-          onSearch={sinon.fake()}
-          statusesWithScenarios={[
-            TestStepResultStatus.PASSED,
-            TestStepResultStatus.FAILED,
-            TestStepResultStatus.PENDING,
-          ]}
-          hideStatuses={[TestStepResultStatus.FAILED, TestStepResultStatus.PENDING]}
-          onFilter={onFilter}
-        />
+        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+          <SearchQueryContext.Provider value={searchQueryContext}>
+            <SearchBar />
+          </SearchQueryContext.Provider>
+        </EnvelopesWrapper>
       )
 
       await userEvent.click(getByRole('checkbox', { name: 'failed' }))
 
-      expect(onFilter).to.have.been.calledOnceWith([TestStepResultStatus.PENDING])
+      expect(onUpdate).to.have.been.calledOnceWithExactly({
+        query: '',
+        hideStatuses: [TestStepResultStatus.UNDEFINED],
+      })
     })
   })
 })
