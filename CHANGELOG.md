@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
+
 ### Changed
 - BREAKING CHANGE: Remove props from `<StatusesSummary/>`, `<ExecutionSummary/>` and `<SearchBar/>` components, use contexts for state ([#374](https://github.com/cucumber/react-components/pull/374))
 
