@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
 
 ### Changed
+- Inherit font-size instead of setting at 14px ([#377](https://github.com/cucumber/react-components/pull/377))
 - BREAKING CHANGE: Remove props from `<StatusesSummary/>`, `<ExecutionSummary/>` and `<SearchBar/>` components, use contexts for state ([#374](https://github.com/cucumber/react-components/pull/374))
 
 ### Removed
