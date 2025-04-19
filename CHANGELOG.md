@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [22.4.2] - 2025-04-19
 ### Fixed
 - Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
 
@@ -428,7 +430,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v22.4.2...HEAD
+[22.4.2]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...v22.4.2
 [22.4.1]: https://github.com/cucumber/cucumber-react/compare/v22.4.0...v22.4.1
 [22.4.0]: https://github.com/cucumber/cucumber-react/compare/v22.3.0...v22.4.0
 [22.3.0]: https://github.com/cucumber/cucumber-react/compare/v22.2.0...v22.3.0
