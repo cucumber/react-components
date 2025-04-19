@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 22.x
       - renovate/**
   pull_request:
     branches:
