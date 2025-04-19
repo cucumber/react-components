@@ -1,0 +1,24 @@
+name: Release NPM
+
+on:
+  push:
+    branches: [release/*]
+
+jobs:
+  publish-npm:
+    name: Publish NPM module
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run compile
+      - uses: cucumber/action-publish-npm@v1.1.1
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          npm-tag: 'latest'
