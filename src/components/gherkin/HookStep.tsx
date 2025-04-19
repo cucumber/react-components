@@ -39,7 +39,7 @@ const DefaultRenderer: React.FunctionComponent<HookStepProps> = ({ step }) => {
     )
   }
 
-  if (attachments) {
+  if (attachments?.length) {
     return (
       <StepItem>
         {attachments.map((attachment, i) => (

@@ -1,12 +1,12 @@
 .steps {
   padding: 0;
-  margin: 1em;
+  margin: 0.875em 1em;
 
   > li {
     list-style: none;
-  }
 
-  > li + li {
-    margin-top: 0.25em;
+    &:not(:empty) {
+      padding: 0.125em 0;
+    }
   }
 }
