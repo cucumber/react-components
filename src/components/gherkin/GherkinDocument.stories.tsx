@@ -6,6 +6,7 @@ import attachments from '../../../acceptance/attachments/attachments.feature.js'
 import dataTables from '../../../acceptance/data-tables/data-tables.feature.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import hooks from '../../../acceptance/hooks/hooks.feature.js'
+import hooksAttachments from '../../../acceptance/hooks-attachment/hooks-attachment.feature.js'
 import markdown from '../../../acceptance/markdown/markdown.feature.md.js'
 import minimal from '../../../acceptance/minimal/minimal.feature.js'
 import parameterTypes from '../../../acceptance/parameter-types/parameter-types.feature.js'
@@ -55,6 +56,11 @@ ExamplesTables.args = {
 export const Hooks = Template.bind({})
 Hooks.args = {
   envelopes: hooks,
+}
+
+export const HooksWithAttachments = Template.bind({})
+HooksWithAttachments.args = {
+  envelopes: hooksAttachments,
 }
 
 export const Markdown = Template.bind({})
