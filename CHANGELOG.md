@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
 - Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
+- Rounding down of percent passed ([#332](https://github.com/cucumber/react-components/issues/332))
 
 ### Changed
 - Inherit font-size instead of setting at 14px ([#377](https://github.com/cucumber/react-components/pull/377))
