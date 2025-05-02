@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-export const Ruby = () => {
+export const Ruby: FC = () => {
   return (
-    <svg viewBox="0 0 128 128">
+    <svg viewBox="0 0 128 128" aria-hidden="true">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

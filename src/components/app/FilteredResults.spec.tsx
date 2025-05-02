@@ -105,9 +105,9 @@ describe('FilteredResults', () => {
 
       await waitFor(() => {
         expect(getAllByRole('checkbox')).to.have.length(3)
-        expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
-        expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
-        expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
+        expect(getByRole('checkbox', { name: 'passed 5' })).to.be.visible
+        expect(getByRole('checkbox', { name: 'failed 2' })).to.be.visible
+        expect(getByRole('checkbox', { name: 'undefined 2' })).to.be.visible
         getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
           expect(checkbox).to.be.checked
         })

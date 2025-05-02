@@ -40,7 +40,7 @@ describe('ciCommitLink(ci)', () => {
         name: 'SuperCI',
       }
 
-      expect(ciCommitLink(ci)).to.eq(null)
+      expect(ciCommitLink(ci)).to.eq(undefined)
     })
   })
 })

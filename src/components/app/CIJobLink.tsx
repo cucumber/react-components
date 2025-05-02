@@ -1,20 +1,25 @@
-import * as messages from '@cucumber/messages'
-import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { Ci } from '@cucumber/messages'
+import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { FC } from 'react'
 
-interface IProps {
-  ci: messages.Ci
-}
-
-export const CIJobLink: React.FunctionComponent<IProps> = ({ ci: ci }) => {
-  if (ci.url && ci.buildNumber) {
+export const CIJobLink: FC<{
+  ci: Ci
+}> = ({ ci }) => {
+  if (ci.url) {
     return (
       <>
-        <FontAwesomeIcon icon={faLink} />
-        Job <a href={ci.url}> {ci.buildNumber}</a>
+        <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faServer} />
+        <a href={ci.url} target="_blank" rel="noreferrer">
+          {ci.name}
+        </a>
       </>
     )
   }
-  return <></>
+  return (
+    <>
+      <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faServer} />
+      <span>{ci.name}</span>
+    </>
+  )
 }

@@ -1,0 +1,14 @@
+@import '../../styles/theming';
+
+.button {
+  background-color: transparent;
+  font-size: inherit;
+  padding: 0;
+  border: none;
+  color: $anchorColor;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: unset;
+  }
+}

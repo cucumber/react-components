@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
+import statuses from '../../statuses.js'
 import statusName from '../gherkin/statusName.js'
-import statuses from './statuses.js'
 import styles from './StatusesSummary.module.scss'
 
 export const StatusesSummary: FC = () => {

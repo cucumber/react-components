@@ -1,61 +1,23 @@
 @import '../../styles/theming';
+@import '../../styles/statuses';
 
-.layout {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1em;
-  border: 1px solid $panelAccentColor;
-  background-color: $panelBackgroundColor;
-  color: $panelTextColor;
-}
-
-.searchForm {
-  position: relative;
-  margin-top: -0.5em;
-}
-
-.queryIcon {
-  position: absolute;
-  left: 0;
-  margin-left: 0.4em;
-  top: 0.5em;
-  opacity: 0.666;
-}
-
-.queryField {
+.field {
   box-sizing: border-box;
   width: 100%;
-  padding: 0.5em 0 0.5em 1.5em;
+  min-width: 20em;
+  max-width: 50vw;
+  height: 1.5em;
+  padding: 0;
   font-family: inherit;
   font-size: inherit;
   background-color: transparent;
   color: $textColor;
-  border: 1px solid #ced4da;
-  border-radius: 0.3em;
+  border: 1px solid transparent;
 }
 
-.searchHelp {
-  display: block;
-  font-size: 0.75em;
-  line-height: 1em;
-  margin-top: 0.3em;
-
-  a {
-    color: $anchorColor;
-  }
-}
-
-.filterLayout {
+.statuses {
   display: flex;
-  align-items: center;
-  gap: 0.5em;
-}
-
-.filterList {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5em;
   list-style: none;
@@ -63,13 +25,49 @@
   margin: 0;
 }
 
-.filterIcon {
-  opacity: 0.666;
+.label {
+  position: relative;
+  font-size: 0.75em;
 }
 
-.filterField {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  accent-color: $anchorColor;
+.checkbox {
+  position: absolute;
+  top: 0.125em;
+  left: 0.5em;
+  width: 1em;
+  height: 1em;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.status {
+  padding: 0.333em 0.5em;
+  border-radius: 0.333em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+
+  @each $name, $color in $statusColors {
+    &[data-status='#{$name}'] {
+      background-color: fade-out($color, 0.666);
+
+      svg {
+        color: $color;
+      }
+    }
+  }
+
+  .checkbox:not(:checked) + & {
+    opacity: 0.666;
+
+    svg {
+      opacity: 0;
+    }
+  }
+
+  > * + * {
+    margin-left: 0.25em;
+  }
 }
