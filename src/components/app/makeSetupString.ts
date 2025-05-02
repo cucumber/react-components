@@ -1,27 +1,23 @@
-import { Meta } from '@cucumber/messages'
+import { Meta, Product } from '@cucumber/messages'
 
 export function makeSetupString(meta: Meta): string {
   const parts = []
   if (meta.implementation) {
-    let implementation = `Implementation: ${meta.implementation.name}`
-    if (meta.implementation.version) {
-      implementation += `@${meta.implementation.version}`
-    }
-    parts.push(implementation)
+    parts.push(makeProductString(meta.implementation, 'Implementation'))
   }
   if (meta.runtime) {
-    let runtime = `Runtime: ${meta.runtime.name}`
-    if (meta.runtime.version) {
-      runtime += `@${meta.runtime.version}`
-    }
-    parts.push(runtime)
+    parts.push(makeProductString(meta.runtime, 'Runtime'))
   }
   if (meta.os) {
-    let os = `Platform: ${meta.os.name}`
-    if (meta.os.version) {
-      os += `@${meta.os.version}`
-    }
-    parts.push(os)
+    parts.push(makeProductString(meta.os, 'Platform'))
   }
   return parts.join('\n')
+}
+
+function makeProductString(product: Product, title: string): string {
+  let result = `${title}: ${product.name}`
+  if (product.version) {
+    result += `@${product.version}`
+  }
+  return result
 }
