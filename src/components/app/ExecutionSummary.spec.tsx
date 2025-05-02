@@ -72,6 +72,16 @@ Runtime: node.js@16.13.1
 Platform: linux@5.11.0-1022-azure`)
     })
 
+    it('should include the pass rate', () => {
+      render(
+        <EnvelopesWrapper envelopes={envelopes}>
+          <ExecutionSummary />
+        </EnvelopesWrapper>
+      )
+
+      expect(screen.getByText('55.5% passed')).to.be.visible
+    })
+
     it('should include the job link', () => {
       render(
         <EnvelopesWrapper envelopes={envelopes}>
