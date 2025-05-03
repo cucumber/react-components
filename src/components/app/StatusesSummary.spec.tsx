@@ -15,9 +15,9 @@ describe('StatusesSummary', () => {
     )
 
     expect(getAllByRole('listitem').map((li) => li.textContent)).to.deep.eq([
-      '2 failed',
       '5 passed',
       '2 undefined',
+      '2 failed',
     ])
   })
 })

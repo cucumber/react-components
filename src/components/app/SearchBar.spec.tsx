@@ -141,9 +141,9 @@ describe('SearchBar', () => {
       )
 
       expect(getAllByRole('checkbox')).to.have.length(3)
-      expect(getByRole('checkbox', { name: 'passed' })).to.be.visible
-      expect(getByRole('checkbox', { name: 'undefined' })).to.be.visible
-      expect(getByRole('checkbox', { name: 'failed' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'passed 5' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'undefined 2' })).to.be.visible
+      expect(getByRole('checkbox', { name: 'failed 2' })).to.be.visible
       getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
         expect(checkbox).to.be.checked
       })
@@ -160,7 +160,7 @@ describe('SearchBar', () => {
         </EnvelopesWrapper>
       )
 
-      await userEvent.click(getByRole('checkbox', { name: 'undefined' }))
+      await userEvent.click(getByRole('checkbox', { name: 'undefined 2' }))
 
       expect(onUpdate).to.have.been.calledOnceWithExactly({
         query: '',
@@ -180,9 +180,9 @@ describe('SearchBar', () => {
         </EnvelopesWrapper>
       )
 
-      expect(getByRole('checkbox', { name: 'passed' })).to.be.checked
-      expect(getByRole('checkbox', { name: 'failed' })).to.be.checked
-      expect(getByRole('checkbox', { name: 'undefined' })).not.to.be.checked
+      expect(getByRole('checkbox', { name: 'passed 5' })).to.be.checked
+      expect(getByRole('checkbox', { name: 'failed 2' })).to.be.checked
+      expect(getByRole('checkbox', { name: 'undefined 2' })).not.to.be.checked
     })
 
     it('updates the search context when a status is rechecked', async () => {
@@ -201,7 +201,7 @@ describe('SearchBar', () => {
         </EnvelopesWrapper>
       )
 
-      await userEvent.click(getByRole('checkbox', { name: 'failed' }))
+      await userEvent.click(getByRole('checkbox', { name: 'failed 2' }))
 
       expect(onUpdate).to.have.been.calledOnceWithExactly({
         query: '',

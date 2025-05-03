@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-export const CucumberLogo = () => {
+export const CucumberLogo: FC = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.06 0.56 32.5 37.13">
+    <svg viewBox="0.06 0.56 32.5 37.13" aria-hidden="true">
       <g fill="none" fillRule="evenodd">
         <path d="M-4-1h40v40H-4z" />
         <path

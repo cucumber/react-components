@@ -1,11 +1,4 @@
-$statusColors:
-  'PASSED' #2cb14a,
-  'SKIPPED' #00a0cc,
-  'PENDING' #ffad33,
-  'UNDEFINED' #ffad33,
-  'AMBIGUOUS' #f4ebfd,
-  'FAILED' #bb0000,
-  'UNKNOWN' #b6becb;
+@import '../../styles/statuses';
 
 .statusesList {
   list-style: none;

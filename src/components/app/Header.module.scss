@@ -1,0 +1,47 @@
+@import '../../styles/theming';
+
+.section {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  border: 1px solid $panelAccentColor;
+  margin: 0;
+
+  & + & {
+    border-top: none;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  font-size: 1.125em;
+  padding: 1rem;
+
+  & + & {
+    border-left: 1px solid $panelAccentColor;
+  }
+
+  > svg {
+    height: 1.25em;
+  }
+
+  a {
+    color: $anchorColor;
+  }
+
+  code {
+    font-family: $monoFamily;
+  }
+}
+
+.subItem {
+  display: inline-flex;
+  gap: 0.25em;
+
+  > svg {
+    height: 1.25em;
+  }
+}

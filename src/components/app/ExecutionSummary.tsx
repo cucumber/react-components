@@ -1,5 +1,5 @@
-import { TestStepResultStatus, TimeConversion } from '@cucumber/messages'
-import { faCodeBranch, faTag } from '@fortawesome/free-solid-svg-icons'
+import { Product, TestStepResultStatus, TimeConversion } from '@cucumber/messages'
+import { faCodeBranch, faStopwatch, faTag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FC } from 'react'
 
@@ -10,8 +10,12 @@ import { useQueries } from '../../hooks/index.js'
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { CICommitLink } from './CICommitLink.js'
 import { CIJobLink } from './CIJobLink.js'
+import { CopyButton } from './CopyButton.js'
 import styles from './ExecutionSummary.module.scss'
-import { CucumberLogo } from './icons/CucumberLogo.js'
+import { HeaderItem, HeaderSection, HeaderSubItem } from './Header.js'
+import { HealthChart } from './HealthChart.js'
+import { ImplementationIcon } from './ImplementationIcon.js'
+import { makeSetupString } from './makeSetupString.js'
 import { OSIcon } from './OSIcon.js'
 import { RuntimeIcon } from './RuntimeIcon.js'
 
@@ -22,92 +26,101 @@ export const ExecutionSummary: FC = () => {
   const meta = cucumberQuery.findMeta()
   const { scenarioCountByStatus, totalScenarioCount } = useResultStatistics()
 
-  const percentagePassed: string =
-    formatStatusRate(scenarioCountByStatus[TestStepResultStatus.PASSED], totalScenarioCount) +
-    ' passed'
-
   const startDate = testRunStarted?.timestamp
     ? new Date(TimeConversion.timestampToMillisecondsSinceEpoch(testRunStarted.timestamp))
     : undefined
-
   const finishDate = testRunFinished?.timestamp
     ? new Date(TimeConversion.timestampToMillisecondsSinceEpoch(testRunFinished.timestamp))
     : undefined
 
-  const formattedTimestamp = startDate ? formatExecutionDistance(startDate) : 'Unknown start time'
-  const formattedDuration =
-    startDate && finishDate ? formatExecutionDuration(startDate, finishDate) : 'Unknown duration'
   return (
-    <div className={styles.backdrop}>
-      <dl className={styles.list}>
-        <div className={styles.item}>
-          <dt className={styles.suffix}>{totalScenarioCount} executed</dt>
-          <dd className={styles.value}>{percentagePassed}</dd>
-        </div>
-        <div className={styles.item}>
-          <dt className={styles.suffix}>last run</dt>
-          <dd className={styles.value}>{formattedTimestamp}</dd>
-        </div>
-        <div className={styles.item}>
-          <dt className={styles.suffix}>duration</dt>
-          <dd className={styles.value}>{formattedDuration}</dd>
-        </div>
-        {meta?.ci && (
-          <div className={`${styles.item} ${styles.itemCi}`}>
-            <dt className={styles.suffix}>
-              {meta.ci.git ? (
-                <>
-                  {meta.ci.git.branch && (
-                    <span className={styles.gitItem}>
-                      <FontAwesomeIcon icon={faCodeBranch} />
-                      {meta.ci.git.branch}
-                    </span>
-                  )}
-                  {meta.ci.git.tag && (
-                    <span className={styles.gitItem}>
-                      <FontAwesomeIcon icon={faTag} />
-                      {meta.ci.git.tag}
-                    </span>
-                  )}
-                  <span className={styles.gitItem}>
-                    <CICommitLink ci={meta.ci} />
-                  </span>
-                  <span className={styles.gitItem}>
-                    <CIJobLink ci={meta.ci} />
-                  </span>
-                </>
-              ) : (
-                '-'
+    <>
+      {meta && (
+        <HeaderSection>
+          <HeaderItem>
+            <HeaderSubItem>
+              <ImplementationIcon implementation={meta.implementation} />
+              <RuntimeIcon runtime={meta.runtime} />
+              <OSIcon os={meta.os} />
+            </HeaderSubItem>
+            <span data-testid="setup.phrase">
+              <VersionedTool {...meta.implementation} fallback="unknown tool" />
+              <em className={styles.conjunction}> with </em>
+              <VersionedTool {...meta.runtime} fallback="unknown runtime" />
+              <em className={styles.conjunction}> on </em>
+              <VersionedTool {...meta.os} fallback="unknown platform" />
+            </span>
+            <CopyButton text={makeSetupString(meta)} />
+          </HeaderItem>
+        </HeaderSection>
+      )}
+      <HeaderSection>
+        <HeaderItem>
+          <HeaderSubItem>
+            <HealthChart />
+            <span>
+              {formatStatusRate(
+                scenarioCountByStatus[TestStepResultStatus.PASSED],
+                totalScenarioCount
               )}
-            </dt>
-            <dd className={styles.value}>{meta.ci.name}</dd>
-          </div>
+              {' passed'}
+            </span>
+          </HeaderSubItem>
+        </HeaderItem>
+        {startDate && (
+          <HeaderItem>
+            <HeaderSubItem>
+              <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faStopwatch} />
+              <span>
+                <time title={startDate.toString()} dateTime={startDate.toISOString()}>
+                  {formatExecutionDistance(startDate)}
+                </time>
+                {finishDate && (
+                  <>
+                    <em className={styles.conjunction}> in </em>
+                    <span>{formatExecutionDuration(startDate, finishDate)}</span>
+                  </>
+                )}
+              </span>
+            </HeaderSubItem>
+          </HeaderItem>
         )}
-        {meta && (
-          <>
-            <div className={styles.item}>
-              <dt className={styles.suffix}>{meta.os.name}</dt>
-              <dd className={styles.value}>
-                <OSIcon name={meta.os.name} />
-              </dd>
-            </div>
-            <div className={styles.item}>
-              <dt className={styles.suffix}>{meta.runtime.name + ' ' + meta.runtime.version}</dt>
-              <dd className={styles.value}>
-                <RuntimeIcon name={meta.runtime.name} />
-              </dd>
-            </div>
-            <div className={styles.item}>
-              <dt className={styles.suffix}>
-                {`${meta.implementation.name} ${meta.implementation.version}`}
-              </dt>
-              <dd className={styles.value}>
-                <CucumberLogo />
-              </dd>
-            </div>
-          </>
+        {meta?.ci && (
+          <HeaderItem>
+            <HeaderSubItem>
+              <CIJobLink ci={meta.ci} />
+            </HeaderSubItem>
+          </HeaderItem>
         )}
-      </dl>
-    </div>
+        {meta?.ci?.git && (
+          <HeaderItem>
+            <HeaderSubItem>
+              <CICommitLink ci={meta.ci} />
+            </HeaderSubItem>
+            {meta.ci.git.branch && (
+              <HeaderSubItem>
+                <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faCodeBranch} />
+                <code>{meta.ci.git.branch}</code>
+              </HeaderSubItem>
+            )}
+            {meta.ci.git.tag && (
+              <HeaderSubItem>
+                <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faTag} />
+                <code>{meta.ci.git.tag}</code>
+              </HeaderSubItem>
+            )}
+          </HeaderItem>
+        )}
+      </HeaderSection>
+    </>
+  )
+}
+
+const VersionedTool: FC<Product & { fallback: string }> = ({ name, fallback, version }) => {
+  return (
+    <code>
+      <strong>{name || fallback}</strong>
+      {version && <span>@{version}</span>}
+    </code>
   )
 }

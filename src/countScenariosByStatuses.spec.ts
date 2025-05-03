@@ -54,9 +54,9 @@ Feature: statuses
     expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
     expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).to.eq(1)
     expect(statusesWithScenarios).to.deep.eq([
-      TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
+      TestStepResultStatus.FAILED,
     ])
     expect(totalScenarioCount).to.eq(4)
     // Ridiculously long because runFeature (fake cucumber) seems to run very slowly with ts-node (?)
@@ -88,9 +88,9 @@ Feature: statuses
     expect(scenarioCountByStatus[messages.TestStepResultStatus.FAILED]).to.eq(1)
     expect(scenarioCountByStatus[messages.TestStepResultStatus.UNDEFINED]).to.eq(1)
     expect(statusesWithScenarios).to.deep.eq([
-      TestStepResultStatus.FAILED,
       TestStepResultStatus.PASSED,
       TestStepResultStatus.UNDEFINED,
+      TestStepResultStatus.FAILED,
     ])
     expect(totalScenarioCount).to.eq(3)
   })

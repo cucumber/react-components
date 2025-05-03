@@ -1,0 +1,9 @@
+@import '../../styles/statuses';
+
+.segment {
+  @each $name, $color in $statusColors {
+    &[data-status='#{$name}'] {
+      stroke: $color;
+    }
+  }
+}

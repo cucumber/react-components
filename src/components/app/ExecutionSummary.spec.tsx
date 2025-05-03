@@ -1,7 +1,9 @@
 import { Meta } from '@cucumber/messages'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
 import React from 'react'
+import sinon from 'sinon'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
@@ -25,30 +27,85 @@ const meta: Meta = {
   },
 }
 
-describe('ExecutionSummary', () => {
-  const envelopes = [...examplesTablesFeature, { meta }]
+const envelopes = [...examplesTablesFeature, { meta }]
+
+describe('<ExecutionSummary/>', () => {
+  const originalClipboard = navigator.clipboard
+
+  before(() => {
+    // @ts-expect-error overriding navigator.clipboard
+    navigator.clipboard = {
+      writeText: sinon.stub().resolves(),
+    }
+  })
+
+  after(() => {
+    // @ts-expect-error overriding navigator.clipboard
+    navigator.clipboard = originalClipboard
+  })
 
   describe('meta', () => {
-    it('should include the implementation name and version', () => {
-      const { getByText } = render(
+    it('should include a phrase for the setup details', () => {
+      render(
         <EnvelopesWrapper envelopes={envelopes}>
           <ExecutionSummary />
         </EnvelopesWrapper>
       )
 
-      expect(getByText('cucumber-js 8.0.0-rc.1')).to.be.visible
+      expect(screen.getByTestId('setup.phrase')).to.contain.text(
+        'cucumber-js@8.0.0-rc.1 with node.js@16.13.1 on linux@5.11.0-1022-azure'
+      )
+    })
+
+    it('should copy the setup details on request', async () => {
+      render(
+        <EnvelopesWrapper envelopes={envelopes}>
+          <ExecutionSummary />
+        </EnvelopesWrapper>
+      )
+
+      await userEvent.click(screen.getByRole('button', { name: 'Copy' }))
+
+      expect(navigator.clipboard.writeText).to.have.been
+        .calledOnceWithExactly(`Implementation: cucumber-js@8.0.0-rc.1
+Runtime: node.js@16.13.1
+Platform: linux@5.11.0-1022-azure`)
+    })
+
+    it('should include the pass rate', () => {
+      render(
+        <EnvelopesWrapper envelopes={envelopes}>
+          <ExecutionSummary />
+        </EnvelopesWrapper>
+      )
+
+      expect(screen.getByText('55.5% passed')).to.be.visible
     })
 
     it('should include the job link', () => {
-      const { getByText } = render(
+      render(
         <EnvelopesWrapper envelopes={envelopes}>
           <ExecutionSummary />
         </EnvelopesWrapper>
       )
 
-      const jobLinkElement = getByText(meta?.ci?.buildNumber as string)
-      expect(jobLinkElement).to.be.visible
-      expect(jobLinkElement.getAttribute('href')).to.eq(meta?.ci?.url)
+      expect(screen.getByRole('link', { name: 'GitHub Actions' }))
+        .attr('href')
+        .to.eq(meta?.ci?.url)
+    })
+
+    it('should include the commit link', () => {
+      render(
+        <EnvelopesWrapper envelopes={envelopes}>
+          <ExecutionSummary />
+        </EnvelopesWrapper>
+      )
+
+      expect(screen.getByRole('link', { name: 'b53d820' }))
+        .attr('href')
+        .to.eq(
+          'https://github.com/cucumber/cucumber-js/commit/b53d820504b31c8e4d44234dc5eaa58d6b7fdd4c'
+        )
     })
   })
 })

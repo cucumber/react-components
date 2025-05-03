@@ -1,13 +1,12 @@
-import React, { VoidFunctionComponent } from 'react'
+import { Meta } from '@cucumber/messages'
+import React, { FC } from 'react'
 
 import { Linux } from './icons/Linux.js'
 import { MacOS } from './icons/MacOS.js'
 import { Windows } from './icons/Windows.js'
 
-export const OSIcon: VoidFunctionComponent<{ name: string }> = ({ name }) => {
-  if (!name) {
-    return <>Unknown OS</>
-  }
+export const OSIcon: FC<{ os: Meta['os'] }> = ({ os }) => {
+  const { name } = os
   if (name.match(/windows|win32/i)) {
     return <Windows />
   }
@@ -17,5 +16,5 @@ export const OSIcon: VoidFunctionComponent<{ name: string }> = ({ name }) => {
   if (name.match(/linux/i)) {
     return <Linux />
   }
-  return <>{name}</>
+  return null
 }

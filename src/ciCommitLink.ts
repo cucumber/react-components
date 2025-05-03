@@ -1,8 +1,9 @@
-import * as messages from '@cucumber/messages'
+import { Ci } from '@cucumber/messages'
 
 import toRepositoryId from './toRepositoryId.js'
 
-export default function ciCommitLink(ci: messages.Ci): string | null {
+// TODO move upstream to create-meta
+export default function ciCommitLink(ci: Ci): string | undefined {
   if (ci.git && ci.git.remote) {
     const repositoryId = toRepositoryId(ci.git.remote)
     const github = repositoryId.startsWith('github.com') || ci.name === 'GitHub Actions'
@@ -10,5 +11,4 @@ export default function ciCommitLink(ci: messages.Ci): string | null {
       return `https://${repositoryId}/commit/${ci.git.revision}`
     }
   }
-  return null
 }
