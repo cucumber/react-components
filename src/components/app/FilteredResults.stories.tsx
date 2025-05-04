@@ -4,7 +4,6 @@ import React from 'react'
 
 import testData from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import targetedRun from '../../../samples/targeted-run.js'
-import { CucumberReact } from '../CucumberReact.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { FilteredResults } from './FilteredResults.js'
 import { SearchWrapper } from './SearchWrapper.js'
@@ -19,13 +18,11 @@ type TemplateArgs = {
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
-    <CucumberReact>
-      <EnvelopesWrapper envelopes={envelopes}>
-        <SearchWrapper>
-          <FilteredResults />
-        </SearchWrapper>
-      </EnvelopesWrapper>
-    </CucumberReact>
+    <EnvelopesWrapper envelopes={envelopes}>
+      <SearchWrapper>
+        <FilteredResults />
+      </SearchWrapper>
+    </EnvelopesWrapper>
   )
 }
 

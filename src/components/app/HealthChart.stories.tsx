@@ -3,7 +3,6 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import { CucumberReact } from '../CucumberReact.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { HealthChart } from './HealthChart.js'
 
@@ -17,11 +16,9 @@ type TemplateArgs = {
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
-    <CucumberReact>
-      <EnvelopesWrapper envelopes={envelopes}>
-        <HealthChart />
-      </EnvelopesWrapper>
-    </CucumberReact>
+    <EnvelopesWrapper envelopes={envelopes}>
+      <HealthChart />
+    </EnvelopesWrapper>
   )
 }
 
