@@ -18,7 +18,6 @@ import stacktTraces from '../../../acceptance/stack-traces/stack-traces.feature.
 import undefinedEnvelopes from '../../../acceptance/undefined/undefined.feature.js'
 import unknownParameterTypes from '../../../acceptance/unknown-parameter-type/unknown-parameter-type.feature.js'
 import { EnvelopesWrapper, GherkinDocumentList } from '../app/index.js'
-import { CucumberReact } from '../CucumberReact.js'
 
 export default {
   title: 'Gherkin/GherkinDocument',
@@ -30,11 +29,9 @@ type TemplateArgs = {
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
-    <CucumberReact>
-      <EnvelopesWrapper envelopes={envelopes}>
-        <GherkinDocumentList />
-      </EnvelopesWrapper>
-    </CucumberReact>
+    <EnvelopesWrapper envelopes={envelopes}>
+      <GherkinDocumentList />
+    </EnvelopesWrapper>
   )
 }
 

@@ -2,9 +2,8 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { CucumberReact } from '../CucumberReact.js'
 import { Feature, Tags } from '../gherkin/index.js'
-import { CustomRenderingSupport, TagsProps } from './customRendering.js'
+import { CustomRendering, CustomRenderingSupport, TagsProps } from './CustomRendering.js'
 
 export default {
   title: 'Customisation/Components',
@@ -17,9 +16,9 @@ export const CustomTagComponent: Story<{
   return (
     <>
       <h2>Tags with JIRA linking</h2>
-      <CucumberReact customRendering={support}>
+      <CustomRendering overrides={support}>
         <Tags tags={tags} />
-      </CucumberReact>
+      </CustomRendering>
     </>
   )
 }
@@ -76,9 +75,9 @@ export const CustomFeatureComponent: Story<{
   return (
     <>
       <h2>Feature with button on top</h2>
-      <CucumberReact customRendering={support}>
+      <CustomRendering overrides={support}>
         <Feature feature={feature} />
-      </CucumberReact>
+      </CustomRendering>
     </>
   )
 }

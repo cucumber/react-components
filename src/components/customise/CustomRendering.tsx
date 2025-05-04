@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { Pickle, PickleStep } from '@cucumber/messages'
-import React, { FunctionComponent, ReactNode, useContext } from 'react'
+import React, { FC, FunctionComponent, PropsWithChildren, ReactNode, useContext } from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
@@ -215,4 +215,13 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
     return StyledCustomRenderer
   }
   return StyledDefaultRenderer
+}
+
+export const CustomRendering: FC<PropsWithChildren<{ overrides: CustomRenderingSupport }>> = ({
+  overrides,
+  children,
+}) => {
+  return (
+    <CustomRenderingContext.Provider value={overrides}>{children}</CustomRenderingContext.Provider>
+  )
 }

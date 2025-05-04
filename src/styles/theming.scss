@@ -1,9 +1,3 @@
-@import './fonts';
-
-$sansFamily: var(--cucumber-sans-font-family, $defaultSansFamily);
-$monoFamily: var(--cucumber-mono-font-family, $defaultMonoFamily);
-$backgroundColor: var(--cucumber-background-color, white);
-$textColor: var(--cucumber-text-color, #222);
 $anchorColor: var(--cucumber-anchor-color, #297bde);
 $keywordColor: var(--cucumber-keyword-color, #000080);
 $parameterColor: var(--cucumber-parameter-color, #297bde);

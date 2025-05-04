@@ -2,7 +2,6 @@ import { AttachmentContentEncoding } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { CucumberReact } from '../../CucumberReact.js'
 import { AttachmentProps } from '../../customise/index.js'
 import { Attachment } from './Attachment.js'
 // @ts-expect-error vite static asset import
@@ -17,11 +16,7 @@ export default {
 type TemplateArgs = AttachmentProps
 
 const Template: Story<TemplateArgs> = ({ attachment }) => {
-  return (
-    <CucumberReact>
-      <Attachment attachment={attachment} />
-    </CucumberReact>
-  )
+  return <Attachment attachment={attachment} />
 }
 
 export const Log = Template.bind({})

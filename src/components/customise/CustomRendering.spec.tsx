@@ -4,8 +4,7 @@ import React from 'react'
 
 import { render } from '../../../test-utils/index.js'
 import { Tags } from '../gherkin/index.js'
-import { CucumberReact } from '../index.js'
-import { Customised, TagsClasses, TagsProps } from './index.js'
+import { Customised, CustomRendering, TagsClasses, TagsProps } from './index.js'
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
@@ -40,8 +39,8 @@ describe('custom rendering and theming', () => {
     ]
 
     const { getByRole } = render(
-      <CucumberReact
-        customRendering={{
+      <CustomRendering
+        overrides={{
           Tags: {
             tags: 'custom-list-class',
             tag: 'custom-item-class',
@@ -49,7 +48,7 @@ describe('custom rendering and theming', () => {
         }}
       >
         <Tags tags={tags} />
-      </CucumberReact>
+      </CustomRendering>
     )
 
     expect(getByRole('list')).to.have.class('custom-list-class')
@@ -69,15 +68,15 @@ describe('custom rendering and theming', () => {
     ]
 
     const { getByRole } = render(
-      <CucumberReact
-        customRendering={{
+      <CustomRendering
+        overrides={{
           Tags: {
             tags: 'custom-list-class',
           },
         }}
       >
         <Tags tags={tags} />
-      </CucumberReact>
+      </CustomRendering>
     )
 
     expect(getByRole('list')).to.have.class('custom-list-class')
@@ -101,13 +100,13 @@ describe('custom rendering and theming', () => {
     }
 
     const { container } = render(
-      <CucumberReact
-        customRendering={{
+      <CustomRendering
+        overrides={{
           Tags: CustomComponent,
         }}
       >
         <Tags tags={tags} />
-      </CucumberReact>
+      </CustomRendering>
     )
 
     expect(container).to.contain.html('<p>Totally custom!</p>')
@@ -130,13 +129,13 @@ describe('custom rendering and theming', () => {
     }
 
     const { getByRole } = render(
-      <CucumberReact
-        customRendering={{
+      <CustomRendering
+        overrides={{
           Tags: CustomComponent,
         }}
       >
         <Tags tags={tags} />
-      </CucumberReact>
+      </CustomRendering>
     )
 
     expect(getByRole('list')).to.have.class('tags')
