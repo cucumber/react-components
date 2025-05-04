@@ -8,8 +8,9 @@ import SearchQueryContext, {
   WindowUrlApi,
 } from './SearchQueryContext.js'
 
-export * as components from './components/index.js'
-export * as hooks from './hooks/index.js'
+export * from './components/index.js'
+export * from './hooks/index.js'
+
 export {
   CucumberQueryContext,
   filterByStatus,
