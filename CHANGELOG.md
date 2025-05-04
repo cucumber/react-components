@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add `<CustomRendering/>` to override presentation ([#382](https://github.com/cucumber/react-components/pull/382))
+
 ### Fixed
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
 - Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
@@ -18,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - BREAKING CHANGE: Remove `EnvelopesQuery` and its React context ([#374](https://github.com/cucumber/react-components/pull/374))
+- BREAKING CHANGE: Remove defunct `<CucumberReact/>` component ([#382](https://github.com/cucumber/react-components/pull/382))
 
 ## [22.4.1] - 2025-03-30
 ### Fixed
