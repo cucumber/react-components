@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Inherit font-size instead of setting at 14px ([#377](https://github.com/cucumber/react-components/pull/377))
 - Redesigned report header block ([#381](https://github.com/cucumber/react-components/pull/381))
 - BREAKING CHANGE: Remove props from `<StatusesSummary/>`, `<ExecutionSummary/>` and `<SearchBar/>` components, use contexts for state ([#374](https://github.com/cucumber/react-components/pull/374))
+- BREAKING CHANGE: Components and hooks are now exported at the top level, not within `components` and `hooks` objects ([#383](https://github.com/cucumber/react-components/pull/383))
 
 ### Removed
 - BREAKING CHANGE: Remove `EnvelopesQuery` and its React context ([#374](https://github.com/cucumber/react-components/pull/374))
