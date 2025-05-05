@@ -17,7 +17,7 @@ import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
 import { CucumberQueryStream, render } from '../test-utils/index.js'
-import { components } from './index.js'
+import { GherkinDocumentList, QueriesWrapper } from './index.js'
 
 describe('acceptance tests', function () {
   this.timeout('30s')
@@ -41,14 +41,9 @@ describe('acceptance tests', function () {
           await runCucumber(supportCode, gherkinStream, gherkinQuery, cucumberQueryStream)
 
           const { container } = render(
-            <components.app.QueriesWrapper
-              gherkinQuery={gherkinQuery}
-              cucumberQuery={cucumberQuery}
-            >
-              <components.app.GherkinDocumentList
-                gherkinDocuments={gherkinQuery.getGherkinDocuments()}
-              />
-            </components.app.QueriesWrapper>
+            <QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
+              <GherkinDocumentList gherkinDocuments={gherkinQuery.getGherkinDocuments()} />
+            </QueriesWrapper>
           )
 
           expect(container.textContent).to.not.eq(null)
@@ -91,11 +86,9 @@ describe('acceptance tests', function () {
         )
 
         const { container } = render(
-          <components.app.QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
-            <components.app.GherkinDocumentList
-              gherkinDocuments={gherkinQuery.getGherkinDocuments()}
-            />
-          </components.app.QueriesWrapper>
+          <QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
+            <GherkinDocumentList gherkinDocuments={gherkinQuery.getGherkinDocuments()} />
+          </QueriesWrapper>
         )
 
         expect(container.textContent).not.to.eq(null)
