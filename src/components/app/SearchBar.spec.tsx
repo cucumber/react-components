@@ -2,63 +2,67 @@ import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
-import React from 'react'
+import React, { FC, useState } from 'react'
 import sinon from 'sinon'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import minimalFeature from '../../../acceptance/minimal/minimal.feature.js'
-import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext.js'
+import { SearchState } from '../../SearchContext.js'
+import { ControlledSearchProvider } from './ControlledSearchProvider.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { SearchBar } from './SearchBar.js'
+
+const TestableSearchBar: FC<{
+  defaultValue?: SearchState
+  onChange?: (value: SearchState) => void
+}> = ({ defaultValue = { query: '', hideStatuses: [] }, onChange = () => {} }) => {
+  const [value, setValue] = useState<SearchState>(defaultValue)
+  return (
+    <ControlledSearchProvider
+      value={value}
+      onChange={(newValue) => {
+        setValue(newValue)
+        onChange(newValue)
+      }}
+    >
+      <SearchBar />
+    </ControlledSearchProvider>
+  )
+}
 
 describe('SearchBar', () => {
   describe('searching', () => {
     it('puts the current query as the initial search text', () => {
-      const searchQueryContext = SearchQueryCtx.withDefaults({
-        query: 'keyword',
-      })
       const { getByRole } = render(
-        <SearchQueryContext.Provider value={searchQueryContext}>
-          <SearchBar />
-        </SearchQueryContext.Provider>
+        <TestableSearchBar defaultValue={{ query: 'keyword', hideStatuses: [] }} />
       )
 
       expect(getByRole('textbox', { name: 'Search' })).to.have.value('keyword')
     })
 
     it('updates the search context after half a second when the user types a query', async () => {
-      const onUpdate = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
-      const { getByRole } = render(
-        <SearchQueryContext.Provider value={searchQueryContext}>
-          <SearchBar />
-        </SearchQueryContext.Provider>
-      )
+      const onChange = sinon.fake()
+      const { getByRole } = render(<TestableSearchBar onChange={onChange} />)
 
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
-      expect(onUpdate).not.to.have.been.called
+      expect(onChange).not.to.have.been.called
 
       await new Promise((resolve) => setTimeout(resolve, 500))
-      expect(onUpdate).to.have.been.calledOnceWithExactly({
+      expect(onChange).to.have.been.calledOnceWithExactly({
         query: 'search text',
         hideStatuses: [],
       })
     })
 
     it('updates the search context with the query when the form is submitted', async () => {
-      const onUpdate = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
-      const { getByRole } = render(
-        <SearchQueryContext.Provider value={searchQueryContext}>
-          <SearchBar />
-        </SearchQueryContext.Provider>
-      )
+      const onChange = sinon.fake()
+      const { getByRole } = render(<TestableSearchBar onChange={onChange} />)
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.type(getByRole('textbox', { name: 'Search' }), 'search text')
       await userEvent.keyboard('{Enter}')
 
-      expect(onUpdate).to.have.been.calledOnceWithExactly({
+      expect(onChange).to.have.been.calledOnceWithExactly({
         query: 'search text',
         hideStatuses: [],
       })
@@ -66,12 +70,7 @@ describe('SearchBar', () => {
 
     it("doesn't perform the default form action when submitting", async () => {
       const eventListener = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults()
-      const { getByRole, baseElement } = render(
-        <SearchQueryContext.Provider value={searchQueryContext}>
-          <SearchBar />
-        </SearchQueryContext.Provider>
-      )
+      const { getByRole, baseElement } = render(<TestableSearchBar />)
 
       baseElement.ownerDocument.addEventListener('submit', eventListener)
 
@@ -83,34 +82,26 @@ describe('SearchBar', () => {
     })
 
     it('updates the search context with empty string when empty search is submitted', async () => {
-      const onUpdate = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults(
-        {
-          query: 'keyword',
-        },
-        onUpdate
-      )
+      const onChange = sinon.fake()
       const { getByRole } = render(
-        <SearchQueryContext.Provider value={searchQueryContext}>
-          <SearchBar />
-        </SearchQueryContext.Provider>
+        <TestableSearchBar
+          defaultValue={{ query: 'keyword', hideStatuses: [] }}
+          onChange={onChange}
+        />
       )
 
       await userEvent.clear(getByRole('textbox', { name: 'Search' }))
       await userEvent.keyboard('{Enter}')
 
-      expect(onUpdate).to.have.been.calledOnceWith({ query: '', hideStatuses: [] })
+      expect(onChange).to.have.been.calledOnceWith({ query: '', hideStatuses: [] })
     })
   })
 
   describe('filtering by status', () => {
     it('should not show status filters when no statuses', () => {
-      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { queryByRole } = render(
         <EnvelopesWrapper envelopes={[]}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar />
         </EnvelopesWrapper>
       )
 
@@ -118,12 +109,9 @@ describe('SearchBar', () => {
     })
 
     it('should not show status filters when just one status', () => {
-      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { queryByRole } = render(
         <EnvelopesWrapper envelopes={minimalFeature}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar />
         </EnvelopesWrapper>
       )
 
@@ -131,12 +119,9 @@ describe('SearchBar', () => {
     })
 
     it('should show named status filters, all checked by default, when multiple statuses', () => {
-      const searchQueryContext = SearchQueryCtx.withDefaults()
       const { getAllByRole, getByRole } = render(
         <EnvelopesWrapper envelopes={examplesTablesFeature}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar />
         </EnvelopesWrapper>
       )
 
@@ -150,33 +135,27 @@ describe('SearchBar', () => {
     })
 
     it('updates the search context with a hidden status when unchecked', async () => {
-      const onUpdate = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults({}, onUpdate)
+      const onChange = sinon.fake()
       const { getByRole } = render(
         <EnvelopesWrapper envelopes={examplesTablesFeature}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar onChange={onChange} />
         </EnvelopesWrapper>
       )
 
       await userEvent.click(getByRole('checkbox', { name: 'undefined 2' }))
 
-      expect(onUpdate).to.have.been.calledOnceWithExactly({
+      expect(onChange).to.have.been.calledOnceWithExactly({
         query: '',
         hideStatuses: [TestStepResultStatus.UNDEFINED],
       })
     })
 
     it('should show hidden statuses as unchecked', () => {
-      const searchQueryContext = SearchQueryCtx.withDefaults({
-        hideStatuses: [TestStepResultStatus.UNDEFINED],
-      })
       const { getByRole } = render(
         <EnvelopesWrapper envelopes={examplesTablesFeature}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar
+            defaultValue={{ query: '', hideStatuses: [TestStepResultStatus.UNDEFINED] }}
+          />
         </EnvelopesWrapper>
       )
 
@@ -186,24 +165,22 @@ describe('SearchBar', () => {
     })
 
     it('updates the search context when a status is rechecked', async () => {
-      const onUpdate = sinon.fake()
-      const searchQueryContext = SearchQueryCtx.withDefaults(
-        {
-          hideStatuses: [TestStepResultStatus.FAILED, TestStepResultStatus.UNDEFINED],
-        },
-        onUpdate
-      )
+      const onChange = sinon.fake()
       const { getByRole } = render(
         <EnvelopesWrapper envelopes={examplesTablesFeature}>
-          <SearchQueryContext.Provider value={searchQueryContext}>
-            <SearchBar />
-          </SearchQueryContext.Provider>
+          <TestableSearchBar
+            defaultValue={{
+              query: '',
+              hideStatuses: [TestStepResultStatus.FAILED, TestStepResultStatus.UNDEFINED],
+            }}
+            onChange={onChange}
+          />
         </EnvelopesWrapper>
       )
 
       await userEvent.click(getByRole('checkbox', { name: 'failed 2' }))
 
-      expect(onUpdate).to.have.been.calledOnceWithExactly({
+      expect(onChange).to.have.been.calledOnceWithExactly({
         query: '',
         hideStatuses: [TestStepResultStatus.UNDEFINED],
       })

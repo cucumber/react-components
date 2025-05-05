@@ -2,25 +2,23 @@ import { Envelope } from '@cucumber/messages'
 import { render, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
-import React, { VoidFunctionComponent } from 'react'
+import React, { FC } from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import minimal from '../../../acceptance/minimal/minimal.feature.js'
 import targetedRun from '../../../samples/targeted-run.js'
-import SearchQueryContext, { useSearchQueryCtx } from '../../SearchQueryContext.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { FilteredResults } from './FilteredResults.js'
+import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 
 describe('FilteredResults', () => {
-  const TestableFilteredResults: VoidFunctionComponent<{ envelopes: Envelope[] }> = ({
-    envelopes,
-  }) => {
+  const TestableFilteredResults: FC<{ envelopes: Envelope[] }> = ({ envelopes }) => {
     return (
       <EnvelopesWrapper envelopes={envelopes}>
-        <SearchQueryContext.Provider value={useSearchQueryCtx({})}>
+        <InMemorySearchProvider>
           <FilteredResults />
-        </SearchQueryContext.Provider>
+        </InMemorySearchProvider>
       </EnvelopesWrapper>
     )
   }

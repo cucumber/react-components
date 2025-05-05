@@ -2,15 +2,15 @@ import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
-import SearchQueryContext, { SearchQueryCtx } from '../../SearchQueryContext.js'
 import { HighLight } from './HighLight.js'
+import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 
 describe('HighLight', () => {
   function renderHighlight(text: string, query: string, markdown: boolean) {
     return render(
-      <SearchQueryContext.Provider value={SearchQueryCtx.withDefaults({ query })}>
+      <InMemorySearchProvider defaultQuery={query}>
         <HighLight text={text} markdown={markdown} />
-      </SearchQueryContext.Provider>
+      </InMemorySearchProvider>
     )
   }
 

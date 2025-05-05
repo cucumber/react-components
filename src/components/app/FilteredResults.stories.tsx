@@ -6,7 +6,7 @@ import testData from '../../../acceptance/examples-tables/examples-tables.featur
 import targetedRun from '../../../samples/targeted-run.js'
 import { EnvelopesWrapper } from './EnvelopesWrapper.js'
 import { FilteredResults } from './FilteredResults.js'
-import { SearchWrapper } from './SearchWrapper.js'
+import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 
 export default {
   title: 'App/FilteredResults',
@@ -19,9 +19,9 @@ type TemplateArgs = {
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <EnvelopesWrapper envelopes={envelopes}>
-      <SearchWrapper>
+      <InMemorySearchProvider>
         <FilteredResults />
-      </SearchWrapper>
+      </InMemorySearchProvider>
     </EnvelopesWrapper>
   )
 }

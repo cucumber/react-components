@@ -3,7 +3,7 @@ import highlightWords from 'highlight-words'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import SearchQueryContext from '../../SearchQueryContext.js'
+import { useSearch } from '../../hooks/index.js'
 import rehypePlugins from './rehypePlugins.js'
 import remarkPlugins from './remarkPlugins.js'
 
@@ -30,7 +30,7 @@ export const HighLight: React.FunctionComponent<IProps> = ({
   markdown = false,
   className = '',
 }) => {
-  const searchQueryContext = React.useContext(SearchQueryContext)
+  const searchQueryContext = useSearch()
   const query = allQueryWords(
     searchQueryContext.query ? searchQueryContext.query.split(' ') : []
   ).join(' ')
