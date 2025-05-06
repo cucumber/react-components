@@ -9,7 +9,7 @@ import examplesTablesFeature from '../../../acceptance/examples-tables/examples-
 import minimalFeature from '../../../acceptance/minimal/minimal.feature.js'
 import { SearchState } from '../../SearchContext.js'
 import { ControlledSearchProvider } from './ControlledSearchProvider.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { SearchBar } from './SearchBar.js'
 
 const TestableSearchBar: FC<{
@@ -100,9 +100,9 @@ describe('SearchBar', () => {
   describe('filtering by status', () => {
     it('should not show status filters when no statuses', () => {
       const { queryByRole } = render(
-        <EnvelopesWrapper envelopes={[]}>
+        <EnvelopesProvider envelopes={[]}>
           <TestableSearchBar />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(queryByRole('checkbox')).not.to.exist
@@ -110,9 +110,9 @@ describe('SearchBar', () => {
 
     it('should not show status filters when just one status', () => {
       const { queryByRole } = render(
-        <EnvelopesWrapper envelopes={minimalFeature}>
+        <EnvelopesProvider envelopes={minimalFeature}>
           <TestableSearchBar />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(queryByRole('checkbox')).not.to.exist
@@ -120,9 +120,9 @@ describe('SearchBar', () => {
 
     it('should show named status filters, all checked by default, when multiple statuses', () => {
       const { getAllByRole, getByRole } = render(
-        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+        <EnvelopesProvider envelopes={examplesTablesFeature}>
           <TestableSearchBar />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(getAllByRole('checkbox')).to.have.length(3)
@@ -137,9 +137,9 @@ describe('SearchBar', () => {
     it('updates the search context with a hidden status when unchecked', async () => {
       const onChange = sinon.fake()
       const { getByRole } = render(
-        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+        <EnvelopesProvider envelopes={examplesTablesFeature}>
           <TestableSearchBar onChange={onChange} />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       await userEvent.click(getByRole('checkbox', { name: 'undefined 2' }))
@@ -152,11 +152,11 @@ describe('SearchBar', () => {
 
     it('should show hidden statuses as unchecked', () => {
       const { getByRole } = render(
-        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+        <EnvelopesProvider envelopes={examplesTablesFeature}>
           <TestableSearchBar
             defaultValue={{ query: '', hideStatuses: [TestStepResultStatus.UNDEFINED] }}
           />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(getByRole('checkbox', { name: 'passed 5' })).to.be.checked
@@ -167,7 +167,7 @@ describe('SearchBar', () => {
     it('updates the search context when a status is rechecked', async () => {
       const onChange = sinon.fake()
       const { getByRole } = render(
-        <EnvelopesWrapper envelopes={examplesTablesFeature}>
+        <EnvelopesProvider envelopes={examplesTablesFeature}>
           <TestableSearchBar
             defaultValue={{
               query: '',
@@ -175,7 +175,7 @@ describe('SearchBar', () => {
             }}
             onChange={onChange}
           />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       await userEvent.click(getByRole('checkbox', { name: 'failed 2' }))

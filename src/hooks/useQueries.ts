@@ -5,12 +5,10 @@ import { useContext } from 'react'
 import CucumberQueryContext from '../CucumberQueryContext.js'
 import GherkinQueryContext from '../GherkinQueryContext.js'
 
-interface IQueries {
+export function useQueries(): {
   cucumberQuery: CucumberQuery
   gherkinQuery: GherkinQuery
-}
-
-export function useQueries(): IQueries {
+} {
   const gherkinQuery = useContext(GherkinQueryContext)
   const cucumberQuery = useContext(CucumberQueryContext)
   return { cucumberQuery, gherkinQuery }

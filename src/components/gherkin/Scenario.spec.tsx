@@ -7,7 +7,7 @@ import React from 'react'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import { render } from '../../../test-utils/index.js'
 import UriContext from '../../UriContext.js'
-import { EnvelopesWrapper } from '../app/EnvelopesWrapper.js'
+import { EnvelopesProvider } from '../app/EnvelopesProvider.js'
 import { Scenario } from './Scenario.js'
 
 describe('<Scenario/>', () => {
@@ -23,11 +23,11 @@ describe('<Scenario/>', () => {
 
     beforeEach(() => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <UriContext.Provider value={uri}>
             <Scenario scenario={scenario} />
           </UriContext.Provider>
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
     })
 

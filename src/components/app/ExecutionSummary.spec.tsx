@@ -6,7 +6,7 @@ import React from 'react'
 import sinon from 'sinon'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 
 const meta: Meta = {
@@ -47,9 +47,9 @@ describe('<ExecutionSummary/>', () => {
   describe('meta', () => {
     it('should include a phrase for the setup details', () => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <ExecutionSummary />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(screen.getByTestId('setup.phrase')).to.contain.text(
@@ -59,9 +59,9 @@ describe('<ExecutionSummary/>', () => {
 
     it('should copy the setup details on request', async () => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <ExecutionSummary />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       await userEvent.click(screen.getByRole('button', { name: 'Copy' }))
@@ -74,9 +74,9 @@ Platform: linux@5.11.0-1022-azure`)
 
     it('should include the pass rate', () => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <ExecutionSummary />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(screen.getByText('55.5% passed')).to.be.visible
@@ -84,9 +84,9 @@ Platform: linux@5.11.0-1022-azure`)
 
     it('should include the job link', () => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <ExecutionSummary />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(screen.getByRole('link', { name: 'GitHub Actions' }))
@@ -96,9 +96,9 @@ Platform: linux@5.11.0-1022-azure`)
 
     it('should include the commit link', () => {
       render(
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <ExecutionSummary />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       )
 
       expect(screen.getByRole('link', { name: 'b53d820' }))
