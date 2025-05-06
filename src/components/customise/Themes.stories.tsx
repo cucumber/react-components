@@ -6,7 +6,7 @@ import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'
 import rules from '../../../acceptance/rules/rules.feature.js'
-import { EnvelopesWrapper, GherkinDocumentList } from '../app/index.js'
+import { EnvelopesProvider, GherkinDocumentList } from '../app/index.js'
 
 export default {
   title: 'Customisation/Themes',
@@ -20,9 +20,9 @@ export const Themes: Story<{ envelopes: messages.Envelope[]; theme: string }> = 
     <>
       <h2>{theme} Theme</h2>
       <div className={`${theme}-theme`}>
-        <EnvelopesWrapper envelopes={envelopes}>
+        <EnvelopesProvider envelopes={envelopes}>
           <GherkinDocumentList />
-        </EnvelopesWrapper>
+        </EnvelopesProvider>
       </div>
     </>
   )

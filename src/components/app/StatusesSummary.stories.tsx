@@ -3,7 +3,7 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { StatusesSummary } from './StatusesSummary.js'
 
 export default {
@@ -16,9 +16,9 @@ type TemplateArgs = {
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
-    <EnvelopesWrapper envelopes={envelopes}>
+    <EnvelopesProvider envelopes={envelopes}>
       <StatusesSummary />
-    </EnvelopesWrapper>
+    </EnvelopesProvider>
   )
 }
 

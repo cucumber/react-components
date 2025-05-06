@@ -4,7 +4,7 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 
 const metaMinimal: messages.Meta = {
@@ -49,9 +49,9 @@ type TemplateArgs = {
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
-    <EnvelopesWrapper envelopes={envelopes}>
+    <EnvelopesProvider envelopes={envelopes}>
       <ExecutionSummary />
-    </EnvelopesWrapper>
+    </EnvelopesProvider>
   )
 }
 

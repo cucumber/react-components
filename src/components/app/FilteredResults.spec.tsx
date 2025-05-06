@@ -8,18 +8,18 @@ import attachments from '../../../acceptance/attachments/attachments.feature.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
 import minimal from '../../../acceptance/minimal/minimal.feature.js'
 import targetedRun from '../../../samples/targeted-run.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { FilteredResults } from './FilteredResults.js'
 import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 
 describe('FilteredResults', () => {
   const TestableFilteredResults: FC<{ envelopes: Envelope[] }> = ({ envelopes }) => {
     return (
-      <EnvelopesWrapper envelopes={envelopes}>
+      <EnvelopesProvider envelopes={envelopes}>
         <InMemorySearchProvider>
           <FilteredResults />
         </InMemorySearchProvider>
-      </EnvelopesWrapper>
+      </EnvelopesProvider>
     )
   }
 

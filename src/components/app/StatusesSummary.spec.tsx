@@ -3,15 +3,15 @@ import { expect } from 'chai'
 import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import { EnvelopesWrapper } from './EnvelopesWrapper.js'
+import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { StatusesSummary } from './StatusesSummary.js'
 
 describe('StatusesSummary', () => {
   it('should render correctly', () => {
     const { getAllByRole } = render(
-      <EnvelopesWrapper envelopes={examplesTablesFeature}>
+      <EnvelopesProvider envelopes={examplesTablesFeature}>
         <StatusesSummary />
-      </EnvelopesWrapper>
+      </EnvelopesProvider>
     )
 
     expect(getAllByRole('listitem').map((li) => li.textContent)).to.deep.eq([

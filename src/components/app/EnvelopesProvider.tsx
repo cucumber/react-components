@@ -1,18 +1,15 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
+import { Envelope } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import React, { FunctionComponent, PropsWithChildren, useMemo } from 'react'
+import React, { FC, PropsWithChildren, useMemo } from 'react'
 
-import { QueriesWrapper } from './QueriesWrapper.js'
+import { QueriesProvider } from './QueriesProvider.js'
 
-interface IProps {
-  envelopes: readonly messages.Envelope[]
+interface Props {
+  envelopes: readonly Envelope[]
 }
 
-export const EnvelopesWrapper: FunctionComponent<PropsWithChildren<IProps>> = ({
-  envelopes,
-  children,
-}) => {
+export const EnvelopesProvider: FC<PropsWithChildren<Props>> = ({ envelopes, children }) => {
   const { gherkinQuery, cucumberQuery } = useMemo(() => {
     const gherkinQuery = new GherkinQuery()
     const cucumberQuery = new CucumberQuery()
@@ -23,8 +20,8 @@ export const EnvelopesWrapper: FunctionComponent<PropsWithChildren<IProps>> = ({
     return { gherkinQuery, cucumberQuery }
   }, [envelopes])
   return (
-    <QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
+    <QueriesProvider gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
       {children}
-    </QueriesWrapper>
+    </QueriesProvider>
   )
 }

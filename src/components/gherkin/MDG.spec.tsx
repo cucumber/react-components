@@ -6,7 +6,7 @@ import React from 'react'
 
 import markdown from '../../../acceptance/markdown/markdown.feature.md.js'
 import UriContext from '../../UriContext.js'
-import { QueriesWrapper } from '../app/index.js'
+import { QueriesProvider } from '../app/index.js'
 import { MDG } from './MDG.js'
 
 describe('<MDG/>', () => {
@@ -15,11 +15,11 @@ describe('<MDG/>', () => {
     const source = envelopes.find((e) => e.source)!.source!
 
     render(
-      <QueriesWrapper {...props(envelopes)}>
+      <QueriesProvider {...props(envelopes)}>
         <UriContext.Provider value={source.uri}>
           <MDG uri={source.uri}>{source.data}</MDG>
         </UriContext.Provider>
-      </QueriesWrapper>
+      </QueriesProvider>
     )
   })
 })

@@ -17,7 +17,7 @@ import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
 import { CucumberQueryStream, render } from '../test-utils/index.js'
-import { GherkinDocumentList, QueriesWrapper } from './index.js'
+import { GherkinDocumentList, QueriesProvider } from './index.js'
 
 describe('acceptance tests', function () {
   this.timeout('30s')
@@ -41,9 +41,9 @@ describe('acceptance tests', function () {
           await runCucumber(supportCode, gherkinStream, gherkinQuery, cucumberQueryStream)
 
           const { container } = render(
-            <QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
+            <QueriesProvider gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
               <GherkinDocumentList gherkinDocuments={gherkinQuery.getGherkinDocuments()} />
-            </QueriesWrapper>
+            </QueriesProvider>
           )
 
           expect(container.textContent).to.not.eq(null)
@@ -86,9 +86,9 @@ describe('acceptance tests', function () {
         )
 
         const { container } = render(
-          <QueriesWrapper gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
+          <QueriesProvider gherkinQuery={gherkinQuery} cucumberQuery={cucumberQuery}>
             <GherkinDocumentList gherkinDocuments={gherkinQuery.getGherkinDocuments()} />
-          </QueriesWrapper>
+          </QueriesProvider>
         )
 
         expect(container.textContent).not.to.eq(null)
