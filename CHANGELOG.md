@@ -20,11 +20,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Redesigned report header block ([#381](https://github.com/cucumber/react-components/pull/381))
 - BREAKING CHANGE: Remove props from `<StatusesSummary/>`, `<ExecutionSummary/>` and `<SearchBar/>` components, use contexts for state ([#374](https://github.com/cucumber/react-components/pull/374))
 - BREAKING CHANGE: Components and hooks are now exported at the top level, not within `components` and `hooks` objects ([#383](https://github.com/cucumber/react-components/pull/383))
+- BREAKING CHANGE: `<EnvelopesWrapper/>` and `<QueriesWrapper/>` renamed to `<EnvelopesProvider/>` and `<QueriesProvider/>` for clarity ([#385](https://github.com/cucumber/react-components/pull/385))
 
 ### Removed
 - BREAKING CHANGE: Remove `EnvelopesQuery` and its React context ([#374](https://github.com/cucumber/react-components/pull/374))
 - BREAKING CHANGE: Remove defunct `<CucumberReact/>` component ([#382](https://github.com/cucumber/react-components/pull/382))
 - BREAKING CHANGE: Remove `SearchQueryContext`, `<SearchWrapper/>` and related defunct symbols ([#384](https://github.com/cucumber/react-components/pull/384)) 
+- BREAKING CHANGE: Remove `GherkinQueryContext` and `CucumberQueryContext` from entry point ([#385](https://github.com/cucumber/react-components/pull/385))
 
 ## [22.4.1] - 2025-03-30
 ### Fixed
