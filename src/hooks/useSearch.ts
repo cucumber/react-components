@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
-import SearchQueryContext, { SearchQueryCtx } from '../SearchQueryContext.js'
+import SearchQueryContext, { SearchContextValue } from '../SearchContext.js'
 
-export function useSearch(): SearchQueryCtx {
+export function useSearch(): SearchContextValue {
   return useContext(SearchQueryContext)
 }

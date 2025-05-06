@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Add `<CustomRendering/>` to override presentation ([#382](https://github.com/cucumber/react-components/pull/382))
+- Add `<ControlledSearchProvider/>`, `<InMemorySearchProvider/>` and `<UrlSearchProvider/>` to provide search state ([#384](https://github.com/cucumber/react-components/pull/384))
 
 ### Fixed
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - BREAKING CHANGE: Remove `EnvelopesQuery` and its React context ([#374](https://github.com/cucumber/react-components/pull/374))
 - BREAKING CHANGE: Remove defunct `<CucumberReact/>` component ([#382](https://github.com/cucumber/react-components/pull/382))
+- BREAKING CHANGE: Remove `SearchQueryContext`, `<SearchWrapper/>` and related defunct symbols ([#384](https://github.com/cucumber/react-components/pull/384)) 
 
 ## [22.4.1] - 2025-03-30
 ### Fixed
