@@ -20,6 +20,7 @@
     "test": "mocha 'src/**/*.spec.*'",
     "start": "ladle serve",
     "build": "ladle build",
+    "preview": "ladle preview",
     "fix": "eslint --max-warnings 0 src test-utils --fix src && prettier --write src test-utils",
     "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils"
   },
@@ -62,7 +63,7 @@
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.20.0",
-    "@ladle/react": "^2.4.5",
+    "@ladle/react": "^5.0.3",
     "@testing-library/react": "14.1.2",
     "@testing-library/user-event": "14.5.1",
     "@types/chai": "^4.3.11",

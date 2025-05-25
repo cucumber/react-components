@@ -17,7 +17,7 @@ import skipped from '../../../acceptance/skipped/skipped.feature.js'
 import stacktTraces from '../../../acceptance/stack-traces/stack-traces.feature.js'
 import undefinedEnvelopes from '../../../acceptance/undefined/undefined.feature.js'
 import unknownParameterTypes from '../../../acceptance/unknown-parameter-type/unknown-parameter-type.feature.js'
-import { EnvelopesProvider, GherkinDocumentList } from '../app/index.js'
+import { EnvelopesProvider, FilteredDocuments } from '../app/index.js'
 
 export default {
   title: 'Gherkin/GherkinDocument',
@@ -30,7 +30,7 @@ type TemplateArgs = {
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <EnvelopesProvider envelopes={envelopes}>
-      <GherkinDocumentList />
+      <FilteredDocuments />
     </EnvelopesProvider>
   )
 }

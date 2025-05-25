@@ -15,12 +15,12 @@ sans-serif,
 'Noto Color Emoji';
 $defaultMonoFamily: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
-body {
+.wrapper {
   font-family: $defaultSansFamily;
   background-color: white;
   color: #222;
-}
 
-pre, code {
-  font-family: $defaultMonoFamily;
+  pre, code {
+    font-family: $defaultMonoFamily;
+  }
 }

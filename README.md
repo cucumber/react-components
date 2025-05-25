@@ -15,10 +15,10 @@ https://cucumber-react-preview.netlify.app/
 The source code for the screenshot above is:
 
 ```jsx
-import { EnvelopesProvider, GherkinDocumentList } from '@cucumber/react-components'
+import { EnvelopesProvider, FilteredDocuments } from '@cucumber/react-components'
 
 <EnvelopesProvider envelopes={envelopes}>
-  <GherkinDocumentList />
+  <FilteredDocuments />
 </EnvelopesProvider>
 ```
 
@@ -45,7 +45,9 @@ You can provide your own theme with a small amount of CSS. Target the element ab
 
 ```jsx
 <div className="dark-theme">
-  <GherkinDocument />
+  <EnvelopesProvider envelopes={envelopes}>
+    <FilteredDocuments />
+  </EnvelopesProvider>
 </div>
 ```
 
@@ -95,7 +97,9 @@ Then, you can provide an `overrides` prop to the `CustomRendering` component, in
     docString: 'acme-docstring'
   }
 }}>
-  <GherkinDocument />
+  <EnvelopesProvider envelopes={envelopes}>
+    <FilteredDocuments />
+  </EnvelopesProvider>
 </CustomRendering>
 ```
 
@@ -116,7 +120,9 @@ Staying with the doc string example, you can use the same `overrides` prop, but 
     </>
   )
 }}>
-  <GherkinDocument />
+  <EnvelopesProvider envelopes={envelopes}>
+    <FilteredDocuments />
+  </EnvelopesProvider>
 </CustomRendering>
 ```
 

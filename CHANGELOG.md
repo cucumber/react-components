@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `<CustomRendering/>` to override presentation ([#382](https://github.com/cucumber/react-components/pull/382))
 - Add `<ControlledSearchProvider/>`, `<InMemorySearchProvider/>` and `<UrlSearchProvider/>` to provide search state ([#384](https://github.com/cucumber/react-components/pull/384))
 - Add `<UriProvider/>`, to provide document URI state ([#386](https://github.com/cucumber/react-components/pull/386))
+- Add `<FilteredDocuments/>`, to provide (optionally filtered) documents with no props ([#388](https://github.com/cucumber/react-components/pull/388))
 
 ### Fixed
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
@@ -29,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - BREAKING CHANGE: Remove defunct `<CucumberReact/>` component ([#382](https://github.com/cucumber/react-components/pull/382))
 - BREAKING CHANGE: Remove `SearchQueryContext`, `<SearchWrapper/>` and related defunct symbols ([#384](https://github.com/cucumber/react-components/pull/384)) 
 - BREAKING CHANGE: Remove `GherkinQueryContext` and `CucumberQueryContext` from entry point ([#385](https://github.com/cucumber/react-components/pull/385))
+- BREAKING CHANGE: Remove `<FilteredResults/>` component in favour of composition ([#388](https://github.com/cucumber/react-components/pull/388))
 
 ## [22.4.1] - 2025-03-30
 ### Fixed
