@@ -6,17 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [23.0.0] - 2025-05-25
 ### Added
 - Add `<CustomRendering/>` to override presentation ([#382](https://github.com/cucumber/react-components/pull/382))
 - Add `<ControlledSearchProvider/>`, `<InMemorySearchProvider/>` and `<UrlSearchProvider/>` to provide search state ([#384](https://github.com/cucumber/react-components/pull/384))
 - Add `<UriProvider/>`, to provide document URI state ([#386](https://github.com/cucumber/react-components/pull/386))
 - Add `<FilteredDocuments/>`, to provide (optionally filtered) documents with no props ([#388](https://github.com/cucumber/react-components/pull/388))
-
-### Fixed
-- Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
-- Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
-- Rounding down of percent passed and adding one decimal place ([#380](https://github.com/cucumber/react-components/pull/380))
-- Avoid UUID errors from accordion when document URI contains spaces ([#386](https://github.com/cucumber/react-components/pull/386))
 
 ### Changed
 - Inherit font-size instead of setting at 14px ([#377](https://github.com/cucumber/react-components/pull/377))
@@ -25,10 +21,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - BREAKING CHANGE: Components and hooks are now exported at the top level, not within `components` and `hooks` objects ([#383](https://github.com/cucumber/react-components/pull/383))
 - BREAKING CHANGE: `<EnvelopesWrapper/>` and `<QueriesWrapper/>` renamed to `<EnvelopesProvider/>` and `<QueriesProvider/>` for clarity ([#385](https://github.com/cucumber/react-components/pull/385))
 
+### Fixed
+- Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
+- Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
+- Rounding down of percent passed and adding one decimal place ([#380](https://github.com/cucumber/react-components/pull/380))
+- Avoid UUID errors from accordion when document URI contains spaces ([#386](https://github.com/cucumber/react-components/pull/386))
+
 ### Removed
 - BREAKING CHANGE: Remove `EnvelopesQuery` and its React context ([#374](https://github.com/cucumber/react-components/pull/374))
 - BREAKING CHANGE: Remove defunct `<CucumberReact/>` component ([#382](https://github.com/cucumber/react-components/pull/382))
-- BREAKING CHANGE: Remove `SearchQueryContext`, `<SearchWrapper/>` and related defunct symbols ([#384](https://github.com/cucumber/react-components/pull/384)) 
+- BREAKING CHANGE: Remove `SearchQueryContext`, `<SearchWrapper/>` and related defunct symbols ([#384](https://github.com/cucumber/react-components/pull/384))
 - BREAKING CHANGE: Remove `GherkinQueryContext` and `CucumberQueryContext` from entry point ([#385](https://github.com/cucumber/react-components/pull/385))
 - BREAKING CHANGE: Remove `<FilteredResults/>` component in favour of composition ([#388](https://github.com/cucumber/react-components/pull/388))
 
@@ -451,7 +453,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.0.0...HEAD
+[23.0.0]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...v23.0.0
 [22.4.1]: https://github.com/cucumber/cucumber-react/compare/v22.4.0...v22.4.1
 [22.4.0]: https://github.com/cucumber/cucumber-react/compare/v22.3.0...v22.4.0
 [22.3.0]: https://github.com/cucumber/cucumber-react/compare/v22.2.0...v22.3.0
