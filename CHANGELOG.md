@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add `<CustomRendering/>` to override presentation ([#382](https://github.com/cucumber/react-components/pull/382))
 - Add `<ControlledSearchProvider/>`, `<InMemorySearchProvider/>` and `<UrlSearchProvider/>` to provide search state ([#384](https://github.com/cucumber/react-components/pull/384))
+- Add `<UriProvider/>`, to provide document URI state ([#386](https://github.com/cucumber/react-components/pull/386))
 
 ### Fixed
 - Make keyword spacing look right ([#376](https://github.com/cucumber/react-components/pull/376))
 - Fix issue with hook steps not being rendered ([#379](https://github.com/cucumber/react-components/pull/379))
 - Rounding down of percent passed and adding one decimal place ([#380](https://github.com/cucumber/react-components/pull/380))
+- Avoid UUID errors from accordion when document URI contains spaces ([#386](https://github.com/cucumber/react-components/pull/386))
 
 ### Changed
 - Inherit font-size instead of setting at 14px ([#377](https://github.com/cucumber/react-components/pull/377))

@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { getWorstTestStepResult } from '@cucumber/messages'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent, useContext, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import {
   Accordion,
   AccordionItem,
@@ -11,26 +11,37 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion'
 
-import CucumberQueryContext from '../../CucumberQueryContext.js'
-import GherkinQueryContext from '../../GherkinQueryContext.js'
-import UriContext from '../../UriContext.js'
+import { useQueries } from '../../hooks/index.js'
 import { GherkinDocument, MDG, StatusIcon } from '../gherkin/index.js'
 import styles from './GherkinDocumentList.module.scss'
+import { UriProvider } from './UriProvider.js'
 
-interface IProps {
-  gherkinDocuments?: readonly messages.GherkinDocument[] | null
+interface ValidGherkinDocument extends messages.GherkinDocument {
+  uri: string
+}
+
+interface Props {
+  gherkinDocuments?: readonly messages.GherkinDocument[]
   // Set to true if non-PASSED documents should be pre-expanded
   preExpand?: boolean
 }
 
-export const GherkinDocumentList: FunctionComponent<IProps> = ({ gherkinDocuments, preExpand }) => {
-  const gherkinQuery = useContext(GherkinQueryContext)
-  const cucumberQuery = useContext(CucumberQueryContext)
-  const gherkinDocs = gherkinDocuments || gherkinQuery.getGherkinDocuments()
-  const gherkinDocumentStatusByUri = useMemo(() => {
-    const entries: Array<[string, messages.TestStepResultStatus]> = gherkinDocs.map(
+const idByUri = new Map<string, string>()
+function getIdByUri(uri: string): string {
+  if (!idByUri.has(uri)) {
+    idByUri.set(uri, crypto.randomUUID())
+  }
+  return idByUri.get(uri) as string
+}
+
+export const GherkinDocumentList: FC<Props> = ({ gherkinDocuments, preExpand }) => {
+  const { gherkinQuery, cucumberQuery } = useQueries()
+  const documents = (gherkinDocuments || gherkinQuery.getGherkinDocuments()).filter(
+    (doc) => !!doc.uri
+  ) as ReadonlyArray<ValidGherkinDocument>
+  const statusByUri = useMemo(() => {
+    const entries: Array<[string, messages.TestStepResultStatus]> = documents.map(
       (gherkinDocument) => {
-        if (!gherkinDocument.uri) throw new Error('No url for gherkinDocument')
         const gherkinDocumentStatus = gherkinDocument.feature
           ? getWorstTestStepResult(
               cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
@@ -40,17 +51,13 @@ export const GherkinDocumentList: FunctionComponent<IProps> = ({ gherkinDocument
       }
     )
     return new Map(entries)
-  }, [gherkinDocs, gherkinQuery, cucumberQuery])
+  }, [documents, gherkinQuery, cucumberQuery])
   const [expanded, setExpanded] = useState<Array<string | number>>(() => {
     // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
     return preExpand
-      ? (gherkinDocs
-          .filter(
-            (doc) =>
-              doc.uri &&
-              gherkinDocumentStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
-          )
-          .map((doc) => doc.uri) as string[])
+      ? (documents
+          .filter((doc) => statusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED)
+          .map((doc) => getIdByUri(doc.uri)) as string[])
       : []
   })
 
@@ -62,15 +69,15 @@ export const GherkinDocumentList: FunctionComponent<IProps> = ({ gherkinDocument
       onChange={setExpanded}
       className={styles.accordion}
     >
-      {gherkinDocs.map((doc) => {
-        if (!doc.uri) throw new Error('No url for gherkinDocument')
-        const gherkinDocumentStatus = gherkinDocumentStatusByUri.get(doc.uri)
-        if (!gherkinDocumentStatus) throw new Error(`No status for ${doc.uri}`)
+      {documents.map((doc) => {
+        const id = getIdByUri(doc.uri)
+        const status = statusByUri.get(doc.uri)
+        if (!status) throw new Error(`No status for ${doc.uri}`)
         const source = gherkinQuery.getSource(doc.uri)
         if (!source) throw new Error(`No source for ${doc.uri}`)
 
         return (
-          <AccordionItem key={doc.uri} uuid={doc.uri} className={styles.accordionItem}>
+          <AccordionItem key={id} uuid={id} className={styles.accordionItem}>
             <AccordionItemHeading>
               <AccordionItemButton className={styles.accordionButton}>
                 <FontAwesomeIcon
@@ -79,20 +86,20 @@ export const GherkinDocumentList: FunctionComponent<IProps> = ({ gherkinDocument
                   icon={faChevronRight}
                 />
                 <span className={styles.icon}>
-                  <StatusIcon status={gherkinDocumentStatus} />
+                  <StatusIcon status={status} />
                 </span>
                 <span>{doc.uri}</span>
               </AccordionItemButton>
             </AccordionItemHeading>
-            {expanded.includes(doc.uri) && (
+            {expanded.includes(id) && (
               <AccordionItemPanel className={styles.accordionPanel}>
-                <UriContext.Provider value={doc.uri}>
+                <UriProvider uri={doc.uri}>
                   {source.mediaType === messages.SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN ? (
                     <GherkinDocument gherkinDocument={doc} source={source} />
                   ) : (
                     <MDG uri={doc.uri}>{source.data}</MDG>
                   )}
-                </UriContext.Provider>
+                </UriProvider>
               </AccordionItemPanel>
             )}
           </AccordionItem>
