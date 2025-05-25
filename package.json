@@ -20,6 +20,7 @@
     "test": "mocha 'src/**/*.spec.*'",
     "start": "ladle serve",
     "build": "ladle build",
+    "preview": "ladle preview",
     "fix": "eslint --max-warnings 0 src test-utils --fix src && prettier --write src test-utils",
     "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils"
   },
