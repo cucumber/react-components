@@ -5,14 +5,13 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'
-import rules from '../../../acceptance/rules/rules.feature.js'
-import { EnvelopesProvider, GherkinDocumentList } from '../app/index.js'
+import { EnvelopesProvider, FilteredDocuments } from '../app/index.js'
 
 export default {
   title: 'Customisation/Themes',
 }
 
-export const Themes: Story<{ envelopes: messages.Envelope[]; theme: string }> = ({
+export const Themes: Story<{ envelopes: readonly messages.Envelope[]; theme: string }> = ({
   envelopes,
   theme,
 }) => {
@@ -21,7 +20,7 @@ export const Themes: Story<{ envelopes: messages.Envelope[]; theme: string }> = 
       <h2>{theme} Theme</h2>
       <div className={`${theme}-theme`}>
         <EnvelopesProvider envelopes={envelopes}>
-          <GherkinDocumentList />
+          <FilteredDocuments />
         </EnvelopesProvider>
       </div>
     </>
@@ -29,6 +28,6 @@ export const Themes: Story<{ envelopes: messages.Envelope[]; theme: string }> = 
 }
 
 Themes.args = {
-  envelopes: [...(attachments as messages.Envelope[]), ...(rules as messages.Envelope[])],
+  envelopes: attachments,
   theme: 'dark',
 }
