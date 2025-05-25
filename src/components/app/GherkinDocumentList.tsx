@@ -21,7 +21,7 @@ interface ValidGherkinDocument extends messages.GherkinDocument {
 }
 
 interface Props {
-  gherkinDocuments?: readonly messages.GherkinDocument[]
+  gherkinDocuments: readonly messages.GherkinDocument[]
   // Set to true if non-PASSED documents should be pre-expanded
   preExpand?: boolean
 }
@@ -36,7 +36,7 @@ function getIdByUri(uri: string): string {
 
 export const GherkinDocumentList: FC<Props> = ({ gherkinDocuments, preExpand }) => {
   const { gherkinQuery, cucumberQuery } = useQueries()
-  const documents = (gherkinDocuments || gherkinQuery.getGherkinDocuments()).filter(
+  const documents = gherkinDocuments.filter(
     (doc) => !!doc.uri
   ) as ReadonlyArray<ValidGherkinDocument>
   const statusByUri = useMemo(() => {
