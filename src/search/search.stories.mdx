@@ -1,0 +1,35 @@
+import { EnvelopesProvider, FilteredDocuments, SearchBar } from '../components/index.js'
+import { InMemorySearchProvider } from '../components/index.js'
+import examplesTablesFeature from '../../acceptance/examples-tables/examples-tables.feature.js'
+
+# Search
+
+A list of documents can be filtered by either/both of:
+
+- A search term, matched either by text or a tag expression
+- Status (passed, failed, etc)
+
+The search functionality is built around a context under the hood. To enable search you need to:
+
+- Add a provider for the search context, just inside your `<EnvelopesProvider/>`
+- Add a way for the user to supply their query and/or filter
+
+The shortest path is to add `<InMemorySearchProvider/>`, which uses a simple `useState` implementation to manage the search state, and then `<SearchBar/>` which provides a nice UI for the user:
+
+```jsx
+<EnvelopesProvider envelopes={envelopes}>
+  <InMemorySearchProvider>
+    <SearchBar />
+    <FilteredDocuments />
+  </InMemorySearchProvider>
+</EnvelopesProvider>
+```
+
+Here's how that renders:
+
+<EnvelopesProvider envelopes={examplesTablesFeature}>
+  <InMemorySearchProvider>
+    <SearchBar />
+    <FilteredDocuments />
+  </InMemorySearchProvider>
+</EnvelopesProvider>
