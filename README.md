@@ -2,6 +2,9 @@
 
 > A set of React components for rendering Gherkin documents and Cucumber results.
 
+Preview and examples:  
+https://cucumber-react-preview.netlify.app/
+
 ![Examples Tables](screenshots/examples-tables.png)
 
 ## Usage
@@ -9,7 +12,7 @@
 - This package is distributed in ES module format only.
 - React 18 or above is required.
 
-The source code for screenshots above is:
+The source code for the screenshot above is:
 
 ```jsx
 import { EnvelopesProvider, GherkinDocumentList } from '@cucumber/react-components'
