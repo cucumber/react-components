@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [23.1.0] - 2025-06-15
 ### Changed
 - Update colors for consistency with other Cucumber web stuff ([#390](https://github.com/cucumber/react-components/pull/390))
 
@@ -455,7 +457,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.0.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.1.0...HEAD
+[23.1.0]: https://github.com/cucumber/cucumber-react/compare/v23.0.0...v23.1.0
 [23.0.0]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...v23.0.0
 [22.4.1]: https://github.com/cucumber/cucumber-react/compare/v22.4.0...v22.4.1
 [22.4.0]: https://github.com/cucumber/cucumber-react/compare/v22.3.0...v22.4.0
