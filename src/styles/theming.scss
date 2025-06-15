@@ -1,12 +1,15 @@
-$anchorColor: var(--cucumber-anchor-color, #297bde);
-$keywordColor: var(--cucumber-keyword-color, #000080);
-$parameterColor: var(--cucumber-parameter-color, #297bde);
-$tagColor: var(--cucumber-tag-color, #808000);
-$docstringColor: var(--cucumber-docstring-color, #008080);
-$errorBackgroundColor: var(--cucumber-error-background-color, #fff0f0);
-$errorTextColor: var(--cucumber-error-text-color, #bd0a2b);
-$codeBackgroundColor: var(--cucumber-code-background-color, #f6f8fa);
-$codeTextColor: var(--cucumber-code-text-color, #666);
-$panelBackgroundColor: var(--cucumber-panel-background-color, #f4f4f4);
-$panelAccentColor: var(--cucumber-panel-accent-color, #e8e8e8);
-$panelTextColor: var(--cucumber-panel-text-color, #444);
+$anchorColor: var(--cucumber-anchor-color, oklch(62.3% 0.214 259.815)); // blue-500
+$keywordColor: var(--cucumber-keyword-color, oklch(37.9% 0.146 265.522)); // blue-900
+$parameterColor: var(--cucumber-parameter-color, oklch(62.3% 0.214 259.815)); // blue-500
+$tagColor: var(--cucumber-tag-color, oklch(68.1% 0.162 75.834)); // yellow-600
+$docstringColor: var(--cucumber-docstring-color, oklch(51.1% 0.096 186.391)); // teal-700
+$errorBackgroundColor: var(--cucumber-error-background-color, oklch(97.1% 0.013 17.38)); // red-50
+$errorTextColor: var(--cucumber-error-text-color, oklch(44.4% 0.177 26.899)); // red-800
+$codeBackgroundColor: var(--cucumber-code-background-color, oklch(98.4% 0.003 247.858)); // slate-50
+$codeTextColor: var(--cucumber-code-text-color, oklch(27.9% 0.041 260.031)); // slate-800
+$panelBackgroundColor: var(
+  --cucumber-panel-background-color,
+  oklch(96.8% 0.007 247.896)
+); // slate-100
+$panelAccentColor: var(--cucumber-panel-accent-color, oklch(92.9% 0.013 255.508)); // slate-200
+$panelTextColor: var(--cucumber-panel-text-color, oklch(27.9% 0.041 260.031)); // slate-800

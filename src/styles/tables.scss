@@ -1,4 +1,4 @@
-@import './theming';
+@use 'theming';
 
 @mixin cucumber-table-style {
   border-collapse: collapse;
@@ -19,7 +19,7 @@
     border-style: solid;
     border-top: none;
     border-bottom: none;
-    border-color: $keywordColor;
-    color: $parameterColor;
+    border-color: theming.$keywordColor;
+    color: theming.$parameterColor;
   }
 }

@@ -1,4 +1,4 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .wrapper {
   position: relative;
@@ -7,7 +7,7 @@
 }
 
 .anchor {
-  color: $anchorColor;
+  color: theming.$anchorColor;
   opacity: 0;
   transition: all 0.35s ease-in-out;
   position: absolute;
