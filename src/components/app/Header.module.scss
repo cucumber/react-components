@@ -1,11 +1,11 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .section {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
   width: 100%;
-  border: 1px solid $panelAccentColor;
+  border: 1px solid theming.$panelAccentColor;
   margin: 0;
 
   & + & {
@@ -21,7 +21,7 @@
   padding: 1rem;
 
   & + & {
-    border-left: 1px solid $panelAccentColor;
+    border-left: 1px solid theming.$panelAccentColor;
   }
 
   > svg {
@@ -29,7 +29,7 @@
   }
 
   a {
-    color: $anchorColor;
+    color: theming.$anchorColor;
   }
 }
 

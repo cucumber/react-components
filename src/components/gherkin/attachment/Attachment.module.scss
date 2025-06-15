@@ -1,4 +1,4 @@
-@import '../../../styles/theming';
+@use '../../../styles/theming';
 
 .text {
   position: relative;
@@ -8,8 +8,8 @@
   border-radius: 0.25em;
   margin: 0;
   overflow-x: auto;
-  background-color: $codeBackgroundColor;
-  color: $codeTextColor;
+  background-color: theming.$codeBackgroundColor;
+  color: theming.$codeTextColor;
 }
 
 .log {
@@ -22,7 +22,7 @@
     left: 0.75em;
     text-transform: uppercase;
     font-weight: bold;
-    color: $parameterColor;
+    color: theming.$parameterColor;
     opacity: 0.75;
   }
 }
@@ -47,7 +47,7 @@
 
   a {
     text-decoration: none;
-    color: $anchorColor;
+    color: theming.$anchorColor;
   }
 
   svg {

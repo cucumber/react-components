@@ -1,5 +1,6 @@
-@import '../../styles/theming';
-@import '../../styles/statuses';
+@use 'sass:color';
+@use '../../styles/theming';
+@use '../../styles/statuses';
 
 .field {
   box-sizing: border-box;
@@ -49,9 +50,9 @@
   white-space: nowrap;
   cursor: pointer;
 
-  @each $name, $color in $statusColors {
+  @each $name, $color in statuses.$statusColors {
     &[data-status='#{$name}'] {
-      background-color: fade-out($color, 0.666);
+      background-color: color.adjust($color, $alpha: -0.666);
 
       svg {
         color: $color;

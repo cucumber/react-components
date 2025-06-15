@@ -1,4 +1,4 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .message {
   white-space: pre-wrap;
@@ -7,6 +7,6 @@
   border-radius: 0.25em;
   margin: 0;
   overflow-x: auto;
-  background-color: $errorBackgroundColor;
-  color: $errorTextColor;
+  background-color: theming.$errorBackgroundColor;
+  color: theming.$errorTextColor;
 }

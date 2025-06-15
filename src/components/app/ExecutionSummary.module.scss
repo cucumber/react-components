@@ -1,5 +1,5 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .conjunction {
-  color: $codeTextColor;
+  color: theming.$codeTextColor;
 }

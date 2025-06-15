@@ -1,8 +1,14 @@
 $statusColors:
-  'PASSED' #2cb14a,
-  'SKIPPED' #00a0cc,
-  'PENDING' #ffad33,
-  'UNDEFINED' #ffad33,
-  'AMBIGUOUS' #f4ebfd,
-  'FAILED' #bb0000,
-  'UNKNOWN' #b6becb;
+  'PASSED' oklch(72.3% 0.219 149.579),
+  // green-500
+  'SKIPPED' oklch(62.3% 0.214 259.815),
+  // blue-500
+  'PENDING' oklch(79.5% 0.184 86.047),
+  // yellow-500
+  'UNDEFINED' oklch(79.5% 0.184 86.047),
+  // yellow-500
+  'AMBIGUOUS' oklch(55.4% 0.046 257.417),
+  // slate-500
+  'FAILED' oklch(63.7% 0.237 25.331),
+  // red-500
+  'UNKNOWN' oklch(55.4% 0.046 257.417); // slate-500;

@@ -1,5 +1,5 @@
-@import '../../styles/tables';
+@use '../../styles/tables';
 
 .table {
-  @include cucumber-table-style;
+  @include tables.cucumber-table-style;
 }

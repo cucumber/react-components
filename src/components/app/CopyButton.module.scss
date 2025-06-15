@@ -1,11 +1,11 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .button {
   background-color: transparent;
   font-size: inherit;
   padding: 0;
   border: none;
-  color: $anchorColor;
+  color: theming.$anchorColor;
   cursor: pointer;
 
   &:disabled {

@@ -1,4 +1,4 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .icon {
   padding-top: 0.35em;
@@ -7,12 +7,12 @@
 }
 
 .accordion {
-  border: 1px solid $panelAccentColor;
+  border: 1px solid theming.$panelAccentColor;
   border-radius: 2px;
 }
 
 .accordionItem + .accordionItem {
-  border-top: 1px solid $panelAccentColor;
+  border-top: 1px solid theming.$panelAccentColor;
 }
 
 .accordionButton {
@@ -20,13 +20,13 @@
   width: 100%;
   padding: 0.75em 1em;
   border: none;
-  background-color: $panelBackgroundColor;
-  color: $panelTextColor;
+  background-color: theming.$panelBackgroundColor;
+  color: theming.$panelTextColor;
   cursor: pointer;
   text-align: left;
 
   &:hover {
-    background-color: $panelAccentColor;
+    background-color: theming.$panelAccentColor;
   }
 }
 

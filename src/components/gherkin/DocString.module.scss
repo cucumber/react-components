@@ -1,7 +1,7 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .docString {
-  color: $docstringColor;
+  color: theming.$docstringColor;
   padding-bottom: 0.25em;
   margin: 0;
   overflow-x: auto;

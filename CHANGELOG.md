@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Update colors for consistency with other Cucumber web stuff ([#390](https://github.com/cucumber/react-components/pull/390))
 
 ## [23.0.0] - 2025-05-25
 ### Added

@@ -1,11 +1,11 @@
-@import '../../styles/theming';
+@use '../../styles/theming';
 
 .navigationButton {
   display: flex;
   align-items: center;
   gap: 4px;
   background-color: transparent;
-  color: $anchorColor;
+  color: theming.$anchorColor;
   font-family: inherit;
   font-size: inherit;
   padding: 0;
