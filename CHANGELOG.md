@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [23.1.1] - 2025-06-24
 ### Added
 - Add [data-testid] to items in the execution summary ([#391](https://github.com/cucumber/react-components/pull/391))
 
@@ -459,7 +461,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.1.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.1.1...HEAD
+[23.1.1]: https://github.com/cucumber/cucumber-react/compare/v23.1.0...v23.1.1
 [23.1.0]: https://github.com/cucumber/cucumber-react/compare/v23.0.0...v23.1.0
 [23.0.0]: https://github.com/cucumber/cucumber-react/compare/v22.4.1...v23.0.0
 [22.4.1]: https://github.com/cucumber/cucumber-react/compare/v22.4.0...v22.4.1
