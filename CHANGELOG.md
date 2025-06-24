@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add [data-testid] to items in the execution summary ([#391](https://github.com/cucumber/react-components/pull/391))
 
 ## [23.1.0] - 2025-06-15
 ### Changed
