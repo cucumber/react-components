@@ -52,7 +52,7 @@ describe('<ExecutionSummary/>', () => {
         </EnvelopesProvider>
       )
 
-      expect(screen.getByTestId('setup.phrase')).to.contain.text(
+      expect(screen.getByTestId('cucumber.summary.setup.phrase')).to.contain.text(
         'cucumber-js@8.0.0-rc.1 with node.js@16.13.1 on linux@5.11.0-1022-azure'
       )
     })

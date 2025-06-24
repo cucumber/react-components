@@ -37,13 +37,13 @@ export const ExecutionSummary: FC = () => {
     <>
       {meta && (
         <HeaderSection>
-          <HeaderItem>
+          <HeaderItem testId="cucumber.summary.setup">
             <HeaderSubItem>
               <ImplementationIcon implementation={meta.implementation} />
               <RuntimeIcon runtime={meta.runtime} />
               <OSIcon os={meta.os} />
             </HeaderSubItem>
-            <span data-testid="setup.phrase">
+            <span data-testid="cucumber.summary.setup.phrase">
               <VersionedTool {...meta.implementation} fallback="unknown tool" />
               <em className={styles.conjunction}> with </em>
               <VersionedTool {...meta.runtime} fallback="unknown runtime" />
@@ -55,7 +55,7 @@ export const ExecutionSummary: FC = () => {
         </HeaderSection>
       )}
       <HeaderSection>
-        <HeaderItem>
+        <HeaderItem testId="cucumber.summary.status">
           <HeaderSubItem>
             <HealthChart />
             <span>
@@ -68,7 +68,7 @@ export const ExecutionSummary: FC = () => {
           </HeaderSubItem>
         </HeaderItem>
         {startDate && (
-          <HeaderItem>
+          <HeaderItem testId="cucumber.summary.timing">
             <HeaderSubItem>
               <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faStopwatch} />
               <span>
@@ -86,14 +86,14 @@ export const ExecutionSummary: FC = () => {
           </HeaderItem>
         )}
         {meta?.ci && (
-          <HeaderItem>
+          <HeaderItem testId="cucumber.summary.ci">
             <HeaderSubItem>
               <CIJobLink ci={meta.ci} />
             </HeaderSubItem>
           </HeaderItem>
         )}
         {meta?.ci?.git && (
-          <HeaderItem>
+          <HeaderItem testId="cucumber.summary.git">
             <HeaderSubItem>
               <CICommitLink ci={meta.ci} />
             </HeaderSubItem>
