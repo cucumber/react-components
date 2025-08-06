@@ -21,7 +21,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
     }
     ;(query ? searchable.search(query) : Promise.resolve(gherkinQuery.getGherkinDocuments())).then(
       (searched) => {
-        const sortedByUri = [...searched].sort((a: GherkinDocument, b: GherkinDocument) => 
+        const sortedByUri = [...searched].sort((a: GherkinDocument, b: GherkinDocument) =>
           (a.uri || '').localeCompare(b.uri || '')
         )
         const filtered = sortedByUri
