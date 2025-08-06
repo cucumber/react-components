@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Applied URI-based sorting for the displayed Gherkin documents ([#394](https://github.com/cucumber/react-components/pull/394))
 
 ## [23.1.1] - 2025-06-24
 ### Added
