@@ -21,8 +21,11 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
     }
     ;(query ? searchable.search(query) : Promise.resolve(gherkinQuery.getGherkinDocuments())).then(
       (searched) => {
-        const filtered = searched
-          .map((document) =>
+        const sortedByUri = [...searched].sort((a: GherkinDocument, b: GherkinDocument) => 
+          (a.uri || '').localeCompare(b.uri || '')
+        )
+        const filtered = sortedByUri
+          .map((document: GherkinDocument) =>
             filterByStatus(
               document,
               gherkinQuery,
@@ -30,7 +33,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
               statuses.filter((s) => !hideStatuses.includes(s))
             )
           )
-          .filter((document) => document !== null) as GherkinDocument[]
+          .filter((document: GherkinDocument | null) => document !== null) as GherkinDocument[]
         setResults(filtered)
       }
     )
