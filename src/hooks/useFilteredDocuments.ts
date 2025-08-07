@@ -21,10 +21,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
     }
     ;(query ? searchable.search(query) : Promise.resolve(gherkinQuery.getGherkinDocuments())).then(
       (searched) => {
-        const sortedByUri = [...searched].sort((a: GherkinDocument, b: GherkinDocument) =>
-          (a.uri || '').localeCompare(b.uri || '')
-        )
-        const filtered = sortedByUri
+        const filtered = searched
           .map((document: GherkinDocument) =>
             filterByStatus(
               document,
@@ -34,6 +31,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
             )
           )
           .filter((document: GherkinDocument | null) => document !== null) as GherkinDocument[]
+        filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
         setResults(filtered)
       }
     )
