@@ -30,7 +30,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
               statuses.filter((s) => !hideStatuses.includes(s))
             )
           )
-          .filter((document: GherkinDocument | null) => document !== null) as GherkinDocument[]
+          .filter((document) => document !== null) as GherkinDocument[]
         filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
         setResults(filtered)
       }
