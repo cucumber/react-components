@@ -22,7 +22,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
     ;(query ? searchable.search(query) : Promise.resolve(gherkinQuery.getGherkinDocuments())).then(
       (searched) => {
         const filtered = searched
-          .map((document: GherkinDocument) =>
+          .map((document) =>
             filterByStatus(
               document,
               gherkinQuery,
