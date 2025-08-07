@@ -6,6 +6,7 @@ import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.feature.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import randomOrderRun from '../../../samples/random-order-run.js'
 import targetedRun from '../../../samples/targeted-run.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { FilteredDocuments } from './FilteredDocuments.js'
@@ -36,6 +37,28 @@ describe('FilteredDocuments', () => {
             name: 'features/empty.feature',
           })
         ).not.to.exist
+      })
+    })
+
+    it('displays features in alphabetical order by URI', async () => {
+      const { getAllByRole } = render(
+        <EnvelopesProvider envelopes={randomOrderRun}>
+          <FilteredDocuments />
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => {
+        const headings = getAllByRole('heading', { level: 3 })
+        const featureNames = headings.map((heading: HTMLElement) => heading.textContent)
+
+        // Verify the features are displayed in alphabetical order by URI
+        expect(featureNames).to.deep.equal([
+          'Features/a.feature',
+          'Features/B.feature',
+          'Features/c.feature',
+          'Features/d/e.feature',
+          'Features/f.feature',
+        ])
       })
     })
   })

@@ -31,6 +31,7 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
             )
           )
           .filter((document) => document !== null) as GherkinDocument[]
+        filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
         setResults(filtered)
       }
     )
