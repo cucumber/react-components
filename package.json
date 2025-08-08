@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cucumber/cucumber.git"
+    "url": "git+https://github.com/cucumber/react-components.git"
   },
   "author": "Aslak Hellesøy",
   "license": "MIT",
@@ -111,9 +111,9 @@
     "uuid": "9.0.0"
   },
   "bugs": {
-    "url": "https://github.com/cucumber/cucumber/issues"
+    "url": "https://github.com/cucumber/react-components/issues"
   },
-  "homepage": "https://github.com/cucumber/cucumber#readme",
+  "homepage": "https://github.com/cucumber/react-components#readme",
   "directories": {
     "test": "test"
   },
