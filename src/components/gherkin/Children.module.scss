@@ -3,4 +3,8 @@
 .children {
   padding: 0;
   margin: 1em;
+
+  & > * + * {
+    margin-top: 1em;
+  }
 }

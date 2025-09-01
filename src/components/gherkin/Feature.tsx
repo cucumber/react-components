@@ -2,7 +2,6 @@ import React from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import { DefaultComponent, FeatureProps, useCustomRendering } from '../customise/index.js'
-import { Background } from './Background.js'
 import { Children } from './Children.js'
 import { Description } from './Description.js'
 import { Keyword } from './Keyword.js'
@@ -23,7 +22,7 @@ const DefaultRenderer: DefaultComponent<FeatureProps> = ({ feature }) => {
       <Children>
         {(feature.children || []).map((child, index) => {
           if (child.background) {
-            return <Background key={index} background={child.background} />
+            return null
           } else if (child.scenario) {
             return <Scenario key={index} scenario={child.scenario} />
           } else if (child.rule) {

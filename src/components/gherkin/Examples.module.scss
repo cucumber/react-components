@@ -1,3 +1,9 @@
+@use '../../styles/theming';
+
 .example {
   margin-left: 1em;
+}
+
+.exampleNumber {
+  color: theming.$exampleNumberColor;
 }
