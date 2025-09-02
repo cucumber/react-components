@@ -39,8 +39,7 @@ describe('TextSearch', () => {
   })
 
   describe('Hit found in step', () => {
-    // TODO: Fix
-    xit('displays just one scenario', async () => {
+    it('displays just one scenario', async () => {
       const searchResults = await search.search('Spain')
 
       assert.deepStrictEqual(
@@ -60,7 +59,7 @@ describe('TextSearch', () => {
   })
 
   describe('Hit found in scenario', () => {
-    xit('displays just one scenario', async () => {
+    it('displays just one scenario', async () => {
       const searchResults = await search.search('europe')
 
       assert.deepStrictEqual(
@@ -114,8 +113,7 @@ describe('TextSearch', () => {
   })
 
   describe('No hit found', () => {
-    // TODO: Fix
-    xit('returns no hits', async () => {
+    it('returns no hits', async () => {
       const searchResults = await search.search('saturn')
 
       assert.deepStrictEqual(searchResults, [])
