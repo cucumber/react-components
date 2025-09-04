@@ -5,8 +5,8 @@ import React, { FC } from 'react'
 
 import { formatExecutionDistance } from '../../formatExecutionDistance.js'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
-import { formatStatusRate } from '../../formatStatusRate.js'
 import { formatPassedQuantity } from '../../formatPassedQuantity.js'
+import { formatStatusRate } from '../../formatStatusRate.js'
 import { useQueries } from '../../hooks/index.js'
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import { CICommitLink } from './CICommitLink.js'
@@ -63,8 +63,7 @@ export const ExecutionSummary: FC = () => {
               {formatStatusRate(
                 scenarioCountByStatus[TestStepResultStatus.PASSED],
                 totalScenarioCount
-              )}
-              {' '}
+              )}{' '}
               {formatPassedQuantity(
                 scenarioCountByStatus[TestStepResultStatus.PASSED],
                 totalScenarioCount
