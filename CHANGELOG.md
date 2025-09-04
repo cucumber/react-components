@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Include pass rate in execution summary ([#397](https://github.com/cucumber/react-components/pull/397))
 
 ## [23.2.0] - 2025-08-07
 ### Changed
