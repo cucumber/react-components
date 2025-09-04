@@ -79,7 +79,7 @@ Platform: linux@5.11.0-1022-azure`)
         </EnvelopesProvider>
       )
 
-      expect(screen.getByText('55.5% passed')).to.be.visible
+      expect(screen.getByText('55.5% (5 / 9) passed')).to.be.visible
     })
 
     it('should include the job link', () => {
