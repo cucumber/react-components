@@ -64,6 +64,7 @@ export const ExecutionSummary: FC = () => {
                 scenarioCountByStatus[TestStepResultStatus.PASSED],
                 totalScenarioCount
               )}
+              {' '}
               {formatPassedQuantity(
                 scenarioCountByStatus[TestStepResultStatus.PASSED],
                 totalScenarioCount
