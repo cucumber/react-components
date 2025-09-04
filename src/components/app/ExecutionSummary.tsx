@@ -69,7 +69,7 @@ export const ExecutionSummary: FC = () => {
                 scenarioCountByStatus[TestStepResultStatus.PASSED],
                 totalScenarioCount
               )}
-              {', passed'}
+              {' passed'}
             </span>
           </HeaderSubItem>
         </HeaderItem>
