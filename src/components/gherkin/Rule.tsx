@@ -2,6 +2,7 @@ import React from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import { DefaultComponent, RuleProps, useCustomRendering } from '../customise/index.js'
+import { Background } from './Background.js'
 import { Children } from './Children.js'
 import { Description } from './Description.js'
 import { Keyword } from './Keyword.js'
@@ -21,7 +22,7 @@ const DefaultRenderer: DefaultComponent<RuleProps> = ({ rule }) => {
       <Children>
         {(rule.children || []).map((child, index) => {
           if (child.background) {
-            return null
+            return <Background key={index} background={child.background} />
           } else if (child.scenario) {
             return <Scenario key={index} scenario={child.scenario} />
           } else {

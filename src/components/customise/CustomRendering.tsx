@@ -32,6 +32,10 @@ export interface AttachmentProps {
 
 export type AttachmentClasses = Styles<'text' | 'log' | 'icon' | 'image' | 'links'>
 
+export interface BackgroundProps {
+  background: messages.Background
+}
+
 export interface ChildrenProps {
   children: ReactNode
 }
@@ -141,6 +145,7 @@ export declare type Customised<Props, Classes = Record<string, string>> =
 export interface CustomRenderingSupport {
   Anchor?: Customised<AnchorProps, AnchorClasses>
   Attachment?: Customised<AttachmentProps, AttachmentClasses>
+  Background?: Customised<BackgroundProps>
   Children?: Customised<ChildrenProps, ChildrenClasses>
   DataTable?: Customised<DataTableProps, DataTableClasses>
   Description?: Customised<DescriptionProps, DescriptionClasses>

@@ -1,5 +1,6 @@
 export * from './Anchor.js'
 export * from './attachment/Attachment.js'
+export * from './Background.js'
 export * from './Children.js'
 export * from './DataTable.js'
 export * from './Description.js'
