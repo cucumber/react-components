@@ -4,7 +4,7 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import attachments from '../../../acceptance/attachments/attachments.feature.js'
+import attachments from '../../../acceptance/attachments/attachments.js'
 import { EnvelopesProvider, FilteredDocuments } from '../app/index.js'
 
 export default {

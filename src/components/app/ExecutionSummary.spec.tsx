@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import React from 'react'
 import sinon from 'sinon'
 
-import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 
