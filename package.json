@@ -25,10 +25,10 @@
     "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils"
   },
   "dependencies": {
-    "@cucumber/gherkin-utils": "9.2.0",
-    "@cucumber/messages": "27.2.0",
-    "@cucumber/query": "13.5.0",
-    "@cucumber/tag-expressions": "6.1.2",
+    "@cucumber/gherkin-utils": "10.0.0",
+    "@cucumber/messages": "29.0.1",
+    "@cucumber/query": "14.0.1",
+    "@cucumber/tag-expressions": "6.2.0",
     "@fortawesome/fontawesome-svg-core": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
@@ -55,10 +55,10 @@
     "react-dom": "~18"
   },
   "devDependencies": {
-    "@cucumber/compatibility-kit": "^18.0.2",
-    "@cucumber/fake-cucumber": "^18.0.0",
-    "@cucumber/gherkin": "^32.0.1",
-    "@cucumber/gherkin-streams": "^5.0.1",
+    "@cucumber/compatibility-kit": "^22.0.1",
+    "@cucumber/fake-cucumber": "^18.1.0",
+    "@cucumber/gherkin": "^35.0.0",
+    "@cucumber/gherkin-streams": "^6.0.0",
     "@cucumber/message-streams": "^4.0.1",
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.2.0",
