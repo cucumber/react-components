@@ -3,6 +3,7 @@ import { Story } from '@ladle/react'
 import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.js'
+import backgrounds from '../../../acceptance/backgrounds/backgrounds.js'
 import dataTables from '../../../acceptance/data-tables/data-tables.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import hooks from '../../../acceptance/hooks/hooks.js'
@@ -13,6 +14,7 @@ import parameterTypes from '../../../acceptance/parameter-types/parameter-types.
 import pending from '../../../acceptance/pending/pending.js'
 import retry from '../../../acceptance/retry/retry.js'
 import rules from '../../../acceptance/rules/rules.js'
+import rulesBackgrounds from '../../../acceptance/rules-backgrounds/rules-backgrounds.js'
 import skipped from '../../../acceptance/skipped/skipped.js'
 import stacktTraces from '../../../acceptance/stack-traces/stack-traces.js'
 import undefinedEnvelopes from '../../../acceptance/undefined/undefined.js'
@@ -38,6 +40,11 @@ const Template: Story<TemplateArgs> = ({ envelopes }) => {
 export const Attachments = Template.bind({})
 Attachments.args = {
   envelopes: attachments,
+}
+
+export const Backgrounds = Template.bind({})
+Backgrounds.args = {
+  envelopes: backgrounds,
 }
 
 export const DataTables = Template.bind({})
@@ -88,6 +95,11 @@ Retry.args = {
 export const Rules = Template.bind({})
 Rules.args = {
   envelopes: rules,
+}
+
+export const RulesWithBackgrounds = Template.bind({})
+RulesWithBackgrounds.args = {
+  envelopes: rulesBackgrounds,
 }
 
 export const Skipped = Template.bind({})
