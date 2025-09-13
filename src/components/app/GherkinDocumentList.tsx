@@ -1,8 +1,8 @@
 import * as messages from '@cucumber/messages'
-import { getWorstTestStepResult } from '@cucumber/messages'
-import React, { FC, useMemo, useState } from 'react'
+import { TestStepResultStatus } from '@cucumber/messages'
+import React, { FC, useState } from 'react'
 
-import { useQueries } from '../../hooks/index.js'
+import { useMostSevereStatusByUri } from '../../hooks/useMostSevereStatusByUri.js'
 import { GherkinDocument } from '../gherkin/index.js'
 import { DocumentAccordion, DocumentAccordionItem } from './DocumentAccordion.js'
 
@@ -17,47 +17,28 @@ interface Props {
 }
 
 export const GherkinDocumentList: FC<Props> = ({ gherkinDocuments, preExpand }) => {
-  const { gherkinQuery, cucumberQuery } = useQueries()
-  const documents = gherkinDocuments.filter(
+  const validDocuments = gherkinDocuments.filter(
     (doc) => !!doc.uri
   ) as ReadonlyArray<ValidGherkinDocument>
-  const statusByUri = useMemo(() => {
-    const entries: Array<[string, messages.TestStepResultStatus]> = documents.map(
-      (gherkinDocument) => {
-        const gherkinDocumentStatus = gherkinDocument.feature
-          ? getWorstTestStepResult(
-              cucumberQuery.getPickleTestStepResults(gherkinQuery.getPickleIds(gherkinDocument.uri))
-            ).status
-          : messages.TestStepResultStatus.UNDEFINED
-        return [gherkinDocument.uri, gherkinDocumentStatus]
-      }
-    )
-    return new Map(entries)
-  }, [documents, gherkinQuery, cucumberQuery])
+  const mostSevereStatusByUri = useMostSevereStatusByUri()
   const [expanded] = useState<ReadonlyArray<string>>(() => {
     // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
     return preExpand
-      ? (documents
-          .filter((doc) => statusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED)
+      ? (validDocuments
+          .filter(
+            (doc) => mostSevereStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
+          )
           .map((doc) => doc.uri) as string[])
       : []
   })
 
   return (
     <DocumentAccordion expanded={expanded}>
-      {documents.map((gherkinDocument) => {
-        const status = statusByUri.get(gherkinDocument.uri)
-        if (!status) {
-          throw new Error(`No status for ${gherkinDocument.uri}`)
-        }
-
+      {validDocuments.map((validDocument) => {
+        const status = mostSevereStatusByUri.get(validDocument.uri) ?? TestStepResultStatus.UNKNOWN
         return (
-          <DocumentAccordionItem
-            key={gherkinDocument.uri}
-            uri={gherkinDocument.uri}
-            status={status}
-          >
-            <GherkinDocument gherkinDocument={gherkinDocument} />
+          <DocumentAccordionItem key={validDocument.uri} uri={validDocument.uri} status={status}>
+            <GherkinDocument gherkinDocument={validDocument} />
           </DocumentAccordionItem>
         )
       })}
