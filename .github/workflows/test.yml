@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x, 23.x]
+        node-version: [22.x, 24.x]
     steps:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
