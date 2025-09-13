@@ -5,7 +5,6 @@ import React, { FunctionComponent, PropsWithChildren, ReactElement } from 'react
 
 import CucumberQueryContext from '../src/CucumberQueryContext.js'
 import GherkinQueryContext from '../src/GherkinQueryContext.js'
-import UriContext from '../src/UriContext.js'
 
 export interface TestRenderOptions {
   uri?: string
@@ -19,11 +18,9 @@ const AllTheProviders: FunctionComponent<PropsWithChildren<{ options: TestRender
 }) => {
   return (
     <GherkinQueryContext.Provider value={options.gherkinQuery ?? new GherkinQuery()}>
-      <UriContext.Provider value={options.uri ?? 'some.feature'}>
-        <CucumberQueryContext.Provider value={options.cucumberQuery ?? new CucumberQuery()}>
-          {children}
-        </CucumberQueryContext.Provider>
-      </UriContext.Provider>
+      <CucumberQueryContext.Provider value={options.cucumberQuery ?? new CucumberQuery()}>
+        {children}
+      </CucumberQueryContext.Provider>
     </GherkinQueryContext.Provider>
   )
 }

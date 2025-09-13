@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - BREAKING CHANGE: Remove defunct scenario/step components `<ExamplesTable/>`, `<GherkinStep/>`, `<GherkinSteps/>`, `<HookStep/>`, `<HookSteps/>`, `<StepItem/>` and their corresponding options on `CustomRenderingSupport` ([#396](https://github.com/cucumber/react-components/pull/396))
+- BREAKING CHANGE: Remove defunct `<UriProvider/>` component and underlying context ([#396](https://github.com/cucumber/react-components/pull/396))
 - BREAKING CHANGE: Remove `<MDG/>` component in favour of using standard Gherkin components for Markdown documents ([#396](https://github.com/cucumber/react-components/pull/396))
 
 ## [23.2.0] - 2025-08-07

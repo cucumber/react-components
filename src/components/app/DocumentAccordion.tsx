@@ -12,7 +12,6 @@ import {
 
 import { StatusIcon } from '../gherkin/index.js'
 import styles from './DocumentAccordion.module.scss'
-import { UriProvider } from './UriProvider.js'
 
 const idByUri = new Map<string, string>()
 function getIdByUri(uri: string): string {
@@ -68,9 +67,7 @@ export const DocumentAccordionItem: FC<DocumentAccordionItemProps> = ({
           <span>{uri}</span>
         </AccordionItemButton>
       </AccordionItemHeading>
-      <AccordionItemPanel className={styles.accordionPanel}>
-        <UriProvider uri={uri}>{children}</UriProvider>
-      </AccordionItemPanel>
+      <AccordionItemPanel className={styles.accordionPanel}>{children}</AccordionItemPanel>
     </AccordionItem>
   )
 }
