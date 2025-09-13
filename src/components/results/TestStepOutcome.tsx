@@ -17,7 +17,7 @@ interface Props {
 
 export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
   return (
-    <>
+    <li data-status={testStepFinished.testStepResult.status}>
       <div className={styles.header}>
         <div className={styles.status}>
           <StatusIcon status={testStepFinished.testStepResult.status} />
@@ -35,7 +35,7 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
         <TestStepResultDetails {...testStepFinished.testStepResult} />
         <TestStepAttachments testStepFinished={testStepFinished} />
       </div>
-    </>
+    </li>
   )
 }
 

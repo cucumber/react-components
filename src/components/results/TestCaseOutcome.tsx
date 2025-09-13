@@ -13,16 +13,18 @@ export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
   const { cucumberQuery } = useQueries()
   const steps = cucumberQuery.findTestStepFinishedAndTestStepBy(testCaseStarted)
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <ol className={styles.steps}>
         {steps.map(([testStepFinished, testStep]) => {
           return (
-            <li key={testStep.id}>
-              <TestStepOutcome testStep={testStep} testStepFinished={testStepFinished} />
-            </li>
+            <TestStepOutcome
+              key={testStep.id}
+              testStep={testStep}
+              testStepFinished={testStepFinished}
+            />
           )
         })}
       </ol>
-    </div>
+    </article>
   )
 }
