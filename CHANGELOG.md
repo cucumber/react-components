@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Render a more test case-centric report ([#396](https://github.com/cucumber/react-components/pull/396))
 
+### Fixed
+- Use uuid library instead of web crypto API ([#402](https://github.com/cucumber/react-components/pull/402))
+
 ### Removed
 - BREAKING CHANGE: Remove defunct scenario/step components `<ExamplesTable/>`, `<GherkinStep/>`, `<GherkinSteps/>`, `<HookStep/>`, `<HookSteps/>`, `<StepItem/>` and their corresponding `CustomRenderingSupport` properties ([#396](https://github.com/cucumber/react-components/pull/396))
 - BREAKING CHANGE: Remove defunct `<UriProvider/>` component and underlying context ([#396](https://github.com/cucumber/react-components/pull/396))
