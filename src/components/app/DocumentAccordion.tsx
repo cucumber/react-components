@@ -9,6 +9,7 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from 'react-accessible-accordion'
+import { v4 as uuidv4 } from 'uuid'
 
 import { StatusIcon } from '../gherkin/index.js'
 import styles from './DocumentAccordion.module.scss'
@@ -16,7 +17,7 @@ import styles from './DocumentAccordion.module.scss'
 const idByUri = new Map<string, string>()
 function getIdByUri(uri: string): string {
   if (!idByUri.has(uri)) {
-    idByUri.set(uri, crypto.randomUUID())
+    idByUri.set(uri, uuidv4())
   }
   return idByUri.get(uri) as string
 }
