@@ -1,5 +1,4 @@
 import * as messages from '@cucumber/messages'
-import { Pickle, PickleStep } from '@cucumber/messages'
 import React, { FC, FunctionComponent, PropsWithChildren, ReactNode, useContext } from 'react'
 
 function mixinStyles<Classes>(
@@ -72,33 +71,15 @@ export interface ExamplesProps {
   examples: messages.Examples
 }
 
-export interface ExamplesTableProps {
-  tableHeader: messages.TableRow
-  tableBody: readonly messages.TableRow[]
-}
-
-export type ExamplesTableClasses = Styles<'examplesTable'>
-
 export interface FeatureProps {
   feature: messages.Feature
 }
 
 export interface GherkinDocumentProps {
   gherkinDocument: messages.GherkinDocument
-  source?: messages.Source
-}
-
-export interface GherkinStepProps {
-  step: messages.Step
-  pickleStep?: PickleStep
-  hasExamples: boolean
 }
 
 export type Header = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
-
-export interface HookStepProps {
-  step: messages.TestStep
-}
 
 export interface KeywordProps {
   children: ReactNode
@@ -127,12 +108,6 @@ export interface ScenarioProps {
 }
 
 export type StatusIconClasses = Styles<'icon'>
-
-export interface GherkinStepsProps {
-  steps: readonly messages.Step[]
-  pickle?: Pickle
-  hasExamples: boolean
-}
 
 export interface TagsProps {
   tags: readonly messages.Tag[] | readonly messages.PickleTag[]
@@ -169,20 +144,16 @@ export declare type Customised<Props, Classes = Record<string, string>> =
 
 export interface CustomRenderingSupport {
   Anchor?: Customised<AnchorProps, AnchorClasses>
-  Background?: Customised<BackgroundProps>
   Attachment?: Customised<AttachmentProps, AttachmentClasses>
+  Background?: Customised<BackgroundProps>
   Children?: Customised<ChildrenProps, ChildrenClasses>
   DataTable?: Customised<DataTableProps, DataTableClasses>
   Description?: Customised<DescriptionProps, DescriptionClasses>
   DocString?: Customised<DocStringProps, DocStringClasses>
   ErrorMessage?: Customised<ErrorMessageProps, ErrorMessageClasses>
   Examples?: Customised<ExamplesProps>
-  ExamplesTable?: Customised<ExamplesTableProps, ExamplesTableClasses>
   Feature?: Customised<FeatureProps>
   GherkinDocument?: Customised<GherkinDocumentProps>
-  GherkinStep?: Customised<GherkinStepProps>
-  GherkinSteps?: Customised<GherkinStepsProps>
-  HookStep?: Customised<HookStepProps>
   Keyword?: Customised<KeywordProps, KeywordClasses>
   Parameter?: Customised<ParameterProps, ParameterClasses>
   Rule?: Customised<RuleProps>

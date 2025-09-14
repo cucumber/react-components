@@ -2,12 +2,17 @@ import React from 'react'
 
 import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise/index.js'
 import { Description } from './Description.js'
-import { GherkinSteps } from './GherkinSteps.js'
 import { Keyword } from './Keyword.js'
-import { StepsList } from './StepsList.js'
 import { Title } from './Title.js'
 
 const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
+  const hasName = background.name && background.name.trim() !== ''
+  const hasDescription = background.description && background.description.trim() !== ''
+
+  if (!hasName && !hasDescription) {
+    return null
+  }
+
   return (
     <section>
       <Title header="h2" id={background.id}>
@@ -15,9 +20,6 @@ const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
         <span>{background.name}</span>
       </Title>
       <Description description={background.description} />
-      <StepsList>
-        <GherkinSteps steps={background.steps || []} hasExamples={false} />
-      </StepsList>
     </section>
   )
 }

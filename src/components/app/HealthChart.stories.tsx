@@ -2,7 +2,7 @@ import { Envelope } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { HealthChart } from './HealthChart.js'
 

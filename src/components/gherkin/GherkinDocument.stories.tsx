@@ -2,21 +2,23 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import attachments from '../../../acceptance/attachments/attachments.feature.js'
-import dataTables from '../../../acceptance/data-tables/data-tables.feature.js'
-import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
-import hooks from '../../../acceptance/hooks/hooks.feature.js'
-import hooksAttachments from '../../../acceptance/hooks-attachment/hooks-attachment.feature.js'
-import markdown from '../../../acceptance/markdown/markdown.feature.md.js'
-import minimal from '../../../acceptance/minimal/minimal.feature.js'
-import parameterTypes from '../../../acceptance/parameter-types/parameter-types.feature.js'
-import pending from '../../../acceptance/pending/pending.feature.js'
-import retry from '../../../acceptance/retry/retry.feature.js'
-import rules from '../../../acceptance/rules/rules.feature.js'
-import skipped from '../../../acceptance/skipped/skipped.feature.js'
-import stacktTraces from '../../../acceptance/stack-traces/stack-traces.feature.js'
-import undefinedEnvelopes from '../../../acceptance/undefined/undefined.feature.js'
-import unknownParameterTypes from '../../../acceptance/unknown-parameter-type/unknown-parameter-type.feature.js'
+import attachments from '../../../acceptance/attachments/attachments.js'
+import backgrounds from '../../../acceptance/backgrounds/backgrounds.js'
+import dataTables from '../../../acceptance/data-tables/data-tables.js'
+import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
+import hooks from '../../../acceptance/hooks/hooks.js'
+import hooksAttachments from '../../../acceptance/hooks-attachment/hooks-attachment.js'
+import markdown from '../../../acceptance/markdown/markdown.js'
+import minimal from '../../../acceptance/minimal/minimal.js'
+import parameterTypes from '../../../acceptance/parameter-types/parameter-types.js'
+import pending from '../../../acceptance/pending/pending.js'
+import retry from '../../../acceptance/retry/retry.js'
+import rules from '../../../acceptance/rules/rules.js'
+import rulesBackgrounds from '../../../acceptance/rules-backgrounds/rules-backgrounds.js'
+import skipped from '../../../acceptance/skipped/skipped.js'
+import stacktTraces from '../../../acceptance/stack-traces/stack-traces.js'
+import undefinedEnvelopes from '../../../acceptance/undefined/undefined.js'
+import unknownParameterTypes from '../../../acceptance/unknown-parameter-type/unknown-parameter-type.js'
 import { EnvelopesProvider, FilteredDocuments } from '../app/index.js'
 
 export default {
@@ -38,6 +40,11 @@ const Template: Story<TemplateArgs> = ({ envelopes }) => {
 export const Attachments = Template.bind({})
 Attachments.args = {
   envelopes: attachments,
+}
+
+export const Backgrounds = Template.bind({})
+Backgrounds.args = {
+  envelopes: backgrounds,
 }
 
 export const DataTables = Template.bind({})
@@ -88,6 +95,11 @@ Retry.args = {
 export const Rules = Template.bind({})
 Rules.args = {
   envelopes: rules,
+}
+
+export const RulesWithBackgrounds = Template.bind({})
+RulesWithBackgrounds.args = {
+  envelopes: rulesBackgrounds,
 }
 
 export const Skipped = Template.bind({})

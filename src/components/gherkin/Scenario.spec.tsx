@@ -1,108 +1,111 @@
-import { Envelope, GherkinDocument } from '@cucumber/messages'
-import { screen, within } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
+import * as messages from '@cucumber/messages'
+import { Envelope, TestStepResultStatus } from '@cucumber/messages'
+import { within } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
-import examplesTables from '../../../acceptance/examples-tables/examples-tables.feature.js'
+import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
+import minimal from '../../../acceptance/minimal/minimal.js'
+import rulesBackgrounds from '../../../acceptance/rules-backgrounds/rules-backgrounds.js'
 import { render } from '../../../test-utils/index.js'
-import UriContext from '../../UriContext.js'
-import { EnvelopesProvider } from '../app/EnvelopesProvider.js'
-import { Scenario } from './Scenario.js'
+import { EnvelopesProvider } from '../app/index.js'
+import { Scenario } from './index.js'
 
-describe('<Scenario/>', () => {
-  const getStatus = (element: HTMLElement) =>
-    within(element).getAllByRole('img', { hidden: true })[0].dataset.status
+describe('Scenario', () => {
+  function documentsFrom(envelopes: ReadonlyArray<Envelope>) {
+    return envelopes
+      .filter((envelope) => envelope.gherkinDocument)
+      .map((envelope) => envelope.gherkinDocument)
+  }
 
-  describe('with examples', () => {
-    const envelopes: Envelope[] = examplesTables as Envelope[]
-    const gherkinDocument: GherkinDocument = envelopes.find((env) => env.gherkinDocument)!
-      .gherkinDocument as GherkinDocument
-    const uri = gherkinDocument.uri!
-    const scenario = gherkinDocument.feature!.children[0].scenario!
+  function renderScenario(envelopes: ReadonlyArray<Envelope>, scenario: messages.Scenario) {
+    return render(
+      <EnvelopesProvider envelopes={envelopes}>
+        <Scenario scenario={scenario} />
+      </EnvelopesProvider>
+    )
+  }
 
-    beforeEach(() => {
-      render(
-        <EnvelopesProvider envelopes={envelopes}>
-          <UriContext.Provider value={uri}>
-            <Scenario scenario={scenario} />
-          </UriContext.Provider>
-        </EnvelopesProvider>
-      )
+  function expectTestSteps(
+    article: HTMLElement,
+    expectedSteps: ReadonlyArray<[TestStepResultStatus, string]>
+  ) {
+    const actualSteps = within(article).getAllByRole('listitem')
+    expect(actualSteps).to.have.length(expectedSteps.length)
+    actualSteps.forEach((step, index) => {
+      const [expectedStatus, expectedText] = expectedSteps[index]
+      expect(step.dataset.status).to.eq(expectedStatus)
+      expect(within(step).getByRole('heading', { name: expectedText })).to.be.visible
     })
+  }
 
-    it('should render the outline with worst result for each step', () => {
-      expect(screen.getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be
-        .visible
-      expect(screen.getByRole('heading', { name: 'Given there are <start> cucumbers' })).to.be
-        .visible
-      expect(screen.getByRole('heading', { name: 'When I eat <eat> cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Then I should have <left> cucumbers' })).to.be
-        .visible
-      const [step1, step2, step3] = screen.getAllByRole('listitem')
-      expect(getStatus(step1)).to.eq('PASSED')
-      expect(getStatus(step2)).to.eq('UNDEFINED')
-      expect(getStatus(step3)).to.eq('FAILED')
-    })
+  it('renders a minimal scenario with steps and statuses', () => {
+    const [gherkinDocument] = documentsFrom(minimal)
+    const { getByRole } = renderScenario(
+      minimal,
+      gherkinDocument?.feature?.children[0]?.scenario as messages.Scenario
+    )
 
-    it('should render the results for individual examples - all passed', async () => {
-      await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
+    expect(getByRole('heading', { name: 'Scenario: cukes' })).to.be.visible
+    expectTestSteps(getByRole('article'), [
+      [TestStepResultStatus.PASSED, 'Given I have 42 cukes in my belly'],
+    ])
+  })
 
-      expect(screen.getByText('@passing')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'When I eat 5 cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
-      const [step1, step2, step3] = within(
-        screen.getByRole('list', { name: 'Steps' })
-      ).getAllByRole('listitem')
-      expect(getStatus(step1)).to.eq('PASSED')
-      expect(getStatus(step2)).to.eq('PASSED')
-      expect(getStatus(step3)).to.eq('PASSED')
-    })
+  it('includes background steps from feature and rule level', () => {
+    const [gherkinDocument] = documentsFrom(rulesBackgrounds)
+    const { getByRole } = renderScenario(
+      rulesBackgrounds,
+      gherkinDocument?.feature?.children[1]?.rule?.children[1].scenario as messages.Scenario
+    )
 
-    it('should render the results for individual examples - one failed', async () => {
-      await userEvent.click(within(screen.getAllByRole('table')[1]).getAllByRole('row')[1])
+    expect(getByRole('heading', { name: 'Example: one scenario' })).to.be.visible
+    expectTestSteps(getByRole('article'), [
+      [TestStepResultStatus.PASSED, 'Given an order for "eggs"'],
+      [TestStepResultStatus.PASSED, 'And an order for "milk"'],
+      [TestStepResultStatus.PASSED, 'And an order for "bread"'],
+      [TestStepResultStatus.PASSED, 'Given an order for "batteries"'],
+      [TestStepResultStatus.PASSED, 'And an order for "light bulbs"'],
+      [TestStepResultStatus.PASSED, 'When an action'],
+      [TestStepResultStatus.PASSED, 'Then an outcome'],
+    ])
+  })
 
-      expect(screen.getByText('@failing')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'When I eat 20 cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Then I should have 0 cucumbers' })).to.be.visible
-      const [step1, step2, step3] = within(
-        screen.getByRole('list', { name: 'Steps' })
-      ).getAllByRole('listitem')
-      expect(getStatus(step1)).to.eq('PASSED')
-      expect(getStatus(step2)).to.eq('PASSED')
-      expect(getStatus(step3)).to.eq('FAILED')
-      expect(screen.getByText(/Expected values to be strictly equal/)).to.be.visible
-    })
+  it('renders each example in a scenario outline individually', () => {
+    const [gherkinDocument] = documentsFrom(examplesTables)
+    const { getByRole, getAllByRole } = renderScenario(
+      examplesTables,
+      gherkinDocument?.feature?.children[0]?.scenario as messages.Scenario
+    )
 
-    it('should render the results for individual examples - undefined', async () => {
-      await userEvent.click(within(screen.getAllByRole('table')[2]).getAllByRole('row')[1])
+    expect(getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be.visible
+    expect(getByRole('heading', { name: 'Examples: These are passing' })).to.be.visible
+    expect(getByRole('heading', { name: 'Examples: These are failing' })).to.be.visible
 
-      expect(screen.getByText('@undefined')).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Given there are 12 cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'When I eat banana cucumbers' })).to.be.visible
-      expect(screen.getByRole('heading', { name: 'Then I should have 12 cucumbers' })).to.be.visible
-      const [step1, step2, step3] = within(
-        screen.getByRole('list', { name: 'Steps' })
-      ).getAllByRole('listitem')
-      expect(getStatus(step1)).to.eq('PASSED')
-      expect(getStatus(step2)).to.eq('UNDEFINED')
-      expect(getStatus(step3)).to.eq('SKIPPED')
-    })
-
-    it('should allow returning to the outline from an example detail', async () => {
-      await userEvent.click(within(screen.getAllByRole('table')[0]).getAllByRole('row')[1])
-      expect(screen.getByRole('heading', { name: 'Example: Eating cucumbers' })).to.be.visible
-
-      await userEvent.click(
-        screen.getByRole('button', { name: 'Back to outline and all 6 examples' })
-      )
-      expect(screen.getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be
-        .visible
-    })
+    const [passing1, passing2, failing1, failing2] = getAllByRole('article')
+    expect(within(passing1.parentElement!).getByRole('heading', { name: '#1.1' })).to.be.visible
+    expectTestSteps(passing1, [
+      [TestStepResultStatus.PASSED, 'Given there are 12 cucumbers'],
+      [TestStepResultStatus.PASSED, 'When I eat 5 cucumbers'],
+      [TestStepResultStatus.PASSED, 'Then I should have 7 cucumbers'],
+    ])
+    expect(within(passing2.parentElement!).getByRole('heading', { name: '#1.2' })).to.be.visible
+    expectTestSteps(passing2, [
+      [TestStepResultStatus.PASSED, 'Given there are 20 cucumbers'],
+      [TestStepResultStatus.PASSED, 'When I eat 5 cucumbers'],
+      [TestStepResultStatus.PASSED, 'Then I should have 15 cucumbers'],
+    ])
+    expect(within(failing1.parentElement!).getByRole('heading', { name: '#2.1' })).to.be.visible
+    expectTestSteps(failing1, [
+      [TestStepResultStatus.PASSED, 'Given there are 12 cucumbers'],
+      [TestStepResultStatus.PASSED, 'When I eat 20 cucumbers'],
+      [TestStepResultStatus.FAILED, 'Then I should have 0 cucumbers'],
+    ])
+    expect(within(failing2.parentElement!).getByRole('heading', { name: '#2.2' })).to.be.visible
+    expectTestSteps(failing2, [
+      [TestStepResultStatus.PASSED, 'Given there are 0 cucumbers'],
+      [TestStepResultStatus.PASSED, 'When I eat 1 cucumbers'],
+      [TestStepResultStatus.FAILED, 'Then I should have 0 cucumbers'],
+    ])
   })
 })

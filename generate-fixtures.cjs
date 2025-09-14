@@ -10,16 +10,14 @@ for (const ndjsonPath of glob.sync(
   'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson'
 )) {
   const filename = path.basename(ndjsonPath)
-  const [suiteName, ...suffixes] = filename.split('.')
+  const [suiteName] = filename.split('.')
   const content = fs.readFileSync(ndjsonPath, { encoding: 'utf-8' })
   const asTs = `// Generated file. Do not edit.
 import { Envelope } from '@cucumber/messages'
 
 export default [${content.split('\n').join(',')}] as ReadonlyArray<Envelope>
 `
-  const targetPath = `acceptance/${suiteName}/${suiteName}.${suffixes
-    .filter((s) => s !== 'ndjson')
-    .join('.')}.ts`
+  const targetPath = `acceptance/${suiteName}/${suiteName}.ts`
   fs.mkdirSync(`acceptance/${suiteName}`, { recursive: true })
   fs.writeFileSync(targetPath, asTs, { encoding: 'utf-8' })
 }
