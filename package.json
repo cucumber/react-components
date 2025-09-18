@@ -22,7 +22,8 @@
     "build": "ladle build",
     "preview": "ladle preview",
     "fix": "eslint --max-warnings 0 src test-utils --fix src && prettier --write src test-utils",
-    "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils"
+    "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils",
+    "prepublishOnly": "npm run compile"
   },
   "dependencies": {
     "@cucumber/gherkin-utils": "10.0.0",
