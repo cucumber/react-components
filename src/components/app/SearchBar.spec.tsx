@@ -125,9 +125,8 @@ describe('SearchBar', () => {
         </EnvelopesProvider>
       )
 
-      expect(getAllByRole('checkbox')).to.have.length(3)
+      expect(getAllByRole('checkbox')).to.have.length(2)
       expect(getByRole('checkbox', { name: 'passed 5' })).to.be.visible
-      expect(getByRole('checkbox', { name: 'undefined 2' })).to.be.visible
       expect(getByRole('checkbox', { name: 'failed 2' })).to.be.visible
       getAllByRole('checkbox').forEach((checkbox: HTMLInputElement) => {
         expect(checkbox).to.be.checked
@@ -142,11 +141,11 @@ describe('SearchBar', () => {
         </EnvelopesProvider>
       )
 
-      await userEvent.click(getByRole('checkbox', { name: 'undefined 2' }))
+      await userEvent.click(getByRole('checkbox', { name: 'failed 2' }))
 
       expect(onChange).to.have.been.calledOnceWithExactly({
         query: '',
-        hideStatuses: [TestStepResultStatus.UNDEFINED],
+        hideStatuses: [TestStepResultStatus.FAILED],
       })
     })
 
@@ -154,14 +153,13 @@ describe('SearchBar', () => {
       const { getByRole } = render(
         <EnvelopesProvider envelopes={examplesTablesFeature}>
           <TestableSearchBar
-            defaultValue={{ query: '', hideStatuses: [TestStepResultStatus.UNDEFINED] }}
+            defaultValue={{ query: '', hideStatuses: [TestStepResultStatus.FAILED] }}
           />
         </EnvelopesProvider>
       )
 
       expect(getByRole('checkbox', { name: 'passed 5' })).to.be.checked
-      expect(getByRole('checkbox', { name: 'failed 2' })).to.be.checked
-      expect(getByRole('checkbox', { name: 'undefined 2' })).not.to.be.checked
+      expect(getByRole('checkbox', { name: 'failed 2' })).not.to.be.checked
     })
 
     it('updates the search context when a status is rechecked', async () => {
@@ -171,7 +169,7 @@ describe('SearchBar', () => {
           <TestableSearchBar
             defaultValue={{
               query: '',
-              hideStatuses: [TestStepResultStatus.FAILED, TestStepResultStatus.UNDEFINED],
+              hideStatuses: [TestStepResultStatus.FAILED, TestStepResultStatus.PASSED],
             }}
             onChange={onChange}
           />
@@ -182,7 +180,7 @@ describe('SearchBar', () => {
 
       expect(onChange).to.have.been.calledOnceWithExactly({
         query: '',
-        hideStatuses: [TestStepResultStatus.UNDEFINED],
+        hideStatuses: [TestStepResultStatus.PASSED],
       })
     })
   })
