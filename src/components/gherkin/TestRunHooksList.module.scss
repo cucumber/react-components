@@ -1,0 +1,13 @@
+.hooks {
+  padding: 0;
+  margin: 0.875em 1em;
+  list-style: none;
+
+  > li {
+    list-style: none;
+
+    &:not(:empty) {
+      padding: 0.125em 0;
+    }
+  }
+}

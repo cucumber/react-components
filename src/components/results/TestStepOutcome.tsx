@@ -33,7 +33,7 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
       <div className={styles.content}>
         {testStep.pickleStepId && <PickleStepArgument testStep={testStep} />}
         <TestStepResultDetails {...testStepFinished.testStepResult} />
-        <TestStepAttachments testStepFinished={testStepFinished} />
+        <TestStepAttachments testStepOrHookFinished={testStepFinished} />
       </div>
     </li>
   )
