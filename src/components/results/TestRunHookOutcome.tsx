@@ -21,7 +21,7 @@ export const RunHookOutcome: FC<Props> = ({ hook, testRunHookFinished }) => {
         </div>
         <div className={styles.title}>
           <h3 className={styles.name}>
-            {hook.type === HookType.BEFORE_TEST_RUN ? 'BeforeAll' : 'AfterAll'}
+            {hook.name ?? (hook.type === HookType.BEFORE_TEST_RUN ? 'BeforeAll' : 'AfterAll')}
           </h3>
           <TestStepDuration duration={testRunHookFinished.result.duration} />
         </div>
