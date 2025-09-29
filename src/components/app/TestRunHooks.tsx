@@ -2,15 +2,15 @@ import { TestRunHookFinished } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/useQueries.js'
-import { RunHooksList } from '../gherkin/TestRunHooksList.js'
 import { TestRunHookOutcome } from '../results/TestRunHookOutcome.js'
+import styles from './TestRunHooks.module.scss'
 
 export const TestRunHooks: FC = () => {
   const { cucumberQuery } = useQueries()
   const testRunHooksFinished: ReadonlyArray<TestRunHookFinished> =
     cucumberQuery.findAllTestRunHookFinished()
   return (
-    <RunHooksList>
+    <ol aria-label="RunHooks" className={styles.hooks}>
       {testRunHooksFinished.map((testRunHookFinished) => {
         const testRunHook = cucumberQuery.findHookBy(testRunHookFinished)
 
@@ -24,6 +24,6 @@ export const TestRunHooks: FC = () => {
           />
         )
       })}
-    </RunHooksList>
+    </ol>
   )
 }
