@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/useQueries.js'
 import { RunHooksList } from '../gherkin/TestRunHooksList.js'
-import { RunHookOutcome } from '../results/TestRunHookOutcome.js'
+import { TestRunHookOutcome } from '../results/TestRunHookOutcome.js'
 
 export const TestRunHooks: FC = () => {
   const { cucumberQuery } = useQueries()
@@ -15,7 +15,7 @@ export const TestRunHooks: FC = () => {
         const testRunHook = cucumberQuery.findHookBy(testRunHookFinished)
 
         return (
-          <RunHookOutcome
+          <TestRunHookOutcome
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             key={testRunHook!.id}
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

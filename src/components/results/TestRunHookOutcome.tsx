@@ -12,7 +12,7 @@ interface Props {
   testRunHookFinished: TestRunHookFinished
 }
 
-export const RunHookOutcome: FC<Props> = ({ hook, testRunHookFinished }) => {
+export const TestRunHookOutcome: FC<Props> = ({ hook, testRunHookFinished }) => {
   return (
     <li data-status={testRunHookFinished.result.status}>
       <div className={styles.header}>
