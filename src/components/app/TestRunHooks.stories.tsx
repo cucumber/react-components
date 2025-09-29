@@ -22,7 +22,7 @@ const Template: Story<TemplateArgs> = ({ envelopes }) => {
 }
 
 export default {
-  title: 'Gherkin/RunHooksList',
+  title: 'App/TestRunHooksList',
 }
 
 export const GlobalHooksWithAttachments = Template.bind({})
