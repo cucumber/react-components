@@ -1,25 +1,20 @@
-import { TestRunHookFinished } from '@cucumber/messages'
 import React, { FC } from 'react'
 
-import { useQueries } from '../../hooks/useQueries.js'
+import { useTestRunHooks } from '../../hooks/useTestRunHooks.js'
 import { TestRunHookOutcome } from '../results/TestRunHookOutcome.js'
 import styles from './TestRunHooks.module.scss'
 
 export const TestRunHooks: FC = () => {
-  const { cucumberQuery } = useQueries()
-  const testRunHooksFinished: ReadonlyArray<TestRunHookFinished> =
-    cucumberQuery.findAllTestRunHookFinished()
+  const hooks = useTestRunHooks()
+
   return (
     <ol aria-label="RunHooks" className={styles.hooks}>
-      {testRunHooksFinished.map((testRunHookFinished) => {
-        const testRunHook = cucumberQuery.findHookBy(testRunHookFinished)
-
+      {hooks.map(({ testRunHookFinished, hook }) => {
         return (
           <TestRunHookOutcome
+            key={hook.id}
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            key={testRunHook!.id}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            hook={testRunHook!}
+            hook={hook!}
             testRunHookFinished={testRunHookFinished}
           />
         )
