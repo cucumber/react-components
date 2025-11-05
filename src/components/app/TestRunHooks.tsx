@@ -7,6 +7,10 @@ import styles from './TestRunHooks.module.scss'
 export const TestRunHooks: FC = () => {
   const hooks = useTestRunHooks()
 
+  if (hooks.length === 0) {
+    return <p className={styles.empty}>No hooks found.</p>
+  }
+
   return (
     <ol aria-label="RunHooks" className={styles.hooks}>
       {hooks.map(({ testRunHookFinished, hook }) => {

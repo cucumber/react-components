@@ -2,6 +2,7 @@ import * as messages from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
+import empty from '../../../acceptance/empty/empty.js'
 import globalHooksAfterAllError from '../../../acceptance/global-hooks-afterall-error/global-hooks-afterall-error.js'
 import globalHooksAttachments from '../../../acceptance/global-hooks-attachments/global-hooks-attachments.js'
 import globalHooksBeforeAllError from '../../../acceptance/global-hooks-beforeall-error/global-hooks-beforeall-error.js'
@@ -16,6 +17,7 @@ const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <EnvelopesProvider envelopes={envelopes}>
       <FilteredDocuments />
+      <h2>BeforeAll/AfterAll</h2>
       <TestRunHooks />
     </EnvelopesProvider>
   )
@@ -23,6 +25,11 @@ const Template: Story<TemplateArgs> = ({ envelopes }) => {
 
 export default {
   title: 'App/TestRunHooksList',
+}
+
+export const EmptyGlobalHooks = Template.bind({})
+EmptyGlobalHooks.args = {
+  envelopes: empty,
 }
 
 export const GlobalHooksWithAttachments = Template.bind({})
