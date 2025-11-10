@@ -17,8 +17,7 @@ export const TestRunHooks: FC = () => {
         return (
           <TestRunHookOutcome
             key={hook.id}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            hook={hook!}
+            hook={hook}
             testRunHookFinished={testRunHookFinished}
           />
         )
