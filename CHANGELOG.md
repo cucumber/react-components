@@ -6,9 +6,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-- Text with numbers is no longer right aligned ([#405](https://github.com/cucumber/react-components/pull/405))
-
 ### Added
 - Include duration for each test step ([#396](https://github.com/cucumber/react-components/pull/396))
 - Include pass rate in execution summary ([#397](https://github.com/cucumber/react-components/pull/397))
@@ -19,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Use uuid library instead of web crypto API ([#402](https://github.com/cucumber/react-components/pull/402))
+- Text with numbers is no longer right aligned ([#405](https://github.com/cucumber/react-components/pull/405))
 
 ### Removed
 - BREAKING CHANGE: Remove defunct scenario/step components `<ExamplesTable/>`, `<GherkinStep/>`, `<GherkinSteps/>`, `<HookStep/>`, `<HookSteps/>`, `<StepItem/>` and their corresponding `CustomRenderingSupport` properties ([#396](https://github.com/cucumber/react-components/pull/396))
