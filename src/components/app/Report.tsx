@@ -4,6 +4,7 @@ import { ExecutionSummary } from './ExecutionSummary.js'
 import { FilteredDocuments } from './FilteredDocuments.js'
 import styles from './Report.module.scss'
 import { SearchBar } from './SearchBar.js'
+import { TestRunHooks } from './TestRunHooks.js'
 
 export const Report: FC = () => {
   return (
@@ -14,6 +15,9 @@ export const Report: FC = () => {
       </section>
       <section>
         <FilteredDocuments />
+      </section>
+      <section>
+        <TestRunHooks/>
       </section>
     </article>
   )
