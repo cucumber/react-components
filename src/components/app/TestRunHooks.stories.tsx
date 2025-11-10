@@ -1,48 +1,52 @@
-import * as messages from '@cucumber/messages'
+import { Envelope } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import empty from '../../../acceptance/empty/empty.js'
-import globalHooksAfterAllError from '../../../acceptance/global-hooks-afterall-error/global-hooks-afterall-error.js'
-import globalHooksAttachments from '../../../acceptance/global-hooks-attachments/global-hooks-attachments.js'
-import globalHooksBeforeAllError from '../../../acceptance/global-hooks-beforeall-error/global-hooks-beforeall-error.js'
-import { EnvelopesProvider, FilteredDocuments } from './index.js'
+import emptySample from '../../../acceptance/empty/empty.js'
+import globalHooksSample from '../../../acceptance/global-hooks/global-hooks.js'
+import globalHooksAfterAllErrorSample from '../../../acceptance/global-hooks-afterall-error/global-hooks-afterall-error.js'
+import globalHooksAttachmentsSample from '../../../acceptance/global-hooks-attachments/global-hooks-attachments.js'
+import globalHooksBeforeAllErrorSample from '../../../acceptance/global-hooks-beforeall-error/global-hooks-beforeall-error.js'
+import { EnvelopesProvider } from './index.js'
 import { TestRunHooks } from './TestRunHooks.js'
 
 type TemplateArgs = {
-  envelopes: readonly messages.Envelope[]
+  envelopes: readonly Envelope[]
 }
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <EnvelopesProvider envelopes={envelopes}>
-      <FilteredDocuments />
-      <h2>BeforeAll/AfterAll</h2>
       <TestRunHooks />
     </EnvelopesProvider>
   )
 }
 
 export default {
-  title: 'App/TestRunHooksList',
+  title: 'App/TestRunHooks',
 }
 
-export const EmptyGlobalHooks = Template.bind({})
-EmptyGlobalHooks.args = {
-  envelopes: empty,
+export const Empty = Template.bind({})
+Empty.args = {
+  envelopes: emptySample,
 }
 
-export const GlobalHooksWithAttachments = Template.bind({})
-GlobalHooksWithAttachments.args = {
-  envelopes: globalHooksAttachments,
+export const Default = Template.bind({})
+Default.args = {
+  envelopes: globalHooksSample,
 }
 
-export const GlobalHooksBeforeAllError = Template.bind({})
-GlobalHooksBeforeAllError.args = {
-  envelopes: globalHooksBeforeAllError,
+export const WithAttachments = Template.bind({})
+WithAttachments.args = {
+  envelopes: globalHooksAttachmentsSample,
 }
 
-export const GlobalHooksAfterAllError = Template.bind({})
-GlobalHooksAfterAllError.args = {
-  envelopes: globalHooksAfterAllError,
+export const BeforeAllError = Template.bind({})
+BeforeAllError.args = {
+  envelopes: globalHooksBeforeAllErrorSample,
+}
+
+export const AfterAllError = Template.bind({})
+AfterAllError.args = {
+  envelopes: globalHooksAfterAllErrorSample,
 }
