@@ -12,7 +12,7 @@ export const TestRunHooks: FC = () => {
   }
 
   return (
-    <ol aria-label="RunHooks" className={styles.hooks}>
+    <ol className={styles.hooks}>
       {hooks.map(({ testRunHookFinished, hook }) => {
         return (
           <TestRunHookOutcome
