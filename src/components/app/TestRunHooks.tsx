@@ -8,7 +8,7 @@ export const TestRunHooks: FC = () => {
   const hooks = useTestRunHooks()
 
   if (hooks.length === 0) {
-    return <p className={styles.empty}>No hooks found.</p>
+    return <p className={styles.empty}>No test run hooks were executed.</p>
   }
 
   return (
