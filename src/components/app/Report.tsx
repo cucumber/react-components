@@ -9,8 +9,8 @@ export const Report: FC = () => {
   return (
     <article className={styles.layout}>
       <section>
-        <ExecutionSummary/>
-        <SearchBar/>
+        <ExecutionSummary />
+        <SearchBar />
       </section>
       <section>
         <FilteredDocuments />
