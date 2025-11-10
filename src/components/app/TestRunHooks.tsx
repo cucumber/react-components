@@ -15,11 +15,7 @@ export const TestRunHooks: FC = () => {
     <ol className={styles.hooks}>
       {hooks.map(({ testRunHookFinished, hook }) => {
         return (
-          <TestRunHookOutcome
-            key={hook.id}
-            hook={hook}
-            testRunHookFinished={testRunHookFinished}
-          />
+          <TestRunHookOutcome key={hook.id} hook={hook} testRunHookFinished={testRunHookFinished} />
         )
       })}
     </ol>

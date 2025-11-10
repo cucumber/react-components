@@ -17,7 +17,7 @@ export const Report: FC = () => {
         <FilteredDocuments />
       </section>
       <section>
-        <TestRunHooks/>
+        <TestRunHooks />
       </section>
     </article>
   )
