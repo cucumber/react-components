@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Include duration for each test step ([#396](https://github.com/cucumber/react-components/pull/396))
 - Include pass rate in execution summary ([#397](https://github.com/cucumber/react-components/pull/397))
 - Add new `<Report/>` component ([#410](https://github.com/cucumber/react-components/pull/410))
+- Add new `<TestRunHooks/>` component and include in report ([#408](https://github.com/cucumber/react-components/pull/408))
 
 ### Changed
 - Render a more test case-centric report ([#396](https://github.com/cucumber/react-components/pull/396))

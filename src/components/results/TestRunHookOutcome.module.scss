@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  width: 100%;
+  gap: 0.25rem;
+}
+
+.status {
+  padding-top: 0.1em;
+}
+
+.title {
+  > * {
+    vertical-align: middle;
+
+    & + * {
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.name {
+  font-size: 1em;
+  display: inline;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  margin-left: 1.125rem;
+
+  // bits of detail (doc string, data table, error, attachments) get consistent spacing between them
+  > * {
+    margin-top: 0.25rem !important;
+  }
+}

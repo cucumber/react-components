@@ -1,0 +1,16 @@
+.empty {
+  font-style: italic;
+}
+
+.hooks {
+  padding: 0;
+  list-style: none;
+
+  > li {
+    list-style: none;
+
+    &:not(:empty) {
+      padding: 0.125em 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { TestStepFinished } from '@cucumber/messages'
+import { TestRunHookFinished, TestStepFinished } from '@cucumber/messages'
 import React from 'react'
 import { FC } from 'react'
 
@@ -7,12 +7,12 @@ import { Attachment } from '../gherkin/index.js'
 import styles from './TestStepAttachments.module.scss'
 
 interface Props {
-  testStepFinished: TestStepFinished
+  testStepOrHookFinished: TestStepFinished | TestRunHookFinished
 }
 
-export const TestStepAttachments: FC<Props> = ({ testStepFinished }) => {
+export const TestStepAttachments: FC<Props> = ({ testStepOrHookFinished }) => {
   const { cucumberQuery } = useQueries()
-  const attachments = cucumberQuery.findAttachmentsBy(testStepFinished)
+  const attachments = cucumberQuery.findAttachmentsBy(testStepOrHookFinished)
   return (
     <ol className={styles.attachments}>
       {attachments.map((attachment, index) => {
