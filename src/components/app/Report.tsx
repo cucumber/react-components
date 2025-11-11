@@ -14,9 +14,11 @@ export const Report: FC = () => {
         <SearchBar />
       </section>
       <section>
+        <h2 className={styles.heading}>Scenarios</h2>
         <FilteredDocuments />
       </section>
       <section>
+        <h2 className={styles.heading}>Hooks</h2>
         <TestRunHooks />
       </section>
     </article>
