@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [24.0.0] - 2025-11-11
 ### Added
 - Include duration for each test step ([#396](https://github.com/cucumber/react-components/pull/396))
 - Include pass rate in execution summary ([#397](https://github.com/cucumber/react-components/pull/397))
@@ -484,7 +486,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v23.2.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.0.0...HEAD
+[24.0.0]: https://github.com/cucumber/cucumber-react/compare/v23.2.0...v24.0.0
 [23.2.0]: https://github.com/cucumber/cucumber-react/compare/v23.1.1...v23.2.0
 [23.1.1]: https://github.com/cucumber/cucumber-react/compare/v23.1.0...v23.1.1
 [23.1.0]: https://github.com/cucumber/cucumber-react/compare/v23.0.0...v23.1.0
