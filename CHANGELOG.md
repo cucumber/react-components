@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Include duration for each test step ([#396](https://github.com/cucumber/react-components/pull/396))
 - Include pass rate in execution summary ([#397](https://github.com/cucumber/react-components/pull/397))
-- Add new `<Report/>` component ([#410](https://github.com/cucumber/react-components/pull/410))
+- Add new `<Report/>` component ([#410](https://github.com/cucumber/react-components/pull/410)) ([#411](https://github.com/cucumber/react-components/pull/411))
 - Add new `<TestRunHooks/>` component and include in report ([#408](https://github.com/cucumber/react-components/pull/408))
 
 ### Changed
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - BREAKING CHANGE: Remove defunct scenario/step components `<ExamplesTable/>`, `<GherkinStep/>`, `<GherkinSteps/>`, `<HookStep/>`, `<HookSteps/>`, `<StepItem/>` and their corresponding `CustomRenderingSupport` properties ([#396](https://github.com/cucumber/react-components/pull/396))
+- BREAKING CHANGE: Remove defunct `<NoMatchResult/>` component ([#411](https://github.com/cucumber/react-components/pull/411))
 - BREAKING CHANGE: Remove defunct `<UriProvider/>` component and underlying context ([#396](https://github.com/cucumber/react-components/pull/396))
 - BREAKING CHANGE: Remove `<MDG/>` component in favour of using standard Gherkin components for Markdown documents ([#396](https://github.com/cucumber/react-components/pull/396))
 
