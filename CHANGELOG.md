@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - BREAKING CHANGE: Remove defunct `<NoMatchResult/>` component ([#411](https://github.com/cucumber/react-components/pull/411))
 - BREAKING CHANGE: Remove defunct `<UriProvider/>` component and underlying context ([#396](https://github.com/cucumber/react-components/pull/396))
 - BREAKING CHANGE: Remove `<MDG/>` component in favour of using standard Gherkin components for Markdown documents ([#396](https://github.com/cucumber/react-components/pull/396))
+- BREAKING CHANGE: Remove public export of `filterByStatus` ([#412](https://github.com/cucumber/react-components/pull/412))
 
 ## [23.2.0] - 2025-08-07
 ### Changed
