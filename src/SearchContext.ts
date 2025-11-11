@@ -7,11 +7,13 @@ export interface SearchState {
 }
 
 export interface SearchContextValue extends SearchState {
+  unchanged: boolean
   update: (changes: Partial<SearchState>) => void
 }
 
 export default React.createContext<SearchContextValue>({
   query: '',
   hideStatuses: [],
+  unchanged: true,
   update: () => {},
 })

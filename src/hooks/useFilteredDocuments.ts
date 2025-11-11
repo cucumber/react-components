@@ -7,8 +7,11 @@ import statuses from '../statuses.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
-export function useFilteredDocuments(): GherkinDocument[] | undefined {
-  const { query, hideStatuses } = useSearch()
+export function useFilteredDocuments(): {
+  results: GherkinDocument[] | undefined
+  filtered: boolean
+} {
+  const { query, hideStatuses, unchanged } = useSearch()
   const { gherkinQuery, cucumberQuery } = useQueries()
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
@@ -36,5 +39,8 @@ export function useFilteredDocuments(): GherkinDocument[] | undefined {
       }
     )
   }, [query, hideStatuses, gherkinQuery, cucumberQuery, searchable])
-  return results
+  return {
+    results,
+    filtered: !unchanged,
+  }
 }

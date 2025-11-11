@@ -13,9 +13,11 @@ export const ControlledSearchProvider: FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   const contextValue: SearchContextValue = useMemo(() => {
+    const unchanged = !value.query && !value.hideStatuses.length
     return {
       query: value.query,
       hideStatuses: value.hideStatuses,
+      unchanged,
       update: (newValues: Partial<SearchState>) => {
         onChange({ ...value, ...newValues })
       },

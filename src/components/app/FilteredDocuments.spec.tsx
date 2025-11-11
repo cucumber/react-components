@@ -74,7 +74,7 @@ describe('FilteredDocuments', () => {
       )
 
       await waitFor(() => {
-        expect(getByText('No matches found for your query and/or filters')).to.be.visible
+        expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
       })
     })
 
@@ -119,7 +119,7 @@ describe('FilteredDocuments', () => {
             name: 'samples/examples-tables/examples-tables.feature',
           })
         ).not.to.exist
-        expect(getByText('No matches found for your query and/or filters')).to.be.visible
+        expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
       })
     })
   })
