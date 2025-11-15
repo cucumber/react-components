@@ -41,7 +41,7 @@ describe('TestCaseOutcome', () => {
     hooksConditionalSample.forEach((envelope) => cucumberQuery.update(envelope))
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
 
-    const { getAllByRole, getByText } = render(
+    const { getAllByRole, getByText, queryByRole } = render(
       <EnvelopesProvider envelopes={hooksConditionalSample}>
         <TestCaseOutcome testCaseStarted={testCaseStarted} />
       </EnvelopesProvider>
@@ -50,5 +50,6 @@ describe('TestCaseOutcome', () => {
     expect(getAllByRole('listitem')).to.have.lengthOf(2)
     expect(getByText('Before')).to.be.visible
     expect(getByText('a step passes')).to.be.visible
+    expect(queryByRole('button', { name: /hooks/ })).not.to.exist
   })
 })

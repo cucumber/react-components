@@ -36,7 +36,7 @@ export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
           )
         })}
       </ol>
-      {!showAllSteps && <button onClick={() => setShowAllSteps(true)}>+{hiddenSteps} hooks</button>}
+      {hiddenSteps > 0 && <button onClick={() => setShowAllSteps(true)}>+{hiddenSteps} hooks</button>}
     </article>
   )
 }
