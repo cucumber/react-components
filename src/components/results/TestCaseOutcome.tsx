@@ -1,4 +1,4 @@
-import { TestCaseStarted } from '@cucumber/messages'
+import { TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
@@ -12,10 +12,16 @@ interface Props {
 export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
   const { cucumberQuery } = useQueries()
   const steps = cucumberQuery.findTestStepFinishedAndTestStepBy(testCaseStarted)
+  const filtered = steps.filter(([testStepFinished, testStep]) => {
+    return (
+      testStep.pickleStepId ||
+      testStepFinished.testStepResult.status !== TestStepResultStatus.PASSED
+    )
+  })
   return (
     <article className={styles.container}>
       <ol className={styles.steps}>
-        {steps.map(([testStepFinished, testStep]) => {
+        {filtered.map(([testStepFinished, testStep]) => {
           return (
             <TestStepOutcome
               key={testStep.id}
