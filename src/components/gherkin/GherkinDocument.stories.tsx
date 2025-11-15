@@ -8,6 +8,7 @@ import dataTables from '../../../acceptance/data-tables/data-tables.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import hooks from '../../../acceptance/hooks/hooks.js'
 import hooksAttachments from '../../../acceptance/hooks-attachment/hooks-attachment.js'
+import hooksConditional from '../../../acceptance/hooks-conditional/hooks-conditional.js'
 import markdown from '../../../acceptance/markdown/markdown.js'
 import minimal from '../../../acceptance/minimal/minimal.js'
 import parameterTypes from '../../../acceptance/parameter-types/parameter-types.js'
@@ -65,6 +66,11 @@ Hooks.args = {
 export const HooksWithAttachments = Template.bind({})
 HooksWithAttachments.args = {
   envelopes: hooksAttachments,
+}
+
+export const HooksConditional = Template.bind({})
+HooksConditional.args = {
+  envelopes: hooksConditional,
 }
 
 export const Markdown = Template.bind({})

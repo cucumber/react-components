@@ -1,3 +1,5 @@
+@use '../../styles/theming';
+
 .container {
   > * + * {
     margin-top: 0.25rem !important;
@@ -12,4 +14,15 @@
   > * + * {
     margin-top: 0.25rem !important;
   }
+}
+
+.expandButton {
+  background-color: transparent;
+  color: theming.$exampleNumberColor;
+  font-size: inherit;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 0.25rem;
 }
