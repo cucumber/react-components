@@ -1,4 +1,5 @@
 import { Query } from '@cucumber/query'
+import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
 import React from 'react'
 
@@ -9,12 +10,12 @@ import { EnvelopesProvider } from '../app/index.js'
 import { TestCaseOutcome } from './TestCaseOutcome.js'
 
 describe('TestCaseOutcome', () => {
-  it('should hide successful hooks by default', () => {
+  it('should hide successful hooks by default, then show them on request', async () => {
     const cucumberQuery = new Query()
     hooksSample.forEach((envelope) => cucumberQuery.update(envelope))
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
 
-    const { getAllByRole, getByText, queryByText } = render(
+    const { getByRole, getAllByRole, getByText, queryByRole, queryByText } = render(
       <EnvelopesProvider envelopes={hooksSample}>
         <TestCaseOutcome testCaseStarted={testCaseStarted} />
       </EnvelopesProvider>
@@ -24,6 +25,15 @@ describe('TestCaseOutcome', () => {
     expect(queryByText('Before')).not.to.exist
     expect(getByText('a step passes')).to.be.visible
     expect(queryByText('After')).not.to.exist
+    expect(getByRole('button', { name: '+2 hooks' })).to.be.visible
+
+    await userEvent.click(getByRole('button', { name: '+2 hooks' }))
+
+    expect(getAllByRole('listitem')).to.have.lengthOf(3)
+    expect(getByText('Before')).to.be.visible
+    expect(getByText('a step passes')).to.be.visible
+    expect(getByText('After')).to.be.visible
+    expect(queryByRole('button', { name: '+2 hooks' })).not.to.exist
   })
 
   it('should always show non-successful hooks', () => {
