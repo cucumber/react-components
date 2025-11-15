@@ -1,4 +1,6 @@
 import { TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FC, useState } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
@@ -36,7 +38,12 @@ export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
           )
         })}
       </ol>
-      {hiddenSteps > 0 && <button onClick={() => setShowAllSteps(true)}>+{hiddenSteps} hooks</button>}
+      {hiddenSteps > 0 && (
+        <button className={styles.expandButton} onClick={() => setShowAllSteps(true)}>
+          <FontAwesomeIcon aria-hidden="true" icon={faCirclePlus} />
+          {hiddenSteps} hooks
+        </button>
+      )}
     </article>
   )
 }

@@ -25,15 +25,15 @@ describe('TestCaseOutcome', () => {
     expect(queryByText('Before')).not.to.exist
     expect(getByText('a step passes')).to.be.visible
     expect(queryByText('After')).not.to.exist
-    expect(getByRole('button', { name: '+2 hooks' })).to.be.visible
+    expect(getByRole('button', { name: '2 hooks' })).to.be.visible
 
-    await userEvent.click(getByRole('button', { name: '+2 hooks' }))
+    await userEvent.click(getByRole('button', { name: '2 hooks' }))
 
     expect(getAllByRole('listitem')).to.have.lengthOf(3)
     expect(getByText('Before')).to.be.visible
     expect(getByText('a step passes')).to.be.visible
     expect(getByText('After')).to.be.visible
-    expect(queryByRole('button', { name: '+2 hooks' })).not.to.exist
+    expect(queryByRole('button', { name: /hooks/ })).not.to.exist
   })
 
   it('should always show non-successful hooks', () => {
