@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Add margin to paragraphs etc in descriptions ([#413](https://github.com/cucumber/react-components/pull/413)) by [@ibanFR](https://github.com/ibanFR)
 
 ## [24.0.0] - 2025-11-11
 ### Added
