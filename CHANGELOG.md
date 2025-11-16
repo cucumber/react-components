@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [24.0.1] - 2025-11-16
 ### Fixed
 - Add margin to paragraphs etc in descriptions ([#413](https://github.com/cucumber/react-components/pull/413)) by [@ibanFR](https://github.com/ibanFR)
 
@@ -488,7 +490,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.0.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.0.1...HEAD
+[24.0.1]: https://github.com/cucumber/cucumber-react/compare/v24.0.0...v24.0.1
 [24.0.0]: https://github.com/cucumber/cucumber-react/compare/v23.2.0...v24.0.0
 [23.2.0]: https://github.com/cucumber/cucumber-react/compare/v23.1.1...v23.2.0
 [23.1.1]: https://github.com/cucumber/cucumber-react/compare/v23.1.0...v23.1.1
