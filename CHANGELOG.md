@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Hide successful hooks by default ([#415](https://github.com/cucumber/react-components/pull/415))
 
+### Fixed
+- Add margin to paragraphs etc in descriptions ([#413](https://github.com/cucumber/react-components/pull/413)) by [@ibanFR](https://github.com/ibanFR)
+
 ## [24.0.0] - 2025-11-11
 ### Added
 - Include duration for each test step ([#396](https://github.com/cucumber/react-components/pull/396))
