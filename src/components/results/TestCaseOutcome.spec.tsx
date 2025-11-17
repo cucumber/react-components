@@ -5,6 +5,7 @@ import React from 'react'
 
 import hooksSample from '../../../acceptance/hooks/hooks.js'
 import hooksConditionalSample from '../../../acceptance/hooks-conditional/hooks-conditional.js'
+import hooksSkippedSample from '../../../acceptance/hooks-skipped/hooks-skipped.js'
 import { render } from '../../../test-utils/index.js'
 import { EnvelopesProvider } from '../app/index.js'
 import { TestCaseOutcome } from './TestCaseOutcome.js'
@@ -36,7 +37,7 @@ describe('TestCaseOutcome', () => {
     expect(queryByRole('button', { name: /hooks/ })).not.to.exist
   })
 
-  it('should always show non-successful hooks', () => {
+  it('should always show failed hooks', () => {
     const cucumberQuery = new Query()
     hooksConditionalSample.forEach((envelope) => cucumberQuery.update(envelope))
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
@@ -51,5 +52,40 @@ describe('TestCaseOutcome', () => {
     expect(getByText('Before')).to.be.visible
     expect(getByText('a step passes')).to.be.visible
     expect(queryByRole('button', { name: /hooks/ })).not.to.exist
+  })
+
+  it('should hide skipped hooks by default when they are not the skipper', () => {
+    const cucumberQuery = new Query()
+    hooksSkippedSample.forEach((envelope) => cucumberQuery.update(envelope))
+    const [skipFromStep] = cucumberQuery.findAllTestCaseStarted()
+
+    const { getAllByRole, getByRole, getByText, queryByText } = render(
+      <EnvelopesProvider envelopes={hooksSkippedSample}>
+        <TestCaseOutcome testCaseStarted={skipFromStep} />
+      </EnvelopesProvider>
+    )
+
+    expect(getAllByRole('listitem')).to.have.lengthOf(1)
+    expect(queryByText('Before')).not.to.exist
+    expect(getByText('a step that skips')).to.be.visible
+    expect(queryByText('After')).not.to.exist
+    expect(getByRole('button', { name: '4 hooks' })).to.be.visible
+  })
+
+  it('should show skipped hooks by default when they are the skipper', () => {
+    const cucumberQuery = new Query()
+    hooksSkippedSample.forEach((envelope) => cucumberQuery.update(envelope))
+    const [, skipFromBefore] = cucumberQuery.findAllTestCaseStarted()
+
+    const { getAllByRole, getAllByText, getByRole, getByText } = render(
+      <EnvelopesProvider envelopes={hooksSkippedSample}>
+        <TestCaseOutcome testCaseStarted={skipFromBefore} />
+      </EnvelopesProvider>
+    )
+
+    expect(getAllByRole('listitem')).to.have.lengthOf(2)
+    expect(getAllByText('Before')).to.have.lengthOf(1)
+    expect(getByText('a normal step')).to.be.visible
+    expect(getByRole('button', { name: '4 hooks' })).to.be.visible
   })
 })
