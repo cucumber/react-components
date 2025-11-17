@@ -2,7 +2,6 @@ const glob = require('glob')
 const fs = require('fs')
 const path = require('path')
 
-// Helper function to convert kebab-case to PascalCase
 function toPascalCase(str) {
   return str
     .split('-')
@@ -10,7 +9,6 @@ function toPascalCase(str) {
     .join('')
 }
 
-// Helper function to convert kebab-case to camelCase
 function toCamelCase(str) {
   const parts = str.split('-')
   return parts[0] + parts.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
@@ -20,7 +18,6 @@ if (fs.existsSync('acceptance')) {
   fs.rmdirSync('acceptance', { recursive: true })
 }
 
-// Collect sample names for story generation
 const sampleNames = []
 
 for (const ndjsonPath of glob.sync(
@@ -41,10 +38,8 @@ export default [${content.split('\n').join(',')}] as ReadonlyArray<Envelope>
   fs.writeFileSync(targetPath, asTs, { encoding: 'utf-8' })
 }
 
-// Sort sample names for consistent output
 sampleNames.sort()
 
-// Generate GherkinDocument.stories.tsx
 const storiesPath = 'src/components/app/Report.stories.tsx'
 
 const imports = sampleNames
