@@ -3,6 +3,7 @@ build/
 dist/
 .idea/
 node_modules/
+src/components/app/Report.stories.tsx
 *.log
 .codegen
 *.iml
