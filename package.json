@@ -57,7 +57,7 @@
     "react-dom": "~18"
   },
   "devDependencies": {
-    "@cucumber/compatibility-kit": "^23.0.0",
+    "@cucumber/compatibility-kit": "^25.0.0",
     "@cucumber/fake-cucumber": "^18.1.0",
     "@cucumber/gherkin": "^35.1.0",
     "@cucumber/gherkin-streams": "^6.0.0",
