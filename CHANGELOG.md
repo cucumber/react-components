@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Hide successful hooks by default ([#415](https://github.com/cucumber/react-components/pull/415))
 
 ## [24.0.1] - 2025-11-16
 ### Fixed
