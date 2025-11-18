@@ -48,7 +48,7 @@ export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
 function filterSteps(allSteps: ReadonlyArray<[TestStepFinished, TestStep]>) {
   const statuses = allSteps.map(([testStepFinished]) => testStepFinished.testStepResult.status)
   return allSteps.filter(([testStepFinished, testStep], index) => {
-    if (testStep.pickleStepId) {
+    if (!testStep.hookId) {
       return true
     }
     if (testStepFinished.testStepResult.status === TestStepResultStatus.SKIPPED) {
