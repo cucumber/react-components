@@ -1,4 +1,4 @@
-import { PickleStep, Step, TestStep, TestStepFinished } from '@cucumber/messages'
+import { PickleStep, TestStep, TestStepFinished } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
@@ -48,10 +48,10 @@ const HookStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
 const PickleStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
   const { cucumberQuery } = useQueries()
   const pickleStep = cucumberQuery.findPickleStepBy(testStep) as PickleStep
-  const step = cucumberQuery.findStepBy(pickleStep) as Step
+  const step = cucumberQuery.findStepBy(pickleStep)
   return (
     <>
-      <Keyword>{step.keyword.trim()}</Keyword>
+      <Keyword>{step?.keyword?.trim()}</Keyword>
       {composePickleStepTitle(pickleStep.text, testStep.stepMatchArgumentsLists).map(
         (fragment, index) => {
           if (fragment.parameterTypeName) {
