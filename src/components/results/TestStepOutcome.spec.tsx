@@ -1,3 +1,4 @@
+import { GherkinDocument } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import { expect } from 'chai'
 import React from 'react'
@@ -9,8 +10,21 @@ import { TestStepOutcome } from './TestStepOutcome.js'
 
 describe('TestStepOutcome', () => {
   it('should still work when we cant resolve the original step', () => {
-    // omit gherkinDocument messages so we have PickleStep but not Step
-    const envelopes = minimalSample.filter((envelope) => !envelope.gherkinDocument)
+    // omit children from gherkinDocument.feature so that Step is unresolved
+    const envelopes = minimalSample.map((envelope) => {
+      if (envelope.gherkinDocument) {
+        return {
+          gherkinDocument: {
+            ...envelope.gherkinDocument,
+            feature: {
+              ...envelope.gherkinDocument.feature,
+              children: []
+            }
+          } as GherkinDocument
+        }
+      }
+      return envelope
+    })
 
     const cucumberQuery = new CucumberQuery()
     envelopes.forEach((envelope) => cucumberQuery.update(envelope))
