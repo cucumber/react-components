@@ -1,4 +1,4 @@
-import { PickleStep, Step, TestStep, TestStepFinished } from '@cucumber/messages'
+import { PickleStep, TestStep, TestStepFinished } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
