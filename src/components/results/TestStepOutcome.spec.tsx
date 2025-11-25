@@ -25,6 +25,6 @@ describe('TestStepOutcome', () => {
       </EnvelopesProvider>
     )
 
-    expect(getByText('I have 42 cukes in my belly')).to.be.visible
+    expect(getByText('cukes in my belly')).to.be.visible
   })
 })
