@@ -18,9 +18,9 @@ describe('TestStepOutcome', () => {
             ...envelope.gherkinDocument,
             feature: {
               ...envelope.gherkinDocument.feature,
-              children: []
-            }
-          } as GherkinDocument
+              children: [],
+            },
+          } as GherkinDocument,
         }
       }
       return envelope
