@@ -7,7 +7,7 @@ import GherkinQueryContext from '../../GherkinQueryContext.js'
 
 interface Props {
   cucumberQuery: CucumberQuery
-  gherkinQuery: GherkinQuery
+  gherkinQuery?: GherkinQuery
 }
 
 export const QueriesProvider: FC<PropsWithChildren<Props>> = (props) => (

@@ -7,7 +7,7 @@ import GherkinQueryContext from '../GherkinQueryContext.js'
 
 export function useQueries(): {
   cucumberQuery: CucumberQuery
-  gherkinQuery: GherkinQuery
+  gherkinQuery?: GherkinQuery
 } {
   const gherkinQuery = useContext(GherkinQueryContext)
   const cucumberQuery = useContext(CucumberQueryContext)
