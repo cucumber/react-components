@@ -64,6 +64,7 @@ import React from 'react'
 
 ${imports}
 import { EnvelopesProvider } from './EnvelopesProvider.js'
+import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 import { Report } from './Report.js'
 
 export default {
@@ -77,7 +78,9 @@ type TemplateArgs = {
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
   return (
     <EnvelopesProvider envelopes={envelopes}>
-      <Report />
+      <InMemorySearchProvider>
+        <Report />
+      </InMemorySearchProvider>
     </EnvelopesProvider>
   )
 }
