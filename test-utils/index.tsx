@@ -32,7 +32,6 @@ const customRender = (ui: ReactElement, options: Partial<TestRenderOptions> = {}
   return render(ui, { wrapper: WrappedWithOptions })
 }
 
-export * from './runFeature.js'
 export * from './search.js'
 export * from '@testing-library/react'
 
