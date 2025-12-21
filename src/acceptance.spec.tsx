@@ -46,7 +46,7 @@ describe('acceptance tests', function () {
 
         const { container } = render(
           <EnvelopesProvider envelopes={envelopes}>
-            <FilteredDocuments/>
+            <FilteredDocuments />
           </EnvelopesProvider>
         )
 
