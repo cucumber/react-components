@@ -1,6 +1,7 @@
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
 import * as messages from '@cucumber/messages'
 import { Envelope } from '@cucumber/messages'
+import { render } from '@testing-library/react'
 import assert from 'assert'
 import { expect } from 'chai'
 import fs from 'fs'
@@ -9,14 +10,13 @@ import React from 'react'
 import { pipeline, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { render } from '../test-utils/index.js'
 import { EnvelopesProvider, FilteredDocuments } from './index.js'
 
 describe('acceptance tests', function () {
   this.timeout('30s')
 
   describe('with user-provided and compatibility kit data', () => {
-    const localMessageFiles = glob.sync(`test-utils/messages/**/*.ndjson`)
+    const localMessageFiles = glob.sync(`test/messages/**/*.ndjson`)
     assert.ok(localMessageFiles.length, 'Expected to find some files to test with')
     const cckMessageFiles = glob.sync(
       `node_modules/@cucumber/compatibility-kit/features/**/*.ndjson`

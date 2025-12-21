@@ -1,9 +1,9 @@
 import * as messages from '@cucumber/messages'
 import { AttachmentContentEncoding } from '@cucumber/messages'
+import { render, screen } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
-import { render, screen } from '../../../../test-utils/index.js'
 import { Attachment } from './Attachment.js'
 
 describe('<Attachment>', () => {

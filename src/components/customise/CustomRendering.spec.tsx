@@ -1,8 +1,8 @@
 import * as messages from '@cucumber/messages'
+import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
-import { render } from '../../../test-utils/index.js'
 import { Tags } from '../gherkin/index.js'
 import { Customised, CustomRendering, TagsClasses, TagsProps } from './index.js'
 

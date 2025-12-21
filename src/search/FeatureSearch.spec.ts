@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { Feature, GherkinDocument } from '@cucumber/messages'
 import { expect } from 'chai'
 
-import { makeFeature } from '../../test-utils/index.js'
+import { makeFeature } from '../../test/search.js'
 import { createFeatureSearch } from './FeatureSearch.js'
 import { TypedIndex } from './types.js'
 

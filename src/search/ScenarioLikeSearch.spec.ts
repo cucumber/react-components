@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { Scenario } from '@cucumber/messages'
 import { expect } from 'chai'
 
-import { makeScenario } from '../../test-utils/index.js'
+import { makeScenario } from '../../test/search.js'
 import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
 import { TypedIndex } from './types.js'
 

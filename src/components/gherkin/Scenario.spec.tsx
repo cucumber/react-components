@@ -1,13 +1,13 @@
 import * as messages from '@cucumber/messages'
 import { Envelope, TestStepResultStatus } from '@cucumber/messages'
 import { within } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import minimal from '../../../acceptance/minimal/minimal.js'
 import rulesBackgrounds from '../../../acceptance/rules-backgrounds/rules-backgrounds.js'
-import { render } from '../../../test-utils/index.js'
 import { EnvelopesProvider } from '../app/index.js'
 import { Scenario } from './index.js'
 
