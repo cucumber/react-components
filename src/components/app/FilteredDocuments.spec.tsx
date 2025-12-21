@@ -6,6 +6,8 @@ import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
+import hooksConditional from '../../../acceptance/hooks-conditional/hooks-conditional.js'
+import retry from '../../../acceptance/retry/retry.js'
 import randomOrderRun from '../../../samples/random-order-run.js'
 import targetedRun from '../../../samples/targeted-run.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
@@ -121,6 +123,163 @@ describe('FilteredDocuments', () => {
         ).not.to.exist
         expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
       })
+    })
+
+    it('shows only passed scenarios when other statuses are hidden', async () => {
+      const { getByRole, getByText, queryByText } = render(
+        <EnvelopesProvider envelopes={retry}>
+          <InMemorySearchProvider
+            defaultHideStatuses={[
+              TestStepResultStatus.FAILED,
+              TestStepResultStatus.SKIPPED,
+              TestStepResultStatus.PENDING,
+              TestStepResultStatus.UNDEFINED,
+              TestStepResultStatus.AMBIGUOUS,
+            ]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('button', { name: 'samples/retry/retry.feature' }))
+      await userEvent.click(getByRole('button', { name: 'samples/retry/retry.feature' }))
+
+      await waitFor(() => getByText("Test cases that pass aren't retried"))
+
+      expect(getByText('Test cases that fail are retried if within the --retry limit')).to.be
+        .visible
+      expect(getByText('Test cases that fail will continue to retry up to the --retry limit')).to.be
+        .visible
+      expect(queryByText("Test cases won't retry after failing more than the --retry limit")).not.to
+        .exist
+    })
+
+    it('shows only failed scenarios when other statuses are hidden', async () => {
+      const { getByRole, queryByRole, getByText } = render(
+        <EnvelopesProvider envelopes={retry}>
+          <InMemorySearchProvider
+            defaultHideStatuses={[
+              TestStepResultStatus.PASSED,
+              TestStepResultStatus.SKIPPED,
+              TestStepResultStatus.PENDING,
+              TestStepResultStatus.UNDEFINED,
+              TestStepResultStatus.AMBIGUOUS,
+            ]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('button', { name: 'samples/retry/retry.feature' }))
+      await userEvent.click(getByRole('button', { name: 'samples/retry/retry.feature' }))
+
+      await waitFor(() =>
+        getByText("Test cases won't retry after failing more than the --retry limit")
+      )
+
+      expect(queryByRole('heading', { name: "Scenario: Test cases that pass aren't retried" })).not
+        .to.exist
+      expect(
+        queryByRole('heading', {
+          name: 'Scenario: Test cases that fail are retried if within the --retry limit',
+        })
+      ).not.to.exist
+      expect(
+        queryByRole('heading', {
+          name: 'Scenario: Test cases that fail will continue to retry up to the --retry limit',
+        })
+      ).not.to.exist
+    })
+
+    it('shows scenarios matching any of multiple statuses', async () => {
+      const { getByRole, getByText } = render(
+        <EnvelopesProvider envelopes={retry}>
+          <InMemorySearchProvider
+            defaultHideStatuses={[
+              TestStepResultStatus.SKIPPED,
+              TestStepResultStatus.PENDING,
+              TestStepResultStatus.UNDEFINED,
+              TestStepResultStatus.AMBIGUOUS,
+            ]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('button', { name: 'samples/retry/retry.feature' }))
+      await userEvent.click(getByRole('button', { name: 'samples/retry/retry.feature' }))
+
+      await waitFor(() => getByText("Test cases that pass aren't retried"))
+
+      expect(getByText('Test cases that fail are retried if within the --retry limit')).to.be
+        .visible
+      expect(getByText('Test cases that fail will continue to retry up to the --retry limit')).to.be
+        .visible
+      expect(getByText("Test cases won't retry after failing more than the --retry limit")).to.be
+        .visible
+    })
+
+    it('treats scenarios with failed before hooks as failed', async () => {
+      const { getByRole, getByText, queryByText } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider
+            defaultHideStatuses={[
+              TestStepResultStatus.PASSED,
+              TestStepResultStatus.SKIPPED,
+              TestStepResultStatus.PENDING,
+              TestStepResultStatus.UNDEFINED,
+              TestStepResultStatus.AMBIGUOUS,
+            ]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() =>
+        getByRole('button', { name: 'samples/hooks-conditional/hooks-conditional.feature' })
+      )
+      await userEvent.click(
+        getByRole('button', { name: 'samples/hooks-conditional/hooks-conditional.feature' })
+      )
+
+      await waitFor(() => getByText('A failure in the before hook and a skipped step'))
+
+      expect(getByText('A failure in the after hook and a passed step')).to.be.visible
+      expect(queryByText('With an tag, a passed step and hook')).not.to.exist
+    })
+
+    it('treats scenarios with failed after hooks as failed', async () => {
+      const { getByRole, getByText, queryByText } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider
+            defaultHideStatuses={[
+              TestStepResultStatus.PASSED,
+              TestStepResultStatus.SKIPPED,
+              TestStepResultStatus.PENDING,
+              TestStepResultStatus.UNDEFINED,
+              TestStepResultStatus.AMBIGUOUS,
+            ]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() =>
+        getByRole('button', { name: 'samples/hooks-conditional/hooks-conditional.feature' })
+      )
+      await userEvent.click(
+        getByRole('button', { name: 'samples/hooks-conditional/hooks-conditional.feature' })
+      )
+
+      await waitFor(() => getByText('A failure in the after hook and a passed step'))
+
+      expect(getByText('A failure in the before hook and a skipped step')).to.be.visible
+      expect(queryByText('With an tag, a passed step and hook')).not.to.exist
     })
   })
 })
