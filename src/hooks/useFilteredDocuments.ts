@@ -27,7 +27,6 @@ export function useFilteredDocuments(): {
         .map((document) =>
           filterByStatus(
             document,
-            gherkinQuery,
             cucumberQuery,
             statuses.filter((s) => !hideStatuses.includes(s))
           )
@@ -36,7 +35,7 @@ export function useFilteredDocuments(): {
       filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
       setResults(filtered)
     })
-  }, [query, hideStatuses, gherkinQuery, cucumberQuery, searchable])
+  }, [query, hideStatuses, cucumberQuery, searchable])
   return {
     results,
     filtered: !unchanged,
