@@ -1,9 +1,9 @@
-import { GherkinDocument } from '@cucumber/messages'
+import { GherkinDocumentWalker, rejectAllFilters } from '@cucumber/gherkin-utils'
+import { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
+import { Query } from '@cucumber/query'
 import { useEffect, useState } from 'react'
 
-import filterByStatus from '../filter/filterByStatus.js'
 import { createSearch, Searchable } from '../search/index.js'
-import statuses from '../statuses.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
@@ -23,21 +23,34 @@ export function useFilteredDocuments(): {
       return
     }
     searchable.search(query).then((searched) => {
-      const filtered = searched
-        .map((document) =>
-          filterByStatus(
-            document,
-            cucumberQuery,
-            statuses.filter((s) => !hideStatuses.includes(s))
-          )
-        )
-        .filter((document) => document !== null) as GherkinDocument[]
-      filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
-      setResults(filtered)
+      const filtered = filterByStatus(searched, hideStatuses, cucumberQuery)
+      const sorted = filtered.toSorted((a, b) => (a.uri || '').localeCompare(b.uri || ''))
+      setResults(sorted)
     })
   }, [query, hideStatuses, cucumberQuery, searchable])
   return {
     results,
     filtered: !unchanged,
   }
+}
+
+function filterByStatus(
+  searched: ReadonlyArray<GherkinDocument>,
+  hideStatuses: ReadonlyArray<TestStepResultStatus>,
+  query: Query
+): ReadonlyArray<GherkinDocument> {
+  const walker = new GherkinDocumentWalker({
+    ...rejectAllFilters,
+    acceptScenario: (scenario) => {
+      return query
+        .findAllTestCaseStarted()
+        .filter((started) => query.findLineageBy(started)?.scenario?.id === scenario.id)
+        .map((started) => query.findMostSevereTestStepResultBy(started)?.status)
+        .some((status) => !hideStatuses.includes(status as TestStepResultStatus))
+    },
+  })
+
+  return searched
+    .map((original) => walker.walkGherkinDocument(original))
+    .filter((gherkinDocument) => !!gherkinDocument)
 }
