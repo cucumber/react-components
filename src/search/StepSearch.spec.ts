@@ -2,7 +2,7 @@ import * as messages from '@cucumber/messages'
 import { Step } from '@cucumber/messages'
 import { expect } from 'chai'
 
-import { makeStep } from '../../test-utils/index.js'
+import { makeStep } from '../../test/search.js'
 import { createStepSearch } from './StepSearch.js'
 import { TypedIndex } from './types.js'
 

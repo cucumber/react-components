@@ -1,4 +1,5 @@
 import { Query } from '@cucumber/query'
+import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
 import React from 'react'
@@ -6,7 +7,6 @@ import React from 'react'
 import hooksSample from '../../../acceptance/hooks/hooks.js'
 import hooksConditionalSample from '../../../acceptance/hooks-conditional/hooks-conditional.js'
 import hooksSkippedSample from '../../../acceptance/hooks-skipped/hooks-skipped.js'
-import { render } from '../../../test-utils/index.js'
 import { EnvelopesProvider } from '../app/index.js'
 import { TestCaseOutcome } from './TestCaseOutcome.js'
 

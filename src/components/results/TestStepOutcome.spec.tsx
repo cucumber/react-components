@@ -1,10 +1,10 @@
 import { GherkinDocument } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
+import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
 import minimalSample from '../../../acceptance/minimal/minimal.js'
-import { render } from '../../../test-utils/index.js'
 import { EnvelopesProvider } from '../app/index.js'
 import { TestStepOutcome } from './TestStepOutcome.js'
 

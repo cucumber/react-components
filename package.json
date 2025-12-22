@@ -21,8 +21,8 @@
     "start": "ladle serve",
     "build": "ladle build",
     "preview": "ladle preview",
-    "fix": "eslint --max-warnings 0 src test-utils --fix src && prettier --write src test-utils",
-    "lint": "eslint --max-warnings 0 src test-utils && prettier --check src test-utils",
+    "fix": "eslint --max-warnings 0 src test --fix src && prettier --write src test",
+    "lint": "eslint --max-warnings 0 src test && prettier --check src test",
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
@@ -58,9 +58,7 @@
   },
   "devDependencies": {
     "@cucumber/compatibility-kit": "^25.0.0",
-    "@cucumber/fake-cucumber": "^18.1.0",
     "@cucumber/gherkin": "^35.1.0",
-    "@cucumber/gherkin-streams": "^6.0.0",
     "@cucumber/message-streams": "^4.0.1",
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.2.0",

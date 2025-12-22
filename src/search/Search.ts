@@ -1,5 +1,5 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
+import { GherkinDocument } from '@cucumber/messages'
 
 import isTagExpression from '../isTagExpression.js'
 import { createTagSearch } from './TagSearch.js'
@@ -7,12 +7,18 @@ import { createTextSearch } from './TextSearch.js'
 import { Searchable } from './types.js'
 
 class Search {
+  private readonly documents: GherkinDocument[] = []
+
   constructor(
     private readonly tagSearch: Searchable,
     private readonly textSearch: Searchable
   ) {}
 
-  public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
+  public async search(query: string): Promise<readonly GherkinDocument[]> {
+    if (!query) {
+      return [...this.documents]
+    }
+
     if (isTagExpression(query)) {
       try {
         return await this.tagSearch.search(query)
@@ -24,7 +30,8 @@ class Search {
     return this.textSearch.search(query)
   }
 
-  public async add(gherkinDocument: messages.GherkinDocument) {
+  public async add(gherkinDocument: GherkinDocument) {
+    this.documents.push(gherkinDocument)
     await this.tagSearch.add(gherkinDocument)
     await this.textSearch.add(gherkinDocument)
     return this

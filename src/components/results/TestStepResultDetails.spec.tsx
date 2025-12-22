@@ -1,8 +1,8 @@
 import { TestStepResultStatus } from '@cucumber/messages'
+import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'
 
-import { render } from '../../../test-utils/index.js'
 import { TestStepResultDetails } from './TestStepResultDetails.js'
 
 describe('TestStepResultDetails', () => {
