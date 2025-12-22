@@ -24,7 +24,7 @@ export function useFilteredDocuments(): {
     }
     searchable.search(query).then((searched) => {
       const filtered = filterByStatus(searched, hideStatuses, cucumberQuery)
-      const sorted = filtered.toSorted((a, b) => (a.uri || '').localeCompare(b.uri || ''))
+      const sorted = sortByUri(filtered)
       setResults(sorted)
     })
   }, [query, hideStatuses, cucumberQuery, searchable])
@@ -52,5 +52,11 @@ function filterByStatus(
 
   return searched
     .map((original) => walker.walkGherkinDocument(original))
-    .filter((gherkinDocument) => !!gherkinDocument)
+    .filter((gherkinDocument) => !!gherkinDocument) as ReadonlyArray<GherkinDocument>
+}
+
+function sortByUri(filtered: ReadonlyArray<GherkinDocument>) {
+  const sorted = [...filtered]
+  sorted.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
+  return sorted
 }
