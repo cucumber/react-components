@@ -22,22 +22,20 @@ export function useFilteredDocuments(): {
     if (!searchable) {
       return
     }
-    ;(query ? searchable.search(query) : Promise.resolve(gherkinQuery.getGherkinDocuments())).then(
-      (searched) => {
-        const filtered = searched
-          .map((document) =>
-            filterByStatus(
-              document,
-              gherkinQuery,
-              cucumberQuery,
-              statuses.filter((s) => !hideStatuses.includes(s))
-            )
+    searchable.search(query).then((searched) => {
+      const filtered = searched
+        .map((document) =>
+          filterByStatus(
+            document,
+            gherkinQuery,
+            cucumberQuery,
+            statuses.filter((s) => !hideStatuses.includes(s))
           )
-          .filter((document) => document !== null) as GherkinDocument[]
-        filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
-        setResults(filtered)
-      }
-    )
+        )
+        .filter((document) => document !== null) as GherkinDocument[]
+      filtered.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
+      setResults(filtered)
+    })
   }, [query, hideStatuses, gherkinQuery, cucumberQuery, searchable])
   return {
     results,
