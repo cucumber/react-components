@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Use magenta for ambiguous ([#424](https://github.com/cucumber/react-components/pull/424))
+- Update skipped, pending and undefined colours ([#425](https://github.com/cucumber/react-components/pull/425))
 
 ## [24.1.2] - 2025-11-29
 ### Fixed
