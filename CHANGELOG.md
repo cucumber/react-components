@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Use magenta for ambiguous ([#424](https://github.com/cucumber/react-components/pull/424))
 
 ## [24.1.2] - 2025-11-29
 ### Fixed
