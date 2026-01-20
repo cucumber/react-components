@@ -1,14 +1,8 @@
 $statusColors:
-  'PASSED' oklch(72.3% 0.219 149.579),
-  // green-500
-  'SKIPPED' oklch(62.3% 0.214 259.815),
-  // blue-500
-  'PENDING' oklch(79.5% 0.184 86.047),
-  // yellow-500
-  'UNDEFINED' oklch(79.5% 0.184 86.047),
-  // yellow-500
-  'AMBIGUOUS' oklch(66.7% 0.295 322.15),
-  // fuchsia-500
-  'FAILED' oklch(63.7% 0.237 25.331),
-  // red-500
-  'UNKNOWN' oklch(55.4% 0.046 257.417); // slate-500;
+  'PASSED' oklch(72.3% 0.219 149.579) /* green-500 */,
+  'SKIPPED' oklch(79.5% 0.184 86.047) /* yellow-500 */,
+  'PENDING' oklch(71.5% 0.143 215.221) /* cyan-500 */,
+  'UNDEFINED' oklch(62.3% 0.214 259.815) /* blue-500 */,
+  'AMBIGUOUS' oklch(66.7% 0.295 322.15) /* fuchsia-500 */,
+  'FAILED' oklch(63.7% 0.237 25.331) /* red-500 */,
+  'UNKNOWN' oklch(55.4% 0.046 257.417) /* slate-500 */;
