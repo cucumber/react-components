@@ -90,10 +90,6 @@ describe('FilteredDocuments', () => {
       )
       await waitFor(() => getByText('samples/attachments/attachments.feature'))
 
-      await userEvent.click(
-        getByRole('button', { name: 'samples/attachments/attachments.feature' })
-      )
-
       expect(getByRole('heading', { name: 'Scenario: Log JSON' })).to.be.visible
       expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.to.exist
     })
