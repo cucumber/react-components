@@ -1,12 +1,13 @@
-import { TestStepResult, TestStepResultStatus } from '@cucumber/messages'
+import { TestStepResult } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { ErrorMessage } from '../gherkin/index.js'
 
-export const TestStepResultDetails: FC<TestStepResult> = ({ status, message, exception }) => {
-  if (status !== TestStepResultStatus.FAILED) {
-    return null
-  }
+interface Props {
+  result: TestStepResult
+}
+
+export const FailedResult: FC<Props> = ({ result: { exception, message } }) => {
   if (exception?.stackTrace) {
     return <ErrorMessage>{exception.stackTrace}</ErrorMessage>
   }

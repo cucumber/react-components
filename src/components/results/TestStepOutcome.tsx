@@ -6,10 +6,10 @@ import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'
 import { composePickleStepTitle } from '../gherkin/composePickleStepTitle.js'
 import { DataTable, DocString, Keyword, Parameter, StatusIcon } from '../gherkin/index.js'
 import { AmbiguousResult } from './AmbiguousResult.js'
+import { FailedResult } from './FailedResult.js'
 import { TestStepAttachments } from './TestStepAttachments.js'
 import { TestStepDuration } from './TestStepDuration.js'
 import styles from './TestStepOutcome.module.scss'
-import { TestStepResultDetails } from './TestStepResultDetails.js'
 
 interface Props {
   testStep: TestStep
@@ -36,7 +36,9 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
         {testStepFinished.testStepResult.status === TestStepResultStatus.AMBIGUOUS && (
           <AmbiguousResult testStep={testStep} />
         )}
-        <TestStepResultDetails {...testStepFinished.testStepResult} />
+        {testStepFinished.testStepResult.status === TestStepResultStatus.FAILED && (
+          <FailedResult result={testStepFinished.testStepResult} />
+        )}
         <TestStepAttachments testStepOrHookFinished={testStepFinished} />
       </div>
     </li>

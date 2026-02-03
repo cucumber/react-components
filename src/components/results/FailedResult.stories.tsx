@@ -2,10 +2,10 @@ import { TestStepResult, TestStepResultStatus } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { TestStepResultDetails } from './TestStepResultDetails.js'
+import { FailedResult } from './FailedResult.js'
 
 export default {
-  title: 'Results/TestStepResultDetails',
+  title: 'Results/FailedResult',
 }
 
 type TemplateArgs = {
@@ -13,7 +13,7 @@ type TemplateArgs = {
 }
 
 const Template: Story<TemplateArgs> = ({ result }) => {
-  return <TestStepResultDetails {...result} />
+  return <FailedResult {...result} />
 }
 
 export const Legacy = Template.bind({})

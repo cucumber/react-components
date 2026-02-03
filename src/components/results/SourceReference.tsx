@@ -8,7 +8,7 @@ interface Props {
   sourceReference: MessagesSourceReference
 }
 
-export const SourceReference: FC<Props> = ({sourceReference}) => {
+export const SourceReference: FC<Props> = ({ sourceReference }) => {
   if (sourceReference.uri) {
     let stringified = sourceReference.uri
     if (sourceReference.location) {
