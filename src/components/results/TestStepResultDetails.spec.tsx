@@ -62,4 +62,19 @@ describe('TestStepResultDetails', () => {
 
     expect(container).to.include.text('at /some/file.js:1:2')
   })
+
+  it('should not render the message if the status isnt FAILED', () => {
+    const { container } = render(
+      <TestStepResultDetails
+        duration={{ seconds: 1, nanos: 0 }}
+        status={TestStepResultStatus.SKIPPED}
+        exception={{
+          type: 'Whoopsie',
+          message: 'Bad things happened',
+        }}
+      />
+    )
+
+    expect(container).not.to.include.text('Bad things happened')
+  })
 })
