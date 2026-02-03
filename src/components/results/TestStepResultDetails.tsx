@@ -7,11 +7,13 @@ export const TestStepResultDetails: FC<TestStepResult> = ({ status, message, exc
   if (status !== TestStepResultStatus.FAILED) {
     return null
   }
+  if (exception?.stackTrace) {
+    return <ErrorMessage>{exception.stackTrace}</ErrorMessage>
+  }
   if (exception) {
     return (
       <ErrorMessage>
         <strong>{exception.type}</strong> {exception.message}
-        {exception.stackTrace && <div>{exception.stackTrace}</div>}
       </ErrorMessage>
     )
   }

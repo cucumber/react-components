@@ -54,7 +54,7 @@ WithStackTrace.args = {
       type: 'TypeError',
       message: "Cannot read properties of null (reading 'type')",
       stackTrace:
-        '    at TodosPage.addItem (/Users/somebody/Projects/my-project/support/pages/TodosPage.ts:39:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CustomWorld.<anonymous> (/Users/somebody/Projects/my-project/support/steps/steps.ts:20:5)',
+        "TypeError: Cannot read properties of null (reading 'type')\n    at TodosPage.addItem (/Users/somebody/Projects/my-project/support/pages/TodosPage.ts:39:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CustomWorld.<anonymous> (/Users/somebody/Projects/my-project/support/steps/steps.ts:20:5)",
     },
   },
 }
