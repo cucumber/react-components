@@ -1,0 +1,27 @@
+@use '../../styles/theming';
+
+.note {
+  padding: 0;
+  margin: 0;
+}
+
+.definitions {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  > * + * {
+    margin-top: 0.25em;
+  }
+}
+
+.definition {
+  > * + * {
+    margin-left: 0.5em;
+  }
+}
+
+.pattern {
+  color: theming.$parameterColor;
+  font-size: inherit;
+}

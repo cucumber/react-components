@@ -1,10 +1,11 @@
-import { PickleStep, TestStep, TestStepFinished } from '@cucumber/messages'
+import { PickleStep, TestStep, TestStepFinished, TestStepResultStatus } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'
 import { composePickleStepTitle } from '../gherkin/composePickleStepTitle.js'
 import { DataTable, DocString, Keyword, Parameter, StatusIcon } from '../gherkin/index.js'
+import { AmbiguousResult } from './AmbiguousResult.js'
 import { TestStepAttachments } from './TestStepAttachments.js'
 import { TestStepDuration } from './TestStepDuration.js'
 import styles from './TestStepOutcome.module.scss'
@@ -32,6 +33,9 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
       </div>
       <div className={styles.content}>
         {testStep.pickleStepId && <PickleStepArgument testStep={testStep} />}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.AMBIGUOUS && (
+          <AmbiguousResult testStep={testStep} />
+        )}
         <TestStepResultDetails {...testStepFinished.testStepResult} />
         <TestStepAttachments testStepOrHookFinished={testStepFinished} />
       </div>
