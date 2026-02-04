@@ -6,6 +6,7 @@ import React from 'react'
 
 import ambiguousSample from '../../../acceptance/ambiguous/ambiguous.js'
 import minimalSample from '../../../acceptance/minimal/minimal.js'
+import undefinedSample from '../../../acceptance/undefined/undefined.js'
 import { EnvelopesProvider } from '../app/index.js'
 import { TestStepOutcome } from './TestStepOutcome.js'
 
@@ -29,6 +30,44 @@ describe('TestStepOutcome', () => {
     expect(getByText('samples/ambiguous/ambiguous.ts:3')).to.be.visible
     expect(getByText('^a step with (.*?)$')).to.be.visible
     expect(getByText('samples/ambiguous/ambiguous.ts:7')).to.be.visible
+  })
+
+  it('should show snippets for an undefined result when available', () => {
+    const cucumberQuery = new CucumberQuery()
+    undefinedSample.forEach((envelope) => cucumberQuery.update(envelope))
+
+    const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
+    const [[testStepFinished, testStep]] =
+      cucumberQuery.findTestStepFinishedAndTestStepBy(testCaseStarted)
+
+    const { container, getByText } = render(
+      <EnvelopesProvider envelopes={undefinedSample}>
+        <TestStepOutcome testStep={testStep} testStepFinished={testStepFinished} />
+      </EnvelopesProvider>
+    )
+
+    expect(getByText('No step definition found. Implement with the snippet(s) below:')).to.be
+      .visible
+    expect(container).to.include.text('Given("a step that is yet to be defined", ()')
+  })
+
+  it('should show a brief note for an undefined result when no snippets available', () => {
+    const cucumberQuery = new CucumberQuery()
+    // omit suggestion messages so there are no snippets
+    const envelopes = undefinedSample.filter((envelope) => !envelope.suggestion)
+    envelopes.forEach((envelope) => cucumberQuery.update(envelope))
+
+    const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
+    const [[testStepFinished, testStep]] =
+      cucumberQuery.findTestStepFinishedAndTestStepBy(testCaseStarted)
+
+    const { getByText } = render(
+      <EnvelopesProvider envelopes={envelopes}>
+        <TestStepOutcome testStep={testStep} testStepFinished={testStepFinished} />
+      </EnvelopesProvider>
+    )
+
+    expect(getByText('No step definition found.')).to.be.visible
   })
 
   it('should still work when we cant resolve the original step', () => {

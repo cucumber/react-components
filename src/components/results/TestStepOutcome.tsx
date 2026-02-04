@@ -10,6 +10,7 @@ import { FailedResult } from './FailedResult.js'
 import { TestStepAttachments } from './TestStepAttachments.js'
 import { TestStepDuration } from './TestStepDuration.js'
 import styles from './TestStepOutcome.module.scss'
+import { UndefinedResult } from './UndefinedResult.js'
 
 interface Props {
   testStep: TestStep
@@ -38,6 +39,9 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
         )}
         {testStepFinished.testStepResult.status === TestStepResultStatus.FAILED && (
           <FailedResult result={testStepFinished.testStepResult} />
+        )}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.UNDEFINED && (
+          <UndefinedResult testStep={testStep} />
         )}
         <TestStepAttachments testStepOrHookFinished={testStepFinished} />
       </div>
