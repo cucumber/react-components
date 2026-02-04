@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Stop errors and attachments getting too wide ([#427](https://github.com/cucumber/react-components/pull/427))
 
 ## [24.2.0] - 2026-01-31
 ### Changed
