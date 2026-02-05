@@ -2,10 +2,10 @@ import { TestStepResult, TestStepResultStatus } from '@cucumber/messages'
 import { Story } from '@ladle/react'
 import React from 'react'
 
-import { TestStepResultDetails } from './TestStepResultDetails.js'
+import { FailedResult } from './FailedResult.js'
 
 export default {
-  title: 'Results/TestStepResultDetails',
+  title: 'Results/FailedResult',
 }
 
 type TemplateArgs = {
@@ -13,7 +13,7 @@ type TemplateArgs = {
 }
 
 const Template: Story<TemplateArgs> = ({ result }) => {
-  return <TestStepResultDetails {...result} />
+  return <FailedResult {...result} />
 }
 
 export const Legacy = Template.bind({})
@@ -54,7 +54,7 @@ WithStackTrace.args = {
       type: 'TypeError',
       message: "Cannot read properties of null (reading 'type')",
       stackTrace:
-        '    at TodosPage.addItem (/Users/somebody/Projects/my-project/support/pages/TodosPage.ts:39:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CustomWorld.<anonymous> (/Users/somebody/Projects/my-project/support/steps/steps.ts:20:5)',
+        "TypeError: Cannot read properties of null (reading 'type')\n    at TodosPage.addItem (/Users/somebody/Projects/my-project/support/pages/TodosPage.ts:39:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CustomWorld.<anonymous> (/Users/somebody/Projects/my-project/support/steps/steps.ts:20:5)",
     },
   },
 }
