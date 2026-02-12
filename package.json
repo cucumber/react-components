@@ -34,7 +34,7 @@
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@orama/orama": "^2.0.0-beta.7",
-    "@orama/stemmers": "^2.0.0-beta.7",
+    "@orama/stemmers": "^3.0.0",
     "@teppeis/multimaps": "2.0.0",
     "ansi-to-html": "0.7.2",
     "color": "4.2.3",
