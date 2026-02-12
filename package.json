@@ -60,7 +60,7 @@
     "@cucumber/compatibility-kit": "^27.0.0",
     "@cucumber/gherkin": "^38.0.0",
     "@cucumber/message-streams": "^4.0.1",
-    "@eslint/compat": "^1.2.7",
+    "@eslint/compat": "^2.0.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.20.0",
     "@ladle/react": "^5.0.3",
