@@ -1,7 +1,40 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>cucumber/renovate-config"
-  ],
-  "rebaseWhen": "never"
+  "extends": ["github>cucumber/renovate-config"],
+  "packageRules": [
+    {
+      "groupName": "cucumber ecosystem",
+      "matchPackagePatterns": ["^@cucumber/"]
+    },
+    {
+      "groupName": "orama ecosystem",
+      "matchPackagePatterns": ["^@orama/"]
+    },
+    {
+      "groupName": "eslint ecosystem",
+      "matchPackagePatterns": ["^eslint", "^@eslint/", "^@typescript-eslint/", "^globals$"]
+    },
+    {
+      "groupName": "mocha/chain/sinon ecosystem",
+      "matchPackageNames": [
+        "mocha",
+        "chai",
+        "chai-dom",
+        "sinon",
+        "sinon-chai",
+        "jsdom",
+        "global-jsdom",
+        "@types/mocha",
+        "@types/chai",
+        "@types/chai-dom",
+        "@types/sinon",
+        "@types/sinon-chai",
+        "@types/jsdom"
+      ]
+    },
+    {
+      "groupName": "rehype/remark ecosystem",
+      "matchPackagePatterns": ["^rehype-", "^remark-"]
+    }
+  ]
 }
