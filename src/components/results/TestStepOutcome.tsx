@@ -1,14 +1,18 @@
-import { PickleStep, TestStep, TestStepFinished } from '@cucumber/messages'
+import { PickleStep, TestStep, TestStepFinished, TestStepResultStatus } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'
 import { composePickleStepTitle } from '../gherkin/composePickleStepTitle.js'
 import { DataTable, DocString, Keyword, Parameter, StatusIcon } from '../gherkin/index.js'
+import { AmbiguousResult } from './AmbiguousResult.js'
+import { FailedResult } from './FailedResult.js'
+import { PendingResult } from './PendingResult.js'
+import { SkippedResult } from './SkippedResult.js'
 import { TestStepAttachments } from './TestStepAttachments.js'
 import { TestStepDuration } from './TestStepDuration.js'
 import styles from './TestStepOutcome.module.scss'
-import { TestStepResultDetails } from './TestStepResultDetails.js'
+import { UndefinedResult } from './UndefinedResult.js'
 
 interface Props {
   testStep: TestStep
@@ -32,7 +36,21 @@ export const TestStepOutcome: FC<Props> = ({ testStep, testStepFinished }) => {
       </div>
       <div className={styles.content}>
         {testStep.pickleStepId && <PickleStepArgument testStep={testStep} />}
-        <TestStepResultDetails {...testStepFinished.testStepResult} />
+        {testStepFinished.testStepResult.status === TestStepResultStatus.AMBIGUOUS && (
+          <AmbiguousResult testStep={testStep} />
+        )}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.FAILED && (
+          <FailedResult result={testStepFinished.testStepResult} />
+        )}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.PENDING && (
+          <PendingResult result={testStepFinished.testStepResult} />
+        )}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.SKIPPED && (
+          <SkippedResult result={testStepFinished.testStepResult} />
+        )}
+        {testStepFinished.testStepResult.status === TestStepResultStatus.UNDEFINED && (
+          <UndefinedResult testStep={testStep} />
+        )}
         <TestStepAttachments testStepOrHookFinished={testStepFinished} />
       </div>
     </li>
