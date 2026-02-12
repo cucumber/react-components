@@ -92,7 +92,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "glob": "8.1.0",
     "global-jsdom": "^9.1.0",
-    "globals": "^16.0.0",
+    "globals": "^17.0.0",
     "jsdom": "22.1.0",
     "mocha": "^11.2.2",
     "nyc": "15.1.0",
