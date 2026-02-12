@@ -1,2 +1,2 @@
+export * from './FailedResult.js'
 export * from './TestCaseOutcome.js'
-export * from './TestStepResultDetails.js'

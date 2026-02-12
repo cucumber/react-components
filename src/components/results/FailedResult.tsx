@@ -3,12 +3,18 @@ import React, { FC } from 'react'
 
 import { ErrorMessage } from '../gherkin/index.js'
 
-export const TestStepResultDetails: FC<TestStepResult> = ({ message, exception }) => {
+interface Props {
+  result: TestStepResult
+}
+
+export const FailedResult: FC<Props> = ({ result: { exception, message } }) => {
+  if (exception?.stackTrace) {
+    return <ErrorMessage>{exception.stackTrace}</ErrorMessage>
+  }
   if (exception) {
     return (
       <ErrorMessage>
         <strong>{exception.type}</strong> {exception.message}
-        {exception.stackTrace && <div>{exception.stackTrace}</div>}
       </ErrorMessage>
     )
   }
