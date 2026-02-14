@@ -3,6 +3,10 @@
   "extends": ["github>cucumber/renovate-config"],
   "packageRules": [
     {
+      "groupName": "jsdom ecosystem",
+      "matchPackageNames": ["@types/jsdom", "global-jsdom", "jsdom"]
+    },
+    {
       "groupName": "orama ecosystem",
       "matchPackagePatterns": ["^@orama/"]
     },
