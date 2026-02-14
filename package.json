@@ -26,10 +26,10 @@
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
-    "@cucumber/gherkin-utils": "10.0.0",
-    "@cucumber/messages": "29.0.1",
-    "@cucumber/query": "14.7.0",
-    "@cucumber/tag-expressions": "6.2.0",
+    "@cucumber/gherkin-utils": "11.0.0",
+    "@cucumber/messages": "32.0.1",
+    "@cucumber/query": "15.0.1",
+    "@cucumber/tag-expressions": "9.0.0",
     "@fortawesome/fontawesome-svg-core": "7.2.0",
     "@fortawesome/free-solid-svg-icons": "7.2.0",
     "@fortawesome/react-fontawesome": "3.2.0",
@@ -57,7 +57,7 @@
     "react-dom": "~18"
   },
   "devDependencies": {
-    "@cucumber/compatibility-kit": "^27.0.0",
+    "@cucumber/compatibility-kit": "^29.0.0",
     "@cucumber/gherkin": "^38.0.0",
     "@cucumber/message-streams": "^4.0.1",
     "@eslint/compat": "^1.2.7",
