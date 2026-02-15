@@ -3,7 +3,7 @@
   "extension": ["ts", "tsx"],
   "recursive": true,
   "require": [
-    "./register-hooks.cjs"
+    "./register-hooks.mjs"
   ],
   "timeout": 10000
 }
