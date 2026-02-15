@@ -68,7 +68,7 @@ export const SearchBar: FC = () => {
                       />
                       <span className={styles.status} data-status={status}>
                         <FontAwesomeIcon aria-hidden="true" icon={faCheck} />
-                        <span>{name}</span>
+                        <span>{name}</span>{' '}
                         <strong>{scenarioCountByStatus[status]}</strong>
                       </span>
                     </label>
