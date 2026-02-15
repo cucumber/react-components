@@ -203,4 +203,15 @@ https://github.com/cucumber/cucumber-ruby
     expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-ruby' })).to.be
       .visible
   })
+
+  it('renders a fallback when the attachment cannot be rendered', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/plain',
+      body: 'this is not valid base64!!!',
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
+  })
 })
