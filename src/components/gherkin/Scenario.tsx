@@ -29,13 +29,8 @@ const DefaultRenderer: DefaultComponent<ScenarioProps> = ({ scenario }) => {
       <Description description={scenario.description} />
       <Children>
         {testCaseStarted && <TestCaseOutcome testCaseStarted={testCaseStarted} />}
-        {examplesList.length > 0 && (
-          <>
-            {examplesList.map((examples, index) => (
-              <Examples key={index} examples={examples} />
-            ))}
-          </>
-        )}
+        {examplesList.length > 0 &&
+          examplesList.map((examples, index) => <Examples key={index} examples={examples} />)}
       </Children>
     </section>
   )

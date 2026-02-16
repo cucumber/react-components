@@ -19,7 +19,7 @@ export function composeHookStepTitle(hook?: Hook): string {
   }
 
   if (hook?.name) {
-    result += ': ' + hook.name
+    result += `: ${hook.name}`
   }
 
   return result

@@ -17,7 +17,7 @@ const DefaultRenderer: DefaultComponent<AnchorProps, AnchorClasses> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      <a href={'#' + id} className={defaultStyles.anchor}>
+      <a href={`#${id}`} className={defaultStyles.anchor}>
         <FontAwesomeIcon icon={faLink} />
       </a>
       {children}

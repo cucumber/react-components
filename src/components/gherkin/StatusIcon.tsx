@@ -44,12 +44,12 @@ export const StatusIcon: FunctionComponent<StatusIconProps> = (props) => {
 
 const statusIcon = (status: messages.TestStepResultStatus): IconDefinition => {
   return {
-    ['PASSED']: faCheckCircle,
-    ['SKIPPED']: faStopCircle,
-    ['PENDING']: faPauseCircle,
-    ['UNDEFINED']: faQuestionCircle,
-    ['AMBIGUOUS']: faInfoCircle,
-    ['FAILED']: faTimesCircle,
-    ['UNKNOWN']: faQuestionCircle,
+    PASSED: faCheckCircle,
+    SKIPPED: faStopCircle,
+    PENDING: faPauseCircle,
+    UNDEFINED: faQuestionCircle,
+    AMBIGUOUS: faInfoCircle,
+    FAILED: faTimesCircle,
+    UNKNOWN: faQuestionCircle,
   }[status]
 }

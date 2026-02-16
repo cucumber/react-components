@@ -100,7 +100,8 @@ const PickleStepArgument: FC<{ testStep: TestStep }> = ({ testStep }) => {
   const pickleStep = cucumberQuery.findPickleStepBy(testStep) as PickleStep
   if (pickleStep.argument?.docString) {
     return <DocString docString={pickleStep.argument.docString} />
-  } else if (pickleStep.argument?.dataTable) {
+  }
+  if (pickleStep.argument?.dataTable) {
     return <DataTable dataTable={pickleStep.argument.dataTable} />
   }
   return null

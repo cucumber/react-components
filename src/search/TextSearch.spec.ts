@@ -1,4 +1,4 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import { AstBuilder, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
 import { pretty } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'

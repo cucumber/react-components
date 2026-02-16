@@ -4,7 +4,7 @@ import React, { type FC } from 'react'
 import { ErrorMessage } from '../ErrorMessage.js'
 
 export const Video: FC<{ attachment: messages.Attachment }> = ({ attachment }) => {
-  const title = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')'
+  const title = attachment.fileName ?? `Attached Video (${attachment.mediaType})`
   if (attachment.url) {
     return <VideoInternal src={attachment.url} title={title} />
   }

@@ -24,7 +24,7 @@ export function useText(attachment: Attachment) {
     }
   }, [attachment])
   return {
-    title: attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')',
+    title: attachment.fileName ?? `Attached Text (${attachment.mediaType})`,
     loading,
     content,
     error,

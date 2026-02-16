@@ -24,13 +24,14 @@ const DefaultRenderer: DefaultComponent<FeatureProps> = ({ feature }) => {
         {(feature.children || []).map((child, index) => {
           if (child.background) {
             return <Background key={index} background={child.background} />
-          } else if (child.scenario) {
-            return <Scenario key={index} scenario={child.scenario} />
-          } else if (child.rule) {
-            return <Rule key={index} rule={child.rule} />
-          } else {
-            throw new Error('Expected background, scenario or rule')
           }
+          if (child.scenario) {
+            return <Scenario key={index} scenario={child.scenario} />
+          }
+          if (child.rule) {
+            return <Rule key={index} rule={child.rule} />
+          }
+          throw new Error('Expected background, scenario or rule')
         })}
       </Children>
     </section>

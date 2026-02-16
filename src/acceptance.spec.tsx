@@ -1,7 +1,7 @@
-import assert from 'assert'
-import fs from 'fs'
-import { Writable, pipeline } from 'stream'
-import { promisify } from 'util'
+import assert from 'node:assert'
+import fs from 'node:fs'
+import { Writable, pipeline } from 'node:stream'
+import { promisify } from 'node:util'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
 import type * as messages from '@cucumber/messages'
 import type { Envelope } from '@cucumber/messages'
@@ -16,10 +16,10 @@ describe('acceptance tests', function () {
   this.timeout('30s')
 
   describe('with user-provided and compatibility kit data', () => {
-    const localMessageFiles = glob.sync(`test/messages/**/*.ndjson`)
+    const localMessageFiles = glob.sync('test/messages/**/*.ndjson')
     assert.ok(localMessageFiles.length, 'Expected to find some files to test with')
     const cckMessageFiles = glob.sync(
-      `node_modules/@cucumber/compatibility-kit/features/**/*.ndjson`
+      'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson'
     )
     assert.ok(cckMessageFiles.length, 'Expected to find some files to test with')
     const messageFiles = [...localMessageFiles, ...cckMessageFiles]

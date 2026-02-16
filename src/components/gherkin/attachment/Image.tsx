@@ -8,7 +8,7 @@ export const Image: FC<{ attachment: messages.Attachment; classes: AttachmentCla
   attachment,
   classes,
 }) => {
-  const title = attachment.fileName ?? 'Attached Image (' + attachment.mediaType + ')'
+  const title = attachment.fileName ?? `Attached Image (${attachment.mediaType})`
   if (attachment.url) {
     return <ImageInternal src={attachment.url} title={title} className={classes.image} />
   }
