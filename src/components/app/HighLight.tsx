@@ -4,6 +4,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { useSearch } from '../../hooks/index.js'
+import markdownComponents from './markdownComponents.js'
 import rehypePlugins from './rehypePlugins.js'
 import remarkPlugins from './remarkPlugins.js'
 
@@ -45,7 +46,11 @@ export const HighLight: React.FunctionComponent<IProps> = ({
 
     return (
       <div className={appliedClassName}>
-        <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}>
+        <ReactMarkdown
+          remarkPlugins={remarkPlugins}
+          rehypePlugins={rehypePlugins}
+          components={markdownComponents}
+        >
           {highlightedText}
         </ReactMarkdown>
       </div>

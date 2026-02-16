@@ -62,15 +62,9 @@ describe('HighLight', () => {
   })
 
   it('does not render <script> tags in markdown', () => {
-    const { container } = renderHighlight(
-      'Failed XSS: <script>alert("hello")</script>',
-      'alert hello',
-      true
-    )
+    const { container } = renderHighlight('Failed XSS: <script>alert("hello")</script>', '', true)
     // Script tags will be removed (rather than escaped). Ideally we'd *escape* them to &lt;script&gt;.
-    expect(container).to.contain.html(
-      `<div class="highlight"><p>Failed XSS: ("<mark>hello</mark>")</p></div>`
-    )
+    expect(container).to.contain.html(`<div class="highlight"><p>Failed XSS: </p></div>`)
   })
 
   it('renders <section> tags in markdown', () => {
@@ -93,5 +87,14 @@ describe('HighLight', () => {
     expect(container).to.contain.html(
       '<div class="highlight"><p>Failed XSS: <small class="supersmall">hello</small></p></div>'
     )
+  })
+
+  it('renders links with appropriate target and rel attrs', () => {
+    const { container } = renderHighlight('[Example](https://example.com)', '', true)
+    const link = container.querySelector('a')
+    expect(link).to.have.attr('href', 'https://example.com')
+    expect(link).to.have.attr('target', '_blank')
+    expect(link).to.have.attr('rel', 'noopener nofollow noreferrer')
+    expect(link).to.have.text('Example')
   })
 })

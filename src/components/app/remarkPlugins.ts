@@ -1,5 +1,5 @@
-import { PluggableList } from 'react-markdown'
+import { Options } from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
 
-const plugins: PluggableList = [remarkBreaks]
+const plugins: Options['remarkPlugins'] = [remarkBreaks]
 export default plugins

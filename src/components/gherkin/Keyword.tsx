@@ -9,7 +9,7 @@ import {
 import defaultStyles from './Keyword.module.scss'
 
 const DefaultRenderer: DefaultComponent<KeywordProps, KeywordClasses> = ({ children, styles }) => {
-  return <span className={styles.keyword}>{children}</span>
+  return <span className={styles.keyword}>{children} </span>
 }
 
 export const Keyword: FunctionComponent<KeywordProps> = ({ children }) => {

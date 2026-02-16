@@ -1,7 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>cucumber/renovate-config"
-  ],
-  "rebaseWhen": "never"
+  "extends": ["github>cucumber/renovate-config"],
+  "packageRules": [
+    {
+      "groupName": "jsdom ecosystem",
+      "matchPackageNames": ["@types/jsdom", "global-jsdom", "jsdom"]
+    },
+    {
+      "groupName": "orama ecosystem",
+      "matchPackagePatterns": ["^@orama/"]
+    },
+    {
+      "groupName": "react-markdown ecosystem",
+      "matchPackagePatterns": ["^hast-", "^react-markdown", "^rehype-", "^remark-"]
+    }
+  ]
 }

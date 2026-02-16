@@ -176,11 +176,11 @@ describe('<Attachment>', () => {
 
     render(<Attachment attachment={attachment} />)
 
-    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.be.visible
-    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.have.attr(
-      'href',
-      'https://cucumber.io'
-    )
+    const link = screen.getByRole('link', { name: 'https://cucumber.io' })
+    expect(link).to.be.visible
+    expect(link).to.have.attr('href', 'https://cucumber.io')
+    expect(link).to.have.attr('target', '_blank')
+    expect(link).to.have.attr('rel', 'noopener nofollow noreferrer')
   })
 
   it('renders multiple links and ignores blank lines', () => {
@@ -202,5 +202,16 @@ https://github.com/cucumber/cucumber-ruby
       .visible
     expect(screen.getByRole('link', { name: 'https://github.com/cucumber/cucumber-ruby' })).to.be
       .visible
+  })
+
+  it('renders a fallback when the attachment cannot be rendered', () => {
+    const attachment: messages.Attachment = {
+      mediaType: 'text/plain',
+      body: 'this is not valid base64!!!',
+      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+    }
+    render(<Attachment attachment={attachment} />)
+
+    expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
   })
 })
