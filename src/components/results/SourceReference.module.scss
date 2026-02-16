@@ -1,0 +1,10 @@
+@use '../../styles/theming';
+
+.sourceReference {
+  background-color: theming.$codeBackgroundColor;
+  color: theming.$codeTextColor;
+  font-size: 0.75em;
+  padding: 0.1em 0.2em;
+  border: 1px solid theming.$panelAccentColor;
+  border-radius: 0.25em;
+}
