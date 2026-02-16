@@ -1,11 +1,11 @@
-import { Hook, HookType, TestRunHookFinished } from '@cucumber/messages'
+import { Hook, HookType, TestRunHookFinished, TestStepResultStatus } from '@cucumber/messages'
 import React, { FC } from 'react'
 
 import { StatusIcon } from '../gherkin/index.js'
+import { FailedResult } from './FailedResult.js'
 import styles from './TestRunHookOutcome.module.scss'
 import { TestStepAttachments } from './TestStepAttachments.js'
 import { TestStepDuration } from './TestStepDuration.js'
-import { TestStepResultDetails } from './TestStepResultDetails.js'
 
 interface Props {
   hook: Hook
@@ -27,7 +27,9 @@ export const TestRunHookOutcome: FC<Props> = ({ hook, testRunHookFinished }) => 
         </div>
       </div>
       <div className={styles.content}>
-        <TestStepResultDetails {...testRunHookFinished.result} />
+        {testRunHookFinished.result.status === TestStepResultStatus.FAILED && (
+          <FailedResult result={testRunHookFinished.result} />
+        )}
         <TestStepAttachments testStepOrHookFinished={testRunHookFinished} />
       </div>
     </li>
