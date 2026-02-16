@@ -176,11 +176,11 @@ describe('<Attachment>', () => {
 
     render(<Attachment attachment={attachment} />)
 
-    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.be.visible
-    expect(screen.getByRole('link', { name: 'https://cucumber.io' })).to.have.attr(
-      'href',
-      'https://cucumber.io'
-    )
+    const link = screen.getByRole('link', { name: 'https://cucumber.io' })
+    expect(link).to.be.visible
+    expect(link).to.have.attr('href', 'https://cucumber.io')
+    expect(link).to.have.attr('target', '_blank')
+    expect(link).to.have.attr('rel', 'noopener nofollow noreferrer')
   })
 
   it('renders multiple links and ignores blank lines', () => {

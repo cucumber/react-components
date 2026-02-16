@@ -94,4 +94,13 @@ describe('HighLight', () => {
       '<div class="highlight"><p>Failed XSS: <small class="supersmall">hello</small></p></div>'
     )
   })
+
+  it('renders links with appropriate target and rel attrs', () => {
+    const { container } = renderHighlight('[Example](https://example.com)', '', true)
+    const link = container.querySelector('a')
+    expect(link).to.have.attr('href', 'https://example.com')
+    expect(link).to.have.attr('target', '_blank')
+    expect(link).to.have.attr('rel', 'noopener nofollow noreferrer')
+    expect(link).to.have.text('Example')
+  })
 })

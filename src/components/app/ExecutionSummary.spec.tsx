@@ -89,9 +89,10 @@ Platform: linux@5.11.0-1022-azure`)
         </EnvelopesProvider>
       )
 
-      expect(screen.getByRole('link', { name: 'GitHub Actions' }))
-        .attr('href')
-        .to.eq(meta?.ci?.url)
+      const link = screen.getByRole('link', { name: 'GitHub Actions' })
+      expect(link).attr('href').to.eq(meta?.ci?.url)
+      expect(link).attr('target').to.eq('_blank')
+      expect(link).attr('rel').to.eq('noopener nofollow noreferrer')
     })
 
     it('should include the commit link', () => {
@@ -101,11 +102,14 @@ Platform: linux@5.11.0-1022-azure`)
         </EnvelopesProvider>
       )
 
-      expect(screen.getByRole('link', { name: 'b53d820' }))
+      const link = screen.getByRole('link', { name: 'b53d820' })
+      expect(link)
         .attr('href')
         .to.eq(
           'https://github.com/cucumber/cucumber-js/commit/b53d820504b31c8e4d44234dc5eaa58d6b7fdd4c'
         )
+      expect(link).attr('target').to.eq('_blank')
+      expect(link).attr('rel').to.eq('noopener nofollow noreferrer')
     })
   })
 })

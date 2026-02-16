@@ -19,7 +19,7 @@ export const CICommitLink: FC<{
     return (
       <>
         <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faCodeCommit} />
-        <a href={commitLink} target="_blank" rel="noreferrer">
+        <a href={commitLink} target="_blank" rel="noopener nofollow noreferrer">
           <code>{shortHash}</code>
         </a>
       </>
