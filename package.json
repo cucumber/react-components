@@ -23,6 +23,8 @@
     "preview": "ladle preview",
     "fix": "eslint --max-warnings 0 src test --fix src && prettier --write src test",
     "lint": "eslint --max-warnings 0 src test && prettier --check src test",
+    "lint:biome": "biome check src test",
+    "fix:biome": "biome check --write src test",
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
@@ -56,6 +58,7 @@
     "react-dom": "~18"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@cucumber/compatibility-kit": "^29.0.0",
     "@cucumber/gherkin": "^38.0.0",
     "@cucumber/message-streams": "^4.0.1",
