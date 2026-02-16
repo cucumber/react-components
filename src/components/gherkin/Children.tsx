@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react'
 
 import {
-  ChildrenClasses,
-  ChildrenProps,
-  DefaultComponent,
+  type ChildrenClasses,
+  type ChildrenProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Children.module.scss'

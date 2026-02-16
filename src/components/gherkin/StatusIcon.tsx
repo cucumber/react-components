@@ -1,20 +1,20 @@
-import * as messages from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
 import {
+  type IconDefinition,
   faCheckCircle,
   faInfoCircle,
   faPauseCircle,
   faQuestionCircle,
   faStopCircle,
   faTimesCircle,
-  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { type FunctionComponent } from 'react'
 
 import {
-  DefaultComponent,
-  StatusIconClasses,
-  StatusIconProps,
+  type DefaultComponent,
+  type StatusIconClasses,
+  type StatusIconProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './StatusIcon.module.scss'

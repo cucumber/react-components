@@ -1,7 +1,7 @@
-import { Step } from '@cucumber/messages'
-import { create, insert, Orama, search } from '@orama/orama'
+import type { Step } from '@cucumber/messages'
+import { type Orama, create, insert, search } from '@orama/orama'
 
-import { TypedIndex } from './types.js'
+import type { TypedIndex } from './types.js'
 
 const schema = {
   keyword: 'string',

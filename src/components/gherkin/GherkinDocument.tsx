@@ -1,6 +1,6 @@
-import React from 'react'
+import type React from 'react'
 
-import { GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
+import { type GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
 import { Feature } from './Feature.js'
 
 const DefaultRenderer: React.FunctionComponent<GherkinDocumentProps> = ({ gherkinDocument }) => {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { type FC } from 'react'
 
 import { ExecutionSummary } from './ExecutionSummary.js'
 import { FilteredDocuments } from './FilteredDocuments.js'

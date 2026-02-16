@@ -1,11 +1,11 @@
-import * as messages from '@cucumber/messages'
-import React from 'react'
+import type * as messages from '@cucumber/messages'
+import type React from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import {
-  DataTableClasses,
-  DataTableProps,
-  DefaultComponent,
+  type DataTableClasses,
+  type DataTableProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './DataTable.module.scss'

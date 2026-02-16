@@ -1,8 +1,12 @@
-import React from 'react'
+import type React from 'react'
 
 import { useTestCaseStarted } from '../../hooks/useTestCaseStarted.js'
 import { HighLight } from '../app/HighLight.js'
-import { DefaultComponent, ScenarioProps, useCustomRendering } from '../customise/index.js'
+import {
+  type DefaultComponent,
+  type ScenarioProps,
+  useCustomRendering,
+} from '../customise/index.js'
 import { TestCaseOutcome } from '../results/index.js'
 import { Children } from './Children.js'
 import { Description } from './Description.js'

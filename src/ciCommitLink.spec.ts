@@ -1,4 +1,4 @@
-import * as messages from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
 import { expect } from 'chai'
 
 import ciCommitLink from './ciCommitLink.js'

@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react'
 
 import {
-  DefaultComponent,
-  TitleClasses,
-  TitleProps,
+  type DefaultComponent,
+  type TitleClasses,
+  type TitleProps,
   useCustomRendering,
 } from '../customise/index.js'
 import { Anchor } from './Anchor.js'

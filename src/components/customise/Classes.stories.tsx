@@ -1,11 +1,11 @@
 import './CustomRendering.stories.scss'
 
-import * as messages from '@cucumber/messages'
-import { Story } from '@ladle/react'
+import type * as messages from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 import React from 'react'
 
 import { DocString } from '../gherkin/index.js'
-import { CustomRendering, CustomRenderingSupport } from './CustomRendering.js'
+import { CustomRendering, type CustomRenderingSupport } from './CustomRendering.js'
 
 export default {
   title: 'Customisation/Classes',

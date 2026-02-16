@@ -1,4 +1,4 @@
-import { StepMatchArgumentsList } from '@cucumber/messages'
+import type { StepMatchArgumentsList } from '@cucumber/messages'
 
 interface TitleFragment {
   value: string

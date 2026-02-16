@@ -1,10 +1,10 @@
-import React from 'react'
+import type React from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import {
-  DefaultComponent,
-  DescriptionClasses,
-  DescriptionProps,
+  type DefaultComponent,
+  type DescriptionClasses,
+  type DescriptionProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Description.module.scss'

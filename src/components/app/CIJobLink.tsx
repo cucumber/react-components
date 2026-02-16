@@ -1,7 +1,7 @@
-import { Ci } from '@cucumber/messages'
+import type { Ci } from '@cucumber/messages'
 import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC } from 'react'
+import React, { type FC } from 'react'
 
 export const CIJobLink: FC<{
   ci: Ci

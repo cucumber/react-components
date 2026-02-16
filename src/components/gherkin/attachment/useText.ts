@@ -1,4 +1,4 @@
-import { Attachment } from '@cucumber/messages'
+import type { Attachment } from '@cucumber/messages'
 import { useEffect, useState } from 'react'
 
 import { base64Decode } from './base64Decode.js'

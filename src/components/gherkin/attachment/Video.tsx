@@ -1,5 +1,5 @@
-import * as messages from '@cucumber/messages'
-import React, { FC } from 'react'
+import type * as messages from '@cucumber/messages'
+import React, { type FC } from 'react'
 
 import { ErrorMessage } from '../ErrorMessage.js'
 

@@ -1,7 +1,7 @@
-import { Feature, GherkinDocument } from '@cucumber/messages'
-import { create, insert, Orama, search } from '@orama/orama'
+import type { Feature, GherkinDocument } from '@cucumber/messages'
+import { type Orama, create, insert, search } from '@orama/orama'
 
-import { TypedIndex } from './types.js'
+import type { TypedIndex } from './types.js'
 
 const schema = {
   name: 'string',

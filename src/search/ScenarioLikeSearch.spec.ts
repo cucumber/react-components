@@ -1,10 +1,10 @@
-import * as messages from '@cucumber/messages'
-import { Scenario } from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
+import type { Scenario } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeScenario } from '../../test/search.js'
 import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
-import { TypedIndex } from './types.js'
+import type { TypedIndex } from './types.js'
 
 describe('ScenarioLikeSearch', () => {
   let scenarioSearch: TypedIndex<Scenario>

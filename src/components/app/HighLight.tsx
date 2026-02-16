@@ -1,6 +1,6 @@
 import { stemmer } from '@orama/stemmers/english'
 import highlightWords from 'highlight-words'
-import React from 'react'
+import type React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { useSearch } from '../../hooks/index.js'

@@ -1,5 +1,5 @@
-import { Duration, TimeConversion } from '@cucumber/messages'
-import React, { FC } from 'react'
+import { type Duration, TimeConversion } from '@cucumber/messages'
+import React, { type FC } from 'react'
 
 import styles from './TestStepDuration.module.scss'
 

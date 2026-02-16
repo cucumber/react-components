@@ -1,5 +1,10 @@
-import { PickleStep, TestStep, TestStepFinished, TestStepResultStatus } from '@cucumber/messages'
-import React, { FC } from 'react'
+import {
+  type PickleStep,
+  type TestStep,
+  type TestStepFinished,
+  TestStepResultStatus,
+} from '@cucumber/messages'
+import React, { type FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'

@@ -1,4 +1,4 @@
-import { Hook, HookType } from '@cucumber/messages'
+import { type Hook, HookType } from '@cucumber/messages'
 
 const labels: Record<HookType, string> = {
   [HookType.BEFORE_TEST_RUN]: 'BeforeAll',

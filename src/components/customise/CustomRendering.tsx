@@ -1,5 +1,11 @@
-import * as messages from '@cucumber/messages'
-import React, { FC, FunctionComponent, PropsWithChildren, ReactNode, useContext } from 'react'
+import type * as messages from '@cucumber/messages'
+import React, {
+  type FC,
+  type FunctionComponent,
+  type PropsWithChildren,
+  type ReactNode,
+  useContext,
+} from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,

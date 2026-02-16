@@ -1,6 +1,10 @@
-import React from 'react'
+import type React from 'react'
 
-import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise/index.js'
+import {
+  type BackgroundProps,
+  type DefaultComponent,
+  useCustomRendering,
+} from '../customise/index.js'
 import { Description } from './Description.js'
 import { Keyword } from './Keyword.js'
 import { Title } from './Title.js'

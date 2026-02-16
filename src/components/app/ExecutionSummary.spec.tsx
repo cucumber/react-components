@@ -1,4 +1,4 @@
-import { Meta } from '@cucumber/messages'
+import type { Meta } from '@cucumber/messages'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
@@ -66,8 +66,9 @@ describe('<ExecutionSummary/>', () => {
 
       await userEvent.click(screen.getByRole('button', { name: 'Copy' }))
 
-      expect(navigator.clipboard.writeText).to.have.been
-        .calledOnceWithExactly(`Implementation: cucumber-js@8.0.0-rc.1
+      expect(
+        navigator.clipboard.writeText
+      ).to.have.been.calledOnceWithExactly(`Implementation: cucumber-js@8.0.0-rc.1
 Runtime: node.js@16.13.1
 Platform: linux@5.11.0-1022-azure`)
     })

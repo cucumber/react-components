@@ -1,5 +1,5 @@
-import { TestStepResult, TestStepResultStatus } from '@cucumber/messages'
-import { Story } from '@ladle/react'
+import { type TestStepResult, TestStepResultStatus } from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 import React from 'react'
 
 import { FailedResult } from './FailedResult.js'

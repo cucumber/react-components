@@ -1,5 +1,5 @@
 import { TestStepResultStatus } from '@cucumber/messages'
-import React, { FC } from 'react'
+import React, { type FC } from 'react'
 
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import styles from './HealthChart.module.scss'

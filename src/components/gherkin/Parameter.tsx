@@ -1,9 +1,9 @@
-import React from 'react'
+import type React from 'react'
 
 import {
-  DefaultComponent,
-  ParameterClasses,
-  ParameterProps,
+  type DefaultComponent,
+  type ParameterClasses,
+  type ParameterProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Parameter.module.scss'

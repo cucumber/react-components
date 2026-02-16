@@ -1,6 +1,6 @@
-import { SourceReference as MessagesSourceReference } from '@cucumber/messages'
+import type { SourceReference as MessagesSourceReference } from '@cucumber/messages'
 import React from 'react'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 import styles from './SourceReference.module.scss'
 

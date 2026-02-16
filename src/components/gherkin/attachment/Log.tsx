@@ -1,8 +1,8 @@
-import { Attachment } from '@cucumber/messages'
+import type { Attachment } from '@cucumber/messages'
 import Convert from 'ansi-to-html'
-import React, { FC } from 'react'
+import React, { type FC } from 'react'
 
-import { AttachmentClasses } from '../../customise/index.js'
+import type { AttachmentClasses } from '../../customise/index.js'
 import { useText } from './useText.js'
 
 export const Log: FC<{

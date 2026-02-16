@@ -1,4 +1,4 @@
-import { GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'

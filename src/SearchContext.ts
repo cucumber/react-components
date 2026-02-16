@@ -1,4 +1,4 @@
-import { TestStepResultStatus as Status } from '@cucumber/messages'
+import type { TestStepResultStatus as Status } from '@cucumber/messages'
 import React from 'react'
 
 export interface SearchState {

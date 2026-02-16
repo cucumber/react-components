@@ -1,4 +1,4 @@
-import * as messages from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import React from 'react'

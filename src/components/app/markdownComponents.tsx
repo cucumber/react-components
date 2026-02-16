@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 
 const components = {
   a: ({ href, children }: { href?: string; children?: ReactNode }) => (

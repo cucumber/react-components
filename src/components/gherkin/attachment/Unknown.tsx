@@ -1,11 +1,11 @@
-import * as messages from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
 import { AttachmentContentEncoding } from '@cucumber/messages'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { type FC, useCallback, useEffect, useState } from 'react'
 
 import { NavigationButton } from '../../app/NavigationButton.js'
-import { AttachmentProps } from '../../customise/index.js'
+import type { AttachmentProps } from '../../customise/index.js'
 import { attachmentFilename } from './attachmentFilename.js'
 import { base64Decode } from './base64Decode.js'
 

@@ -1,4 +1,4 @@
-import { Ci } from '@cucumber/messages'
+import type { Ci } from '@cucumber/messages'
 
 import toRepositoryId from './toRepositoryId.js'
 

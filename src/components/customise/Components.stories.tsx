@@ -1,9 +1,9 @@
-import * as messages from '@cucumber/messages'
-import { Story } from '@ladle/react'
+import type * as messages from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 import React from 'react'
 
 import { Feature, Tags } from '../gherkin/index.js'
-import { CustomRendering, CustomRenderingSupport, TagsProps } from './CustomRendering.js'
+import { CustomRendering, type CustomRenderingSupport, type TagsProps } from './CustomRendering.js'
 
 export default {
   title: 'Customisation/Components',

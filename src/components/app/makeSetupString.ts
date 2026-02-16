@@ -1,4 +1,4 @@
-import { Meta, Product } from '@cucumber/messages'
+import type { Meta, Product } from '@cucumber/messages'
 
 export function makeSetupString(meta: Meta): string {
   const parts = []

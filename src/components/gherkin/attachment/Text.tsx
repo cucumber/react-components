@@ -1,7 +1,7 @@
-import { Attachment } from '@cucumber/messages'
-import React, { FC } from 'react'
+import type { Attachment } from '@cucumber/messages'
+import React, { type FC } from 'react'
 
-import { AttachmentClasses } from '../../customise/index.js'
+import type { AttachmentClasses } from '../../customise/index.js'
 import { ErrorMessage } from '../ErrorMessage.js'
 import { useText } from './useText.js'
 

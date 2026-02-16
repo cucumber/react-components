@@ -1,14 +1,14 @@
 import {
   GherkinDocumentWalker,
-  Query as GherkinQuery,
+  type Query as GherkinQuery,
   rejectAllFilters,
 } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { GherkinDocument } from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 import parse from '@cucumber/tag-expressions'
 import { ArrayMultimap } from '@teppeis/multimaps'
 
-import { Searchable } from './types.js'
+import type { Searchable } from './types.js'
 
 class TagSearch {
   private readonly pickleById = new Map<string, messages.Pickle>()

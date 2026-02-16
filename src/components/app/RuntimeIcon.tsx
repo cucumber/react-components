@@ -1,5 +1,5 @@
-import { Product } from '@cucumber/messages'
-import React, { FC } from 'react'
+import type { Product } from '@cucumber/messages'
+import React, { type FC } from 'react'
 
 import { Jvm } from './icons/Jvm.js'
 import { NodeJs } from './icons/NodeJs.js'

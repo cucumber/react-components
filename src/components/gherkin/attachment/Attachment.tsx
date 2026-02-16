@@ -1,10 +1,10 @@
-import React from 'react'
+import type React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import {
-  AttachmentClasses,
-  AttachmentProps,
-  DefaultComponent,
+  type AttachmentClasses,
+  type AttachmentProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../../customise/index.js'
 import { ErrorMessage } from '../ErrorMessage.js'

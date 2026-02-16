@@ -1,10 +1,10 @@
-import * as messages from '@cucumber/messages'
-import { Step } from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
+import type { Step } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeStep } from '../../test/search.js'
 import { createStepSearch } from './StepSearch.js'
-import { TypedIndex } from './types.js'
+import type { TypedIndex } from './types.js'
 
 describe('StepSearch', () => {
   let stepSearch: TypedIndex<Step>

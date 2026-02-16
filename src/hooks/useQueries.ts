@@ -1,5 +1,5 @@
-import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Query as CucumberQuery } from '@cucumber/query'
+import type { Query as GherkinQuery } from '@cucumber/gherkin-utils'
+import type { Query as CucumberQuery } from '@cucumber/query'
 import { useContext } from 'react'
 
 import CucumberQueryContext from '../CucumberQueryContext.js'

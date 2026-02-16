@@ -1,5 +1,5 @@
-import * as messages from '@cucumber/messages'
-import { Envelope, TestStepResultStatus } from '@cucumber/messages'
+import type * as messages from '@cucumber/messages'
+import { type Envelope, TestStepResultStatus } from '@cucumber/messages'
 import { within } from '@testing-library/react'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
