@@ -23,8 +23,8 @@
     "preview": "ladle preview",
     "fix": "eslint --max-warnings 0 src test --fix src && prettier --write src test",
     "lint": "eslint --max-warnings 0 src test && prettier --check src test",
-    "lint:biome": "biome check src test",
-    "fix:biome": "biome check --write src test",
+    "lint:biome": "biome check --error-on-warnings src test",
+    "fix:biome": "biome check --error-on-warnings --write src test",
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
