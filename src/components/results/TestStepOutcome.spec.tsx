@@ -2,7 +2,6 @@ import type { GherkinDocument } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import ambiguousSample from '../../../acceptance/ambiguous/ambiguous.js'
 import minimalSample from '../../../acceptance/minimal/minimal.js'
@@ -15,7 +14,9 @@ import { TestStepOutcome } from './TestStepOutcome.js'
 describe('TestStepOutcome', () => {
   it('should show ambiguous step definitions with source references for an ambiguous result', () => {
     const cucumberQuery = new CucumberQuery()
-    ambiguousSample.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of ambiguousSample) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =
@@ -36,7 +37,9 @@ describe('TestStepOutcome', () => {
 
   it('should show exception message for a pending result', () => {
     const cucumberQuery = new CucumberQuery()
-    pendingExceptionSample.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of pendingExceptionSample) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =
@@ -53,7 +56,9 @@ describe('TestStepOutcome', () => {
 
   it('should show exception message for a skipped result', () => {
     const cucumberQuery = new CucumberQuery()
-    skippedExceptionSample.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of skippedExceptionSample) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =
@@ -70,7 +75,9 @@ describe('TestStepOutcome', () => {
 
   it('should show snippets for an undefined result when available', () => {
     const cucumberQuery = new CucumberQuery()
-    undefinedSample.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of undefinedSample) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =
@@ -91,7 +98,9 @@ describe('TestStepOutcome', () => {
     const cucumberQuery = new CucumberQuery()
     // omit suggestion messages so there are no snippets
     const envelopes = undefinedSample.filter((envelope) => !envelope.suggestion)
-    envelopes.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of envelopes) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =
@@ -123,7 +132,9 @@ describe('TestStepOutcome', () => {
     })
 
     const cucumberQuery = new CucumberQuery()
-    envelopes.forEach((envelope) => cucumberQuery.update(envelope))
+    for (const envelope of envelopes) {
+      cucumberQuery.update(envelope)
+    }
 
     const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
     const [[testStepFinished, testStep]] =

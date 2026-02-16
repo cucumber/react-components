@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { useResultStatistics } from '../../hooks/useResultStatistics.js'
 import statuses from '../../statuses.js'
@@ -13,7 +13,7 @@ export const StatusesSummary: FC = () => {
       {statuses.map((status) => {
         const scenarioCount = scenarioCountByStatus[status]
         if (!scenarioCount) {
-          return
+          return null
         }
         return (
           <li

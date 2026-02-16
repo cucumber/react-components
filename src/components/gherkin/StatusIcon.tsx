@@ -1,15 +1,15 @@
 import type * as messages from '@cucumber/messages'
 import {
-  type IconDefinition,
   faCheckCircle,
   faInfoCircle,
   faPauseCircle,
   faQuestionCircle,
   faStopCircle,
   faTimesCircle,
+  type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 
 import {
   type DefaultComponent,

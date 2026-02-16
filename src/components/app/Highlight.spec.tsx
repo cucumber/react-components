@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import { HighLight } from './HighLight.js'
 import { InMemorySearchProvider } from './InMemorySearchProvider.js'

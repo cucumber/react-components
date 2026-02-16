@@ -2,7 +2,6 @@ import { TestStepResultStatus } from '@cucumber/messages'
 import { render, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
-import React from 'react'
 
 import attachments from '../../../acceptance/attachments/attachments.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'

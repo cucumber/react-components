@@ -53,7 +53,7 @@ export const SearchBar: FC = () => {
             <ul className={styles.statuses}>
               {statuses.map((status) => {
                 if (!statusesWithScenarios.includes(status)) {
-                  return
+                  return null
                 }
                 const name = statusName(status)
                 const enabled = !hideStatuses.includes(status)

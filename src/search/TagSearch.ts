@@ -57,11 +57,13 @@ class TagSearch {
           if (!gherkinDocument.uri) throw new Error('No uri for gherkinDocument')
           const pickleIds = this.gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
-          pickleIds.map((pickleId) => {
+          for (const pickleId of pickleIds) {
             const pickle = this.pickleById.get(pickleId)
-            if (!pickle) throw new Error(`No pickle for id=${pickleId}`)
+            if (!pickle) {
+              throw new Error(`No pickle for id=${pickleId}`)
+            }
             this.picklesByScenarioId.put(scenario.id, pickle)
-          })
+          }
         },
       }
     )

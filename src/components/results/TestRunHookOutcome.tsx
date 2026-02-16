@@ -4,7 +4,7 @@ import {
   type TestRunHookFinished,
   TestStepResultStatus,
 } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { StatusIcon } from '../gherkin/index.js'
 import { FailedResult } from './FailedResult.js'

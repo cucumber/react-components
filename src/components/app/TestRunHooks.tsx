@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { useTestRunHooks } from '../../hooks/useTestRunHooks.js'
 import { TestRunHookOutcome } from '../results/TestRunHookOutcome.js'

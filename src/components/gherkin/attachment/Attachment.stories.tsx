@@ -1,6 +1,5 @@
 import { AttachmentContentEncoding } from '@cucumber/messages'
 import type { Story } from '@ladle/react'
-import React from 'react'
 
 import type { AttachmentProps } from '../../customise/index.js'
 import { Attachment } from './Attachment.js'

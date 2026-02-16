@@ -1,5 +1,5 @@
 import type { TestStep } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { ensure } from '../../hooks/helpers.js'
 import { useQueries } from '../../hooks/index.js'

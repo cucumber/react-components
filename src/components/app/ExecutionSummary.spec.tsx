@@ -2,7 +2,6 @@ import type { Meta } from '@cucumber/messages'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
-import React from 'react'
 import sinon from 'sinon'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'

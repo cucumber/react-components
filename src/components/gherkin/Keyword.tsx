@@ -1,4 +1,4 @@
-import React, { type FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 
 import {
   type DefaultComponent,

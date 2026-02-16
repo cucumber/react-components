@@ -1,4 +1,4 @@
-import React, { type FC, type PropsWithChildren, useMemo } from 'react'
+import { type FC, type PropsWithChildren, useMemo } from 'react'
 
 import SearchQueryContext, {
   type SearchContextValue,

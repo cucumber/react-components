@@ -1,6 +1,6 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC, useState } from 'react'
+import { type FC, useState } from 'react'
 
 import styles from './CopyButton.module.scss'
 

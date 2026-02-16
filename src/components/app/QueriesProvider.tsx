@@ -1,6 +1,6 @@
 import type { Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import type { Query as CucumberQuery } from '@cucumber/query'
-import React, { type FC, type PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 
 import CucumberQueryContext from '../../CucumberQueryContext.js'
 import GherkinQueryContext from '../../GherkinQueryContext.js'

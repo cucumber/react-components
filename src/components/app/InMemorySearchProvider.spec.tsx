@@ -1,7 +1,6 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { act, render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 import sinon, { type SinonSpy } from 'sinon'
 
 import SearchQueryContext, { type SearchContextValue } from '../../SearchContext.js'

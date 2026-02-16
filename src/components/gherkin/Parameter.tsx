@@ -8,12 +8,11 @@ import defaultStyles from './Parameter.module.scss'
 
 const DefaultRenderer: DefaultComponent<ParameterProps, ParameterClasses> = ({
   parameterTypeName,
-  value,
   children,
   styles,
 }) => {
   return (
-    <span title={parameterTypeName} aria-label={value} className={styles.parameter}>
+    <span title={parameterTypeName} className={styles.parameter}>
       {children}
     </span>
   )

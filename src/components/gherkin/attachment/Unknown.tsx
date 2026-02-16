@@ -2,7 +2,7 @@ import type * as messages from '@cucumber/messages'
 import { AttachmentContentEncoding } from '@cucumber/messages'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC, useCallback, useEffect, useState } from 'react'
+import { type FC, useCallback, useEffect, useState } from 'react'
 
 import { NavigationButton } from '../../app/NavigationButton.js'
 import type { AttachmentProps } from '../../customise/index.js'

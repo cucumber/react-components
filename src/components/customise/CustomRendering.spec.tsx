@@ -1,10 +1,9 @@
 import type * as messages from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import { Tags } from '../gherkin/index.js'
-import { CustomRendering, type Customised, type TagsClasses, type TagsProps } from './index.js'
+import { type Customised, CustomRendering, type TagsClasses, type TagsProps } from './index.js'
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {

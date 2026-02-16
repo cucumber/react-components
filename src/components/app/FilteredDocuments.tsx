@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
 import styles from './FilteredDocuments.module.scss'

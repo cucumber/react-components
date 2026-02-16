@@ -1,6 +1,8 @@
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: pre-sanitised
+
 import type { Attachment } from '@cucumber/messages'
 import Convert from 'ansi-to-html'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import type { AttachmentClasses } from '../../customise/index.js'
 import { useText } from './useText.js'

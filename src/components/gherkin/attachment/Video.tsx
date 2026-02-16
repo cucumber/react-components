@@ -1,5 +1,7 @@
+// biome-ignore-all lint/a11y/useMediaCaption: user-generated content
+
 import type * as messages from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { ErrorMessage } from '../ErrorMessage.js'
 

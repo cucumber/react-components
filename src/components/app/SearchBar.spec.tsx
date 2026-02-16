@@ -2,7 +2,7 @@ import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
-import React, { type FC, useState } from 'react'
+import { type FC, useState } from 'react'
 import sinon from 'sinon'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'

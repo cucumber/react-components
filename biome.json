@@ -1,13 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.1/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -23,12 +21,9 @@
   },
   "overrides": [
     {
-      "include": ["src/**/*.spec.*"],
+      "includes": ["**/src/**/*.spec.*"],
       "linter": {
         "rules": {
-          "complexity": {
-            "noForEach": "off"
-          },
           "style": {
             "noNonNullAssertion": "off"
           }
@@ -51,7 +46,14 @@
     }
   },
   "files": {
-    "include": ["src/**", "test/**"],
-    "ignore": ["node_modules", "dist", "build", "acceptance", "*.scss"]
+    "includes": [
+      "**/src/**",
+      "**/test/**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/acceptance",
+      "!**/*.scss"
+    ]
   }
 }

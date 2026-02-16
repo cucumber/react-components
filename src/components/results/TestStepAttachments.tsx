@@ -1,5 +1,4 @@
 import type { TestRunHookFinished, TestStepFinished } from '@cucumber/messages'
-import React from 'react'
 import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'

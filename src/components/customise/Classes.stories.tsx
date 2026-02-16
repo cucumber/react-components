@@ -2,7 +2,6 @@ import './CustomRendering.stories.scss'
 
 import type * as messages from '@cucumber/messages'
 import type { Story } from '@ladle/react'
-import React from 'react'
 
 import { DocString } from '../gherkin/index.js'
 import { CustomRendering, type CustomRenderingSupport } from './CustomRendering.js'

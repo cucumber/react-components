@@ -1,6 +1,6 @@
 import * as messages from '@cucumber/messages'
 import { TestStepResultStatus } from '@cucumber/messages'
-import React, { type FC, useState } from 'react'
+import { type FC, useState } from 'react'
 
 import { useMostSevereStatusByUri } from '../../hooks/useMostSevereStatusByUri.js'
 import { GherkinDocument } from '../gherkin/index.js'

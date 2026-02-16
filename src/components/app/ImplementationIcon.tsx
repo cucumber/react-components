@@ -1,5 +1,5 @@
 import type { Product } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { CucumberLogo } from './icons/CucumberLogo.js'
 

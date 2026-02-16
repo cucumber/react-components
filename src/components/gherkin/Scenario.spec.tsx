@@ -1,9 +1,7 @@
 import type * as messages from '@cucumber/messages'
 import { type Envelope, TestStepResultStatus } from '@cucumber/messages'
-import { within } from '@testing-library/react'
-import { render } from '@testing-library/react'
+import { render, within } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import minimal from '../../../acceptance/minimal/minimal.js'

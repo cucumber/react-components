@@ -4,7 +4,7 @@ import {
   type TestStepFinished,
   TestStepResultStatus,
 } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'
@@ -81,8 +81,8 @@ const PickleStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
             return (
               <Parameter
                 key={index}
-                parameterTypeName={fragment.parameterTypeName}
                 value={fragment.value}
+                parameterTypeName={fragment.parameterTypeName}
               >
                 {fragment.value}
               </Parameter>

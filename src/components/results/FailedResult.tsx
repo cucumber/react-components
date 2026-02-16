@@ -1,5 +1,5 @@
 import type { TestStepResult } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { ErrorMessage } from '../gherkin/index.js'
 

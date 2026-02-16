@@ -1,7 +1,7 @@
 import type { Ci } from '@cucumber/messages'
 import { faCodeCommit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import ciCommitLink from '../../ciCommitLink.js'
 

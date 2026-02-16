@@ -1,6 +1,5 @@
 import type * as messages from '@cucumber/messages'
 import type { Story } from '@ladle/react'
-import React from 'react'
 
 import { Feature, Tags } from '../gherkin/index.js'
 import { CustomRendering, type CustomRenderingSupport, type TagsProps } from './CustomRendering.js'
@@ -96,7 +95,7 @@ CustomFeatureComponent.args = {
     language: 'en',
   },
   support: {
-    Feature: (props: any) => (
+    Feature: (props) => (
       <div>
         <button type="button">Click me</button>
         <props.DefaultRenderer {...props} />

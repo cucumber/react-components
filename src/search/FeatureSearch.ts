@@ -1,5 +1,5 @@
 import type { Feature, GherkinDocument } from '@cucumber/messages'
-import { type Orama, create, insert, search } from '@orama/orama'
+import { create, insert, type Orama, search } from '@orama/orama'
 
 import type { TypedIndex } from './types.js'
 

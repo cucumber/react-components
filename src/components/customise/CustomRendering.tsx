@@ -179,14 +179,14 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
   DefaultRenderer: DefaultComponent<Props, Classes>
 ): FunctionComponent<Props> {
   const { [component]: Custom } = useContext(CustomRenderingContext)
-  // @ts-ignore
+  // @ts-expect-error
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
   const StyledDefaultRenderer: React.FunctionComponent<Props> = (props) => {
     return <DefaultRenderer {...props} styles={composedStyles} />
   }
   if (typeof Custom === 'function') {
     const StyledCustomRenderer: React.FunctionComponent<Props> = (props) => {
-      // @ts-ignore
+      // @ts-expect-error
       return <Custom {...props} styles={composedStyles} DefaultRenderer={StyledDefaultRenderer} />
     }
     return StyledCustomRenderer

@@ -1,5 +1,5 @@
 import type { TestStep } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import styles from './AmbiguousResult.module.scss'

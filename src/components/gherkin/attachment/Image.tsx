@@ -1,5 +1,5 @@
 import type * as messages from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import type { AttachmentClasses } from '../../customise/index.js'
 import { ErrorMessage } from '../ErrorMessage.js'

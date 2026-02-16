@@ -1,5 +1,5 @@
 import { type Duration, TimeConversion } from '@cucumber/messages'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import styles from './TestStepDuration.module.scss'
 
@@ -18,11 +18,9 @@ export const TestStepDuration: FC<{ duration: Duration }> = ({ duration }) => {
   }
   return (
     <span className={styles.duration}>
-      {millis < 1000 ? (
-        <>{`${subSecondFormat.format(millis)}ms`}</>
-      ) : (
-        <>{`${secondPlusFormat.format(millis / 1000)}s`}</>
-      )}
+      {millis < 1000
+        ? `${subSecondFormat.format(millis)}ms`
+        : `${secondPlusFormat.format(millis / 1000)}s`}
     </span>
   )
 }

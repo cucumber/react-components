@@ -1,6 +1,6 @@
 import assert from 'node:assert'
 import fs from 'node:fs'
-import { Writable, pipeline } from 'node:stream'
+import { pipeline, Writable } from 'node:stream'
 import { promisify } from 'node:util'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
 import type * as messages from '@cucumber/messages'
@@ -8,7 +8,6 @@ import type { Envelope } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
 import { glob } from 'glob'
-import React from 'react'
 
 import { EnvelopesProvider, FilteredDocuments } from './index.js'
 

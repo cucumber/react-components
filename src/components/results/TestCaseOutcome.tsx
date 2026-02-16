@@ -6,7 +6,7 @@ import {
 } from '@cucumber/messages'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC, useState } from 'react'
+import { type FC, useState } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import styles from './TestCaseOutcome.module.scss'

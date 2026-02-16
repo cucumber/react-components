@@ -1,7 +1,7 @@
 import { type Product, TestStepResultStatus, TimeConversion } from '@cucumber/messages'
 import { faCodeBranch, faStopwatch, faTag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC } from 'react'
+import type { FC } from 'react'
 
 import { formatExecutionDistance } from '../../formatExecutionDistance.js'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
@@ -16,9 +16,9 @@ import styles from './ExecutionSummary.module.scss'
 import { HeaderItem, HeaderSection, HeaderSubItem } from './Header.js'
 import { HealthChart } from './HealthChart.js'
 import { ImplementationIcon } from './ImplementationIcon.js'
+import { makeSetupString } from './makeSetupString.js'
 import { OSIcon } from './OSIcon.js'
 import { RuntimeIcon } from './RuntimeIcon.js'
-import { makeSetupString } from './makeSetupString.js'
 
 export const ExecutionSummary: FC = () => {
   const { cucumberQuery } = useQueries()

@@ -1,7 +1,6 @@
 import type * as messages from '@cucumber/messages'
 import { type TestRunFinished, type TestRunStarted, TimeConversion } from '@cucumber/messages'
 import type { Story } from '@ladle/react'
-import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'

@@ -1,7 +1,7 @@
 import type { TestStepResultStatus } from '@cucumber/messages'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { type FC, type ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import {
   Accordion,
   AccordionItem,
