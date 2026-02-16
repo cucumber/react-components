@@ -62,15 +62,9 @@ describe('HighLight', () => {
   })
 
   it('does not render <script> tags in markdown', () => {
-    const { container } = renderHighlight(
-      'Failed XSS: <script>alert("hello")</script>',
-      'alert hello',
-      true
-    )
+    const { container } = renderHighlight('Failed XSS: <script>alert("hello")</script>', '', true)
     // Script tags will be removed (rather than escaped). Ideally we'd *escape* them to &lt;script&gt;.
-    expect(container).to.contain.html(
-      `<div class="highlight"><p>Failed XSS: ("<mark>hello</mark>")</p></div>`
-    )
+    expect(container).to.contain.html(`<div class="highlight"><p>Failed XSS: </p></div>`)
   })
 
   it('renders <section> tags in markdown', () => {
