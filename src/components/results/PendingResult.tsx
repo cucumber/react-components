@@ -7,9 +7,12 @@ interface Props {
   result: TestStepResult
 }
 
-export const PendingResult: FC<Props> = ({ result: { exception } }) => {
+export const PendingResult: FC<Props> = ({ result: { exception, message }  }) => {
   if (exception?.message) {
     return <ResultNote>{exception.message}</ResultNote>
+  }
+  if (message) {
+    return <ResultNote>{message}</ResultNote>
   }
   return null
 }
