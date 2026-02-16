@@ -10,7 +10,7 @@ export const CIJobLink: FC<{
     return (
       <>
         <FontAwesomeIcon aria-hidden="true" style={{ opacity: 0.75 }} icon={faServer} />
-        <a href={ci.url} target="_blank" rel="noreferrer">
+        <a href={ci.url} target="_blank" rel="noopener nofollow noreferrer">
           {ci.name}
         </a>
       </>

@@ -19,7 +19,7 @@ export const Links: FC<{
         .map((line, index) => {
           return (
             <li key={index}>
-              <a href={line} target="_blank" rel="noreferrer">
+              <a href={line} target="_blank" rel="noopener nofollow noreferrer">
                 <FontAwesomeIcon icon={faLink} />
                 {line}
               </a>
