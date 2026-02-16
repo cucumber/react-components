@@ -20,8 +20,7 @@ const UnknownExternalised: FC<AttachmentProps> = ({ attachment }) => {
   const filename = attachmentFilename(attachment)
   const onClick = () => {
     const anchor = document.createElement('a')
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    anchor.href = attachment.url!
+    anchor.href = attachment.url as string
     anchor.download = filename
     anchor.click()
   }
@@ -38,7 +37,7 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   useEffect(() => () => cleanupDownloadUrl(downloadUrl), [downloadUrl])
   const filename = attachmentFilename(attachment)
   const onClick = useCallback(() => {
-    let href
+    let href: string
     if (downloadUrl) {
       href = downloadUrl
     } else {

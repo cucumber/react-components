@@ -36,7 +36,7 @@ export const TestCaseOutcome: FC<Props> = ({ testCaseStarted }) => {
         })}
       </ol>
       {hiddenSteps > 0 && (
-        <button className={styles.expandButton} onClick={() => setShowAllSteps(true)}>
+        <button type="button" className={styles.expandButton} onClick={() => setShowAllSteps(true)}>
           <FontAwesomeIcon aria-hidden="true" icon={faCirclePlus} />
           {hiddenSteps} hooks
         </button>

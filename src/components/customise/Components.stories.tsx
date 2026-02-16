@@ -96,10 +96,9 @@ CustomFeatureComponent.args = {
     language: 'en',
   },
   support: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Feature: (props: any) => (
       <div>
-        <button>Click me</button>
+        <button type="button">Click me</button>
         <props.DefaultRenderer {...props} />
       </div>
     ),

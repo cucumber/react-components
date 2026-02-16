@@ -31,7 +31,9 @@ export const UrlSearchProvider: FC<PropsWithChildren<Props>> = ({
         url.searchParams.delete(queryKey)
       }
       url.searchParams.delete(hideKey)
-      newValue.hideStatuses.forEach((s) => url.searchParams.append(hideKey, s.toLowerCase()))
+      for (const s of newValue.hideStatuses) {
+        url.searchParams.append(hideKey, s.toLowerCase())
+      }
       window.history.replaceState({}, '', url)
     },
     [queryKey, hideKey]

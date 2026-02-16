@@ -46,7 +46,9 @@ class TagSearch {
   public async add(gherkinDocument: messages.GherkinDocument) {
     this.gherkinDocuments.push(gherkinDocument)
     const pickles = this.gherkinQuery.getPickles()
-    pickles.forEach((pickle) => this.pickleById.set(pickle.id, pickle))
+    for (const pickle of pickles) {
+      this.pickleById.set(pickle.id, pickle)
+    }
 
     const astWalker = new GherkinDocumentWalker(
       {},

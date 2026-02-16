@@ -12,14 +12,14 @@ function mixinStyles<Classes>(
   custom?: Record<string, string> | React.FunctionComponent
 ): Classes {
   const mixed: Record<string, unknown> = {}
-  Object.keys(builtIn).forEach((key) => {
+  for (const key of Object.keys(builtIn)) {
     if (builtIn[key]) {
       mixed[key] = builtIn[key]
     }
     if (custom && typeof custom !== 'function' && custom[key]) {
       mixed[key] = custom[key]
     }
-  })
+  }
   return mixed as Classes
 }
 

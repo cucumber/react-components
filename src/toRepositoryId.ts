@@ -1,10 +1,11 @@
-export default function toRepositoryId(s: string): string {
-  if (!s.includes('://') && s.includes(':')) {
+export default function toRepositoryId(remote: string): string {
+  let result = remote
+  if (!remote.includes('://') && remote.includes(':')) {
     // scp style URL (not really a URL)
-    const [host, path] = s.split(':', 2)
-    s = `ssh://${host}/${path}`
+    const [host, path] = remote.split(':', 2)
+    result = `ssh://${host}/${path}`
   }
-  s = s.replace(/\.git$/, '')
-  const url = new URL(s)
+  result = result.replace(/\.git$/, '')
+  const url = new URL(result)
   return `${url.hostname}${url.pathname}`
 }
