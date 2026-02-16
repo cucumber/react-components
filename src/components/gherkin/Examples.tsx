@@ -1,6 +1,6 @@
 import type { TableRow } from '@cucumber/messages'
 import type { Lineage } from '@cucumber/query'
-import type React from 'react'
+
 import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'

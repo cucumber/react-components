@@ -1,7 +1,7 @@
 import type { TestStepResultStatus as Status } from '@cucumber/messages'
 import { faCheck, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type React from 'react'
+
 import type { FC } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 

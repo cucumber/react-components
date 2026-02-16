@@ -1,5 +1,3 @@
-import type React from 'react'
-
 import { type GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
 import { Feature } from './Feature.js'
 

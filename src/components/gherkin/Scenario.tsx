@@ -1,5 +1,3 @@
-import type React from 'react'
-
 import { useTestCaseStarted } from '../../hooks/useTestCaseStarted.js'
 import { HighLight } from '../app/HighLight.js'
 import {

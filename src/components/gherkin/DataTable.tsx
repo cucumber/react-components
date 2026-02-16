@@ -1,5 +1,4 @@
 import type * as messages from '@cucumber/messages'
-import type React from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import {

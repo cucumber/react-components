@@ -1,5 +1,3 @@
-import type React from 'react'
-
 import { HighLight } from '../app/HighLight.js'
 import { type DefaultComponent, type RuleProps, useCustomRendering } from '../customise/index.js'
 import { Background } from './Background.js'

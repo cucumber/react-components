@@ -1,5 +1,3 @@
-import type React from 'react'
-
 import {
   type ChildrenClasses,
   type ChildrenProps,
