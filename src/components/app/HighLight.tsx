@@ -1,5 +1,5 @@
 import { stemmer } from '@orama/stemmers/english'
-import highlightWords from 'highlight-words'
+import { findAll } from 'highlight-words-core'
 import type { FC } from 'react'
 
 import ReactMarkdown from 'react-markdown'
@@ -29,16 +29,19 @@ const allQueryWords = (queryWords: string[]): string[] => {
 
 export const HighLight: FC<IProps> = ({ text, markdown = false, className = '' }) => {
   const searchQueryContext = useSearch()
-  const query = allQueryWords(
+  const searchWords = allQueryWords(
     searchQueryContext.query ? searchQueryContext.query.split(' ') : []
-  ).join(' ')
+  )
   const appliedClassName = className ? `highlight ${className}` : 'highlight'
 
-  const chunks = highlightWords({ text, query })
+  const chunks = findAll({ textToHighlight: text, searchWords })
 
   if (markdown) {
     const highlightedText = chunks
-      .map(({ text, match }) => (match ? `<mark>${text}</mark>` : text))
+      .map(({ start, end, highlight }) => {
+        const chunkText = text.substring(start, end)
+        return highlight ? `<mark>${chunkText}</mark>` : chunkText
+      })
       .join('')
 
     return (
@@ -56,7 +59,10 @@ export const HighLight: FC<IProps> = ({ text, markdown = false, className = '' }
 
   return (
     <span className={appliedClassName}>
-      {chunks.map(({ text, match, key }) => (match ? <mark key={key}>{text}</mark> : text))}
+      {chunks.map(({ start, end, highlight }) => {
+        const chunkText = text.substring(start, end)
+        return highlight ? <mark key={start}>{chunkText}</mark> : chunkText
+      })}
     </span>
   )
 }
