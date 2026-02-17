@@ -9,15 +9,10 @@ import {
 import defaultStyles from './Parameter.module.scss'
 
 const DefaultRenderer: DefaultComponent<ParameterProps, ParameterClasses> = ({
-  parameterTypeName,
   children,
   styles,
 }) => {
-  return (
-    <span title={parameterTypeName} className={styles.parameter}>
-      {children}
-    </span>
-  )
+  return <span className={styles.parameter}>{children}</span>
 }
 
 export const Parameter: FC<ParameterProps> = (props) => {
