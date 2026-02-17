@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { useTestCaseStarted } from '../../hooks/useTestCaseStarted.js'
 import { HighLight } from '../app/HighLight.js'
 import {
@@ -34,7 +36,7 @@ const DefaultRenderer: DefaultComponent<ScenarioProps> = ({ scenario }) => {
   )
 }
 
-export const Scenario: React.FunctionComponent<ScenarioProps> = (props) => {
+export const Scenario: FC<ScenarioProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ScenarioProps>('Scenario', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

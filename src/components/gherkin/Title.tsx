@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import {
   type DefaultComponent,
   type TitleClasses,
@@ -22,7 +24,7 @@ const DefaultRenderer: DefaultComponent<TitleProps, TitleClasses> = ({
   )
 }
 
-export const Title: React.FunctionComponent<TitleProps> = (props) => {
+export const Title: FC<TitleProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<TitleProps, TitleClasses>(
     'Title',
     defaultStyles,

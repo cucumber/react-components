@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import {
   type DefaultComponent,
   type ParameterClasses,
@@ -18,7 +20,7 @@ const DefaultRenderer: DefaultComponent<ParameterProps, ParameterClasses> = ({
   )
 }
 
-export const Parameter: React.FunctionComponent<ParameterProps> = (props) => {
+export const Parameter: FC<ParameterProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ParameterProps, ParameterClasses>(
     'Parameter',
     defaultStyles,

@@ -1,5 +1,6 @@
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { FC } from 'react'
 
 import {
   type AnchorClasses,
@@ -24,7 +25,7 @@ const DefaultRenderer: DefaultComponent<AnchorProps, AnchorClasses> = ({
   )
 }
 
-export const Anchor: React.FunctionComponent<AnchorProps> = (props) => {
+export const Anchor: FC<AnchorProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<AnchorProps, AnchorClasses>(
     'Anchor',
     defaultStyles,

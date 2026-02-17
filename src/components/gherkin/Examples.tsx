@@ -36,7 +36,7 @@ const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples }) => {
   )
 }
 
-export const Examples: React.FunctionComponent<ExamplesProps> = (props) => {
+export const Examples: FC<ExamplesProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ExamplesProps>(
     'Examples',
     defaultStyles,

@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import {
   type ChildrenClasses,
   type ChildrenProps,
@@ -13,7 +15,7 @@ const DefaultRenderer: DefaultComponent<ChildrenProps, ChildrenClasses> = ({
   return <div className={styles.children}>{children}</div>
 }
 
-export const Children: React.FunctionComponent<ChildrenProps> = (props) => {
+export const Children: FC<ChildrenProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ChildrenProps, ChildrenClasses>(
     'Children',
     defaultStyles,

@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { HighLight } from '../app/HighLight.js'
 import { type DefaultComponent, type FeatureProps, useCustomRendering } from '../customise/index.js'
 import { Background } from './Background.js'
@@ -36,7 +38,7 @@ const DefaultRenderer: DefaultComponent<FeatureProps> = ({ feature }) => {
   )
 }
 
-export const Feature: React.FunctionComponent<FeatureProps> = (props) => {
+export const Feature: FC<FeatureProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<FeatureProps>('Feature', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

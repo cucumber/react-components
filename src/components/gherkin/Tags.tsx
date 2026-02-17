@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { HighLight } from '../app/HighLight.js'
 import {
   type DefaultComponent,
@@ -22,7 +24,7 @@ const DefaultRenderer: DefaultComponent<TagsProps, TagsClasses> = ({ tags, style
   )
 }
 
-export const Tags: React.FunctionComponent<TagsProps> = (props) => {
+export const Tags: FC<TagsProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<TagsProps, TagsClasses>(
     'Tags',
     defaultStyles,

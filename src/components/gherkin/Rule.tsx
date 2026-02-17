@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { HighLight } from '../app/HighLight.js'
 import { type DefaultComponent, type RuleProps, useCustomRendering } from '../customise/index.js'
 import { Background } from './Background.js'
@@ -32,7 +34,7 @@ const DefaultRenderer: DefaultComponent<RuleProps> = ({ rule }) => {
   )
 }
 
-export const Rule: React.FunctionComponent<RuleProps> = (props) => {
+export const Rule: FC<RuleProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<RuleProps>('Rule', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

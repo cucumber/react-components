@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import {
   type BackgroundProps,
   type DefaultComponent,
@@ -26,7 +28,7 @@ const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
   )
 }
 
-export const Background: React.FunctionComponent<BackgroundProps> = (props) => {
+export const Background: FC<BackgroundProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<BackgroundProps>('Background', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

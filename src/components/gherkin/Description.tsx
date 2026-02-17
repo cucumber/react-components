@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { HighLight } from '../app/HighLight.js'
 import {
   type DefaultComponent,
@@ -21,7 +23,7 @@ const DefaultRenderer: DefaultComponent<DescriptionProps, DescriptionClasses> = 
   )
 }
 
-export const Description: React.FunctionComponent<DescriptionProps> = (props) => {
+export const Description: FC<DescriptionProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<DescriptionProps, DescriptionClasses>(
     'Description',
     defaultStyles,

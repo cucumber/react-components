@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import {
@@ -40,7 +41,7 @@ const DefaultRenderer: DefaultComponent<AttachmentProps, AttachmentClasses> = ({
   return <Unknown attachment={attachment} />
 }
 
-export const Attachment: React.FunctionComponent<AttachmentProps> = (props) => {
+export const Attachment: FC<AttachmentProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<AttachmentProps, AttachmentClasses>(
     'Attachment',
     defaultStyles,

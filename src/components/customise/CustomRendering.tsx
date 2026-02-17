@@ -14,7 +14,8 @@ import type {
   Tag,
   TestStepResultStatus,
 } from '@cucumber/messages'
-import React, {
+import {
+  createContext,
   type FC,
   type FunctionComponent,
   type PropsWithChildren,
@@ -24,7 +25,7 @@ import React, {
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
-  custom?: Record<string, string> | React.FunctionComponent
+  custom?: Record<string, string> | FunctionComponent
 ): Classes {
   const mixed: Record<string, unknown> = {}
   for (const key of Object.keys(builtIn)) {
@@ -152,10 +153,10 @@ export declare type DefaultComponent<
 export declare type CustomisedComponent<
   Props,
   Classes = Record<string, string>,
-> = React.FunctionComponent<
+> = FunctionComponent<
   Props & {
     styles: Classes
-    DefaultRenderer: React.FunctionComponent<Props>
+    DefaultRenderer: FunctionComponent<Props>
   }
 >
 
@@ -186,7 +187,7 @@ export interface CustomRenderingSupport {
 
 export declare type CustomRenderable = keyof CustomRenderingSupport
 
-export const CustomRenderingContext = React.createContext<CustomRenderingSupport>({})
+export const CustomRenderingContext = createContext<CustomRenderingSupport>({})
 
 export function useCustomRendering<Props, Classes extends Styles<string> = Record<string, string>>(
   component: CustomRenderable,
@@ -196,11 +197,11 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
   const { [component]: Custom } = useContext(CustomRenderingContext)
   // @ts-expect-error
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
-  const StyledDefaultRenderer: React.FunctionComponent<Props> = (props) => {
+  const StyledDefaultRenderer: FunctionComponent<Props> = (props) => {
     return <DefaultRenderer {...props} styles={composedStyles} />
   }
   if (typeof Custom === 'function') {
-    const StyledCustomRenderer: React.FunctionComponent<Props> = (props) => {
+    const StyledCustomRenderer: FunctionComponent<Props> = (props) => {
       // @ts-expect-error
       return <Custom {...props} styles={composedStyles} DefaultRenderer={StyledDefaultRenderer} />
     }
