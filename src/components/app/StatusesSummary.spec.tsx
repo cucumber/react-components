@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'

@@ -1,18 +1,18 @@
-import * as messages from '@cucumber/messages'
-import React from 'react'
+import type { PickleTableRow, TableRow } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { HighLight } from '../app/HighLight.js'
 import {
-  DataTableClasses,
-  DataTableProps,
-  DefaultComponent,
+  type DataTableClasses,
+  type DataTableProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './DataTable.module.scss'
 import isNumber from './isNumber.js'
 
-const TableBody: React.FunctionComponent<{
-  rows: readonly messages.TableRow[] | readonly messages.PickleTableRow[]
+const TableBody: FC<{
+  rows: readonly TableRow[] | readonly PickleTableRow[]
 }> = ({ rows }) => {
   return (
     <tbody>
@@ -40,7 +40,7 @@ const DefaultRenderer: DefaultComponent<DataTableProps, DataTableClasses> = ({
   )
 }
 
-export const DataTable: React.FunctionComponent<DataTableProps> = (props) => {
+export const DataTable: FC<DataTableProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<DataTableProps, DataTableClasses>(
     'DataTable',
     defaultStyles,

@@ -1,7 +1,7 @@
-import { TestStepResultStatus } from '@cucumber/messages'
-import React, { FC, PropsWithChildren, useCallback, useState } from 'react'
+import type { TestStepResultStatus } from '@cucumber/messages'
+import { type FC, type PropsWithChildren, useCallback, useState } from 'react'
 
-import { SearchState } from '../../SearchContext.js'
+import type { SearchState } from '../../SearchContext.js'
 import { ControlledSearchProvider } from './ControlledSearchProvider.js'
 
 interface Props {
@@ -31,7 +31,9 @@ export const UrlSearchProvider: FC<PropsWithChildren<Props>> = ({
         url.searchParams.delete(queryKey)
       }
       url.searchParams.delete(hideKey)
-      newValue.hideStatuses.forEach((s) => url.searchParams.append(hideKey, s.toLowerCase()))
+      for (const s of newValue.hideStatuses) {
+        url.searchParams.append(hideKey, s.toLowerCase())
+      }
       window.history.replaceState({}, '', url)
     },
     [queryKey, hideKey]

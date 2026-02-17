@@ -1,9 +1,10 @@
-import * as messages from '@cucumber/messages'
-import { Envelope, TestStepResultStatus } from '@cucumber/messages'
-import { within } from '@testing-library/react'
-import { render } from '@testing-library/react'
+import {
+  type Envelope,
+  type Scenario as ScenarioMessage,
+  TestStepResultStatus,
+} from '@cucumber/messages'
+import { render, within } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import minimal from '../../../acceptance/minimal/minimal.js'
@@ -18,7 +19,7 @@ describe('Scenario', () => {
       .map((envelope) => envelope.gherkinDocument)
   }
 
-  function renderScenario(envelopes: ReadonlyArray<Envelope>, scenario: messages.Scenario) {
+  function renderScenario(envelopes: ReadonlyArray<Envelope>, scenario: ScenarioMessage) {
     return render(
       <EnvelopesProvider envelopes={envelopes}>
         <Scenario scenario={scenario} />
@@ -43,7 +44,7 @@ describe('Scenario', () => {
     const [gherkinDocument] = documentsFrom(minimal)
     const { getByRole } = renderScenario(
       minimal,
-      gherkinDocument?.feature?.children[0]?.scenario as messages.Scenario
+      gherkinDocument?.feature?.children[0]?.scenario as ScenarioMessage
     )
 
     expect(getByRole('heading', { name: 'Scenario: cukes' })).to.be.visible
@@ -56,7 +57,7 @@ describe('Scenario', () => {
     const [gherkinDocument] = documentsFrom(rulesBackgrounds)
     const { getByRole } = renderScenario(
       rulesBackgrounds,
-      gherkinDocument?.feature?.children[1]?.rule?.children[1].scenario as messages.Scenario
+      gherkinDocument?.feature?.children[1]?.rule?.children[1].scenario as ScenarioMessage
     )
 
     expect(getByRole('heading', { name: 'Example: one scenario' })).to.be.visible
@@ -75,7 +76,7 @@ describe('Scenario', () => {
     const [gherkinDocument] = documentsFrom(examplesTables)
     const { getByRole, getAllByRole } = renderScenario(
       examplesTables,
-      gherkinDocument?.feature?.children[0]?.scenario as messages.Scenario
+      gherkinDocument?.feature?.children[0]?.scenario as ScenarioMessage
     )
 
     expect(getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' })).to.be.visible

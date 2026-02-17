@@ -1,14 +1,12 @@
+import assert from 'node:assert'
+import fs from 'node:fs'
+import { pipeline, Writable } from 'node:stream'
+import { promisify } from 'node:util'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
-import * as messages from '@cucumber/messages'
-import { Envelope } from '@cucumber/messages'
+import type { Envelope } from '@cucumber/messages'
 import { render } from '@testing-library/react'
-import assert from 'assert'
 import { expect } from 'chai'
-import fs from 'fs'
 import { glob } from 'glob'
-import React from 'react'
-import { pipeline, Writable } from 'stream'
-import { promisify } from 'util'
 
 import { EnvelopesProvider, FilteredDocuments } from './index.js'
 
@@ -16,10 +14,10 @@ describe('acceptance tests', function () {
   this.timeout('30s')
 
   describe('with user-provided and compatibility kit data', () => {
-    const localMessageFiles = glob.sync(`test/messages/**/*.ndjson`)
+    const localMessageFiles = glob.sync('test/messages/**/*.ndjson')
     assert.ok(localMessageFiles.length, 'Expected to find some files to test with')
     const cckMessageFiles = glob.sync(
-      `node_modules/@cucumber/compatibility-kit/features/**/*.ndjson`
+      'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson'
     )
     assert.ok(cckMessageFiles.length, 'Expected to find some files to test with')
     const messageFiles = [...localMessageFiles, ...cckMessageFiles]
@@ -33,11 +31,7 @@ describe('acceptance tests', function () {
           messageStream,
           new Writable({
             objectMode: true,
-            write(
-              envelope: messages.Envelope,
-              _: string,
-              callback: (error?: Error | null) => void
-            ) {
+            write(envelope: Envelope, _: string, callback: (error?: Error | null) => void) {
               envelopes.push(envelope)
               callback()
             },

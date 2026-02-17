@@ -1,12 +1,11 @@
-import * as messages from '@cucumber/messages'
+import type { Background as BackgroundMessage } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import { Background } from './index.js'
 
 describe('Background', () => {
-  const createBackground = (overrides: Partial<messages.Background> = {}): messages.Background => ({
+  const createBackground = (overrides: Partial<BackgroundMessage> = {}): BackgroundMessage => ({
     id: 'background-1',
     keyword: 'Background',
     name: '',

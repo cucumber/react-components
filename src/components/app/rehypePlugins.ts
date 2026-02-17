@@ -1,5 +1,5 @@
 import { defaultSchema } from 'hast-util-sanitize'
-import { Options } from 'react-markdown'
+import type { Options } from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import gfm from 'remark-gfm'

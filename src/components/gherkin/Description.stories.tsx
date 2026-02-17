@@ -1,5 +1,4 @@
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Story } from '@ladle/react'
 
 import { Description } from './Description.js'
 

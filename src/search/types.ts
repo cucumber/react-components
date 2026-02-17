@@ -1,4 +1,4 @@
-import { GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 
 /**
  * Facade for an index that supports searching for and adding items of a given

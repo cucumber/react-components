@@ -1,8 +1,7 @@
 import { AttachmentContentEncoding } from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Story } from '@ladle/react'
 
-import { AttachmentProps } from '../../customise/index.js'
+import type { AttachmentProps } from '../../customise/index.js'
 import { Attachment } from './Attachment.js'
 // @ts-expect-error vite static asset import
 import externalisedImageUrl from './fixture-image.svg?url'

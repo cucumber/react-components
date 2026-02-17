@@ -1,9 +1,9 @@
-import React from 'react'
+import type { FC } from 'react'
 
 import {
-  DefaultComponent,
-  TitleClasses,
-  TitleProps,
+  type DefaultComponent,
+  type TitleClasses,
+  type TitleProps,
   useCustomRendering,
 } from '../customise/index.js'
 import { Anchor } from './Anchor.js'
@@ -24,7 +24,7 @@ const DefaultRenderer: DefaultComponent<TitleProps, TitleClasses> = ({
   )
 }
 
-export const Title: React.FunctionComponent<TitleProps> = (props) => {
+export const Title: FC<TitleProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<TitleProps, TitleClasses>(
     'Title',
     defaultStyles,

@@ -1,10 +1,14 @@
-import * as messages from '@cucumber/messages'
+import {
+  type DataTable,
+  type DocString,
+  type Feature,
+  IdGenerator,
+  type Rule,
+  type Scenario,
+  type Step,
+} from '@cucumber/messages'
 
-function makeFeature(
-  name: string,
-  description: string,
-  scenarios: messages.Scenario[]
-): messages.Feature {
+function makeFeature(name: string, description: string, scenarios: Scenario[]): Feature {
   return {
     keyword: 'Feature',
     language: 'en',
@@ -18,12 +22,8 @@ function makeFeature(
   }
 }
 
-function makeRule(
-  name: string,
-  description: string,
-  scenarios: messages.Scenario[]
-): messages.Rule {
-  const idGenerator = messages.IdGenerator.uuid()
+function makeRule(name: string, description: string, scenarios: Scenario[]): Rule {
+  const idGenerator = IdGenerator.uuid()
 
   return {
     id: idGenerator(),
@@ -38,12 +38,8 @@ function makeRule(
   }
 }
 
-function makeScenario(
-  name: string,
-  description: string,
-  steps: messages.Step[]
-): messages.Scenario {
-  const idGenerator = messages.IdGenerator.uuid()
+function makeScenario(name: string, description: string, steps: Step[]): Scenario {
+  const idGenerator = IdGenerator.uuid()
 
   return {
     id: idGenerator(),
@@ -62,16 +58,16 @@ function makeStep(
   text: string,
   docstring = '',
   datatable: readonly (readonly string[])[] = []
-): messages.Step {
-  const idGenerator = messages.IdGenerator.uuid()
-  const docString: messages.DocString | undefined = docstring
+): Step {
+  const idGenerator = IdGenerator.uuid()
+  const docString: DocString | undefined = docstring
     ? {
         content: docstring,
         delimiter: '"""',
         location: { line: 1 },
       }
     : undefined
-  const dataTable: messages.DataTable | undefined =
+  const dataTable: DataTable | undefined =
     datatable.length > 0
       ? {
           location: { line: 1 },

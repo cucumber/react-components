@@ -1,10 +1,12 @@
-import * as messages from '@cucumber/messages'
-import React, { FC } from 'react'
+// biome-ignore-all lint/a11y/useMediaCaption: user-generated content
+
+import type { Attachment } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { ErrorMessage } from '../ErrorMessage.js'
 
-export const Video: FC<{ attachment: messages.Attachment }> = ({ attachment }) => {
-  const title = attachment.fileName ?? 'Attached Video (' + attachment.mediaType + ')'
+export const Video: FC<{ attachment: Attachment }> = ({ attachment }) => {
+  const title = attachment.fileName ?? `Attached Video (${attachment.mediaType})`
   if (attachment.url) {
     return <VideoInternal src={attachment.url} title={title} />
   }

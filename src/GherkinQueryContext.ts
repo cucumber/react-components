@@ -1,4 +1,4 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import React from 'react'
+import { createContext } from 'react'
 
-export default React.createContext(new GherkinQuery())
+export default createContext(new GherkinQuery())

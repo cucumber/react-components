@@ -1,4 +1,4 @@
-import { Attachment } from '@cucumber/messages'
+import type { Attachment } from '@cucumber/messages'
 import mimeTypes from 'mime'
 
 export function attachmentFilename(attachment: Attachment): string {

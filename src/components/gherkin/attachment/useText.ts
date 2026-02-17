@@ -1,4 +1,4 @@
-import { Attachment } from '@cucumber/messages'
+import type { Attachment } from '@cucumber/messages'
 import { useEffect, useState } from 'react'
 
 import { base64Decode } from './base64Decode.js'
@@ -24,7 +24,7 @@ export function useText(attachment: Attachment) {
     }
   }, [attachment])
   return {
-    title: attachment.fileName ?? 'Attached Text (' + attachment.mediaType + ')',
+    title: attachment.fileName ?? `Attached Text (${attachment.mediaType})`,
     loading,
     content,
     error,

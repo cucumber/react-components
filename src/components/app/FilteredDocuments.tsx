@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 
 import { useFilteredDocuments } from '../../hooks/useFilteredDocuments.js'
 import styles from './FilteredDocuments.module.scss'
@@ -9,7 +9,8 @@ export const FilteredDocuments: FC = () => {
 
   if (!results) {
     return null
-  } else if (!results.length) {
+  }
+  if (!results.length) {
     return filtered ? (
       <p className={styles.empty}>No scenarios match your query and/or filters.</p>
     ) : (

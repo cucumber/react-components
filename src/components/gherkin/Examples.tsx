@@ -1,10 +1,15 @@
-import { TableRow } from '@cucumber/messages'
-import { Lineage } from '@cucumber/query'
-import React, { FC } from 'react'
+import type { TableRow } from '@cucumber/messages'
+import type { Lineage } from '@cucumber/query'
+
+import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { useTestCaseStarted } from '../../hooks/useTestCaseStarted.js'
-import { DefaultComponent, ExamplesProps, useCustomRendering } from '../customise/index.js'
+import {
+  type DefaultComponent,
+  type ExamplesProps,
+  useCustomRendering,
+} from '../customise/index.js'
 import { TestCaseOutcome } from '../results/index.js'
 import { Children } from './Children.js'
 import { Description } from './Description.js'
@@ -31,7 +36,7 @@ const DefaultRenderer: DefaultComponent<ExamplesProps> = ({ examples }) => {
   )
 }
 
-export const Examples: React.FunctionComponent<ExamplesProps> = (props) => {
+export const Examples: FC<ExamplesProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ExamplesProps>(
     'Examples',
     defaultStyles,

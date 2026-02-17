@@ -1,4 +1,4 @@
-import { StepMatchArgumentsList } from '@cucumber/messages'
+import type { StepMatchArgumentsList } from '@cucumber/messages'
 
 interface TitleFragment {
   value: string
@@ -14,7 +14,7 @@ export function composePickleStepTitle(
     let offset = 0
     let plain: string
     const fragments: TitleFragment[] = []
-    stepMatchArguments.forEach((argument) => {
+    for (const argument of stepMatchArguments) {
       plain = text.slice(offset, argument.group.start)
       if (plain.length > 0) {
         fragments.push({ value: plain })
@@ -29,7 +29,7 @@ export function composePickleStepTitle(
         }
         offset += plain.length + arg.length
       }
-    })
+    }
     plain = text.slice(offset)
     if (plain.length > 0) {
       fragments.push({ value: plain })

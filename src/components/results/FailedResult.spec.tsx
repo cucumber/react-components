@@ -1,7 +1,6 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import { FailedResult } from './FailedResult.js'
 

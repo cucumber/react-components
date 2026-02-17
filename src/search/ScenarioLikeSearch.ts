@@ -1,6 +1,6 @@
-import { create, insert, Orama, search } from '@orama/orama'
+import { create, insert, type Orama, search } from '@orama/orama'
 
-import { TypedIndex } from './types.js'
+import type { TypedIndex } from './types.js'
 
 const schema = {
   name: 'string',

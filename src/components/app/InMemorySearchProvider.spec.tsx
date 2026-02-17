@@ -1,10 +1,9 @@
 import { TestStepResultStatus } from '@cucumber/messages'
 import { act, render } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
-import sinon, { SinonSpy } from 'sinon'
+import sinon, { type SinonSpy } from 'sinon'
 
-import SearchQueryContext, { SearchContextValue } from '../../SearchContext.js'
+import SearchQueryContext, { type SearchContextValue } from '../../SearchContext.js'
 import { InMemorySearchProvider } from './InMemorySearchProvider.js'
 
 describe('<InMemorySearchProvider />', () => {

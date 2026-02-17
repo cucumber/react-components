@@ -1,6 +1,7 @@
 import { stemmer } from '@orama/stemmers/english'
 import highlightWords from 'highlight-words'
-import React from 'react'
+import type { FC } from 'react'
+
 import ReactMarkdown from 'react-markdown'
 
 import { useSearch } from '../../hooks/index.js'
@@ -26,11 +27,7 @@ const allQueryWords = (queryWords: string[]): string[] => {
   }, [] as string[])
 }
 
-export const HighLight: React.FunctionComponent<IProps> = ({
-  text,
-  markdown = false,
-  className = '',
-}) => {
+export const HighLight: FC<IProps> = ({ text, markdown = false, className = '' }) => {
   const searchQueryContext = useSearch()
   const query = allQueryWords(
     searchQueryContext.query ? searchQueryContext.query.split(' ') : []

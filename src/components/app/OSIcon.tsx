@@ -1,5 +1,5 @@
-import { Meta } from '@cucumber/messages'
-import React, { FC } from 'react'
+import type { Meta } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { Linux } from './icons/Linux.js'
 import { MacOS } from './icons/MacOS.js'

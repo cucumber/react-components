@@ -1,11 +1,11 @@
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import type { FC } from 'react'
 
 import {
-  AnchorClasses,
-  AnchorProps,
-  DefaultComponent,
+  type AnchorClasses,
+  type AnchorProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Anchor.module.scss'
@@ -17,7 +17,7 @@ const DefaultRenderer: DefaultComponent<AnchorProps, AnchorClasses> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      <a href={'#' + id} className={defaultStyles.anchor}>
+      <a href={`#${id}`} className={defaultStyles.anchor}>
         <FontAwesomeIcon icon={faLink} />
       </a>
       {children}
@@ -25,7 +25,7 @@ const DefaultRenderer: DefaultComponent<AnchorProps, AnchorClasses> = ({
   )
 }
 
-export const Anchor: React.FunctionComponent<AnchorProps> = (props) => {
+export const Anchor: FC<AnchorProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<AnchorProps, AnchorClasses>(
     'Anchor',
     defaultStyles,

@@ -1,8 +1,10 @@
-import { Attachment } from '@cucumber/messages'
-import Convert from 'ansi-to-html'
-import React, { FC } from 'react'
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: pre-sanitised
 
-import { AttachmentClasses } from '../../customise/index.js'
+import type { Attachment } from '@cucumber/messages'
+import Convert from 'ansi-to-html'
+import type { FC } from 'react'
+
+import type { AttachmentClasses } from '../../customise/index.js'
 import { useText } from './useText.js'
 
 export const Log: FC<{

@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 
 import {
-  DefaultComponent,
-  KeywordClasses,
-  KeywordProps,
+  type DefaultComponent,
+  type KeywordClasses,
+  type KeywordProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Keyword.module.scss'

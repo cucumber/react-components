@@ -1,13 +1,17 @@
-import * as messages from '@cucumber/messages'
-import { TestRunFinished, TestRunStarted, TimeConversion } from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import {
+  type Envelope,
+  type Meta,
+  type TestRunFinished,
+  type TestRunStarted,
+  TimeConversion,
+} from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { ExecutionSummary } from './ExecutionSummary.js'
 
-const metaMinimal: messages.Meta = {
+const metaMinimal: Meta = {
   protocolVersion: '17.1.1',
   implementation: { version: '8.0.0-rc.1', name: 'cucumber-js' },
   cpu: { name: 'x64' },
@@ -16,7 +20,7 @@ const metaMinimal: messages.Meta = {
   ci: undefined,
 }
 
-const metaWithCi: messages.Meta = {
+const metaWithCi: Meta = {
   ...metaMinimal,
   ci: {
     name: 'GitHub Actions',
@@ -44,7 +48,7 @@ export default {
 }
 
 type TemplateArgs = {
-  envelopes: readonly messages.Envelope[]
+  envelopes: readonly Envelope[]
 }
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {

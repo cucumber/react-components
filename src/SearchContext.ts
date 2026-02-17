@@ -1,5 +1,5 @@
-import { TestStepResultStatus as Status } from '@cucumber/messages'
-import React from 'react'
+import type { TestStepResultStatus as Status } from '@cucumber/messages'
+import { createContext } from 'react'
 
 export interface SearchState {
   readonly query: string
@@ -11,7 +11,7 @@ export interface SearchContextValue extends SearchState {
   update: (changes: Partial<SearchState>) => void
 }
 
-export default React.createContext<SearchContextValue>({
+export default createContext<SearchContextValue>({
   query: '',
   hideStatuses: [],
   unchanged: true,

@@ -1,6 +1,10 @@
-import React from 'react'
+import type { FC } from 'react'
 
-import { BackgroundProps, DefaultComponent, useCustomRendering } from '../customise/index.js'
+import {
+  type BackgroundProps,
+  type DefaultComponent,
+  useCustomRendering,
+} from '../customise/index.js'
 import { Description } from './Description.js'
 import { Keyword } from './Keyword.js'
 import { Title } from './Title.js'
@@ -24,7 +28,7 @@ const DefaultRenderer: DefaultComponent<BackgroundProps> = ({ background }) => {
   )
 }
 
-export const Background: React.FunctionComponent<BackgroundProps> = (props) => {
+export const Background: FC<BackgroundProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<BackgroundProps>('Background', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

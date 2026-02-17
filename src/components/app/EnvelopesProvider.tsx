@@ -1,7 +1,7 @@
 import { Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import { Envelope } from '@cucumber/messages'
+import type { Envelope } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
-import React, { FC, PropsWithChildren, useMemo } from 'react'
+import { type FC, type PropsWithChildren, useMemo } from 'react'
 
 import { QueriesProvider } from './QueriesProvider.js'
 

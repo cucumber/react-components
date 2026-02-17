@@ -1,13 +1,13 @@
-import React from 'react'
+import type { FC } from 'react'
 
-import { GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
+import { type GherkinDocumentProps, useCustomRendering } from '../customise/index.js'
 import { Feature } from './Feature.js'
 
-const DefaultRenderer: React.FunctionComponent<GherkinDocumentProps> = ({ gherkinDocument }) => {
+const DefaultRenderer: FC<GherkinDocumentProps> = ({ gherkinDocument }) => {
   return gherkinDocument.feature ? <Feature feature={gherkinDocument.feature} /> : null
 }
 
-export const GherkinDocument: React.FunctionComponent<GherkinDocumentProps> = (props) => {
+export const GherkinDocument: FC<GherkinDocumentProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<GherkinDocumentProps>(
     'GherkinDocument',
     {},

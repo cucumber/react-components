@@ -1,6 +1,5 @@
-import { TestRunHookFinished, TestStepFinished } from '@cucumber/messages'
-import React from 'react'
-import { FC } from 'react'
+import type { TestRunHookFinished, TestStepFinished } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { Attachment } from '../gherkin/index.js'

@@ -1,4 +1,4 @@
-import * as messages from '@cucumber/messages'
+import type { TestStepResultStatus } from '@cucumber/messages'
 import {
   faCheckCircle,
   faInfoCircle,
@@ -6,15 +6,15 @@ import {
   faQuestionCircle,
   faStopCircle,
   faTimesCircle,
-  IconDefinition,
+  type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 
 import {
-  DefaultComponent,
-  StatusIconClasses,
-  StatusIconProps,
+  type DefaultComponent,
+  type StatusIconClasses,
+  type StatusIconProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './StatusIcon.module.scss'
@@ -42,14 +42,14 @@ export const StatusIcon: FunctionComponent<StatusIconProps> = (props) => {
   return <Customised {...props} />
 }
 
-const statusIcon = (status: messages.TestStepResultStatus): IconDefinition => {
+const statusIcon = (status: TestStepResultStatus): IconDefinition => {
   return {
-    ['PASSED']: faCheckCircle,
-    ['SKIPPED']: faStopCircle,
-    ['PENDING']: faPauseCircle,
-    ['UNDEFINED']: faQuestionCircle,
-    ['AMBIGUOUS']: faInfoCircle,
-    ['FAILED']: faTimesCircle,
-    ['UNKNOWN']: faQuestionCircle,
+    PASSED: faCheckCircle,
+    SKIPPED: faStopCircle,
+    PENDING: faPauseCircle,
+    UNDEFINED: faQuestionCircle,
+    AMBIGUOUS: faInfoCircle,
+    FAILED: faTimesCircle,
+    UNKNOWN: faQuestionCircle,
   }[status]
 }

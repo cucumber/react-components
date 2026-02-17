@@ -1,8 +1,12 @@
-import React from 'react'
+import type { FC } from 'react'
 
 import { useTestCaseStarted } from '../../hooks/useTestCaseStarted.js'
 import { HighLight } from '../app/HighLight.js'
-import { DefaultComponent, ScenarioProps, useCustomRendering } from '../customise/index.js'
+import {
+  type DefaultComponent,
+  type ScenarioProps,
+  useCustomRendering,
+} from '../customise/index.js'
 import { TestCaseOutcome } from '../results/index.js'
 import { Children } from './Children.js'
 import { Description } from './Description.js'
@@ -25,19 +29,14 @@ const DefaultRenderer: DefaultComponent<ScenarioProps> = ({ scenario }) => {
       <Description description={scenario.description} />
       <Children>
         {testCaseStarted && <TestCaseOutcome testCaseStarted={testCaseStarted} />}
-        {examplesList.length > 0 && (
-          <>
-            {examplesList.map((examples, index) => (
-              <Examples key={index} examples={examples} />
-            ))}
-          </>
-        )}
+        {examplesList.length > 0 &&
+          examplesList.map((examples, index) => <Examples key={index} examples={examples} />)}
       </Children>
     </section>
   )
 }
 
-export const Scenario: React.FunctionComponent<ScenarioProps> = (props) => {
+export const Scenario: FC<ScenarioProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ScenarioProps>('Scenario', {}, DefaultRenderer)
   return <ResolvedRenderer {...props} />
 }

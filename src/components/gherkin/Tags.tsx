@@ -1,7 +1,12 @@
-import React from 'react'
+import type { FC } from 'react'
 
 import { HighLight } from '../app/HighLight.js'
-import { DefaultComponent, TagsClasses, TagsProps, useCustomRendering } from '../customise/index.js'
+import {
+  type DefaultComponent,
+  type TagsClasses,
+  type TagsProps,
+  useCustomRendering,
+} from '../customise/index.js'
 import defaultStyles from './Tags.module.scss'
 
 const DefaultRenderer: DefaultComponent<TagsProps, TagsClasses> = ({ tags, styles }) => {
@@ -19,7 +24,7 @@ const DefaultRenderer: DefaultComponent<TagsProps, TagsClasses> = ({ tags, style
   )
 }
 
-export const Tags: React.FunctionComponent<TagsProps> = (props) => {
+export const Tags: FC<TagsProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<TagsProps, TagsClasses>(
     'Tags',
     defaultStyles,

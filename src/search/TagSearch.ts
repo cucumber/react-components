@@ -1,28 +1,27 @@
 import {
   GherkinDocumentWalker,
-  Query as GherkinQuery,
+  type Query as GherkinQuery,
   rejectAllFilters,
 } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument, Pickle, Scenario } from '@cucumber/messages'
 import parse from '@cucumber/tag-expressions'
 import { ArrayMultimap } from '@teppeis/multimaps'
 
-import { Searchable } from './types.js'
+import type { Searchable } from './types.js'
 
 class TagSearch {
-  private readonly pickleById = new Map<string, messages.Pickle>()
-  private readonly picklesByScenarioId = new ArrayMultimap<string, messages.Pickle>()
-  private gherkinDocuments: messages.GherkinDocument[] = []
+  private readonly pickleById = new Map<string, Pickle>()
+  private readonly picklesByScenarioId = new ArrayMultimap<string, Pickle>()
+  private gherkinDocuments: GherkinDocument[] = []
 
   constructor(private readonly gherkinQuery: GherkinQuery) {
     this.gherkinQuery = gherkinQuery
   }
 
-  public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
+  public async search(query: string): Promise<readonly GherkinDocument[]> {
     const expressionNode = parse(query)
     const tagFilters = {
-      acceptScenario: (scenario: messages.Scenario) => {
+      acceptScenario: (scenario: Scenario) => {
         const pickles = this.picklesByScenarioId.get(scenario.id)
 
         for (const pickle of pickles) {
@@ -43,10 +42,12 @@ class TagSearch {
       .filter((gherkinDocument) => gherkinDocument !== null) as GherkinDocument[]
   }
 
-  public async add(gherkinDocument: messages.GherkinDocument) {
+  public async add(gherkinDocument: GherkinDocument) {
     this.gherkinDocuments.push(gherkinDocument)
     const pickles = this.gherkinQuery.getPickles()
-    pickles.forEach((pickle) => this.pickleById.set(pickle.id, pickle))
+    for (const pickle of pickles) {
+      this.pickleById.set(pickle.id, pickle)
+    }
 
     const astWalker = new GherkinDocumentWalker(
       {},
@@ -55,11 +56,13 @@ class TagSearch {
           if (!gherkinDocument.uri) throw new Error('No uri for gherkinDocument')
           const pickleIds = this.gherkinQuery.getPickleIds(gherkinDocument.uri, scenario.id)
 
-          pickleIds.map((pickleId) => {
+          for (const pickleId of pickleIds) {
             const pickle = this.pickleById.get(pickleId)
-            if (!pickle) throw new Error(`No pickle for id=${pickleId}`)
+            if (!pickle) {
+              throw new Error(`No pickle for id=${pickleId}`)
+            }
             this.picklesByScenarioId.put(scenario.id, pickle)
-          })
+          }
         },
       }
     )

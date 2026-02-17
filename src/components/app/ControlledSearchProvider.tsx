@@ -1,6 +1,9 @@
-import React, { FC, PropsWithChildren, useMemo } from 'react'
+import { type FC, type PropsWithChildren, useMemo } from 'react'
 
-import SearchQueryContext, { SearchContextValue, SearchState } from '../../SearchContext.js'
+import SearchQueryContext, {
+  type SearchContextValue,
+  type SearchState,
+} from '../../SearchContext.js'
 
 interface Props {
   value: SearchState

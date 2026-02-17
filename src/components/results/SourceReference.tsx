@@ -1,11 +1,10 @@
-import { SourceReference as MessagesSourceReference } from '@cucumber/messages'
-import React from 'react'
-import { FC } from 'react'
+import type { SourceReference as SourceReferenceMessage } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import styles from './SourceReference.module.scss'
 
 interface Props {
-  sourceReference: MessagesSourceReference
+  sourceReference: SourceReferenceMessage
 }
 
 export const SourceReference: FC<Props> = ({ sourceReference }) => {

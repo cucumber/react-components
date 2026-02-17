@@ -1,4 +1,4 @@
-import { Hook, HookType } from '@cucumber/messages'
+import { type Hook, HookType } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { composeHookStepTitle } from './composeHookStepTitle.js'

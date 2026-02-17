@@ -1,7 +1,8 @@
-import { TestStepResultStatus as Status } from '@cucumber/messages'
+import type { TestStepResultStatus as Status } from '@cucumber/messages'
 import { faCheck, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC } from 'react'
+
+import type { FC, FormEvent } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 
 import { useSearch } from '../../hooks/index.js'
@@ -16,7 +17,7 @@ export const SearchBar: FC = () => {
   const { query, hideStatuses, update } = useSearch()
 
   const debouncedSearchChange = useDebouncedCallback((newValue) => update({ query: newValue }), 500)
-  const searchSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
+  const searchSubmitted = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     debouncedSearchChange.flush()
   }
@@ -52,7 +53,7 @@ export const SearchBar: FC = () => {
             <ul className={styles.statuses}>
               {statuses.map((status) => {
                 if (!statusesWithScenarios.includes(status)) {
-                  return
+                  return null
                 }
                 const name = statusName(status)
                 const enabled = !hideStatuses.includes(status)

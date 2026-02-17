@@ -1,11 +1,10 @@
-import * as messages from '@cucumber/messages'
-import { AttachmentContentEncoding } from '@cucumber/messages'
+import { type Attachment, AttachmentContentEncoding } from '@cucumber/messages'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import { type FC, useCallback, useEffect, useState } from 'react'
 
 import { NavigationButton } from '../../app/NavigationButton.js'
-import { AttachmentProps } from '../../customise/index.js'
+import type { AttachmentProps } from '../../customise/index.js'
 import { attachmentFilename } from './attachmentFilename.js'
 import { base64Decode } from './base64Decode.js'
 
@@ -20,8 +19,7 @@ const UnknownExternalised: FC<AttachmentProps> = ({ attachment }) => {
   const filename = attachmentFilename(attachment)
   const onClick = () => {
     const anchor = document.createElement('a')
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    anchor.href = attachment.url!
+    anchor.href = attachment.url as string
     anchor.download = filename
     anchor.click()
   }
@@ -38,7 +36,7 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   useEffect(() => () => cleanupDownloadUrl(downloadUrl), [downloadUrl])
   const filename = attachmentFilename(attachment)
   const onClick = useCallback(() => {
-    let href
+    let href: string
     if (downloadUrl) {
       href = downloadUrl
     } else {
@@ -60,7 +58,7 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   )
 }
 
-function createDownloadUrl(attachment: messages.Attachment) {
+function createDownloadUrl(attachment: Attachment) {
   console.debug('Creating download url')
   const body =
     attachment.contentEncoding === AttachmentContentEncoding.BASE64

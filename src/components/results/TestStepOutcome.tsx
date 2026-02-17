@@ -1,5 +1,10 @@
-import { PickleStep, TestStep, TestStepFinished, TestStepResultStatus } from '@cucumber/messages'
-import React, { FC } from 'react'
+import {
+  type PickleStep,
+  type TestStep,
+  type TestStepFinished,
+  TestStepResultStatus,
+} from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { useQueries } from '../../hooks/index.js'
 import { composeHookStepTitle } from '../gherkin/composeHookStepTitle.js'
@@ -76,8 +81,8 @@ const PickleStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
             return (
               <Parameter
                 key={index}
-                parameterTypeName={fragment.parameterTypeName}
                 value={fragment.value}
+                parameterTypeName={fragment.parameterTypeName}
               >
                 {fragment.value}
               </Parameter>
@@ -95,7 +100,8 @@ const PickleStepArgument: FC<{ testStep: TestStep }> = ({ testStep }) => {
   const pickleStep = cucumberQuery.findPickleStepBy(testStep) as PickleStep
   if (pickleStep.argument?.docString) {
     return <DocString docString={pickleStep.argument.docString} />
-  } else if (pickleStep.argument?.dataTable) {
+  }
+  if (pickleStep.argument?.dataTable) {
     return <DataTable dataTable={pickleStep.argument.dataTable} />
   }
   return null

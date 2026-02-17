@@ -1,4 +1,4 @@
-import { TestStepResultStatus } from '@cucumber/messages'
+import type { TestStepResultStatus } from '@cucumber/messages'
 
 import statuses from '../statuses.js'
 import { useQueries } from './useQueries.js'

@@ -1,9 +1,8 @@
-import * as messages from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Feature as FeatureMessage, Tag } from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 
 import { Feature, Tags } from '../gherkin/index.js'
-import { CustomRendering, CustomRenderingSupport, TagsProps } from './CustomRendering.js'
+import { CustomRendering, type CustomRenderingSupport, type TagsProps } from './CustomRendering.js'
 
 export default {
   title: 'Customisation/Components',
@@ -11,7 +10,7 @@ export default {
 
 export const CustomTagComponent: Story<{
   support: CustomRenderingSupport
-  tags: messages.Tag[]
+  tags: Tag[]
 }> = ({ support, tags }) => {
   return (
     <>
@@ -70,7 +69,7 @@ CustomTagComponent.args = {
 
 export const CustomFeatureComponent: Story<{
   support: CustomRenderingSupport
-  feature: messages.Feature
+  feature: FeatureMessage
 }> = ({ support, feature }) => {
   return (
     <>
@@ -96,10 +95,9 @@ CustomFeatureComponent.args = {
     language: 'en',
   },
   support: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Feature: (props: any) => (
+    Feature: (props) => (
       <div>
-        <button>Click me</button>
+        <button type="button">Click me</button>
         <props.DefaultRenderer {...props} />
       </div>
     ),

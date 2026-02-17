@@ -1,6 +1,5 @@
-import { Envelope } from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Envelope } from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 
 import emptySample from '../../../acceptance/empty/empty.js'
 import globalHooksSample from '../../../acceptance/global-hooks/global-hooks.js'

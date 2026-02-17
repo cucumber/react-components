@@ -1,19 +1,41 @@
-import * as messages from '@cucumber/messages'
-import React, { FC, FunctionComponent, PropsWithChildren, ReactNode, useContext } from 'react'
+import type {
+  Attachment,
+  Background,
+  DataTable,
+  DocString,
+  Examples,
+  Feature,
+  GherkinDocument,
+  PickleDocString,
+  PickleTable,
+  PickleTag,
+  Rule,
+  Scenario,
+  Tag,
+  TestStepResultStatus,
+} from '@cucumber/messages'
+import {
+  createContext,
+  type FC,
+  type FunctionComponent,
+  type PropsWithChildren,
+  type ReactNode,
+  useContext,
+} from 'react'
 
 function mixinStyles<Classes>(
   builtIn: Record<string, string>,
-  custom?: Record<string, string> | React.FunctionComponent
+  custom?: Record<string, string> | FunctionComponent
 ): Classes {
   const mixed: Record<string, unknown> = {}
-  Object.keys(builtIn).forEach((key) => {
+  for (const key of Object.keys(builtIn)) {
     if (builtIn[key]) {
       mixed[key] = builtIn[key]
     }
     if (custom && typeof custom !== 'function' && custom[key]) {
       mixed[key] = custom[key]
     }
-  })
+  }
   return mixed as Classes
 }
 
@@ -27,13 +49,13 @@ export interface AnchorProps {
 export type AnchorClasses = Styles<'wrapper' | 'anchor'>
 
 export interface AttachmentProps {
-  attachment: messages.Attachment
+  attachment: Attachment
 }
 
 export type AttachmentClasses = Styles<'text' | 'log' | 'icon' | 'image' | 'links'>
 
 export interface BackgroundProps {
-  background: messages.Background
+  background: Background
 }
 
 export interface ChildrenProps {
@@ -43,7 +65,7 @@ export interface ChildrenProps {
 export type ChildrenClasses = Styles<'children'>
 
 export interface DataTableProps {
-  dataTable: messages.DataTable | messages.PickleTable
+  dataTable: DataTable | PickleTable
 }
 
 export type DataTableClasses = Styles<'table'>
@@ -55,7 +77,7 @@ export interface DescriptionProps {
 export type DescriptionClasses = Styles<'content'>
 
 export interface DocStringProps {
-  docString: messages.DocString | messages.PickleDocString
+  docString: DocString | PickleDocString
 }
 
 export type DocStringClasses = Styles<'docString'>
@@ -68,15 +90,15 @@ export interface ErrorMessageProps {
 export type ErrorMessageClasses = Styles<'message'>
 
 export interface ExamplesProps {
-  examples: messages.Examples
+  examples: Examples
 }
 
 export interface FeatureProps {
-  feature: messages.Feature
+  feature: Feature
 }
 
 export interface GherkinDocumentProps {
-  gherkinDocument: messages.GherkinDocument
+  gherkinDocument: GherkinDocument
 }
 
 export type Header = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
@@ -96,21 +118,21 @@ export interface ParameterProps {
 export type ParameterClasses = Styles<'parameter'>
 
 export interface StatusIconProps {
-  status: messages.TestStepResultStatus
+  status: TestStepResultStatus
 }
 
 export interface RuleProps {
-  rule: messages.Rule
+  rule: Rule
 }
 
 export interface ScenarioProps {
-  scenario: messages.Scenario
+  scenario: Scenario
 }
 
 export type StatusIconClasses = Styles<'icon'>
 
 export interface TagsProps {
-  tags: readonly messages.Tag[] | readonly messages.PickleTag[]
+  tags: readonly Tag[] | readonly PickleTag[]
 }
 
 export type TagsClasses = Styles<'tags' | 'tag'>
@@ -131,10 +153,10 @@ export declare type DefaultComponent<
 export declare type CustomisedComponent<
   Props,
   Classes = Record<string, string>,
-> = React.FunctionComponent<
+> = FunctionComponent<
   Props & {
     styles: Classes
-    DefaultRenderer: React.FunctionComponent<Props>
+    DefaultRenderer: FunctionComponent<Props>
   }
 >
 
@@ -165,7 +187,7 @@ export interface CustomRenderingSupport {
 
 export declare type CustomRenderable = keyof CustomRenderingSupport
 
-export const CustomRenderingContext = React.createContext<CustomRenderingSupport>({})
+export const CustomRenderingContext = createContext<CustomRenderingSupport>({})
 
 export function useCustomRendering<Props, Classes extends Styles<string> = Record<string, string>>(
   component: CustomRenderable,
@@ -173,14 +195,14 @@ export function useCustomRendering<Props, Classes extends Styles<string> = Recor
   DefaultRenderer: DefaultComponent<Props, Classes>
 ): FunctionComponent<Props> {
   const { [component]: Custom } = useContext(CustomRenderingContext)
-  // @ts-ignore
+  // @ts-expect-error
   const composedStyles = mixinStyles<Classes>(defaultStyles, Custom)
-  const StyledDefaultRenderer: React.FunctionComponent<Props> = (props) => {
+  const StyledDefaultRenderer: FunctionComponent<Props> = (props) => {
     return <DefaultRenderer {...props} styles={composedStyles} />
   }
   if (typeof Custom === 'function') {
-    const StyledCustomRenderer: React.FunctionComponent<Props> = (props) => {
-      // @ts-ignore
+    const StyledCustomRenderer: FunctionComponent<Props> = (props) => {
+      // @ts-expect-error
       return <Custom {...props} styles={composedStyles} DefaultRenderer={StyledDefaultRenderer} />
     }
     return StyledCustomRenderer

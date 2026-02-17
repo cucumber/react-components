@@ -1,6 +1,5 @@
-import { Envelope } from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Envelope } from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'

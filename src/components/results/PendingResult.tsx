@@ -1,5 +1,5 @@
-import { TestStepResult } from '@cucumber/messages'
-import React, { FC } from 'react'
+import type { TestStepResult } from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { ResultNote } from './ResultNote.js'
 

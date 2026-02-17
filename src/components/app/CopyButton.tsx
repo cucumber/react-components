@@ -1,6 +1,6 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC, useState } from 'react'
+import { type FC, useState } from 'react'
 
 import styles from './CopyButton.module.scss'
 
@@ -23,6 +23,7 @@ export const CopyButton: FC<{ text: string }> = ({ text }) => {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       aria-label={copied ? 'Copied' : 'Copy'}
       disabled={copied}

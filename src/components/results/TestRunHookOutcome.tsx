@@ -1,5 +1,10 @@
-import { Hook, HookType, TestRunHookFinished, TestStepResultStatus } from '@cucumber/messages'
-import React, { FC } from 'react'
+import {
+  type Hook,
+  HookType,
+  type TestRunHookFinished,
+  TestStepResultStatus,
+} from '@cucumber/messages'
+import type { FC } from 'react'
 
 import { StatusIcon } from '../gherkin/index.js'
 import { FailedResult } from './FailedResult.js'

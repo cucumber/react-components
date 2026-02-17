@@ -1,4 +1,4 @@
 import { Query as CucumberQuery } from '@cucumber/query'
-import React from 'react'
+import { createContext } from 'react'
 
-export default React.createContext(new CucumberQuery())
+export default createContext(new CucumberQuery())

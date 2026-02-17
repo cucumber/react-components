@@ -1,17 +1,15 @@
-import * as messages from '@cucumber/messages'
-import { AttachmentContentEncoding } from '@cucumber/messages'
+import { AttachmentContentEncoding, type Attachment as AttachmentMessage } from '@cucumber/messages'
 import { render, screen } from '@testing-library/react'
 import { expect } from 'chai'
-import React from 'react'
 
 import { Attachment } from './Attachment.js'
 
 describe('<Attachment>', () => {
   it('renders a download button for a file that isnt video, image or text', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       body: 'test content',
       mediaType: 'application/pdf',
-      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
       fileName: 'document.pdf',
     }
     render(<Attachment attachment={attachment} />)
@@ -20,10 +18,10 @@ describe('<Attachment>', () => {
   })
 
   it('renders a download button for an unknown externalised attachment', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       body: '',
       mediaType: 'application/pdf',
-      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
       fileName: 'document.pdf',
     }
     render(<Attachment attachment={attachment} />)
@@ -32,10 +30,10 @@ describe('<Attachment>', () => {
   })
 
   it('renders a video', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'video/mp4',
       body: 'fake-base64',
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -45,11 +43,11 @@ describe('<Attachment>', () => {
   })
 
   it('renders a video with a name', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'video/mp4',
       fileName: 'the attachment name',
       body: 'fake-base64',
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -59,10 +57,10 @@ describe('<Attachment>', () => {
   })
 
   it('renders an externalised video', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'video/mp4',
       body: '',
-      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
       url: './path-to-video.mp4',
     }
     const { container } = render(<Attachment attachment={attachment} />)
@@ -73,10 +71,10 @@ describe('<Attachment>', () => {
   })
 
   it('renders an image', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'image/png',
       body: 'fake-base64',
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -86,11 +84,11 @@ describe('<Attachment>', () => {
   })
 
   it('renders an image with a name', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'image/png',
       fileName: 'the attachment name',
       body: 'fake-base64',
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -100,7 +98,7 @@ describe('<Attachment>', () => {
   })
 
   it('renders an externalised image ', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'image/png',
       body: '',
       contentEncoding: AttachmentContentEncoding.IDENTITY,
@@ -114,10 +112,10 @@ describe('<Attachment>', () => {
   })
 
   it('renders base64 encoded plaintext', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/plain',
       body: Buffer.from('hello').toString('base64'),
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -127,11 +125,11 @@ describe('<Attachment>', () => {
   })
 
   it('renders base64 encoded plaintext with a name', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/plain',
       fileName: 'the attachment name',
       body: Buffer.from('hello').toString('base64'),
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const summary = container.querySelector('details summary')
@@ -141,10 +139,10 @@ describe('<Attachment>', () => {
   })
 
   it('correctly renders ANSI characters', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/x.cucumber.log+plain',
       body: '\x1b[30mblack\x1b[37mwhite',
-      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const data = container.querySelector('pre > span')
@@ -154,11 +152,11 @@ describe('<Attachment>', () => {
   })
 
   it('correctly renders ANSI characters with a name', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/x.cucumber.log+plain',
       fileName: 'the attachment name',
       body: '\x1b[30mblack\x1b[37mwhite',
-      contentEncoding: messages.AttachmentContentEncoding.IDENTITY,
+      contentEncoding: AttachmentContentEncoding.IDENTITY,
     }
     const { container } = render(<Attachment attachment={attachment} />)
     const data = container.querySelector('pre > span')
@@ -168,7 +166,7 @@ describe('<Attachment>', () => {
   })
 
   it('renders a link', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/uri-list',
       contentEncoding: AttachmentContentEncoding.IDENTITY,
       body: 'https://cucumber.io',
@@ -184,7 +182,7 @@ describe('<Attachment>', () => {
   })
 
   it('renders multiple links and ignores blank lines', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/uri-list',
       contentEncoding: AttachmentContentEncoding.IDENTITY,
       body: `https://github.com/cucumber/cucumber-js
@@ -205,10 +203,10 @@ https://github.com/cucumber/cucumber-ruby
   })
 
   it('renders a fallback when the attachment cannot be rendered', () => {
-    const attachment: messages.Attachment = {
+    const attachment: AttachmentMessage = {
       mediaType: 'text/plain',
       body: 'this is not valid base64!!!',
-      contentEncoding: messages.AttachmentContentEncoding.BASE64,
+      contentEncoding: AttachmentContentEncoding.BASE64,
     }
     render(<Attachment attachment={attachment} />)
 

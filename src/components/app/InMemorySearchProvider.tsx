@@ -1,7 +1,7 @@
-import { TestStepResultStatus } from '@cucumber/messages'
-import React, { FC, PropsWithChildren, useState } from 'react'
+import type { TestStepResultStatus } from '@cucumber/messages'
+import { type FC, type PropsWithChildren, useState } from 'react'
 
-import { SearchState } from '../../SearchContext.js'
+import type { SearchState } from '../../SearchContext.js'
 import { ControlledSearchProvider } from './ControlledSearchProvider.js'
 
 interface Props {

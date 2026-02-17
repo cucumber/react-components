@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 
 import {
-  DefaultComponent,
-  ErrorMessageClasses,
-  ErrorMessageProps,
+  type DefaultComponent,
+  type ErrorMessageClasses,
+  type ErrorMessageProps,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './ErrorMessage.module.scss'

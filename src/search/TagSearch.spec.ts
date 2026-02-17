@@ -1,6 +1,6 @@
 import { generateMessages } from '@cucumber/gherkin'
-import { pretty, Query as GherkinQuery } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
+import { Query as GherkinQuery, pretty } from '@cucumber/gherkin-utils'
+import { IdGenerator, SourceMediaType } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { createTagSearch } from './TagSearch.js'
@@ -28,11 +28,11 @@ Feature: Solar System
     const envelopes = generateMessages(
       feature,
       'test.feature',
-      messages.SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN,
+      SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN,
       {
         includePickles: true,
         includeGherkinDocument: true,
-        newId: messages.IdGenerator.incrementing(),
+        newId: IdGenerator.incrementing(),
       }
     )
     const tagSearch = await createTagSearch(gherkinQuery)

@@ -1,4 +1,4 @@
-import { Hook, TestRunHookFinished } from '@cucumber/messages'
+import type { Hook, TestRunHookFinished } from '@cucumber/messages'
 
 import { ensure } from './helpers.js'
 import { useQueries } from './useQueries.js'

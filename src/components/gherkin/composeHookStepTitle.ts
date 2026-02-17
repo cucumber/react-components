@@ -1,4 +1,4 @@
-import { Hook, HookType } from '@cucumber/messages'
+import { type Hook, HookType } from '@cucumber/messages'
 
 const labels: Record<HookType, string> = {
   [HookType.BEFORE_TEST_RUN]: 'BeforeAll',
@@ -19,7 +19,7 @@ export function composeHookStepTitle(hook?: Hook): string {
   }
 
   if (hook?.name) {
-    result += ': ' + hook.name
+    result += `: ${hook.name}`
   }
 
   return result

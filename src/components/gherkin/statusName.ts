@@ -1,5 +1,5 @@
-import * as messages from '@cucumber/messages'
+import type { TestStepResultStatus } from '@cucumber/messages'
 
-export default (status: messages.TestStepResultStatus): string => {
+export default (status: TestStepResultStatus): string => {
   return status.toLowerCase()
 }

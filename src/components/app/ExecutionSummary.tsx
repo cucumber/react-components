@@ -1,7 +1,7 @@
-import { Product, TestStepResultStatus, TimeConversion } from '@cucumber/messages'
+import { type Product, TestStepResultStatus, TimeConversion } from '@cucumber/messages'
 import { faCodeBranch, faStopwatch, faTag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FC } from 'react'
+import type { FC } from 'react'
 
 import { formatExecutionDistance } from '../../formatExecutionDistance.js'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'

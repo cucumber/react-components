@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import type { FunctionComponent, ReactNode } from 'react'
 
 import styles from './StepsList.module.scss'
 

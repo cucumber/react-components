@@ -1,9 +1,9 @@
-import React from 'react'
+import type { FC } from 'react'
 
 import {
-  ChildrenClasses,
-  ChildrenProps,
-  DefaultComponent,
+  type ChildrenClasses,
+  type ChildrenProps,
+  type DefaultComponent,
   useCustomRendering,
 } from '../customise/index.js'
 import defaultStyles from './Children.module.scss'
@@ -15,7 +15,7 @@ const DefaultRenderer: DefaultComponent<ChildrenProps, ChildrenClasses> = ({
   return <div className={styles.children}>{children}</div>
 }
 
-export const Children: React.FunctionComponent<ChildrenProps> = (props) => {
+export const Children: FC<ChildrenProps> = (props) => {
   const ResolvedRenderer = useCustomRendering<ChildrenProps, ChildrenClasses>(
     'Children',
     defaultStyles,

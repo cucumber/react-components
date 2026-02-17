@@ -1,4 +1,4 @@
-import { TestCaseStarted } from '@cucumber/messages'
+import type { TestCaseStarted } from '@cucumber/messages'
 import { useMemo } from 'react'
 
 import { useQueries } from './useQueries.js'

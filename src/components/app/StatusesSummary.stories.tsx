@@ -1,6 +1,5 @@
-import * as messages from '@cucumber/messages'
-import { Story } from '@ladle/react'
-import React from 'react'
+import type { Envelope } from '@cucumber/messages'
+import type { Story } from '@ladle/react'
 
 import examplesTablesFeature from '../../../acceptance/examples-tables/examples-tables.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
@@ -11,7 +10,7 @@ export default {
 }
 
 type TemplateArgs = {
-  envelopes: readonly messages.Envelope[]
+  envelopes: readonly Envelope[]
 }
 
 const Template: Story<TemplateArgs> = ({ envelopes }) => {
