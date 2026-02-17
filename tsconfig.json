@@ -11,13 +11,13 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "experimentalDecorators": true,
-    "module": "Node16",
+    "module": "NodeNext",
     "lib": [
       "ES2022",
       "dom"
     ],
     "target": "ES2022",
-    "moduleResolution": "node16",
+    "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "jsx": "react-jsx"
