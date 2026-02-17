@@ -39,7 +39,7 @@
     "ansi-to-html": "0.7.2",
     "date-fns": "4.1.0",
     "hast-util-sanitize": "^5.0.1",
-    "highlight-words-core": "1.2.2",
+    "highlight-words-core": "1.2.3",
     "mime": "^4.0.0",
     "react-accessible-accordion": "5.0.1",
     "react-error-boundary": "^6.0.0",
