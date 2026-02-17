@@ -4,7 +4,7 @@ import {
   rejectAllFilters,
 } from '@cucumber/gherkin-utils'
 import type { GherkinDocument, Pickle, Scenario } from '@cucumber/messages'
-import parse from '@cucumber/tag-expressions'
+import { parse } from '@cucumber/tag-expressions'
 import { ArrayMultimap } from '@teppeis/multimaps'
 
 import type { Searchable } from './types.js'
