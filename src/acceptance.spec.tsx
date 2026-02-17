@@ -3,7 +3,6 @@ import fs from 'node:fs'
 import { pipeline, Writable } from 'node:stream'
 import { promisify } from 'node:util'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
-import type * as messages from '@cucumber/messages'
 import type { Envelope } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
@@ -32,11 +31,7 @@ describe('acceptance tests', function () {
           messageStream,
           new Writable({
             objectMode: true,
-            write(
-              envelope: messages.Envelope,
-              _: string,
-              callback: (error?: Error | null) => void
-            ) {
+            write(envelope: Envelope, _: string, callback: (error?: Error | null) => void) {
               envelopes.push(envelope)
               callback()
             },

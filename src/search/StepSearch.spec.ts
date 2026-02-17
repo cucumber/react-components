@@ -1,4 +1,3 @@
-import type * as messages from '@cucumber/messages'
 import type { Step } from '@cucumber/messages'
 import { expect } from 'chai'
 
@@ -8,7 +7,7 @@ import type { TypedIndex } from './types.js'
 
 describe('StepSearch', () => {
   let stepSearch: TypedIndex<Step>
-  let steps: messages.Step[]
+  let steps: Step[]
 
   beforeEach(async () => {
     stepSearch = await createStepSearch()

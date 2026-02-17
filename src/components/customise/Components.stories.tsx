@@ -1,4 +1,4 @@
-import type * as messages from '@cucumber/messages'
+import type { Feature as FeatureMessage, Tag } from '@cucumber/messages'
 import type { Story } from '@ladle/react'
 
 import { Feature, Tags } from '../gherkin/index.js'
@@ -10,7 +10,7 @@ export default {
 
 export const CustomTagComponent: Story<{
   support: CustomRenderingSupport
-  tags: messages.Tag[]
+  tags: Tag[]
 }> = ({ support, tags }) => {
   return (
     <>
@@ -69,7 +69,7 @@ CustomTagComponent.args = {
 
 export const CustomFeatureComponent: Story<{
   support: CustomRenderingSupport
-  feature: messages.Feature
+  feature: FeatureMessage
 }> = ({ support, feature }) => {
   return (
     <>

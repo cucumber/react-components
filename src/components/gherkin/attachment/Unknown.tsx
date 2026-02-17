@@ -1,5 +1,4 @@
-import type * as messages from '@cucumber/messages'
-import { AttachmentContentEncoding } from '@cucumber/messages'
+import { type Attachment, AttachmentContentEncoding } from '@cucumber/messages'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type FC, useCallback, useEffect, useState } from 'react'
@@ -59,7 +58,7 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   )
 }
 
-function createDownloadUrl(attachment: messages.Attachment) {
+function createDownloadUrl(attachment: Attachment) {
   console.debug('Creating download url')
   const body =
     attachment.contentEncoding === AttachmentContentEncoding.BASE64

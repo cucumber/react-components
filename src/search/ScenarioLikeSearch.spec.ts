@@ -1,4 +1,3 @@
-import type * as messages from '@cucumber/messages'
 import type { Scenario } from '@cucumber/messages'
 import { expect } from 'chai'
 
@@ -8,7 +7,7 @@ import type { TypedIndex } from './types.js'
 
 describe('ScenarioLikeSearch', () => {
   let scenarioSearch: TypedIndex<Scenario>
-  let scenarios: messages.Scenario[]
+  let scenarios: Scenario[]
 
   beforeEach(async () => {
     scenarioSearch = await createScenarioLikeSearch<Scenario>()

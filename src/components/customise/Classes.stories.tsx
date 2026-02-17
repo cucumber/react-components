@@ -1,6 +1,6 @@
 import './CustomRendering.stories.scss'
 
-import type * as messages from '@cucumber/messages'
+import type { DocString as DocStringMessage } from '@cucumber/messages'
 import type { Story } from '@ladle/react'
 
 import { DocString } from '../gherkin/index.js'
@@ -10,7 +10,7 @@ export default {
   title: 'Customisation/Classes',
 }
 
-export const Classes: Story<{ support: CustomRenderingSupport; docString: messages.DocString }> = ({
+export const Classes: Story<{ support: CustomRenderingSupport; docString: DocStringMessage }> = ({
   support,
   docString,
 }) => {

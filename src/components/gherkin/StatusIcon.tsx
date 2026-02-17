@@ -1,4 +1,4 @@
-import type * as messages from '@cucumber/messages'
+import type { TestStepResultStatus } from '@cucumber/messages'
 import {
   faCheckCircle,
   faInfoCircle,
@@ -42,7 +42,7 @@ export const StatusIcon: FunctionComponent<StatusIconProps> = (props) => {
   return <Customised {...props} />
 }
 
-const statusIcon = (status: messages.TestStepResultStatus): IconDefinition => {
+const statusIcon = (status: TestStepResultStatus): IconDefinition => {
   return {
     PASSED: faCheckCircle,
     SKIPPED: faStopCircle,

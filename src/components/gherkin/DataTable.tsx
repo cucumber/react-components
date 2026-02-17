@@ -1,4 +1,4 @@
-import type * as messages from '@cucumber/messages'
+import type { PickleTableRow, TableRow } from '@cucumber/messages'
 
 import { HighLight } from '../app/HighLight.js'
 import {
@@ -11,7 +11,7 @@ import defaultStyles from './DataTable.module.scss'
 import isNumber from './isNumber.js'
 
 const TableBody: React.FunctionComponent<{
-  rows: readonly messages.TableRow[] | readonly messages.PickleTableRow[]
+  rows: readonly TableRow[] | readonly PickleTableRow[]
 }> = ({ rows }) => {
   return (
     <tbody>

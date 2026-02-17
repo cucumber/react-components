@@ -1,4 +1,3 @@
-import type * as messages from '@cucumber/messages'
 import type { Feature, GherkinDocument } from '@cucumber/messages'
 import { expect } from 'chai'
 
@@ -8,7 +7,7 @@ import type { TypedIndex } from './types.js'
 
 describe('FeatureSearch', () => {
   let featureSearch: TypedIndex<Feature, GherkinDocument>
-  let gherkinDocument: messages.GherkinDocument
+  let gherkinDocument: GherkinDocument
 
   beforeEach(async () => {
     featureSearch = await createFeatureSearch()

@@ -1,10 +1,10 @@
-import type * as messages from '@cucumber/messages'
+import type { Attachment } from '@cucumber/messages'
 import type { FC } from 'react'
 
 import type { AttachmentClasses } from '../../customise/index.js'
 import { ErrorMessage } from '../ErrorMessage.js'
 
-export const Image: FC<{ attachment: messages.Attachment; classes: AttachmentClasses }> = ({
+export const Image: FC<{ attachment: Attachment; classes: AttachmentClasses }> = ({
   attachment,
   classes,
 }) => {

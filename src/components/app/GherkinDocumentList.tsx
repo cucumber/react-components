@@ -1,17 +1,19 @@
-import * as messages from '@cucumber/messages'
-import { TestStepResultStatus } from '@cucumber/messages'
+import {
+  type GherkinDocument as GherkinDocumentMessage,
+  TestStepResultStatus,
+} from '@cucumber/messages'
 import { type FC, useState } from 'react'
 
 import { useMostSevereStatusByUri } from '../../hooks/useMostSevereStatusByUri.js'
 import { GherkinDocument } from '../gherkin/index.js'
 import { DocumentAccordion, DocumentAccordionItem } from './DocumentAccordion.js'
 
-interface ValidGherkinDocument extends messages.GherkinDocument {
+interface ValidGherkinDocument extends GherkinDocumentMessage {
   uri: string
 }
 
 interface Props {
-  gherkinDocuments: readonly messages.GherkinDocument[]
+  gherkinDocuments: readonly GherkinDocumentMessage[]
   // Set to true if non-PASSED documents should be pre-expanded
   preExpand?: boolean
 }
@@ -25,9 +27,7 @@ export const GherkinDocumentList: FC<Props> = ({ gherkinDocuments, preExpand }) 
     // Pre-expand any document that is *not* passed - assuming this is what people want to look at first
     return preExpand
       ? (validDocuments
-          .filter(
-            (doc) => mostSevereStatusByUri.get(doc.uri) !== messages.TestStepResultStatus.PASSED
-          )
+          .filter((doc) => mostSevereStatusByUri.get(doc.uri) !== TestStepResultStatus.PASSED)
           .map((doc) => doc.uri) as string[])
       : []
   })

@@ -1,4 +1,4 @@
-import type * as messages from '@cucumber/messages'
+import type { Ci } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import ciCommitLink from './ciCommitLink.js'
@@ -6,7 +6,7 @@ import ciCommitLink from './ciCommitLink.js'
 describe('ciCommitLink(ci)', () => {
   describe('when executed on GitHubAction', () => {
     it('returns a link to the commit view on GitHub', () => {
-      const ci: messages.Ci = {
+      const ci: Ci = {
         name: 'GitHub Actions',
         url: 'http://anywhere',
         git: {
@@ -21,7 +21,7 @@ describe('ciCommitLink(ci)', () => {
 
   describe('when remote startss with github.com', () => {
     it('returns a link to the commit view on GitHub', () => {
-      const ci: messages.Ci = {
+      const ci: Ci = {
         name: 'CircleCI',
         url: 'http://anywhere',
         git: {
@@ -36,7 +36,7 @@ describe('ciCommitLink(ci)', () => {
 
   describe('when git is not specified', () => {
     it('returns undefined', () => {
-      const ci: messages.Ci = {
+      const ci: Ci = {
         name: 'SuperCI',
       }
 

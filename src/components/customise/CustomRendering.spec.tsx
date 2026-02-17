@@ -1,4 +1,4 @@
-import type * as messages from '@cucumber/messages'
+import type { Tag } from '@cucumber/messages'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
 
@@ -7,7 +7,7 @@ import { type Customised, CustomRendering, type TagsClasses, type TagsProps } fr
 
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
-    const tags: messages.Tag[] = [
+    const tags: Tag[] = [
       {
         id: '123',
         name: 'sometag',
@@ -26,7 +26,7 @@ describe('custom rendering and theming', () => {
   })
 
   it('uses the custom classnames provided via custom rendering', () => {
-    const tags: messages.Tag[] = [
+    const tags: Tag[] = [
       {
         id: '123',
         name: 'sometag',
@@ -55,7 +55,7 @@ describe('custom rendering and theming', () => {
   })
 
   it('uses a partial of custom classes and falls back to built-in styles where omitted', () => {
-    const tags: messages.Tag[] = [
+    const tags: Tag[] = [
       {
         id: '123',
         name: 'sometag',
@@ -83,7 +83,7 @@ describe('custom rendering and theming', () => {
   })
 
   it('uses a custom component implementation where provided', () => {
-    const tags: messages.Tag[] = [
+    const tags: Tag[] = [
       {
         id: '123',
         name: 'sometag',
@@ -112,7 +112,7 @@ describe('custom rendering and theming', () => {
   })
 
   it('a custom component can defer to the default renderer if it wants to', () => {
-    const tags: messages.Tag[] = [
+    const tags: Tag[] = [
       {
         id: '123',
         name: 'sometag',

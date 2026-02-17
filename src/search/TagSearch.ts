@@ -3,26 +3,25 @@ import {
   type Query as GherkinQuery,
   rejectAllFilters,
 } from '@cucumber/gherkin-utils'
-import type * as messages from '@cucumber/messages'
-import type { GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument, Pickle, Scenario } from '@cucumber/messages'
 import parse from '@cucumber/tag-expressions'
 import { ArrayMultimap } from '@teppeis/multimaps'
 
 import type { Searchable } from './types.js'
 
 class TagSearch {
-  private readonly pickleById = new Map<string, messages.Pickle>()
-  private readonly picklesByScenarioId = new ArrayMultimap<string, messages.Pickle>()
-  private gherkinDocuments: messages.GherkinDocument[] = []
+  private readonly pickleById = new Map<string, Pickle>()
+  private readonly picklesByScenarioId = new ArrayMultimap<string, Pickle>()
+  private gherkinDocuments: GherkinDocument[] = []
 
   constructor(private readonly gherkinQuery: GherkinQuery) {
     this.gherkinQuery = gherkinQuery
   }
 
-  public async search(query: string): Promise<readonly messages.GherkinDocument[]> {
+  public async search(query: string): Promise<readonly GherkinDocument[]> {
     const expressionNode = parse(query)
     const tagFilters = {
-      acceptScenario: (scenario: messages.Scenario) => {
+      acceptScenario: (scenario: Scenario) => {
         const pickles = this.picklesByScenarioId.get(scenario.id)
 
         for (const pickle of pickles) {
@@ -43,7 +42,7 @@ class TagSearch {
       .filter((gherkinDocument) => gherkinDocument !== null) as GherkinDocument[]
   }
 
-  public async add(gherkinDocument: messages.GherkinDocument) {
+  public async add(gherkinDocument: GherkinDocument) {
     this.gherkinDocuments.push(gherkinDocument)
     const pickles = this.gherkinQuery.getPickles()
     for (const pickle of pickles) {

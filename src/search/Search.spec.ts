@@ -1,6 +1,6 @@
 import { generateMessages } from '@cucumber/gherkin'
 import { Query as GherkinQuery, pretty } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
+import { IdGenerator, SourceMediaType } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { createSearch } from './Search.js'
@@ -27,12 +27,12 @@ describe('Search', () => {
     const envelopes = generateMessages(
       feature,
       'test.feature',
-      messages.SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN,
+      SourceMediaType.TEXT_X_CUCUMBER_GHERKIN_PLAIN,
       {
         includeGherkinDocument: true,
         includePickles: true,
         includeSource: true,
-        newId: messages.IdGenerator.incrementing(),
+        newId: IdGenerator.incrementing(),
       }
     )
     for (const envelope of envelopes) {
