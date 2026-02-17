@@ -21,7 +21,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/src/**/*.spec.*"],
+      "includes": ["src/**/*.spec.*"],
       "linter": {
         "rules": {
           "style": {
@@ -46,14 +46,6 @@
     }
   },
   "files": {
-    "includes": [
-      "**/src/**",
-      "**/test/**",
-      "!**/node_modules",
-      "!**/dist",
-      "!**/build",
-      "!**/acceptance",
-      "!**/*.scss"
-    ]
+    "includes": ["src/**", "test/**"]
   }
 }
