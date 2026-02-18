@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - Stop errors and attachments getting too wide ([#427](https://github.com/cucumber/react-components/pull/427))
+- Attachments Fail to Properly Render Unicode Text Attachments
 
 ## [24.2.0] - 2026-01-31
 ### Changed

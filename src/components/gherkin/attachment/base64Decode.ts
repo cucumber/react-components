@@ -1,4 +1,4 @@
 export function base64Decode(body: string) {
-  // TODO handle unicode
-  return atob(body)
+  // Properly decode base64 to UTF-8 string
+  return new TextDecoder('utf-8').decode(Uint8Array.from(atob(body), c => c.charCodeAt(0)));
 }

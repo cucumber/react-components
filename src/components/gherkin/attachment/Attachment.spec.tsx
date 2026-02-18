@@ -212,4 +212,19 @@ https://github.com/cucumber/cucumber-ruby
 
     expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
   })
+
+  it('renders base64 encoded Cyrillic text', () => {
+    const cyrillicText = 'СЧА ИРК' // Example Cyrillic string
+    const attachment: AttachmentMessage = {
+      mediaType: 'text/plain',
+      body: Buffer.from(cyrillicText, 'utf-8').toString('base64'),
+      contentEncoding: AttachmentContentEncoding.BASE64,
+      fileName: 'CyrillicAsUTF8.txt',
+    }
+    const { container } = render(<Attachment attachment={attachment} />)
+    const summary = container.querySelector('details summary')
+    const data = container.querySelector('details pre span')
+    expect(summary).to.have.text('CyrillicAsUTF8.txt')
+    expect(data).to.have.text(cyrillicText)
+  })
 })
