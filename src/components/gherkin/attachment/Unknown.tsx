@@ -1,4 +1,3 @@
-import { type Attachment, AttachmentContentEncoding } from '@cucumber/messages'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type FC, useCallback, useEffect, useState } from 'react'
@@ -6,7 +5,7 @@ import { type FC, useCallback, useEffect, useState } from 'react'
 import { NavigationButton } from '../../app/NavigationButton.js'
 import type { AttachmentProps } from '../../customise/index.js'
 import { attachmentFilename } from './attachmentFilename.js'
-import { base64Decode } from './base64Decode.js'
+import { createDownloadUrl } from './createDownloadUrl.js'
 
 export const Unknown: FC<AttachmentProps> = ({ attachment }) => {
   if (attachment.url) {
@@ -56,19 +55,6 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
       Download {filename}
     </NavigationButton>
   )
-}
-
-function createDownloadUrl(attachment: Attachment) {
-  console.debug('Creating download url')
-  const body =
-    attachment.contentEncoding === AttachmentContentEncoding.BASE64
-      ? base64Decode(attachment.body)
-      : attachment.body
-  const bytes = Uint8Array.from<string>(body, (m) => m.codePointAt(0) as number)
-  const file = new File([bytes], 'attachment', {
-    type: attachment.mediaType,
-  })
-  return URL.createObjectURL(file)
 }
 
 function cleanupDownloadUrl(url?: string) {

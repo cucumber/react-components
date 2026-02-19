@@ -213,6 +213,20 @@ https://github.com/cucumber/cucumber-ruby
     expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
   })
 
+  it('renders a download button for a binary BASE64 attachment containing bytes > 127', () => {
+    // Regression guard: ensures the Unknown component does not throw when decoding
+    // binary content that contains multi-byte sequences invalid as UTF-8 text
+    const binaryBytes = new Uint8Array([0xc3, 0xa9, 0x00, 0xff, 0x80, 0xfe])
+    const attachment: AttachmentMessage = {
+      mediaType: 'application/octet-stream',
+      body: Buffer.from(binaryBytes).toString('base64'),
+      contentEncoding: AttachmentContentEncoding.BASE64,
+      fileName: 'binary.bin',
+    }
+    render(<Attachment attachment={attachment} />)
+    expect(screen.getByRole('button', { name: 'Download binary.bin' })).to.be.visible
+  })
+
   it('renders base64 encoded Cyrillic text', () => {
     const cyrillicText = 'СЧА ИРК' // Example Cyrillic string
     const attachment: AttachmentMessage = {
