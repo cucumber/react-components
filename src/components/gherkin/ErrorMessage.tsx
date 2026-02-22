@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 
+import { CopyButton } from '../app/CopyButton.js'
 import {
   type DefaultComponent,
   type ErrorMessageClasses,
@@ -13,7 +14,13 @@ const DefaultRenderer: DefaultComponent<ErrorMessageProps, ErrorMessageClasses> 
   children,
   styles,
 }) => {
-  return <pre className={styles.message}>{message ?? children}</pre>
+  const text = message ?? (typeof children === 'string' ? children : '')
+  return (
+    <div className={styles.message}>
+      <pre>{message ?? children}</pre>
+      <CopyButton className={styles.copyButton} text={text} />
+    </div>
+  )
 }
 
 export const ErrorMessage: FC<ErrorMessageProps> = ({ children, ...props }) => {

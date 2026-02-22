@@ -52,7 +52,7 @@ export interface AttachmentProps {
   attachment: Attachment
 }
 
-export type AttachmentClasses = Styles<'text' | 'log' | 'icon' | 'image' | 'links'>
+export type AttachmentClasses = Styles<'text' | 'copyButton' | 'log' | 'icon' | 'image' | 'links'>
 
 export interface BackgroundProps {
   background: Background
@@ -87,7 +87,7 @@ export interface ErrorMessageProps {
   children?: ReactNode
 }
 
-export type ErrorMessageClasses = Styles<'message'>
+export type ErrorMessageClasses = Styles<'message' | 'copyButton'>
 
 export interface ExamplesProps {
   examples: Examples
