@@ -12,7 +12,7 @@ type TemplateArgs = {
 }
 
 const Template: Story<TemplateArgs> = ({ result }) => {
-  return <FailedResult {...result} />
+  return <FailedResult result={result} />
 }
 
 export const Legacy = Template.bind({})
