@@ -1,13 +1,24 @@
 @use '../../styles/theming';
 
+.copyButton {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: theming.$errorTextColor;
+}
+
 .message {
-  white-space: pre-wrap;
-  font-size: 0.875em;
+  position: relative;
   width: fit-content;
-  padding: 0.666em 0.75em;
-  border-radius: 0.25em;
-  margin: 0;
   overflow-x: auto;
   background-color: theming.$errorBackgroundColor;
   color: theming.$errorTextColor;
+
+  pre {
+    white-space: pre-wrap;
+    font-size: 0.875em;
+    padding: 0.666em 2.25em 0.666em 0.75em;
+    border-radius: 0.25em;
+    margin: 0;
+  }
 }
