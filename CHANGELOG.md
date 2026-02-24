@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add appropriate rel values for links ([#483](https://github.com/cucumber/react-components/pull/483))
+- Add copy button to attachments and errors ([#487](https://github.com/cucumber/react-components/pull/487))
+
+### Changed
+- Rework handling of non-pass results ([#426](https://github.com/cucumber/react-components/pull/426))
+
 ### Fixed
 - Stop errors and attachments getting too wide ([#427](https://github.com/cucumber/react-components/pull/427))
 - Attachments Fail to Properly Render Unicode Text Attachments

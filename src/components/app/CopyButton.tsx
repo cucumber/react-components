@@ -4,7 +4,7 @@ import { type FC, useState } from 'react'
 
 import styles from './CopyButton.module.scss'
 
-export const CopyButton: FC<{ text: string }> = ({ text }) => {
+export const CopyButton: FC<{ text: string; className?: string }> = ({ text, className }) => {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {
@@ -27,7 +27,7 @@ export const CopyButton: FC<{ text: string }> = ({ text }) => {
       onClick={handleCopy}
       aria-label={copied ? 'Copied' : 'Copy'}
       disabled={copied}
-      className={styles.button}
+      className={`${styles.button}${className ? ` ${className}` : ''}`}
     >
       <FontAwesomeIcon icon={copied ? faCheck : faCopy} />
     </button>

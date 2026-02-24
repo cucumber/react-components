@@ -1,6 +1,7 @@
 import type { Attachment } from '@cucumber/messages'
 import type { FC } from 'react'
 
+import { CopyButton } from '../../app/CopyButton.js'
 import type { AttachmentClasses } from '../../customise/index.js'
 import { ErrorMessage } from '../ErrorMessage.js'
 import { useText } from './useText.js'
@@ -27,9 +28,12 @@ export const Text: FC<{
   return (
     <details>
       <summary>{title}</summary>
-      <pre className={classes.text}>
-        <span>{prettify(content)}</span>
-      </pre>
+      <div className={classes.text}>
+        <pre>
+          <span>{prettify(content)}</span>
+        </pre>
+        <CopyButton className={classes.copyButton} text={content} />
+      </div>
     </details>
   )
 }

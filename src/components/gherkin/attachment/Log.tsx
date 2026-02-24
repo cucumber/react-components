@@ -4,6 +4,7 @@ import type { Attachment } from '@cucumber/messages'
 import Convert from 'ansi-to-html'
 import type { FC } from 'react'
 
+import { CopyButton } from '../../app/CopyButton.js'
 import type { AttachmentClasses } from '../../customise/index.js'
 import { useText } from './useText.js'
 
@@ -13,9 +14,12 @@ export const Log: FC<{
 }> = ({ attachment, classes }) => {
   const { content } = useText(attachment)
   return (
-    <pre className={`${classes.text} ${classes.log}`}>
-      <span dangerouslySetInnerHTML={{ __html: prettyANSI(content) }} />
-    </pre>
+    <div className={`${classes.text} ${classes.log}`}>
+      <pre>
+        <span dangerouslySetInnerHTML={{ __html: prettyANSI(content) }} />
+      </pre>
+      <CopyButton className={classes.copyButton} text={content} />
+    </div>
   )
 }
 
