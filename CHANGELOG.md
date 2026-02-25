@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Stop errors and attachments getting too wide ([#427](https://github.com/cucumber/react-components/pull/427))
-- Attachments Fail to Properly Render Unicode Text Attachments
+- Handle base64-encoded attachments with unicode characters ([#486](https://github.com/cucumber/react-components/pull/486))
 
 ## [24.2.0] - 2026-01-31
 ### Changed
