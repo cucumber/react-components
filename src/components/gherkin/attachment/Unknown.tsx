@@ -6,7 +6,7 @@ import { type FC, useCallback, useEffect, useState } from 'react'
 import { NavigationButton } from '../../app/NavigationButton.js'
 import type { AttachmentProps } from '../../customise/index.js'
 import { attachmentFilename } from './attachmentFilename.js'
-import { base64Decode } from './base64Decode.js'
+import { base64DecodeBytes } from './base64Decode.js'
 
 export const Unknown: FC<AttachmentProps> = ({ attachment }) => {
   if (attachment.url) {
@@ -58,14 +58,12 @@ const UnknownEmbedded: FC<AttachmentProps> = ({ attachment }) => {
   )
 }
 
-function createDownloadUrl(attachment: Attachment) {
-  console.debug('Creating download url')
+function createDownloadUrl(attachment: Attachment): string {
   const body =
     attachment.contentEncoding === AttachmentContentEncoding.BASE64
-      ? base64Decode(attachment.body)
+      ? base64DecodeBytes(attachment.body)
       : attachment.body
-  const bytes = Uint8Array.from<string>(body, (m) => m.codePointAt(0) as number)
-  const file = new File([bytes], 'attachment', {
+  const file = new File([body], 'attachment', {
     type: attachment.mediaType,
   })
   return URL.createObjectURL(file)

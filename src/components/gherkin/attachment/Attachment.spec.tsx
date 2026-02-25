@@ -25,40 +25,114 @@ describe('<Attachment>', () => {
     ;(navigator.clipboard.writeText as sinon.SinonStub).resetHistory()
   })
 
-  describe('binary', () => {
-    it('renders a download button for a file that isnt video, image or text', () => {
-      const attachment: AttachmentMessage = {
-        body: 'test content',
-        mediaType: 'application/pdf',
-        contentEncoding: AttachmentContentEncoding.IDENTITY,
-        fileName: 'document.pdf',
-      }
-      render(<Attachment attachment={attachment} />)
+  describe('download', () => {
+    let clickedAnchor: HTMLAnchorElement | undefined
 
-      expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
+    beforeEach(() => {
+      clickedAnchor = undefined
+      sinon.stub(HTMLAnchorElement.prototype, 'click').callsFake(function (
+        this: HTMLAnchorElement
+      ) {
+        clickedAnchor = this
+      })
     })
 
-    it('renders a download button for an unknown externalised attachment', () => {
+    afterEach(() => {
+      sinon.restore()
+    })
+
+    it('renders a download button for an externalised attachment', () => {
       const attachment: AttachmentMessage = {
         body: '',
         mediaType: 'application/pdf',
         contentEncoding: AttachmentContentEncoding.IDENTITY,
         fileName: 'document.pdf',
+        url: './path-to-document.pdf',
       }
       render(<Attachment attachment={attachment} />)
 
       expect(screen.getByRole('button', { name: 'Download document.pdf' })).to.be.visible
     })
 
-    it('renders a fallback when the attachment cannot be rendered', () => {
+    it('downloads with the correct media type', async () => {
       const attachment: AttachmentMessage = {
-        mediaType: 'text/plain',
-        body: 'this is not valid base64!!!',
+        body: Buffer.from('data').toString('base64'),
+        mediaType: 'application/pdf',
         contentEncoding: AttachmentContentEncoding.BASE64,
+        fileName: 'document.pdf',
       }
       render(<Attachment attachment={attachment} />)
 
-      expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
+      await userEvent.click(screen.getByRole('button', { name: 'Download document.pdf' }))
+
+      const response = await fetch(clickedAnchor!.href)
+      const blob = await response.blob()
+      expect(blob.type).to.eq('application/pdf')
+    })
+
+    it('downloads IDENTITY text content correctly', async () => {
+      const attachment: AttachmentMessage = {
+        body: 'hello',
+        mediaType: 'application/octet-stream',
+        contentEncoding: AttachmentContentEncoding.IDENTITY,
+        fileName: 'file.bin',
+      }
+      render(<Attachment attachment={attachment} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download file.bin' }))
+
+      const response = await fetch(clickedAnchor!.href)
+      const text = await response.text()
+      expect(text).to.eq('hello')
+    })
+
+    it('downloads BASE64 ASCII content with byte accuracy', async () => {
+      const original = Buffer.from('hello')
+      const attachment: AttachmentMessage = {
+        body: original.toString('base64'),
+        mediaType: 'application/octet-stream',
+        contentEncoding: AttachmentContentEncoding.BASE64,
+        fileName: 'file.bin',
+      }
+      render(<Attachment attachment={attachment} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download file.bin' }))
+
+      const response = await fetch(clickedAnchor!.href)
+      const buffer = await response.arrayBuffer()
+      expect(Array.from(new Uint8Array(buffer))).to.deep.eq(Array.from(original))
+    })
+
+    it('downloads BASE64 binary content with bytes > 127 with byte accuracy', async () => {
+      // 0xC3 0xA9 is the UTF-8 encoding of é — as raw binary they must survive byte-for-byte.
+      const originalBytes = new Uint8Array([0xc3, 0xa9, 0x00, 0xff, 0x80, 0xfe])
+      const attachment: AttachmentMessage = {
+        body: Buffer.from(originalBytes).toString('base64'),
+        mediaType: 'application/octet-stream',
+        contentEncoding: AttachmentContentEncoding.BASE64,
+        fileName: 'binary.bin',
+      }
+      render(<Attachment attachment={attachment} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download binary.bin' }))
+
+      const response = await fetch(clickedAnchor!.href)
+      const buffer = await response.arrayBuffer()
+      expect(Array.from(new Uint8Array(buffer))).to.deep.eq(Array.from(originalBytes))
+    })
+
+    it('does not download when invalid base64 encountered', async () => {
+      const attachment: AttachmentMessage = {
+        body: 'this is not valid base64!!!',
+        mediaType: 'application/octet-stream',
+        contentEncoding: AttachmentContentEncoding.BASE64,
+        fileName: 'file.bin',
+      }
+      render(<Attachment attachment={attachment} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download file.bin' }))
+
+      expect(clickedAnchor).to.be.undefined
     })
   })
 
@@ -190,6 +264,44 @@ describe('<Attachment>', () => {
       await waitFor(() => {
         expect(navigator.clipboard.writeText).to.have.been.calledOnceWithExactly('hello')
       })
+    })
+
+    it('renders base64 encoded Cyrillic text', () => {
+      const cyrillicText = 'СЧА ИРК'
+      const attachment: AttachmentMessage = {
+        mediaType: 'text/plain',
+        body: Buffer.from(cyrillicText, 'utf-8').toString('base64'),
+        contentEncoding: AttachmentContentEncoding.BASE64,
+        fileName: 'CyrillicAsUTF8.txt',
+      }
+      const { container } = render(<Attachment attachment={attachment} />)
+      const summary = container.querySelector('details summary')
+      const data = container.querySelector('details pre span')
+      expect(summary).to.have.text('CyrillicAsUTF8.txt')
+      expect(data).to.have.text(cyrillicText)
+    })
+
+    it('renders base64 encoded emoji text', () => {
+      const emojiText = '🥒🌍'
+      const attachment: AttachmentMessage = {
+        mediaType: 'text/plain',
+        body: Buffer.from(emojiText, 'utf-8').toString('base64'),
+        contentEncoding: AttachmentContentEncoding.BASE64,
+      }
+      const { container } = render(<Attachment attachment={attachment} />)
+      const data = container.querySelector('details pre span')
+      expect(data).to.have.text(emojiText)
+    })
+
+    it('renders a fallback when invalid base64 encountered', () => {
+      const attachment: AttachmentMessage = {
+        mediaType: 'text/plain',
+        body: 'this is not valid base64!!!',
+        contentEncoding: AttachmentContentEncoding.BASE64,
+      }
+      render(<Attachment attachment={attachment} />)
+
+      expect(screen.getByText("Attachment couldn't be rendered")).to.be.visible
     })
   })
 

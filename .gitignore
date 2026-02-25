@@ -8,3 +8,4 @@ src/components/app/Report.stories.tsx
 .codegen
 *.iml
 .vscode-test
+/.devcontainer

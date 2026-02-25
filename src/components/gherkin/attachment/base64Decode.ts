@@ -1,4 +1,19 @@
-export function base64Decode(body: string) {
-  // TODO handle unicode
-  return atob(body)
+/**
+ * Decode base64 to UTF-8 string.
+ */
+export function base64DecodeText(body: string): string {
+  return new TextDecoder('utf-8').decode(Uint8Array.from(atob(body), (c) => c.charCodeAt(0)))
+}
+
+/**
+ * Decode base64 to raw bytes without any text encoding conversion,
+ * preserving byte-for-byte accuracy needed for binary content.
+ */
+export function base64DecodeBytes(body: string): Uint8Array<ArrayBuffer> {
+  const binary = atob(body)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i)
+  }
+  return bytes
 }
