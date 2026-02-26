@@ -95,6 +95,25 @@ describe('FilteredDocuments', () => {
   })
 
   describe('filtering by status', () => {
+    it('filters individual examples within a scenario outline by status', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={examplesTables}>
+          <InMemorySearchProvider defaultHideStatuses={[TestStepResultStatus.FAILED]}>
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' }))
+
+      // passing examples should be visible
+      expect(getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
+      expect(getByRole('heading', { name: 'Then I should have 15 cucumbers' })).to.be.visible
+      // failing examples should not be visible
+      expect(queryByRole('heading', { name: 'When I eat 20 cucumbers' })).not.to.exist
+      expect(queryByRole('heading', { name: 'When I eat 1 cucumbers' })).not.to.exist
+    })
+
     it('should show a message if we filter all statuses out', async () => {
       const { queryByRole, getByText } = render(
         <EnvelopesProvider envelopes={examplesTables}>
