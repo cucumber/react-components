@@ -1,12 +1,14 @@
 import type { TestCaseStarted } from '@cucumber/messages'
 import { useMemo } from 'react'
 
+import { useFilteredTestCases } from './useFilteredTestCases.js'
 import { useQueries } from './useQueries.js'
 
 export function useTestCaseStarted(nodeId: string): TestCaseStarted | undefined {
   const { cucumberQuery } = useQueries()
+  const filteredTestCases = useFilteredTestCases()
   const mapped = useMemo(() => {
-    return cucumberQuery.findAllTestCaseStarted().reduce((prev, testCaseStarted) => {
+    return filteredTestCases.reduce((prev, testCaseStarted) => {
       const lineage = cucumberQuery.findLineageBy(testCaseStarted)
       const closestNodeId = lineage?.example?.id ?? lineage?.scenario?.id
       if (closestNodeId) {
@@ -14,6 +16,6 @@ export function useTestCaseStarted(nodeId: string): TestCaseStarted | undefined 
       }
       return prev
     }, new Map<string, TestCaseStarted>())
-  }, [cucumberQuery])
+  }, [cucumberQuery, filteredTestCases])
   return mapped.get(nodeId)
 }
