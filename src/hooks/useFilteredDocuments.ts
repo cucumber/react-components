@@ -46,6 +46,14 @@ function filterAndSort(
   return sortByUri(applyFilters(searched, filteredTestCases))
 }
 
+/**
+ * Filters Gherkin documents to only include content that is present in executed test cases
+ * after filters for tag expression and status have been applied.
+ *
+ * The GherkinDocumentWalker traverses each document and produces an abridged copy
+ * containing only the scenarios whose IDs appear in our filtered set. Rules and
+ * Features with no matching scenarios are excluded entirely.
+ */
 function applyFilters(
   searched: ReadonlyArray<GherkinDocument>,
   filteredTestCases: ReadonlyArray<FilterableTestCase>
