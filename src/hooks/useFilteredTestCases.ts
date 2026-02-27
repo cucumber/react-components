@@ -1,4 +1,4 @@
-import { Pickle, TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
+import { type Pickle, type TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
 import { parse } from '@cucumber/tag-expressions'
 import { useMemo } from 'react'
 
@@ -25,7 +25,9 @@ export function useFilteredTestCases(): ReadonlyArray<FilterableTestCase> {
         return { testCaseStarted, pickle }
       })
       .filter(({ testCaseStarted, pickle }) => {
-        const status = cucumberQuery.findMostSevereTestStepResultBy(testCaseStarted)?.status ?? TestStepResultStatus.UNKNOWN
+        const status =
+          cucumberQuery.findMostSevereTestStepResultBy(testCaseStarted)?.status ??
+          TestStepResultStatus.UNKNOWN
         if (hideStatuses.includes(status)) {
           return false
         }

@@ -38,7 +38,7 @@ describe('TextSearch', () => {
     for (const envelope of envelopes) {
       gherkinQuery.update(envelope)
     }
-    const search = await createTextSearch(gherkinQuery)
+    const search = await createTextSearch(gherkinQuery.getGherkinDocuments())
     return pretty((await search.search(query))[0])
   }
 
