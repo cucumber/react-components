@@ -7,6 +7,7 @@ import attachments from '../../../acceptance/attachments/attachments.js'
 import examplesTables from '../../../acceptance/examples-tables/examples-tables.js'
 import hooksConditional from '../../../acceptance/hooks-conditional/hooks-conditional.js'
 import retry from '../../../acceptance/retry/retry.js'
+import rules from '../../../acceptance/rules/rules.js'
 import randomOrderRun from '../../../samples/random-order-run.js'
 import targetedRun from '../../../samples/targeted-run.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
@@ -91,6 +92,128 @@ describe('FilteredDocuments', () => {
 
       expect(getByRole('heading', { name: 'Scenario: Log JSON' })).to.be.visible
       expect(queryByRole('heading', { name: 'Scenario: Log text' })).not.to.exist
+    })
+  })
+
+  describe('filtering by tag expression', () => {
+    it('shows no results based on a tag expression that doesnt match anything', async () => {
+      const { getByText } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider defaultQuery="@nonexistent">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => {
+        expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
+      })
+    })
+
+    it('matches based on a single tag', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider defaultQuery="@fail-before">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() =>
+        getByRole('heading', {
+          name: 'Scenario: A failure in the before hook and a skipped step',
+        })
+      )
+
+      expect(
+        queryByRole('heading', { name: 'Scenario: A failure in the after hook and a passed step' })
+      ).not.to.exist
+      expect(queryByRole('heading', { name: 'Scenario: With an tag, a passed step and hook' })).not
+        .to.exist
+    })
+
+    it('matches based on an or expression', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider defaultQuery="@fail-before or @fail-after">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() =>
+        getByRole('heading', {
+          name: 'Scenario: A failure in the before hook and a skipped step',
+        })
+      )
+
+      expect(
+        getByRole('heading', { name: 'Scenario: A failure in the after hook and a passed step' })
+      ).to.be.visible
+      expect(queryByRole('heading', { name: 'Scenario: With an tag, a passed step and hook' })).not
+        .to.exist
+    })
+
+    it('matches based on a negated expression', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={hooksConditional}>
+          <InMemorySearchProvider defaultQuery="not @passing-hook">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() =>
+        getByRole('heading', {
+          name: 'Scenario: A failure in the before hook and a skipped step',
+        })
+      )
+
+      expect(
+        getByRole('heading', { name: 'Scenario: A failure in the after hook and a passed step' })
+      ).to.be.visible
+      expect(queryByRole('heading', { name: 'Scenario: With an tag, a passed step and hook' })).not
+        .to.exist
+    })
+
+    it('matches based on tags inherited from rule', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={rules}>
+          <InMemorySearchProvider defaultQuery="@some-tag">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('button', { name: 'samples/rules/rules.feature' }))
+      await userEvent.click(getByRole('button', { name: 'samples/rules/rules.feature' }))
+
+      await waitFor(() => getByRole('heading', { name: 'Example: No chocolates left' }))
+
+      // scenario inside rule with @some-tag is shown
+      expect(getByRole('heading', { name: 'Example: No chocolates left' })).to.be.visible
+      // scenarios inside rule without @some-tag are excluded
+      expect(queryByRole('heading', { name: 'Example: Not enough money' })).not.to.exist
+      expect(queryByRole('heading', { name: 'Example: Enough money' })).not.to.exist
+    })
+
+    it('matches based on tags inherited from examples table', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={examplesTables}>
+          <InMemorySearchProvider defaultQuery="@passing">
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('heading', { name: 'Examples: These are passing' }))
+
+      // examples with @passing tag are shown
+      expect(getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
+      expect(getByRole('heading', { name: 'Then I should have 15 cucumbers' })).to.be.visible
+      // examples with @failing tag (not matching) should not be visible
+      expect(queryByRole('heading', { name: 'When I eat 20 cucumbers' })).not.to.exist
+      expect(queryByRole('heading', { name: 'When I eat 1 cucumbers' })).not.to.exist
     })
   })
 
