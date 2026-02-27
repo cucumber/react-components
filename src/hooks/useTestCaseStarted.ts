@@ -8,7 +8,7 @@ export function useTestCaseStarted(nodeId: string): TestCaseStarted | undefined 
   const { cucumberQuery } = useQueries()
   const filteredTestCases = useFilteredTestCases()
   const mapped = useMemo(() => {
-    return filteredTestCases.reduce((prev, testCaseStarted) => {
+    return filteredTestCases.reduce((prev, { testCaseStarted }) => {
       const lineage = cucumberQuery.findLineageBy(testCaseStarted)
       const closestNodeId = lineage?.example?.id ?? lineage?.scenario?.id
       if (closestNodeId) {
