@@ -1,6 +1,7 @@
-import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
+import { GherkinDocumentWalker, type Query as GherkinQuery } from '@cucumber/gherkin-utils'
 import type { Background, Feature, GherkinDocument, Rule, Scenario, Step } from '@cucumber/messages'
 
+import isTagExpression from '../isTagExpression.js'
 import { createFeatureSearch } from './FeatureSearch.js'
 import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
 import { createStepSearch } from './StepSearch.js'
@@ -30,6 +31,10 @@ class TextSearch {
   }
 
   public async search(query: string): Promise<readonly GherkinDocument[]> {
+    if (!query || isTagExpression(query)) {
+      return [...this.gherkinDocuments]
+    }
+
     const [matchingSteps, matchingBackgrounds, matchingScenarios, matchingRules, matchingFeatures] =
       await Promise.all([
         this.stepSearch.search(query),
@@ -71,7 +76,11 @@ class TextSearch {
   }
 }
 
-export async function createTextSearch(): Promise<Searchable> {
+/**
+ * Creates a search index that supports querying by term, and returns an array
+ * of abridged Gherkin documents matching the query.
+ */
+export async function createTextSearch(gherkinQuery: GherkinQuery): Promise<Searchable> {
   const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
     await Promise.all([
       createStepSearch(),
@@ -80,5 +89,15 @@ export async function createTextSearch(): Promise<Searchable> {
       createScenarioLikeSearch<Rule>(),
       createFeatureSearch(),
     ])
-  return new TextSearch(stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch)
+  const search = new TextSearch(
+    stepSearch,
+    backgroundSearch,
+    scenarioSearch,
+    ruleSearch,
+    featureSearch
+  )
+  for (const doc of gherkinQuery.getGherkinDocuments()) {
+    await search.add(doc)
+  }
+  return search
 }

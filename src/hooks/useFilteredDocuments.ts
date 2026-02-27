@@ -3,7 +3,7 @@ import type { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
 import type { Query } from '@cucumber/query'
 import { useEffect, useState } from 'react'
 
-import { createSearch, type Searchable } from '../search/index.js'
+import { createTextSearch, type Searchable } from '../search/index.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
@@ -16,7 +16,7 @@ export function useFilteredDocuments(): {
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
   useEffect(() => {
-    createSearch(gherkinQuery).then((created) => setSearchable(created))
+    createTextSearch(gherkinQuery).then((created) => setSearchable(created))
   }, [gherkinQuery])
   useEffect(() => {
     if (!searchable) {
