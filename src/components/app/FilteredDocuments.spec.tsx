@@ -218,26 +218,7 @@ describe('FilteredDocuments', () => {
   })
 
   describe('filtering by status', () => {
-    it('filters individual examples within a scenario outline by status', async () => {
-      const { getByRole, queryByRole } = render(
-        <EnvelopesProvider envelopes={examplesTables}>
-          <InMemorySearchProvider defaultHideStatuses={[TestStepResultStatus.FAILED]}>
-            <FilteredDocuments />
-          </InMemorySearchProvider>
-        </EnvelopesProvider>
-      )
-
-      await waitFor(() => getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' }))
-
-      // passing examples should be visible
-      expect(getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
-      expect(getByRole('heading', { name: 'Then I should have 15 cucumbers' })).to.be.visible
-      // failing examples should not be visible
-      expect(queryByRole('heading', { name: 'When I eat 20 cucumbers' })).not.to.exist
-      expect(queryByRole('heading', { name: 'When I eat 1 cucumbers' })).not.to.exist
-    })
-
-    it('should show a message if we filter all statuses out', async () => {
+    it('shows no results when all statuses are hidden', async () => {
       const { queryByRole, getByText } = render(
         <EnvelopesProvider envelopes={examplesTables}>
           <InMemorySearchProvider
@@ -262,7 +243,7 @@ describe('FilteredDocuments', () => {
       })
     })
 
-    it('shows only passed scenarios when other statuses are hidden', async () => {
+    it('shows only passed scenarios', async () => {
       const { getByRole, getByText, queryByText } = render(
         <EnvelopesProvider envelopes={retry}>
           <InMemorySearchProvider
@@ -292,7 +273,7 @@ describe('FilteredDocuments', () => {
         .exist
     })
 
-    it('shows only failed scenarios when other statuses are hidden', async () => {
+    it('shows only failed scenarios', async () => {
       const { getByRole, queryByRole, getByText } = render(
         <EnvelopesProvider envelopes={retry}>
           <InMemorySearchProvider
@@ -330,7 +311,7 @@ describe('FilteredDocuments', () => {
       ).not.to.exist
     })
 
-    it('shows scenarios matching any of multiple statuses', async () => {
+    it('shows scenarios matching multiple statuses', async () => {
       const { getByRole, getByText } = render(
         <EnvelopesProvider envelopes={retry}>
           <InMemorySearchProvider
@@ -357,6 +338,25 @@ describe('FilteredDocuments', () => {
         .visible
       expect(getByText("Test cases won't retry after failing more than the --retry limit")).to.be
         .visible
+    })
+
+    it('shows only matching examples within a scenario outline', async () => {
+      const { getByRole, queryByRole } = render(
+        <EnvelopesProvider envelopes={examplesTables}>
+          <InMemorySearchProvider defaultHideStatuses={[TestStepResultStatus.FAILED]}>
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => getByRole('heading', { name: 'Scenario Outline: Eating cucumbers' }))
+
+      // passing examples should be visible
+      expect(getByRole('heading', { name: 'Then I should have 7 cucumbers' })).to.be.visible
+      expect(getByRole('heading', { name: 'Then I should have 15 cucumbers' })).to.be.visible
+      // failing examples should not be visible
+      expect(queryByRole('heading', { name: 'When I eat 20 cucumbers' })).not.to.exist
+      expect(queryByRole('heading', { name: 'When I eat 1 cucumbers' })).not.to.exist
     })
 
     it('treats scenarios with failed before hooks as failed', async () => {
