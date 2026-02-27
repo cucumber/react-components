@@ -1,6 +1,6 @@
 import { GherkinDocumentWalker, rejectAllFilters } from '@cucumber/gherkin-utils'
 import type { GherkinDocument } from '@cucumber/messages'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import isTagExpression from '../isTagExpression.js'
 import { createTextSearch, type Searchable } from '../search/index.js'
@@ -14,10 +14,14 @@ export function useFilteredDocuments(): {
 } {
   const { query, unchanged } = useSearch()
   const { gherkinQuery } = useQueries()
-  const gherkinDocuments = gherkinQuery.getGherkinDocuments()
+  const gherkinDocuments = useMemo(() => {
+    // this is a stable reference at time of writing, but that's a bug
+    return gherkinQuery.getGherkinDocuments()
+  }, [gherkinQuery])
   const filteredTestCases = useFilteredTestCases()
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
+
   useEffect(() => {
     createTextSearch(gherkinDocuments).then((created) => setSearchable(created))
   }, [gherkinDocuments])
