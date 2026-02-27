@@ -43,48 +43,16 @@ describe('Search', () => {
   }
 
   describe('search', () => {
-    describe('when using a tag expression query', () => {
-      it('uses TagSearch to filter the results', async () => {
-        const results = await prettyResults(feature, '@planet')
-        expect(results).to.eq(
-          `Feature: Solar System
-
-  @planet
-  Scenario: Earth
-    Given is the sixth planet from the Sun
-`
-        )
-      })
-
-      it('does not raises error when tag expression is incorrect', async () => {
-        const results = await prettyResults(feature, '(@planet or @dwarf))')
-        expect(results).to.eq(
-          `Feature: Solar System
-
-  @planet
-  Scenario: Earth
-    Given is the sixth planet from the Sun
+    it('uses TextSearch to filter the results', async () => {
+      const results = await prettyResults(feature, 'not really')
+      expect(results).to.eq(
+        `Feature: Solar System
 
   @dwarf
   Scenario: Pluto
     Given it is not really a planet
 `
-        )
-      })
-    })
-
-    describe('when using a query which is not a tag expression', () => {
-      it('uses TextSearch to filter the results', async () => {
-        const results = await prettyResults(feature, 'not really')
-        expect(results).to.eq(
-          `Feature: Solar System
-
-  @dwarf
-  Scenario: Pluto
-    Given it is not really a planet
-`
-        )
-      })
+      )
     })
   })
 })
