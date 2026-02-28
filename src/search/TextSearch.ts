@@ -71,7 +71,13 @@ class TextSearch {
   }
 }
 
-export async function createTextSearch(): Promise<Searchable> {
+/**
+ * Creates a search index that supports querying by term, and returns an array
+ * of abridged Gherkin documents matching the query.
+ */
+export async function createTextSearch(
+  gherkinDocuments: ReadonlyArray<GherkinDocument>
+): Promise<Searchable> {
   const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
     await Promise.all([
       createStepSearch(),
@@ -80,5 +86,15 @@ export async function createTextSearch(): Promise<Searchable> {
       createScenarioLikeSearch<Rule>(),
       createFeatureSearch(),
     ])
-  return new TextSearch(stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch)
+  const search = new TextSearch(
+    stepSearch,
+    backgroundSearch,
+    scenarioSearch,
+    ruleSearch,
+    featureSearch
+  )
+  for (const doc of gherkinDocuments) {
+    await search.add(doc)
+  }
+  return search
 }

@@ -1,9 +1,10 @@
 import { GherkinDocumentWalker, rejectAllFilters } from '@cucumber/gherkin-utils'
-import type { GherkinDocument, TestStepResultStatus } from '@cucumber/messages'
-import type { Query } from '@cucumber/query'
-import { useEffect, useState } from 'react'
+import type { GherkinDocument } from '@cucumber/messages'
+import { useEffect, useMemo, useState } from 'react'
 
-import { createSearch, type Searchable } from '../search/index.js'
+import isTagExpression from '../isTagExpression.js'
+import { createTextSearch, type Searchable } from '../search/index.js'
+import { type FilterableTestCase, useFilteredTestCases } from './useFilteredTestCases.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
@@ -11,43 +12,61 @@ export function useFilteredDocuments(): {
   results: GherkinDocument[] | undefined
   filtered: boolean
 } {
-  const { query, hideStatuses, unchanged } = useSearch()
-  const { gherkinQuery, cucumberQuery } = useQueries()
+  const { query, unchanged } = useSearch()
+  const { gherkinQuery } = useQueries()
+  const gherkinDocuments = useMemo(() => {
+    // this is a stable reference at time of writing, but that's a bug
+    return gherkinQuery.getGherkinDocuments()
+  }, [gherkinQuery])
+  const filteredTestCases = useFilteredTestCases()
   const [searchable, setSearchable] = useState<Searchable>()
   const [results, setResults] = useState<GherkinDocument[]>()
+
   useEffect(() => {
-    createSearch(gherkinQuery).then((created) => setSearchable(created))
-  }, [gherkinQuery])
+    createTextSearch(gherkinDocuments).then((created) => setSearchable(created))
+  }, [gherkinDocuments])
   useEffect(() => {
     if (!searchable) {
       return
     }
-    searchable.search(query).then((searched) => {
-      const filtered = filterByStatus(searched, hideStatuses, cucumberQuery)
-      const sorted = sortByUri(filtered)
-      setResults(sorted)
-    })
-  }, [query, hideStatuses, cucumberQuery, searchable])
+    if (query && !isTagExpression(query)) {
+      searchable.search(query).then((searched) => {
+        setResults(filterAndSort(searched, filteredTestCases))
+      })
+    } else {
+      setResults(filterAndSort(gherkinDocuments, filteredTestCases))
+    }
+  }, [query, gherkinDocuments, filteredTestCases, searchable])
   return {
     results,
     filtered: !unchanged,
   }
 }
 
-function filterByStatus(
+function filterAndSort(
   searched: ReadonlyArray<GherkinDocument>,
-  hideStatuses: ReadonlyArray<TestStepResultStatus>,
-  query: Query
+  filteredTestCases: ReadonlyArray<FilterableTestCase>
+) {
+  return sortByUri(applyFilters(searched, filteredTestCases))
+}
+
+/**
+ * Filters Gherkin documents to only include content that is present in executed test cases
+ * after filters for tag expression and status have been applied.
+ *
+ * The GherkinDocumentWalker traverses each document and produces an abridged copy
+ * containing only the scenarios whose IDs appear in our filtered set. Rules and
+ * Features with no matching scenarios are excluded entirely.
+ */
+function applyFilters(
+  searched: ReadonlyArray<GherkinDocument>,
+  filteredTestCases: ReadonlyArray<FilterableTestCase>
 ): ReadonlyArray<GherkinDocument> {
+  const scenarioIds = new Set(filteredTestCases.flatMap(({ pickle }) => pickle.astNodeIds))
+
   const walker = new GherkinDocumentWalker({
     ...rejectAllFilters,
-    acceptScenario: (scenario) => {
-      return query
-        .findAllTestCaseStarted()
-        .filter((started) => query.findLineageBy(started)?.scenario?.id === scenario.id)
-        .map((started) => query.findMostSevereTestStepResultBy(started)?.status)
-        .some((status) => !hideStatuses.includes(status as TestStepResultStatus))
-    },
+    acceptScenario: (scenario) => scenarioIds.has(scenario.id),
   })
 
   return searched
