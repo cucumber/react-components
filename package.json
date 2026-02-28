@@ -52,8 +52,8 @@
     "uuid": "13.0.0"
   },
   "peerDependencies": {
-    "react": "~18",
-    "react-dom": "~18"
+    "react": "~19.2.0",
+    "react-dom": "~19.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.1",
@@ -71,8 +71,8 @@
     "@types/mime": "^4.0.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "24.11.0",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@types/sinon": "^21.0.0",
     "@types/sinon-chai": "^4.0.0",
     "chai": "^6.0.0",
@@ -85,9 +85,9 @@
     "mocha": "^11.2.2",
     "nyc": "18.0.0",
     "path-browserify": "1.0.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-is": "18.3.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-is": "19.2.4",
     "sass": "^1.89.2",
     "sinon": "^21.0.0",
     "sinon-chai": "^4.0.0",
