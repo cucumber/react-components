@@ -58,7 +58,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.1",
     "@cucumber/compatibility-kit": "^29.0.0",
-    "@cucumber/gherkin": "^38.0.0",
+    "@cucumber/gherkin": "^39.0.0",
     "@cucumber/message-streams": "^4.0.1",
     "@ladle/react": "^5.0.3",
     "@testing-library/react": "16.3.2",
