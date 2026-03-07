@@ -10,12 +10,15 @@ const schema = {
   dataTable: 'string[]',
 } as const
 
-class StepSearch implements TypedIndex<Step> {
+export class StepSearch implements TypedIndex<Step> {
   private readonly stepById = new Map<string, Step>()
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
   async search(term: string): Promise<Array<Step>> {
@@ -39,14 +42,4 @@ class StepSearch implements TypedIndex<Step> {
     })
     return this
   }
-}
-
-export async function createStepSearch() {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new StepSearch(index)
 }

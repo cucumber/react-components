@@ -12,12 +12,15 @@ const schema = {
  * A little different than the other indexes - a Feature doesn't have its own id,
  * so we use the uri of the GherkinDocument as a pointer
  */
-class FeatureSearch implements TypedIndex<Feature, GherkinDocument> {
+export class FeatureSearch implements TypedIndex<Feature, GherkinDocument> {
   private readonly featuresByUri = new Map<string, Feature>()
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
   async search(term: string): Promise<Array<Feature>> {
@@ -38,14 +41,4 @@ class FeatureSearch implements TypedIndex<Feature, GherkinDocument> {
     })
     return this
   }
-}
-
-export async function createFeatureSearch(): Promise<TypedIndex<Feature, GherkinDocument>> {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new FeatureSearch(index)
 }

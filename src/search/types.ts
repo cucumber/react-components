@@ -2,7 +2,7 @@ import type { GherkinDocument } from '@cucumber/messages'
 
 /**
  * Facade for an index that supports searching for and adding items of a given
- * type. Also supports a different type being added if needed.
+ * type. Also supports a different type being added vs returned if needed.
  */
 export interface TypedIndex<ReturnedType, SourceType = ReturnedType> {
   search: (query: string) => Promise<readonly ReturnedType[]>
@@ -10,6 +10,9 @@ export interface TypedIndex<ReturnedType, SourceType = ReturnedType> {
 }
 
 /**
- * Shorthand type for an index of Gherkin documents.
+ * Interface for the top-level document search index. Accepts an optional set of
+ * document URIs to constrain the scope.
  */
-export type Searchable = TypedIndex<GherkinDocument>
+export interface SearchIndex {
+  search: (query: string, allowedUris?: ReadonlySet<string>) => Promise<readonly GherkinDocument[]>
+}
