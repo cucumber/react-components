@@ -8,7 +8,9 @@ export function useSearchIndex(): SearchIndex | undefined {
   const [searchIndex, setSearchIndex] = useState<SearchIndex>()
 
   useEffect(() => {
-    createSearchIndex(gherkinDocuments).then((created) => setSearchIndex(created))
+    createSearchIndex(gherkinDocuments)
+      .then((created) => setSearchIndex(created))
+      .catch((error) => console.error('Failed to create search index:', error))
   }, [gherkinDocuments])
 
   return searchIndex

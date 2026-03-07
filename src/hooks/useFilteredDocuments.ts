@@ -27,9 +27,12 @@ export function useFilteredDocuments(): {
   useEffect(() => {
     if (searchTerm && searchIndex) {
       const allowedUris = new Set(filteredTestCases.map(({ pickle }) => pickle.uri))
-      searchIndex.search(searchTerm, allowedUris).then((searched) => {
-        setResults(filterAndSort(searched, filteredTestCases))
-      })
+      searchIndex
+        .search(searchTerm, allowedUris)
+        .then((searched) => {
+          setResults(filterAndSort(searched, filteredTestCases))
+        })
+        .catch((error) => console.error('Search failed:', error))
     }
   }, [searchTerm, searchIndex, filteredTestCases])
   return {

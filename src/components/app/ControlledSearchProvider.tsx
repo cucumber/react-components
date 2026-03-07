@@ -19,17 +19,33 @@ export const ControlledSearchProvider: FC<PropsWithChildren<Props>> = ({
 }) => {
   const contextValue: SearchContextValue = useMemo(() => {
     const unchanged = !value.query && !value.hideStatuses.length
-    const isTag = !!value.query && isTagExpression(value.query)
     return {
       query: value.query,
       hideStatuses: value.hideStatuses,
       unchanged,
-      searchTerm: value.query && !isTag ? value.query : undefined,
-      tagExpression: isTag ? parse(value.query) : undefined,
+      ...makeDerivedState(value.query),
       update: (newValues: Partial<SearchState>) => {
         onChange({ ...value, ...newValues })
       },
     }
   }, [value, onChange])
   return <SearchQueryContext.Provider value={contextValue}>{children}</SearchQueryContext.Provider>
+}
+
+function makeDerivedState(query: string): Pick<SearchContextValue, 'searchTerm' | 'tagExpression'> {
+  if (!query) {
+    return {}
+  }
+  if (isTagExpression(query)) {
+    try {
+      return {
+        tagExpression: parse(query),
+      }
+    } catch (error) {
+      console.error(`Failed to parse tag expression "${query}":`, error)
+    }
+  }
+  return {
+    searchTerm: query,
+  }
 }

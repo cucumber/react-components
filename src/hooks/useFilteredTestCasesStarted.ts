@@ -1,6 +1,7 @@
 import { type Pickle, type TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
 import { useMemo } from 'react'
 
+import { ensure } from './helpers.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
@@ -21,7 +22,10 @@ export function useFilteredTestCasesStarted(): ReadonlyArray<FilterableTestCase>
     return cucumberQuery
       .findAllTestCaseStarted()
       .map((testCaseStarted) => {
-        const pickle = cucumberQuery.findPickleBy(testCaseStarted) as Pickle
+        const pickle = ensure(
+          cucumberQuery.findPickleBy(testCaseStarted),
+          `No Pickle found for TestCaseStarted ${testCaseStarted.id}`
+        )
         return { testCaseStarted, pickle }
       })
       .filter(({ testCaseStarted, pickle }) => {

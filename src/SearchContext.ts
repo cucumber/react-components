@@ -9,8 +9,8 @@ export interface SearchState {
 
 export interface SearchContextValue extends SearchState {
   unchanged: boolean
-  searchTerm: string | undefined
-  tagExpression: Node | undefined
+  searchTerm?: string
+  tagExpression?: Node
   update: (changes: Partial<SearchState>) => void
 }
 
