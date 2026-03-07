@@ -2,7 +2,7 @@ import type { Scenario } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeScenario } from '../../test/search.js'
-import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
+import { ScenarioLikeSearch } from './ScenarioLikeSearch.js'
 import type { TypedIndex } from './types.js'
 
 describe('ScenarioLikeSearch', () => {
@@ -10,7 +10,7 @@ describe('ScenarioLikeSearch', () => {
   let scenarios: Scenario[]
 
   beforeEach(async () => {
-    scenarioSearch = await createScenarioLikeSearch<Scenario>()
+    scenarioSearch = new ScenarioLikeSearch<Scenario>()
 
     scenarios = [
       makeScenario('a passed scenario', 'a little description', []),

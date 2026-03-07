@@ -1,12 +1,9 @@
 import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
 import type { Background, Feature, GherkinDocument, Rule, Scenario, Step } from '@cucumber/messages'
 
-import { createFeatureSearch } from './FeatureSearch.js'
-import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
-import { createStepSearch } from './StepSearch.js'
-import type { Searchable, TypedIndex } from './types.js'
+import type { SearchIndex, TypedIndex } from './types.js'
 
-class TextSearch {
+export class TextSearch implements SearchIndex {
   private readonly gherkinDocuments: GherkinDocument[] = []
 
   private readonly stepSearch: TypedIndex<Step>
@@ -29,7 +26,10 @@ class TextSearch {
     this.featureSearch = featureSearch
   }
 
-  public async search(query: string): Promise<readonly GherkinDocument[]> {
+  public async search(
+    query: string,
+    allowedUris?: ReadonlySet<string>
+  ): Promise<readonly GherkinDocument[]> {
     const [matchingSteps, matchingBackgrounds, matchingScenarios, matchingRules, matchingFeatures] =
       await Promise.all([
         this.stepSearch.search(query),
@@ -47,7 +47,11 @@ class TextSearch {
       acceptFeature: (feature) => matchingFeatures.includes(feature),
     })
 
-    return this.gherkinDocuments
+    const documentsToWalk = allowedUris
+      ? this.gherkinDocuments.filter((doc) => doc.uri && allowedUris.has(doc.uri))
+      : this.gherkinDocuments
+
+    return documentsToWalk
       .map((gherkinDocument) => walker.walkGherkinDocument(gherkinDocument))
       .filter((gherkinDocument) => !!gherkinDocument) as readonly GherkinDocument[]
   }
@@ -69,16 +73,4 @@ class TextSearch {
     await Promise.all(promises)
     return this
   }
-}
-
-export async function createTextSearch(): Promise<Searchable> {
-  const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
-    await Promise.all([
-      createStepSearch(),
-      createScenarioLikeSearch<Background>(),
-      createScenarioLikeSearch<Scenario>(),
-      createScenarioLikeSearch<Rule>(),
-      createFeatureSearch(),
-    ])
-  return new TextSearch(stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch)
 }

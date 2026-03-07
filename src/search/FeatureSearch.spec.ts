@@ -2,7 +2,7 @@ import type { Feature, GherkinDocument } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeFeature } from '../../test/search.js'
-import { createFeatureSearch } from './FeatureSearch.js'
+import { FeatureSearch } from './FeatureSearch.js'
 import type { TypedIndex } from './types.js'
 
 describe('FeatureSearch', () => {
@@ -10,7 +10,7 @@ describe('FeatureSearch', () => {
   let gherkinDocument: GherkinDocument
 
   beforeEach(async () => {
-    featureSearch = await createFeatureSearch()
+    featureSearch = new FeatureSearch()
     gherkinDocument = {
       uri: 'some/feature.file',
       comments: [],

@@ -17,12 +17,15 @@ export interface ScenarioLike {
  * Can be used for Backgrounds, Scenarios and Rules, searching against the
  * name and description
  */
-class ScenarioLikeSearch<T extends ScenarioLike> implements TypedIndex<T> {
+export class ScenarioLikeSearch<T extends ScenarioLike> implements TypedIndex<T> {
   private itemById = new Map<string, T>()
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
   async search(term: string): Promise<Array<T>> {
@@ -41,16 +44,4 @@ class ScenarioLikeSearch<T extends ScenarioLike> implements TypedIndex<T> {
     })
     return this
   }
-}
-
-export async function createScenarioLikeSearch<T extends ScenarioLike>(): Promise<
-  ScenarioLikeSearch<T>
-> {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new ScenarioLikeSearch<T>(index)
 }

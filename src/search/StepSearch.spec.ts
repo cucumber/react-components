@@ -2,7 +2,7 @@ import type { Step } from '@cucumber/messages'
 import { expect } from 'chai'
 
 import { makeStep } from '../../test/search.js'
-import { createStepSearch } from './StepSearch.js'
+import { StepSearch } from './StepSearch.js'
 import type { TypedIndex } from './types.js'
 
 describe('StepSearch', () => {
@@ -10,7 +10,7 @@ describe('StepSearch', () => {
   let steps: Step[]
 
   beforeEach(async () => {
-    stepSearch = await createStepSearch()
+    stepSearch = new StepSearch()
 
     steps = [
       makeStep('Given', 'a passed step', 'There is a docstring here'),
