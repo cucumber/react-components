@@ -449,5 +449,39 @@ describe('FilteredDocuments', () => {
       expect(queryByText("Test cases won't retry after failing more than the --retry limit")).not.to
         .exist
     })
+
+    it('shows no results when text search matches but status filter excludes all', async () => {
+      const { getByText } = render(
+        <EnvelopesProvider envelopes={retry}>
+          <InMemorySearchProvider
+            defaultQuery="always"
+            defaultHideStatuses={[TestStepResultStatus.PASSED, TestStepResultStatus.FAILED]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => {
+        expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
+      })
+    })
+
+    it('shows no results when status filter matches but text search excludes all', async () => {
+      const { getByText } = render(
+        <EnvelopesProvider envelopes={retry}>
+          <InMemorySearchProvider
+            defaultQuery="nonexistent"
+            defaultHideStatuses={[TestStepResultStatus.FAILED]}
+          >
+            <FilteredDocuments />
+          </InMemorySearchProvider>
+        </EnvelopesProvider>
+      )
+
+      await waitFor(() => {
+        expect(getByText('No scenarios match your query and/or filters.')).to.be.visible
+      })
+    })
   })
 })
