@@ -3,17 +3,20 @@ import { useMemo } from 'react'
 
 import { useQueries } from './useQueries.js'
 
+/**
+ * Finds the corresponding TestCaseStarted for an Example or Scenario node from a Gherkin
+ * document
+ * @param nodeId the Gherkin node id
+ */
 export function useTestCaseStarted(nodeId: string): TestCaseStarted | undefined {
   const { cucumberQuery } = useQueries()
-  const mapped = useMemo(() => {
-    return cucumberQuery.findAllTestCaseStarted().reduce((prev, testCaseStarted) => {
-      const lineage = cucumberQuery.findLineageBy(testCaseStarted)
-      const closestNodeId = lineage?.example?.id ?? lineage?.scenario?.id
-      if (closestNodeId) {
-        prev.set(closestNodeId, testCaseStarted)
+  return useMemo(() => {
+    for (const testCaseStarted of cucumberQuery.findAllTestCaseStarted()) {
+      const pickle = cucumberQuery.findPickleBy(testCaseStarted)
+      const closestNodeId = pickle?.astNodeIds.at(-1)
+      if (closestNodeId === nodeId) {
+        return testCaseStarted
       }
-      return prev
-    }, new Map<string, TestCaseStarted>())
-  }, [cucumberQuery])
-  return mapped.get(nodeId)
+    }
+  }, [cucumberQuery, nodeId])
 }

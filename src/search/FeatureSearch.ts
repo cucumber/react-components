@@ -1,7 +1,7 @@
-import type { Feature, GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 import { create, insert, type Orama, search } from '@orama/orama'
 
-import type { TypedIndex } from './types.js'
+import type { IndexHit, TypedIndex } from './types.js'
 
 const schema = {
   name: 'string',
@@ -9,28 +9,29 @@ const schema = {
 } as const
 
 /**
- * A little different than the other indexes - a Feature doesn't have its own id,
+ * A little different to the other indexes - a Feature doesn't have its own id,
  * so we use the uri of the GherkinDocument as a pointer
  */
-class FeatureSearch implements TypedIndex<Feature, GherkinDocument> {
-  private readonly featuresByUri = new Map<string, Feature>()
+export class FeatureSearch implements TypedIndex<GherkinDocument> {
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
-  async search(term: string): Promise<Array<Feature>> {
+  async search(term: string): Promise<ReadonlyArray<IndexHit>> {
     const { hits } = await search(this.index, {
       term,
     })
-    return hits.map((hit) => this.featuresByUri.get(hit.id)) as Feature[]
+    return hits.map((hit) => ({ uri: hit.id, id: hit.id }))
   }
 
-  async add(gherkinDocument: GherkinDocument): Promise<this> {
+  async add(gherkinDocument: GherkinDocument, _uri: string): Promise<this> {
     if (!gherkinDocument.feature) return this
     if (!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
-    this.featuresByUri.set(gherkinDocument.uri, gherkinDocument.feature)
     await insert(this.index, {
       id: gherkinDocument.uri,
       name: gherkinDocument.feature.name,
@@ -38,14 +39,4 @@ class FeatureSearch implements TypedIndex<Feature, GherkinDocument> {
     })
     return this
   }
-}
-
-export async function createFeatureSearch(): Promise<TypedIndex<Feature, GherkinDocument>> {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new FeatureSearch(index)
 }

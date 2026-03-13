@@ -1,84 +1,74 @@
-import { GherkinDocumentWalker } from '@cucumber/gherkin-utils'
-import type { Background, Feature, GherkinDocument, Rule, Scenario, Step } from '@cucumber/messages'
+import { walkGherkinDocument } from '@cucumber/gherkin-utils'
+import type { Background, GherkinDocument, Rule, Scenario } from '@cucumber/messages'
+import { FeatureSearch } from './FeatureSearch.js'
+import { ScenarioLikeSearch } from './ScenarioLikeSearch.js'
+import { StepSearch } from './StepSearch.js'
+import type { DocumentSearchHits, IndexHit, SearchHits, SearchIndex } from './types.js'
 
-import { createFeatureSearch } from './FeatureSearch.js'
-import { createScenarioLikeSearch } from './ScenarioLikeSearch.js'
-import { createStepSearch } from './StepSearch.js'
-import type { Searchable, TypedIndex } from './types.js'
+export class TextSearch implements SearchIndex {
+  private readonly featureSearch = new FeatureSearch()
+  private readonly backgroundSearch = new ScenarioLikeSearch<Background>()
+  private readonly ruleSearch = new ScenarioLikeSearch<Rule>()
+  private readonly scenarioSearch = new ScenarioLikeSearch<Scenario>()
+  private readonly stepSearch = new StepSearch()
 
-class TextSearch {
-  private readonly gherkinDocuments: GherkinDocument[] = []
-
-  private readonly stepSearch: TypedIndex<Step>
-  private readonly backgroundSearch: TypedIndex<Background>
-  private readonly scenarioSearch: TypedIndex<Scenario>
-  private readonly ruleSearch: TypedIndex<Rule>
-  private readonly featureSearch: TypedIndex<Feature, GherkinDocument>
-
-  constructor(
-    stepSearch: TypedIndex<Step>,
-    backgroundSearch: TypedIndex<Background>,
-    scenarioSearch: TypedIndex<Scenario>,
-    ruleSearch: TypedIndex<Rule>,
-    featureSearch: TypedIndex<Feature, GherkinDocument>
-  ) {
-    this.stepSearch = stepSearch
-    this.backgroundSearch = backgroundSearch
-    this.scenarioSearch = scenarioSearch
-    this.ruleSearch = ruleSearch
-    this.featureSearch = featureSearch
-  }
-
-  public async search(query: string): Promise<readonly GherkinDocument[]> {
-    const [matchingSteps, matchingBackgrounds, matchingScenarios, matchingRules, matchingFeatures] =
-      await Promise.all([
-        this.stepSearch.search(query),
-        this.backgroundSearch.search(query),
-        this.scenarioSearch.search(query),
-        this.ruleSearch.search(query),
-        this.featureSearch.search(query),
-      ])
-
-    const walker = new GherkinDocumentWalker({
-      acceptStep: (step) => matchingSteps.includes(step),
-      acceptBackground: (background) => matchingBackgrounds.includes(background),
-      acceptScenario: (scenario) => matchingScenarios.includes(scenario),
-      acceptRule: (rule) => matchingRules.includes(rule),
-      acceptFeature: (feature) => matchingFeatures.includes(feature),
-    })
-
-    return this.gherkinDocuments
-      .map((gherkinDocument) => walker.walkGherkinDocument(gherkinDocument))
-      .filter((gherkinDocument) => !!gherkinDocument) as readonly GherkinDocument[]
+  public async search(query: string): Promise<SearchHits | false> {
+    const [featureHits, backgroundHits, ruleHits, scenarioHits, stepHits] = await Promise.all([
+      this.featureSearch.search(query),
+      this.backgroundSearch.search(query),
+      this.ruleSearch.search(query),
+      this.scenarioSearch.search(query),
+      this.stepSearch.search(query),
+    ])
+    const allHits: ReadonlyArray<IndexHit> = [
+      ...featureHits,
+      ...backgroundHits,
+      ...ruleHits,
+      ...scenarioHits,
+      ...stepHits,
+    ]
+    if (allHits.length === 0) {
+      return false
+    }
+    const map = new Map<string, DocumentSearchHits>()
+    const ensure = (uri: string): DocumentSearchHits => {
+      let entry = map.get(uri)
+      if (!entry) {
+        entry = { feature: false, background: [], rule: [], scenario: [], step: [] }
+        map.set(uri, entry)
+      }
+      return entry
+    }
+    for (const hit of featureHits) {
+      ensure(hit.uri).feature = true
+    }
+    for (const hit of backgroundHits) {
+      ;(ensure(hit.uri).background as string[]).push(hit.id)
+    }
+    for (const hit of ruleHits) {
+      ;(ensure(hit.uri).rule as string[]).push(hit.id)
+    }
+    for (const hit of scenarioHits) {
+      ;(ensure(hit.uri).scenario as string[]).push(hit.id)
+    }
+    for (const hit of stepHits) {
+      ;(ensure(hit.uri).step as string[]).push(hit.id)
+    }
+    return map
   }
 
   public async add(gherkinDocument: GherkinDocument) {
-    this.gherkinDocuments.push(gherkinDocument)
-    const promises: Promise<unknown>[] = []
-    const walker = new GherkinDocumentWalker(
-      {},
-      {
-        handleStep: (step) => promises.push(this.stepSearch.add(step)),
-        handleBackground: (background) => promises.push(this.backgroundSearch.add(background)),
-        handleScenario: (scenario) => promises.push(this.scenarioSearch.add(scenario)),
-        handleRule: (rule) => promises.push(this.ruleSearch.add(rule)),
-      }
-    )
-    promises.push(this.featureSearch.add(gherkinDocument))
-    walker.walkGherkinDocument(gherkinDocument)
+    const uri = gherkinDocument.uri
+    if (!uri) {
+      return
+    }
+    const promises = walkGherkinDocument<Array<Promise<unknown>>>(gherkinDocument, [], {
+      feature: (_feature, acc) => [...acc, this.featureSearch.add(gherkinDocument, uri)],
+      background: (background, acc) => [...acc, this.backgroundSearch.add(background, uri)],
+      rule: (rule, acc) => [...acc, this.ruleSearch.add(rule, uri)],
+      scenario: (scenario, acc) => [...acc, this.scenarioSearch.add(scenario, uri)],
+      step: (step, acc) => [...acc, this.stepSearch.add(step, uri)],
+    })
     await Promise.all(promises)
-    return this
   }
-}
-
-export async function createTextSearch(): Promise<Searchable> {
-  const [stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch] =
-    await Promise.all([
-      createStepSearch(),
-      createScenarioLikeSearch<Background>(),
-      createScenarioLikeSearch<Scenario>(),
-      createScenarioLikeSearch<Rule>(),
-      createFeatureSearch(),
-    ])
-  return new TextSearch(stepSearch, backgroundSearch, scenarioSearch, ruleSearch, featureSearch)
 }

@@ -1,6 +1,6 @@
 import { create, insert, type Orama, search } from '@orama/orama'
 
-import type { TypedIndex } from './types.js'
+import { ID_SEPARATOR, type TypedIndex } from './types.js'
 
 const schema = {
   name: 'string',
@@ -17,40 +17,32 @@ export interface ScenarioLike {
  * Can be used for Backgrounds, Scenarios and Rules, searching against the
  * name and description
  */
-class ScenarioLikeSearch<T extends ScenarioLike> implements TypedIndex<T> {
-  private itemById = new Map<string, T>()
+export class ScenarioLikeSearch<T extends ScenarioLike> implements TypedIndex<T> {
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
-  async search(term: string): Promise<Array<T>> {
+  async search(term: string) {
     const { hits } = await search(this.index, {
       term,
     })
-    return hits.map((hit) => this.itemById.get(hit.id)) as T[]
+    return hits.map((hit) => {
+      const [uri, id] = hit.id.split(ID_SEPARATOR)
+      return { uri, id }
+    })
   }
 
-  async add(item: T): Promise<this> {
-    this.itemById.set(item.id, item)
+  async add(item: T, uri: string): Promise<this> {
     await insert(this.index, {
-      id: item.id,
+      id: uri + ID_SEPARATOR + item.id,
       name: item.name,
       description: item.description,
     })
     return this
   }
-}
-
-export async function createScenarioLikeSearch<T extends ScenarioLike>(): Promise<
-  ScenarioLikeSearch<T>
-> {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new ScenarioLikeSearch<T>(index)
 }
