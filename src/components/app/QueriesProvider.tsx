@@ -10,10 +10,14 @@ interface Props {
   gherkinQuery: GherkinQuery
 }
 
-export const QueriesProvider: FC<PropsWithChildren<Props>> = (props) => (
-  <CucumberQueryContext.Provider value={props.cucumberQuery}>
-    <GherkinQueryContext.Provider value={props.gherkinQuery}>
-      {props.children}
-    </GherkinQueryContext.Provider>
-  </CucumberQueryContext.Provider>
-)
+export const QueriesProvider: FC<PropsWithChildren<Props>> = ({
+  cucumberQuery,
+  gherkinQuery,
+  children,
+}) => {
+  return (
+    <CucumberQueryContext.Provider value={cucumberQuery}>
+      <GherkinQueryContext.Provider value={gherkinQuery}>{children}</GherkinQueryContext.Provider>
+    </CucumberQueryContext.Provider>
+  )
+}

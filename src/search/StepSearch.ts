@@ -1,7 +1,7 @@
 import type { Step } from '@cucumber/messages'
 import { create, insert, type Orama, search } from '@orama/orama'
 
-import type { TypedIndex } from './types.js'
+import { ID_SEPARATOR, type TypedIndex } from './types.js'
 
 const schema = {
   keyword: 'string',
@@ -10,28 +10,32 @@ const schema = {
   dataTable: 'string[]',
 } as const
 
-class StepSearch implements TypedIndex<Step> {
-  private readonly stepById = new Map<string, Step>()
+export class StepSearch implements TypedIndex<Step> {
   private readonly index: Orama<typeof schema>
 
-  constructor(index: Orama<typeof schema>) {
-    this.index = index
+  constructor() {
+    this.index = create({
+      schema,
+      sort: { enabled: false },
+    })
   }
 
-  async search(term: string): Promise<Array<Step>> {
+  async search(term: string) {
     const { hits } = await search(this.index, {
       term,
       boost: {
         text: 2,
       },
     })
-    return hits.map((hit) => this.stepById.get(hit.id)) as Step[]
+    return hits.map((hit) => {
+      const [uri, id] = hit.id.split(ID_SEPARATOR)
+      return { uri, id }
+    })
   }
 
-  async add(step: Step): Promise<this> {
-    this.stepById.set(step.id, step)
+  async add(step: Step, uri: string): Promise<this> {
     await insert(this.index, {
-      id: step.id,
+      id: uri + ID_SEPARATOR + step.id,
       keyword: step.keyword,
       text: step.text,
       docString: step.docString?.content,
@@ -39,14 +43,4 @@ class StepSearch implements TypedIndex<Step> {
     })
     return this
   }
-}
-
-export async function createStepSearch() {
-  const index: Orama<typeof schema> = await create({
-    schema,
-    sort: {
-      enabled: false,
-    },
-  })
-  return new StepSearch(index)
 }
