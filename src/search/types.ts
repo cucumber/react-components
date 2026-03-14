@@ -27,10 +27,10 @@ export interface SearchIndex {
  */
 export interface DocumentSearchHits {
   feature: boolean
-  background: readonly string[]
-  rule: readonly string[]
-  scenario: readonly string[]
-  step: readonly string[]
+  background: Array<string>
+  rule: Array<string>
+  scenario: Array<string>
+  step: Array<string>
 }
 
 export type SearchHits = ReadonlyMap<string, DocumentSearchHits>

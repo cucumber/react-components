@@ -31,7 +31,7 @@ export class TextSearch implements SearchIndex {
       return false
     }
     const map = new Map<string, DocumentSearchHits>()
-    const ensure = (uri: string): DocumentSearchHits => {
+    const getOrDefault = (uri: string) => {
       let entry = map.get(uri)
       if (!entry) {
         entry = { feature: false, background: [], rule: [], scenario: [], step: [] }
@@ -40,19 +40,19 @@ export class TextSearch implements SearchIndex {
       return entry
     }
     for (const hit of featureHits) {
-      ensure(hit.uri).feature = true
+      getOrDefault(hit.uri).feature = true
     }
     for (const hit of backgroundHits) {
-      ;(ensure(hit.uri).background as string[]).push(hit.id)
+      getOrDefault(hit.uri).background.push(hit.id)
     }
     for (const hit of ruleHits) {
-      ;(ensure(hit.uri).rule as string[]).push(hit.id)
+      getOrDefault(hit.uri).rule.push(hit.id)
     }
     for (const hit of scenarioHits) {
-      ;(ensure(hit.uri).scenario as string[]).push(hit.id)
+      getOrDefault(hit.uri).scenario.push(hit.id)
     }
     for (const hit of stepHits) {
-      ;(ensure(hit.uri).step as string[]).push(hit.id)
+      getOrDefault(hit.uri).step.push(hit.id)
     }
     return map
   }

@@ -18,8 +18,7 @@ import type { DocumentSearchHits, LineageConstraints, SearchHits } from './types
  *
  * @param gherkinDocuments - the original documents to prune
  * @param constraints - the set of AST node IDs to retain, derived from pickle lineage
- * @param searchHits - if provided, further narrows results to nodes matching a search query.
- *   when `false`, no documents matched the search and an empty array is returned.
+ * @param searchHits - if provided, further narrows results to nodes matching a search query
  *
  * @remarks
  * The two filtering mechanisms behave a little differently.
@@ -30,7 +29,8 @@ import type { DocumentSearchHits, LineageConstraints, SearchHits } from './types
  *
  * `searchHits` has cascading behaviour - a match at a higher level (Feature, Rule, or Background)
  * ensures all of its descendants will be retained, and a match at a lower level (Scenario, Step)
- * ensures all of its ascendants (but not siblings) will be retained.
+ * ensures all of its ascendants (but not siblings) will be retained. A `false` value means there
+ * were no hits at all, so no documents will be returned.
  */
 export function pruneGherkinDocuments(
   gherkinDocuments: ReadonlyArray<GherkinDocument>,
