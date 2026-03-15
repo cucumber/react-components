@@ -1,12 +1,13 @@
 import type { TestStepResultStatus } from '@cucumber/messages'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { FC, ReactNode } from 'react'
+import { type FC, type ReactElement, type ReactNode, useContext, useState } from 'react'
 import {
   Button,
   Disclosure,
   DisclosureGroup,
   DisclosurePanel,
+  DisclosureStateContext,
   Heading,
 } from 'react-aria-components'
 
@@ -22,6 +23,17 @@ interface DocumentAccordionItemProps {
   status: TestStepResultStatus
   uri: string
   children: ReactNode
+}
+
+const LazyContent: FC<{ children: ReactElement }> = ({ children }) => {
+  const state = useContext(DisclosureStateContext)
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(state?.isExpanded ?? false)
+
+  if (state?.isExpanded && !hasBeenExpanded) {
+    setHasBeenExpanded(true)
+  }
+
+  return hasBeenExpanded ? children : null
 }
 
 export const DocumentAccordion: FC<DocumentAccordionProps> = ({ expanded, children }) => {
@@ -53,7 +65,9 @@ export const DocumentAccordionItem: FC<DocumentAccordionItemProps> = ({
         </Button>
       </Heading>
       <DisclosurePanel>
-        <div className={styles.content}>{children}</div>
+        <LazyContent>
+          <div className={styles.content}>{children}</div>
+        </LazyContent>
       </DisclosurePanel>
     </Disclosure>
   )
