@@ -1,17 +1,23 @@
 const glob = require('glob')
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 function toPascalCase(str) {
   return str
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join('')
 }
 
 function toCamelCase(str) {
   const parts = str.split('-')
-  return parts[0] + parts.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
+  return (
+    parts[0] +
+    parts
+      .slice(1)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+  )
 }
 
 if (fs.existsSync('acceptance')) {
@@ -43,13 +49,13 @@ sampleNames.sort()
 const storiesPath = 'src/components/app/Report.stories.tsx'
 
 const imports = sampleNames
-  .map(name => `import ${toCamelCase(name)}Sample from '../../../acceptance/${name}/${name}.js'`)
+  .map((name) => `import ${toCamelCase(name)}Sample from '../../../acceptance/${name}/${name}.js'`)
   .join('\n')
 
 const stories = sampleNames
-  .map(name => {
+  .map((name) => {
     const exportName = toPascalCase(name)
-    const importName = toCamelCase(name) + 'Sample'
+    const importName = `${toCamelCase(name)}Sample`
     return `export const ${exportName} = Template.bind({})
 ${exportName}.args = {
   envelopes: ${importName},
