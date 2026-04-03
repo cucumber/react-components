@@ -2,8 +2,6 @@
   "exit": true,
   "extension": ["ts", "tsx"],
   "recursive": true,
-  "require": [
-    "./register-hooks.mjs"
-  ],
+  "require": ["./register-hooks.mjs"],
   "timeout": 10000
 }

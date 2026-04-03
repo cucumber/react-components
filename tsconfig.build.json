@@ -8,13 +8,8 @@
     "inlineSources": true,
     "rootDir": ".",
     "outDir": "dist",
-    "noEmit": false,
+    "noEmit": false
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/**/*.spec.*",
-    "src/**/*.stories.*",
-  ]
+  "include": ["src"],
+  "exclude": ["src/**/*.spec.*", "src/**/*.stories.*"]
 }

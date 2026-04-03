@@ -1,5 +1,5 @@
 import { register } from 'node:module'
-import { pathToFileURL, fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import 'global-jsdom/register'
 import * as chai from 'chai'
 import chaiDom from 'chai-dom'
