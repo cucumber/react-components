@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add appropriate rel values for links ([#483](https://github.com/cucumber/react-components/pull/483))
 - Add copy button to attachments and errors ([#487](https://github.com/cucumber/react-components/pull/487))
+- Declare support for React 19 ([#469](https://github.com/cucumber/react-components/pull/469))
 
 ### Changed
 - Rework handling of non-pass results ([#426](https://github.com/cucumber/react-components/pull/426))
