@@ -32,7 +32,7 @@
     "@cucumber/tag-expressions": "9.1.0",
     "@fortawesome/fontawesome-svg-core": "7.2.0",
     "@fortawesome/free-solid-svg-icons": "7.2.0",
-    "@fortawesome/react-fontawesome": "3.3.0",
+    "@fortawesome/react-fontawesome": "3.3.1",
     "@orama/orama": "^3.0.0",
     "@orama/stemmers": "^3.0.0",
     "@teppeis/multimaps": "3.0.0",
