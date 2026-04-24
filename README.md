@@ -3,7 +3,7 @@
 > A set of React components for rendering Gherkin documents and Cucumber results.
 
 Preview and examples:  
-https://cucumber-react-preview.netlify.app/
+https://react-components-9pg.pages.dev/
 
 ![Examples Tables](screenshots/examples-tables.png)
 
