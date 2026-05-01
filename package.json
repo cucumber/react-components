@@ -95,7 +95,7 @@
     "typescript": "5.9.3"
   },
   "overrides": {
-    "uuid": "13.0.0"
+    "uuid": "14.0.0"
   },
   "bugs": {
     "url": "https://github.com/cucumber/react-components/issues"
