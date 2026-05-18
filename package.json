@@ -37,7 +37,7 @@
     "@orama/stemmers": "^3.0.0",
     "@teppeis/multimaps": "3.0.0",
     "ansi-to-html": "0.7.2",
-    "date-fns": "4.1.0",
+    "date-fns": "4.2.1",
     "hast-util-sanitize": "^5.0.1",
     "highlight-words-core": "1.2.3",
     "mime": "^4.0.0",
