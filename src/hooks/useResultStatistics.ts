@@ -15,8 +15,8 @@ export function useResultStatistics(): {
     .filter(([, value]) => {
       return value > 0
     })
-    .map(([key]) => key)
-    .sort(statusComparator) as TestStepResultStatus[]
+    .map(([key]) => key as TestStepResultStatus)
+    .sort(statusComparator)
 
   const totalScenarioCount = [...Object.values(scenarioCountByStatus)].reduce(
     (prev, curr) => prev + curr,
