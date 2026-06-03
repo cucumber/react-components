@@ -3,8 +3,8 @@
   "version": "24.3.0",
   "description": "React components for Cucumber",
   "type": "module",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -16,7 +16,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "node generate-fixtures.cjs",
-    "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.scss' 'dist/src'",
+    "compile": "tsc --project tsconfig.build.json && cpy 'src/**/*.scss' 'dist'",
     "test": "mocha 'src/**/*.spec.*'",
     "start": "ladle serve",
     "build": "ladle build",
@@ -63,6 +63,7 @@
     "@ladle/react": "^5.0.3",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
+    "@tsconfig/recommended": "^1.0.13",
     "@types/chai": "^5.0.0",
     "@types/chai-dom": "^1.11.3",
     "@types/glob": "9.0.0",
@@ -92,7 +93,7 @@
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   },
   "overrides": {
     "uuid": "14.0.0"

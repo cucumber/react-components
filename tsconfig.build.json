@@ -1,15 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
-    "rootDir": ".",
-    "outDir": "dist",
-    "noEmit": false
-  },
   "include": ["src"],
-  "exclude": ["src/**/*.spec.*", "src/**/*.stories.*"]
+  "exclude": ["src/**/*.spec.*", "src/**/*.stories.*"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  }
 }
