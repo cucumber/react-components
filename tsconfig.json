@@ -1,23 +1,21 @@
 {
+  "extends": "./node_modules/@tsconfig/recommended/tsconfig.json",
+  "include": ["src", "test"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "sourceMap": true,
-    "allowJs": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "experimentalDecorators": true,
+    "lib": ["es2024", "dom"],
+    "target": "es2024",
     "module": "NodeNext",
-    "lib": ["ES2022", "dom"],
-    "target": "ES2022",
-    "moduleResolution": "nodenext",
-    "allowSyntheticDefaultImports": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "moduleResolution": "NodeNext",
+    "types": ["mocha", "chai", "chai-dom", "sinon-chai"],
+    "declaration": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "strictNullChecks": true
   },
   "ts-node": {
     "files": true
