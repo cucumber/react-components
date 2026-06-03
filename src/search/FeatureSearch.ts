@@ -30,8 +30,12 @@ export class FeatureSearch implements TypedIndex<GherkinDocument> {
   }
 
   async add(gherkinDocument: GherkinDocument, _uri: string): Promise<this> {
-    if (!gherkinDocument.feature) return this
-    if (!gherkinDocument.uri) throw new Error('Missing uri on gherkinDocument')
+    if (!gherkinDocument.feature) {
+      return this
+    }
+    if (!gherkinDocument.uri) {
+      throw new Error('Missing uri on gherkinDocument')
+    }
     await insert(this.index, {
       id: gherkinDocument.uri,
       name: gherkinDocument.feature.name,
