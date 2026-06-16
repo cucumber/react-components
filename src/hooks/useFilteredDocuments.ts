@@ -7,7 +7,7 @@ import {
   pruneGherkinDocuments,
   type SearchIndex,
 } from '../search/index.js'
-import { ensure } from './helpers.js'
+import { comparePaths, ensure } from './helpers.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 
@@ -52,7 +52,7 @@ export function useFilteredDocuments(): {
   const [results, setResults] = useState<ReadonlyArray<GherkinDocument>>()
   const setResultsSorting: Dispatch<ReadonlyArray<GherkinDocument>> = useCallback((unsorted) => {
     const sorted = [...unsorted]
-    sorted.sort((a, b) => (a.uri || '').localeCompare(b.uri || ''))
+    sorted.sort((a, b) => comparePaths(a.uri || '', b.uri || ''))
     setResults(sorted)
   }, [])
 
