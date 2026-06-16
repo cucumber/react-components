@@ -9,7 +9,7 @@ import examplesTables from '../../../acceptance/examples-tables/examples-tables.
 import hooksConditional from '../../../acceptance/hooks-conditional/hooks-conditional.js'
 import retry from '../../../acceptance/retry/retry.js'
 import rules from '../../../acceptance/rules/rules.js'
-import randomOrderRun from '../../../samples/random-order-run.js'
+import directoryFirstSort from '../../../samples/sorting-directory-first.js'
 import targetedRun from '../../../samples/targeted-run.js'
 import { EnvelopesProvider } from './EnvelopesProvider.js'
 import { FilteredDocuments } from './FilteredDocuments.js'
@@ -43,9 +43,9 @@ describe('FilteredDocuments', () => {
       })
     })
 
-    it('displays features in alphabetical order by URI', async () => {
+    it('sorts nested feature paths before sibling files', async () => {
       const { getAllByRole } = render(
-        <EnvelopesProvider envelopes={randomOrderRun}>
+        <EnvelopesProvider envelopes={directoryFirstSort}>
           <FilteredDocuments />
         </EnvelopesProvider>
       )
@@ -54,13 +54,15 @@ describe('FilteredDocuments', () => {
         const headings = getAllByRole('heading', { level: 3 })
         const featureNames = headings.map((heading: HTMLElement) => heading.textContent)
 
-        // Verify the features are displayed in alphabetical order by URI
         expect(featureNames).to.deep.equal([
-          'Features/a.feature',
-          'Features/B.feature',
-          'Features/c.feature',
-          'Features/d/e.feature',
-          'Features/f.feature',
+          'Features/A/B/f1.feature',
+          'Features/A/B/f2.feature',
+          'Features/A/f3.feature',
+          'Features/A/f4.feature',
+          'Features/C/D/f5.feature',
+          'Features/C/D/f6.feature',
+          'Features/C/f7.feature',
+          'Features/C/f8.feature',
         ])
       })
     })
