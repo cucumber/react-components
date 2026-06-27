@@ -6,7 +6,7 @@
     "target": "es2024",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": ["mocha", "chai", "chai-dom", "sinon-chai"],
+    "types": ["node", "mocha", "chai", "chai-dom", "sinon-chai"],
     "declaration": true,
     "inlineSourceMap": true,
     "inlineSources": true,
