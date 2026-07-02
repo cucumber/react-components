@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Add directory hierarchy awareness to document sorting ([#517](https://github.com/cucumber/react-components/pull/517)) by [@MuhammadTalha57](https://github.com/MuhammadTalha57)
 
 ## [24.3.0] - 2026-04-13
 ### Added
