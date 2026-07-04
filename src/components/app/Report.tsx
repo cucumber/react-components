@@ -5,6 +5,7 @@ import { FilteredDocuments } from './FilteredDocuments.js'
 import styles from './Report.module.scss'
 import { SearchBar } from './SearchBar.js'
 import { TestRunHooks } from './TestRunHooks.js'
+import { Timeline } from './Timeline.js'
 
 export const Report: FC = () => {
   return (
@@ -12,6 +13,10 @@ export const Report: FC = () => {
       <section>
         <ExecutionSummary />
         <SearchBar />
+      </section>
+      <section>
+        <h2 className={styles.heading}>Timeline</h2>
+        <Timeline />
       </section>
       <section>
         <h2 className={styles.heading}>Scenarios</h2>
