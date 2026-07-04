@@ -1,0 +1,174 @@
+@use '../../styles/statuses';
+@use '../../styles/theming';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.empty {
+  font-style: italic;
+}
+
+.chart {
+  position: relative;
+  overflow-x: auto;
+}
+
+.axis {
+  position: relative;
+  height: 1.5em;
+  margin: 0 0 0.5em;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid theming.$panelAccentColor;
+  min-width: 40em;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed theming.$panelAccentColor;
+  padding-left: 0.35em;
+  font-size: 0.75em;
+  opacity: 0.75;
+  white-space: nowrap;
+
+  &[data-edge='end'] {
+    border-left: none;
+    border-right: 1px dashed theming.$panelAccentColor;
+    padding-left: 0;
+    padding-right: 0.35em;
+    text-align: right;
+
+    span {
+      display: inline-block;
+      transform: translateX(-100%);
+    }
+  }
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  min-width: 40em;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.groupLabel {
+  flex: 0 0 auto;
+  width: 8em;
+  font-size: 0.85em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.75;
+}
+
+.lane {
+  position: relative;
+  flex: 1 1 auto;
+  height: 2.25em;
+  background-color: theming.$panelBackgroundColor;
+  border-radius: 0.25em;
+}
+
+.item {
+  position: absolute;
+  top: 0.25em;
+  bottom: 0.25em;
+  min-width: 6px;
+  padding: 0 0.4em;
+  overflow: hidden;
+  border: none;
+  border-radius: 0.2em;
+  cursor: pointer;
+  color: white;
+  font: inherit;
+  font-size: 0.75em;
+  text-align: left;
+
+  @each $name, $color in statuses.$statusColors {
+    &[data-status='#{$name}'] {
+      background-color: $color;
+    }
+  }
+
+  &[aria-pressed='true'] {
+    outline: 2px solid theming.$panelTextColor;
+    outline-offset: 1px;
+    z-index: 1;
+  }
+}
+
+.itemLabel {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.detail {
+  position: relative;
+  padding: 1em;
+  background-color: theming.$panelBackgroundColor;
+  color: theming.$panelTextColor;
+  border: 1px solid theming.$panelAccentColor;
+  border-radius: 0.25em;
+}
+
+.detailClose {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.25em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.detailTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.25em;
+  font-size: 1.1em;
+
+  svg {
+    height: 1em;
+  }
+}
+
+.detailFeature {
+  margin: 0 0 0.5em;
+  opacity: 0.75;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 0.75em 0 0;
+
+  dt {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
