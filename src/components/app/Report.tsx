@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'react-aria-components'
 
 import { ExecutionSummary } from './ExecutionSummary.js'
 import { FilteredDocuments } from './FilteredDocuments.js'
@@ -15,12 +16,24 @@ export const Report: FC = () => {
         <SearchBar />
       </section>
       <section>
-        <h2 className={styles.heading}>Timeline</h2>
-        <Timeline />
-      </section>
-      <section>
-        <h2 className={styles.heading}>Scenarios</h2>
-        <FilteredDocuments />
+        <Tabs className={styles.tabs}>
+          <TabList aria-label="Report views" className={styles.tabList}>
+            <Tab id="scenarios" className={styles.tab}>
+              Scenarios
+            </Tab>
+            <Tab id="timeline" className={styles.tab}>
+              Timeline
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel id="scenarios" className={styles.tabPanel}>
+              <FilteredDocuments />
+            </TabPanel>
+            <TabPanel id="timeline" className={styles.tabPanel}>
+              <Timeline />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </section>
       <section>
         <h2 className={styles.heading}>Hooks</h2>
