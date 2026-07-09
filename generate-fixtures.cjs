@@ -26,12 +26,10 @@ if (fs.existsSync('acceptance')) {
 
 const sampleNames = []
 
-for (const ndjsonPath of glob.sync(
-  [
-    'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson',
-    "samples/*.ndjson"
-  ]
-)) {
+for (const ndjsonPath of glob.sync([
+  'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson',
+  'samples/*.ndjson',
+])) {
   const filename = path.basename(ndjsonPath)
   const [suiteName] = filename.split('.')
   sampleNames.push(suiteName)
