@@ -26,16 +26,17 @@ if (fs.existsSync('acceptance')) {
 
 const sampleNames = []
 
-for (const ndjsonPath of glob.sync(
-  'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson'
-)) {
+for (const ndjsonPath of glob.sync([
+  'node_modules/@cucumber/compatibility-kit/features/**/*.ndjson',
+  'samples/*.ndjson',
+])) {
   const filename = path.basename(ndjsonPath)
   const [suiteName] = filename.split('.')
   sampleNames.push(suiteName)
 
   const content = fs.readFileSync(ndjsonPath, { encoding: 'utf-8' })
   const asTs = `// Generated file. Do not edit.
-import { Envelope } from '@cucumber/messages'
+import { type Envelope } from '@cucumber/messages'
 
 export default [${content.split('\n').join(',')}] as ReadonlyArray<Envelope>
 `
