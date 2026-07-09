@@ -25,7 +25,7 @@ npm run start
 
 ## Using samples
 
-Like most other Cucumber reporting tools, this project uses the samples shipped by the Cucumber Compatibility Kit (CCK) as fixtures. The samples are pretty diverse and cover a lot of Cucumber functionality, and it'll usually be more convenient to re-use one than hand-craft a message stream.
+Like most other Cucumber reporting tools, this project uses the samples shipped by the [Cucumber Compatibility Kit (CCK)](https://github.com/cucumber/compatibility-kit) as fixtures. The samples are pretty diverse and cover a lot of Cucumber functionality, and it'll usually be more convenient to re-use one than hand-craft a message stream.
 
 On every `npm install`, the samples from the CCK are used to generate importable TypeScript files in the `acceptance` directory. You can use these directly in tests and stories - you'll find that most of our existing tests and stories already do.
 
