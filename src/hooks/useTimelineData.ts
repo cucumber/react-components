@@ -30,8 +30,8 @@ export interface TimelineGroup {
 export interface TimelineData {
   readonly groups: readonly TimelineGroup[]
   readonly items: readonly TimelineItem[]
-  readonly start: number
-  readonly end: number
+  readonly fullStart: number | undefined
+  readonly fullEnd: number | undefined
   readonly filtered: boolean
 }
 
@@ -45,6 +45,8 @@ export function useTimelineData(): TimelineData {
     const items: TimelineItem[] = []
     const groupIds = new Set<string>()
     const normalizedSearchTerm = searchTerm?.trim().toLowerCase()
+    let fullStart: number | undefined
+    let fullEnd: number | undefined
 
     for (const testCaseFinished of cucumberQuery.findAllTestCaseFinished()) {
       const testCaseStarted = cucumberQuery.findTestCaseStartedBy(testCaseFinished)
@@ -54,6 +56,16 @@ export function useTimelineData(): TimelineData {
       const pickle = cucumberQuery.findPickleBy(testCaseStarted)
       if (!pickle) {
         continue
+      }
+
+      const itemStart = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseStarted.timestamp)
+      const itemEnd = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseFinished.timestamp)
+
+      if (fullStart === undefined || itemStart < fullStart) {
+        fullStart = itemStart
+      }
+      if (fullEnd === undefined || itemEnd > fullEnd) {
+        fullEnd = itemEnd
       }
 
       // A test case with no step results at all is considered passed by definition
@@ -93,8 +105,8 @@ export function useTimelineData(): TimelineData {
         scenario,
         tags: pickle.tags,
         status,
-        start: TimeConversion.timestampToMillisecondsSinceEpoch(testCaseStarted.timestamp),
-        end: TimeConversion.timestampToMillisecondsSinceEpoch(testCaseFinished.timestamp),
+        start: itemStart,
+        end: itemEnd,
         testCaseStarted,
       })
     }
@@ -105,15 +117,12 @@ export function useTimelineData(): TimelineData {
       .sort(compareGroupIds)
       .map((id) => ({ id, label: describeGroup(id) }))
 
-    const start = items.length > 0 ? Math.min(...items.map((item) => item.start)) : 0
-    const end = items.length > 0 ? Math.max(...items.map((item) => item.end)) : 0
-
-    return { groups, items, start, end, filtered: !unchanged }
+    return { groups, items, fullStart, fullEnd, filtered: !unchanged }
   }, [cucumberQuery, hideStatuses, tagExpression, searchTerm, unchanged])
 }
 
 function describeGroup(id: string): string {
-  return id === UNASSIGNED_GROUP_ID ? 'Main process' : `Worker ${id}`
+  return id === UNASSIGNED_GROUP_ID ? '' : `Worker ${id}`
 }
 
 function compareGroupIds(a: string, b: string): number {
