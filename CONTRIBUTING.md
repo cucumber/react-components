@@ -22,3 +22,18 @@ We use [Ladle](https://ladle.dev/) to develop and test our components, which you
 ```shell
 npm run start
 ```
+
+## Using samples
+
+Like most other Cucumber reporting tools, this project uses the samples shipped by the Cucumber Compatibility Kit (CCK) as fixtures. The samples are pretty diverse and cover a lot of Cucumber functionality, and it'll usually be more convenient to re-use one than hand-craft a message stream.
+
+On every `npm install`, the samples from the CCK are used to generate importable TypeScript files in the `acceptance` directory. You can use these directly in tests and stories - you'll find that most of our existing tests and stories already do.
+
+If you need a sample for a use case that isn't covered by the CCK, you can add a custom sample:
+
+1. Use the Cucumber of your choice to do a test run that captures the use case
+2. Use the `message` formatter and direct the output to an `.ndjson` file
+3. Add the `.ndjson` file to the `samples` directory in this repo
+4. Run `npm run prepare` to regenerate the TypeScript files
+
+(Please ensure your sample doesn't contain any secrets, proprietary or sensitive information before you commit it!)
