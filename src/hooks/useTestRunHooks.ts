@@ -1,6 +1,6 @@
 import type { Hook, TestRunHookFinished } from '@cucumber/messages'
 
-import { ensure } from './helpers.js'
+import { ensure } from '../ensure.js'
 import { useQueries } from './useQueries.js'
 
 type RunHooksList = { testRunHookFinished: TestRunHookFinished; hook: Hook }[]
