@@ -18,7 +18,7 @@ export interface TypedIndex<SourceType = unknown> {
  * Interface for the top-level document search index
  */
 export interface SearchIndex {
-  search: (query: string) => Promise<SearchHits | false>
+  search: (query: string) => Promise<SearchHits>
 }
 
 /**
@@ -27,10 +27,10 @@ export interface SearchIndex {
  */
 export interface DocumentSearchHits {
   feature: boolean
-  background: Array<string>
-  rule: Array<string>
-  scenario: Array<string>
-  step: Array<string>
+  background: ReadonlySet<string>
+  rule: ReadonlySet<string>
+  scenario: ReadonlySet<string>
+  step: ReadonlySet<string>
 }
 
 export type SearchHits = ReadonlyMap<string, DocumentSearchHits>

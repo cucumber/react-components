@@ -29,15 +29,15 @@ import type { DocumentSearchHits, LineageConstraints, SearchHits } from './types
  *
  * `searchHits` has cascading behaviour - a match at a higher level (Feature, Rule, or Background)
  * ensures all of its descendants will be retained, and a match at a lower level (Scenario, Step)
- * ensures all of its ascendants (but not siblings) will be retained. A `false` value means there
- * were no hits at all, so no documents will be returned.
+ * ensures all of its ascendants (but not siblings) will be retained. An empty map means there were
+ * no hits at all, so no documents will be returned.
  */
 export function pruneGherkinDocuments(
   gherkinDocuments: ReadonlyArray<GherkinDocument>,
   constraints: LineageConstraints,
-  searchHits?: SearchHits | false
+  searchHits?: SearchHits
 ): ReadonlyArray<GherkinDocument> {
-  if (searchHits === false) {
+  if (searchHits?.size === 0) {
     return []
   }
   const results: GherkinDocument[] = []
@@ -150,7 +150,7 @@ function filterRule(
 
   if (
     searchHits &&
-    (searchHits.rule.includes(rule.id) || matchesOnBackground(rule.children, searchHits))
+    (searchHits.rule.has(rule.id) || matchesOnBackground(rule.children, searchHits))
   ) {
     searchHits = undefined
   }
@@ -201,7 +201,7 @@ function filterScenario(
   }
   if (
     searchHits &&
-    !searchHits.scenario.includes(scenario.id) &&
+    !searchHits.scenario.has(scenario.id) &&
     !matchesOnSteps(scenario.steps, searchHits)
   ) {
     return undefined
@@ -242,11 +242,10 @@ function matchesOnBackground(
     .filter((background) => !!background)
     .some(
       (background) =>
-        searchHits.background.includes(background.id) ||
-        matchesOnSteps(background.steps, searchHits)
+        searchHits.background.has(background.id) || matchesOnSteps(background.steps, searchHits)
     )
 }
 
 function matchesOnSteps(steps: ReadonlyArray<Step>, searchHits: DocumentSearchHits): boolean {
-  return steps.some((step) => searchHits.step.includes(step.id))
+  return steps.some((step) => searchHits.step.has(step.id))
 }
