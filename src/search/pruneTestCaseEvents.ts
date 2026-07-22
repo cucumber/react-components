@@ -1,5 +1,5 @@
 import type { TestCaseFinished, TestCaseStarted } from '@cucumber/messages'
-import type { ExpandedTestCase } from './filterAndExpandTestCases.js'
+import type { ExpandedTestCase } from './filterAndExpandTestCaseEvents.js'
 import type { SearchHits } from './types.js'
 
 /**

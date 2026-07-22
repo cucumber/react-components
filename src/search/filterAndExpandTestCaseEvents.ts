@@ -27,23 +27,23 @@ export interface FilterCriteria {
  * Works for either `TestCaseStarted` or `TestCaseFinished` - the element type flows through to the
  * `testCaseEvent` of each returned item.
  */
-export function filterAndExpandTestCases<T extends TestCaseStarted | TestCaseFinished>(
+export function filterAndExpandTestCaseEvents<T extends TestCaseStarted | TestCaseFinished>(
   cucumberQuery: CucumberQuery,
-  testCases: ReadonlyArray<T>,
+  testCaseEvents: ReadonlyArray<T>,
   { hideStatuses, tagExpression }: FilterCriteria
 ): Array<ExpandedTestCase<T>> {
   const expanded: Array<ExpandedTestCase<T>> = []
-  for (const testCase of testCases) {
+  for (const testCaseEvent of testCaseEvents) {
     if (hideStatuses.length) {
       const status =
-        cucumberQuery.findMostSevereTestStepResultBy(testCase)?.status ?? Status.UNKNOWN
+        cucumberQuery.findMostSevereTestStepResultBy(testCaseEvent)?.status ?? Status.UNKNOWN
       if (hideStatuses.includes(status)) {
         continue
       }
     }
-    const id = 'id' in testCase ? testCase.id : testCase.testCaseStartedId
+    const id = 'id' in testCaseEvent ? testCaseEvent.id : testCaseEvent.testCaseStartedId
     const pickle = ensure(
-      cucumberQuery.findPickleBy(testCase),
+      cucumberQuery.findPickleBy(testCaseEvent),
       `No Pickle found for TestCase ${id}`
     )
     if (tagExpression) {
@@ -56,7 +56,7 @@ export function filterAndExpandTestCases<T extends TestCaseStarted | TestCaseFin
       cucumberQuery.findLineageBy(pickle),
       `No Lineage found for Pickle ${pickle.uri}`
     )
-    expanded.push({ testCaseEvent: testCase, pickle, lineage })
+    expanded.push({ testCaseEvent, pickle, lineage })
   }
   return expanded
 }

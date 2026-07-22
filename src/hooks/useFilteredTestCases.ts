@@ -2,7 +2,7 @@ import type { TestCaseFinished } from '@cucumber/messages'
 import { useEffect, useMemo, useState } from 'react'
 import {
   type ExpandedTestCase,
-  filterAndExpandTestCases,
+  filterAndExpandTestCaseEvents,
   pruneTestCaseEvents,
 } from '../search/index.js'
 import { useQueries } from './useQueries.js'
@@ -18,7 +18,7 @@ export function useFilteredTestCases(): ReadonlyArray<ExpandedTestCase<TestCaseF
   const { hideStatuses, tagExpression } = useSearch()
   const candidates = useMemo(
     () =>
-      filterAndExpandTestCases(cucumberQuery, allTestCasesFinished, {
+      filterAndExpandTestCaseEvents(cucumberQuery, allTestCasesFinished, {
         hideStatuses,
         tagExpression,
       }),

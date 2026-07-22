@@ -1,6 +1,6 @@
 export * from './createSearchIndex.js'
 export * from './deriveLineageConstraints.js'
-export * from './filterAndExpandTestCases.js'
+export * from './filterAndExpandTestCaseEvents.js'
 export * from './pruneGherkinDocuments.js'
 export * from './pruneTestCaseEvents.js'
 export * from './types.js'

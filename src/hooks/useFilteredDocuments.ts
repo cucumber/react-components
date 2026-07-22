@@ -2,7 +2,7 @@ import type { GherkinDocument } from '@cucumber/messages'
 import { type Dispatch, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   deriveLineageConstraints,
-  filterAndExpandTestCases,
+  filterAndExpandTestCaseEvents,
   pruneGherkinDocuments,
 } from '../search/index.js'
 import { useQueries } from './useQueries.js'
@@ -20,7 +20,7 @@ export function useFilteredDocuments(): {
   const lineageConstraints = useMemo(
     () =>
       deriveLineageConstraints(
-        filterAndExpandTestCases(cucumberQuery, allTestCasesStarted, {
+        filterAndExpandTestCaseEvents(cucumberQuery, allTestCasesStarted, {
           hideStatuses,
           tagExpression,
         })
