@@ -2,7 +2,7 @@
   "extends": "./node_modules/@tsconfig/recommended/tsconfig.json",
   "include": ["src", "test"],
   "compilerOptions": {
-    "lib": ["es2024", "dom"],
+    "lib": ["es2024", "ESNext.Collection", "dom"],
     "target": "es2024",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
