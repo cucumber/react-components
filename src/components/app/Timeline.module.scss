@@ -1,0 +1,76 @@
+@use '../../styles/statuses';
+@use '../../styles/theming';
+
+.container {
+   border: 1px solid theming.$panelAccentColor;
+}
+
+@each $name, $color in statuses.$statusColors {
+  .visItem[data-status='#{$name}'] {
+    background-color: $color;
+    border-color: $color;
+  }
+
+.visItem[data-status='#{$name}']:global(.vis-selected) {
+    background-color: $color;
+    border-color: $color;
+
+    outline: 2px solid theming.$panelTextColor;
+    outline-offset: 1px;
+    z-index: 2;
+  }
+}
+
+.detail {
+  position: relative;
+  padding: 1em;
+  background-color: theming.$panelBackgroundColor;
+  color: theming.$panelTextColor;
+  border: 1px solid theming.$panelAccentColor;
+  border-radius: 0.25em;
+}
+
+.detailClose {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.25em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.detailTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.25em;
+  font-size: 1.1em;
+
+  svg {
+    height: 1em;
+  }
+}
+
+.detailFeature {
+  margin: 0 0 0.5em;
+  opacity: 0.75;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 0.75em 0 0;
+
+  dt {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
