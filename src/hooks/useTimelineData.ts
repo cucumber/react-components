@@ -8,6 +8,7 @@ import { useMemo } from 'react'
 
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
+import { useFilteredTestCases } from './useFilteredTestCases.js'
 
 export interface TimelineItem {
   readonly id: string
@@ -41,25 +42,27 @@ export function useTimelineData(): TimelineData {
   const { cucumberQuery } = useQueries()
   const { hideStatuses, tagExpression, searchTerm, unchanged } = useSearch()
 
+  const finishedTestCases = useFilteredTestCases();
   return useMemo(() => {
     const items: TimelineItem[] = []
     const groupIds = new Set<string>()
-    const normalizedSearchTerm = searchTerm?.trim().toLowerCase()
+    // const normalizedSearchTerm = searchTerm?.trim().toLowerCase()
     let fullStart: number | undefined
     let fullEnd: number | undefined
 
-    for (const testCaseFinished of cucumberQuery.findAllTestCaseFinished()) {
-      const testCaseStarted = cucumberQuery.findTestCaseStartedBy(testCaseFinished)
+    // for (const testCaseFinished of cucumberQuery.findAllTestCaseFinished()) {
+    for (const testCaseFinished of finishedTestCases) {
+      const testCaseStarted = cucumberQuery.findTestCaseStartedBy(testCaseFinished.testCaseEvent)
       if (!testCaseStarted) {
         continue
       }
-      const pickle = cucumberQuery.findPickleBy(testCaseStarted)
+      const pickle = testCaseFinished.pickle;
       if (!pickle) {
         continue
       }
 
       const itemStart = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseStarted.timestamp)
-      const itemEnd = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseFinished.timestamp)
+      const itemEnd = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseFinished.testCaseEvent.timestamp)
 
       if (fullStart === undefined || itemStart < fullStart) {
         fullStart = itemStart
@@ -70,29 +73,29 @@ export function useTimelineData(): TimelineData {
 
       // A test case with no step results at all is considered passed by definition
       const status =
-        cucumberQuery.findMostSevereTestStepResultBy(testCaseFinished)?.status ??
+        cucumberQuery.findMostSevereTestStepResultBy(testCaseFinished.testCaseEvent)?.status ??
         TestStepResultStatus.PASSED
 
-      if (hideStatuses.includes(status)) {
-        continue
-      }
+      // if (hideStatuses.includes(status)) {
+      //   continue
+      // }
 
-      if (tagExpression) {
-        const tagNames = pickle.tags.map((tag) => tag.name)
-        if (!tagExpression.evaluate(tagNames)) {
-          continue
-        }
-      }
+      // if (tagExpression) {
+      //   const tagNames = pickle.tags.map((tag) => tag.name)
+      //   if (!tagExpression.evaluate(tagNames)) {
+      //     continue
+      //   }
+      // }
 
-      const feature = cucumberQuery.findLineageBy(testCaseStarted)?.feature?.name ?? ''
+      const feature = testCaseFinished.lineage.feature?.name ?? ''
       const scenario = pickle.name
 
-      if (
-        normalizedSearchTerm &&
-        !`${feature} ${scenario}`.toLowerCase().includes(normalizedSearchTerm)
-      ) {
-        continue
-      }
+      // if (
+      //   normalizedSearchTerm &&
+      //   !`${feature} ${scenario}`.toLowerCase().includes(normalizedSearchTerm)
+      // ) {
+      //   continue
+      // }
 
       const groupId = testCaseStarted.workerId ?? UNASSIGNED_GROUP_ID
       groupIds.add(groupId)
@@ -118,7 +121,7 @@ export function useTimelineData(): TimelineData {
       .map((id) => ({ id, label: describeGroup(id) }))
 
     return { groups, items, fullStart, fullEnd, filtered: !unchanged }
-  }, [cucumberQuery, hideStatuses, tagExpression, searchTerm, unchanged])
+  }, [cucumberQuery, unchanged, finishedTestCases])
 }
 
 function describeGroup(id: string): string {

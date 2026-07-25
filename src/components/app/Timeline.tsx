@@ -1,6 +1,4 @@
-import { type FC, useEffect, useRef, useState } from 'react'
-import { DataSet } from 'vis-data'
-import { Timeline as VisTimeline } from 'vis-timeline'
+import { type FC, useEffect, useRef, useState, WheelEventHandler } from 'react'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
 import { type TimelineItem, useTimelineData } from '../../hooks/useTimelineData.js'
 import { StatusIcon } from '../gherkin/StatusIcon.js'
@@ -8,96 +6,99 @@ import statusName from '../gherkin/statusName.js'
 import { Tags } from '../gherkin/Tags.js'
 import { TestCaseOutcome } from '../results/index.js'
 import styles from './Timeline.module.scss'
-
-import 'vis-timeline/styles/vis-timeline-graph2d.css'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {TooltipTrigger} from 'react-aria-components';
+import {
 
-type DataSetGroup = {
-  id: string
-  content: string
-}
+  TooltipTrigger,
+  Tooltip,
+  Button,
+  type TooltipProps,
+  type TooltipTriggerComponentProps
+} from 'react-aria-components';
 
-type DataSetItem = {
-  id: string
-  content: string
-  group: string
-  start: Date
-  end: Date
-  status: string
-  className: string
-}
+
 export const Timeline: FC = () => {
-  const { groups, items, fullStart, fullEnd, filtered } = useTimelineData()
-  const [selectedId, setSelectedId] = useState<string | undefined>()
+  const { groups, items, fullStart, fullEnd, filtered } = useTimelineData();
+  const axisRef = useRef<HTMLDivElement>(null);
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
 
-  const containerRef = useRef<HTMLDivElement>(null)
-
+  const [axisUnit, setAxisUnit] = useState(100);
+  const [pxPerMs, setPxPerMs] = useState(10);
+  
+  // const pxPerMs = 10;
+  
   useEffect(() => {
-    if (!containerRef.current) {
-      return
+    const element = axisRef.current;
+    if (!element) {
+      return;
     }
-
-    const dataSetGroups = new DataSet<DataSetGroup>()
-    groups.forEach((g) => {
-      dataSetGroups.add({ id: g.id, content: g.label })
-    })
-
-    const dataSetItems = new DataSet<DataSetItem>()
-    items.forEach((i) => {
-      dataSetItems.add({
-        id: i.id,
-        content: i.scenario,
-        group: i.groupId,
-        start: new Date(i.start),
-        end: new Date(i.end),
-        status: i.status,
-        className: styles.visItem,
-      })
-    })
-
-    const timeline = new VisTimeline(containerRef.current, dataSetItems, dataSetGroups, {
-      stack: false,
-      zoomable: true,
-      moveable: true,
-      selectable: true,
-      editable: false,
-      showCurrentTime: false,
-      orientation: 'top',
-      min: fullStart,
-      max: fullEnd,
-      start: fullStart,
-      end: fullEnd,
-      dataAttributes: ['status'],
-    })
-
-    timeline.on('select', (props: { items: string[] }) => {
-      setSelectedId(props.items[0] ?? undefined)
-    })
+    const handleAxisZoom = (e: WheelEvent) => {
+      e.preventDefault();
+      const zoomDirection = e.deltaY < 0 ? 1: -1;
+      const zoomFactor = 1.1;
+      if(zoomDirection === -1) {
+        setAxisUnit(prev => prev * zoomFactor);
+        setPxPerMs(prev => prev / zoomFactor);
+      } else {
+        setAxisUnit(prev => prev / zoomFactor);
+        setPxPerMs(prev => prev * zoomFactor);
+      }
+    }
+    element.addEventListener('wheel', handleAxisZoom, { passive: false });
 
     return () => {
-      timeline.destroy()
-    }
-  }, [fullStart, fullEnd, groups, items])
+      element.removeEventListener('wheel', handleAxisZoom);
+    };
+  }, []);
 
-  if (items.length === 0) {
-    return filtered ? (
-      <p className={styles.empty}>No scenarios match your query and/or filters.</p>
-    ) : (
-      <p className={styles.empty}>No scenarios were executed.</p>
-    )
-  }
-
-  const selectedItem = items.find((item) => item.id === selectedId)
+  const selectedItem = items.find((item) => item.id === selectedId);
 
   return (
-    <div>
-      <div ref={containerRef} className={styles.container} />
-      {selectedItem && (
+    <>
+    <div className={styles.timelineWrapper}>
+      {/* Header */}
+
+      <div className={styles.timelineRow}>
+        <div className={`${styles.cell} ${styles.workerCell}`}></div>
+        <div ref={axisRef} className={styles.cell}>Axis Unit: {axisUnit}ms</div>
+      </div>
+
+      {
+        groups.map((grp) => {
+          return <div key={grp.id} className={styles.timelineRow}>
+
+            <div className={`${styles.cell} ${styles.workerCell}`}>
+              {grp.label}
+            </div>
+            <div className={`${styles.workerRow} ${styles.cell}`}>
+              {items.filter((i) => i.groupId === grp.id).map((item) => {
+                const width = (item.end - item.start) * pxPerMs;
+
+                return <TooltipTrigger key={item.id}>
+                  <Button type='button' className={styles.timelineBar} style={{width: `${width}px`}} data-status={item.status} onClick={(_e) => setSelectedId(item.id)} ></Button>
+                  <Tooltip>
+                      EDIT
+                  </Tooltip>
+                </TooltipTrigger>
+  
+              })}
+            </div>
+
+          </div>
+        })
+      }
+
+
+
+    </div>
+    {selectedItem && (
         <TimelineDetail item={selectedItem} onClose={() => setSelectedId(undefined)} />
       )}
-    </div>
-  )
+    </>
+  );
+
 }
 
 const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item, onClose }) => {

@@ -1,5 +1,6 @@
 @use '../../styles/statuses';
 @use '../../styles/theming';
+@use 'sass:color';
 
 .container {
    border: 1px solid theming.$panelAccentColor;
@@ -73,4 +74,64 @@
   dd {
     margin: 0;
   }
+}
+
+
+
+
+
+
+// NEW NEW NEW
+
+.timelineWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1px; 
+  background-color: theming.$panelAccentColor;
+  padding: 1px;
+}
+
+.timelineRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 4fr);
+  overscroll-behavior: none;
+  gap: 1px;
+}
+
+.cell {
+  height: 2em;
+  background-color: theming.$panelBackgroundColor;
+
+}
+
+.workerCell {
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+}
+
+
+.workerRow {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+}
+
+.timelineBar {
+  height: 80%;
+  border-radius: 0.333em;
+  border: none;
+}
+
+@each $name, $color in statuses.$statusColors {
+  .timelineBar[data-status='#{$name}'] {
+    background-color: color.adjust($color, $alpha: -0.666);
+    border-color: $color;
+  }
+
+  .timelineBar[data-status='#{$name}']:hover {
+    outline: 1px solid $color;
+  }
+
 }
