@@ -1,7 +1,7 @@
 import type { TestStep } from '@cucumber/messages'
 import type { FC } from 'react'
 
-import { ensure } from '../../hooks/helpers.js'
+import { ensure } from '../../ensure.js'
 import { useQueries } from '../../hooks/index.js'
 import { ResultNote } from './ResultNote.js'
 import styles from './UndefinedResult.module.scss'

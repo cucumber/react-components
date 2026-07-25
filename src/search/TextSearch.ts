@@ -3,7 +3,13 @@ import type { Background, GherkinDocument, Rule, Scenario } from '@cucumber/mess
 import { FeatureSearch } from './FeatureSearch.js'
 import { ScenarioLikeSearch } from './ScenarioLikeSearch.js'
 import { StepSearch } from './StepSearch.js'
-import type { DocumentSearchHits, IndexHit, SearchHits, SearchIndex } from './types.js'
+import type { DocumentSearchHits, SearchHits, SearchIndex } from './types.js'
+
+type MutableDocumentSearchHits = {
+  [Key in keyof DocumentSearchHits]: DocumentSearchHits[Key] extends ReadonlySet<infer Item>
+    ? Set<Item>
+    : DocumentSearchHits[Key]
+}
 
 export class TextSearch implements SearchIndex {
   private readonly featureSearch = new FeatureSearch()
@@ -12,7 +18,7 @@ export class TextSearch implements SearchIndex {
   private readonly scenarioSearch = new ScenarioLikeSearch<Scenario>()
   private readonly stepSearch = new StepSearch()
 
-  public async search(query: string): Promise<SearchHits | false> {
+  public async search(query: string): Promise<SearchHits> {
     const [featureHits, backgroundHits, ruleHits, scenarioHits, stepHits] = await Promise.all([
       this.featureSearch.search(query),
       this.backgroundSearch.search(query),
@@ -20,21 +26,18 @@ export class TextSearch implements SearchIndex {
       this.scenarioSearch.search(query),
       this.stepSearch.search(query),
     ])
-    const allHits: ReadonlyArray<IndexHit> = [
-      ...featureHits,
-      ...backgroundHits,
-      ...ruleHits,
-      ...scenarioHits,
-      ...stepHits,
-    ]
-    if (allHits.length === 0) {
-      return false
-    }
-    const map = new Map<string, DocumentSearchHits>()
+    // an empty map is a valid result meaning nothing matched
+    const map = new Map<string, MutableDocumentSearchHits>()
     const getOrDefault = (uri: string) => {
       let entry = map.get(uri)
       if (!entry) {
-        entry = { feature: false, background: [], rule: [], scenario: [], step: [] }
+        entry = {
+          feature: false,
+          background: new Set(),
+          rule: new Set(),
+          scenario: new Set(),
+          step: new Set(),
+        }
         map.set(uri, entry)
       }
       return entry
@@ -43,16 +46,16 @@ export class TextSearch implements SearchIndex {
       getOrDefault(hit.uri).feature = true
     }
     for (const hit of backgroundHits) {
-      getOrDefault(hit.uri).background.push(hit.id)
+      getOrDefault(hit.uri).background.add(hit.id)
     }
     for (const hit of ruleHits) {
-      getOrDefault(hit.uri).rule.push(hit.id)
+      getOrDefault(hit.uri).rule.add(hit.id)
     }
     for (const hit of scenarioHits) {
-      getOrDefault(hit.uri).scenario.push(hit.id)
+      getOrDefault(hit.uri).scenario.add(hit.id)
     }
     for (const hit of stepHits) {
-      getOrDefault(hit.uri).step.push(hit.id)
+      getOrDefault(hit.uri).step.add(hit.id)
     }
     return map
   }
