@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef, useState, WheelEventHandler } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
 import { type TimelineItem, useTimelineData } from '../../hooks/useTimelineData.js'
 import { StatusIcon } from '../gherkin/StatusIcon.js'
@@ -8,14 +8,11 @@ import { TestCaseOutcome } from '../results/index.js'
 import styles from './Timeline.module.scss'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {TooltipTrigger} from 'react-aria-components';
 import {
-
   TooltipTrigger,
   Tooltip,
   Button,
-  type TooltipProps,
-  type TooltipTriggerComponentProps
+  OverlayArrow,
 } from 'react-aria-components';
 
 
@@ -26,8 +23,6 @@ export const Timeline: FC = () => {
 
   const [axisUnit, setAxisUnit] = useState(100);
   const [pxPerMs, setPxPerMs] = useState(10);
-  
-  // const pxPerMs = 10;
   
   useEffect(() => {
     const element = axisRef.current;
@@ -58,39 +53,28 @@ export const Timeline: FC = () => {
   return (
     <>
     <div className={styles.timelineWrapper}>
-      {/* Header */}
 
       <div className={styles.timelineRow}>
         <div className={`${styles.cell} ${styles.workerCell}`}></div>
-        <div ref={axisRef} className={styles.cell}>Axis Unit: {axisUnit}ms</div>
+        <div ref={axisRef} className={styles.cell}></div>
       </div>
+
 
       {
         groups.map((grp) => {
           return <div key={grp.id} className={styles.timelineRow}>
-
+            
             <div className={`${styles.cell} ${styles.workerCell}`}>
               {grp.label}
             </div>
+
             <div className={`${styles.workerRow} ${styles.cell}`}>
-              {items.filter((i) => i.groupId === grp.id).map((item) => {
-                const width = (item.end - item.start) * pxPerMs;
+              {items.filter((i) => i.groupId === grp.id).map((item) => <TimelineBar key={item.id} item={item} width={(item.end - item.start) * pxPerMs} selectedId={selectedId} setSelectedId={setSelectedId}></TimelineBar>)}
 
-                return <TooltipTrigger key={item.id}>
-                  <Button type='button' className={styles.timelineBar} style={{width: `${width}px`}} data-status={item.status} onClick={(_e) => setSelectedId(item.id)} ></Button>
-                  <Tooltip>
-                      EDIT
-                  </Tooltip>
-                </TooltipTrigger>
-  
-              })}
             </div>
-
           </div>
         })
       }
-
-
 
     </div>
     {selectedItem && (
@@ -100,6 +84,26 @@ export const Timeline: FC = () => {
   );
 
 }
+
+const TimelineBar: FC<{item: TimelineItem, width: number, selectedId: string | undefined, setSelectedId: (id: string) => void}> = ({item, width, selectedId, setSelectedId}) => {
+  return <TooltipTrigger key={item.id} delay={500}>
+                  <Button type='button' className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected: ''}`} style={{width: `${width}px`}} data-status={item.status} onClick={(_e) => setSelectedId(item.id)} ></Button>
+                  <Tooltip>
+                      <OverlayArrow className={styles.OverlayArrow}>
+                         <svg width={8} height={8} viewBox="0 0 8 8">
+                            <title>Tooltip Arrow</title>
+                            <path d="M0 0 L4 4 L8 0" />
+                          </svg>
+                      </OverlayArrow>
+                      <span>
+                        <StatusIcon status={item.status} />
+                      </span>
+                      <span>{item.scenario}</span>
+                  </Tooltip>
+                </TooltipTrigger>
+}
+
+
 
 const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item, onClose }) => {
   return (
