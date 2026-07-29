@@ -8,11 +8,18 @@
     },
     {
       "groupName": "orama ecosystem",
-      "matchPackagePatterns": ["^@orama/"]
+      "matchPackageNames": [
+        "/^@orama//"
+      ]
     },
     {
       "groupName": "react-markdown ecosystem",
-      "matchPackagePatterns": ["^hast-", "^react-markdown", "^rehype-", "^remark-"]
+      "matchPackageNames": [
+        "/^hast-/",
+        "/^react-markdown/",
+        "/^rehype-/",
+        "/^remark-/"
+      ]
     }
   ]
 }
