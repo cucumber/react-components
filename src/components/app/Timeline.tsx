@@ -1,4 +1,7 @@
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type FC, useEffect, useRef, useState } from 'react'
+import { Button, OverlayArrow, Tooltip, TooltipTrigger } from 'react-aria-components'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
 import { type TimelineItem, useTimelineData } from '../../hooks/useTimelineData.js'
 import { StatusIcon } from '../gherkin/StatusIcon.js'
@@ -6,104 +9,186 @@ import statusName from '../gherkin/statusName.js'
 import { Tags } from '../gherkin/Tags.js'
 import { TestCaseOutcome } from '../results/index.js'
 import styles from './Timeline.module.scss'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  TooltipTrigger,
-  Tooltip,
-  Button,
-  OverlayArrow,
-} from 'react-aria-components';
 
+type unit = {
+  label: string
+  magnitude: number
+}
+
+const axisUnits: unit[] = [
+  { label: '1 ms', magnitude: 1 },
+  { label: '10 ms', magnitude: 10 },
+  { label: '50 ms', magnitude: 50 },
+  { label: '100 ms', magnitude: 100 },
+  { label: '500 ms', magnitude: 500 },
+  { label: '1 s', magnitude: 1 * 1000 },
+  { label: '10 s', magnitude: 10 * 1000 },
+  { label: '30 s', magnitude: 30 * 1000 },
+  { label: '1 min', magnitude: 1 * 60 * 1000 },
+  { label: '10 min', magnitude: 10 * 60 * 1000 },
+  { label: '30 min', magnitude: 30 * 60 * 1000 },
+  { label: '1 hr', magnitude: 1 * 60 * 60 * 1000 },
+]
 
 export const Timeline: FC = () => {
-  const { groups, items, fullStart, fullEnd, filtered } = useTimelineData();
-  const axisRef = useRef<HTMLDivElement>(null);
-  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+  const { groups, items, fullStart, fullEnd, filtered } = useTimelineData()
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
+  const [axisUnitIndex, setAxisUnitIndex] = useState(0)
+  const [rowWidthPx, setRowWidthPx] = useState(0)
+  const pxPerUnit = 20
 
-  const [axisUnit, setAxisUnit] = useState(100);
-  const [pxPerMs, setPxPerMs] = useState(10);
-  
-  useEffect(() => {
-    const element = axisRef.current;
-    if (!element) {
-      return;
-    }
-    const handleAxisZoom = (e: WheelEvent) => {
-      e.preventDefault();
-      const zoomDirection = e.deltaY < 0 ? 1: -1;
-      const zoomFactor = 1.1;
-      if(zoomDirection === -1) {
-        setAxisUnit(prev => prev * zoomFactor);
-        setPxPerMs(prev => prev / zoomFactor);
-      } else {
-        setAxisUnit(prev => prev / zoomFactor);
-        setPxPerMs(prev => prev * zoomFactor);
-      }
-    }
-    element.addEventListener('wheel', handleAxisZoom, { passive: false });
-
-    return () => {
-      element.removeEventListener('wheel', handleAxisZoom);
-    };
-  }, []);
-
-  const selectedItem = items.find((item) => item.id === selectedId);
+  const selectedItem = items.find((item) => item.id === selectedId)
 
   return (
     <>
-    <div className={styles.timelineWrapper}>
+      <div className={styles.timelineWrapper}>
+        <TimelineAxis
+          axisUnitIndex={axisUnitIndex}
+          setAxisUnitIndex={setAxisUnitIndex}
+          setRowWidthPx={setRowWidthPx}
+        ></TimelineAxis>
 
-      <div className={styles.timelineRow}>
-        <div className={`${styles.cell} ${styles.workerCell}`}></div>
-        <div ref={axisRef} className={styles.cell}></div>
+        {groups.map((grp) => {
+          return (
+            <div key={grp.id} className={styles.timelineRow}>
+              <div className={`${styles.cell} ${styles.workerCell}`}>{grp.label}</div>
+
+              <div className={`${styles.workerRow} ${styles.cell}`}>
+                {items
+                  .filter((i) => i.groupId === grp.id)
+                  .map((item) => {
+                    if (rowWidthPx === 0) {
+                      return null
+                    }
+
+                    const magnitude = axisUnits[axisUnitIndex].magnitude
+                    const duration = item.end - item.start
+
+                    const widthInUnits = duration / magnitude
+                    const leftOffsetInUnits = (item.start - (fullStart ?? 0)) / magnitude
+
+                    const widthInPx = widthInUnits * pxPerUnit
+                    const leftOffsetInPx = leftOffsetInUnits * pxPerUnit
+
+                    const widthPercent = (widthInPx / rowWidthPx) * 100
+                    const leftPercent = (leftOffsetInPx / rowWidthPx) * 100
+
+                    // console.log(duration, widthPercent);
+                    return (
+                      <TimelineBar
+                        key={item.id}
+                        item={item}
+                        width={widthPercent}
+                        left={leftPercent}
+                        selectedId={selectedId}
+                        setSelectedId={setSelectedId}
+                      ></TimelineBar>
+                    )
+                  })}
+              </div>
+            </div>
+          )
+        })}
       </div>
-
-
-      {
-        groups.map((grp) => {
-          return <div key={grp.id} className={styles.timelineRow}>
-            
-            <div className={`${styles.cell} ${styles.workerCell}`}>
-              {grp.label}
-            </div>
-
-            <div className={`${styles.workerRow} ${styles.cell}`}>
-              {items.filter((i) => i.groupId === grp.id).map((item) => <TimelineBar key={item.id} item={item} width={(item.end - item.start) * pxPerMs} selectedId={selectedId} setSelectedId={setSelectedId}></TimelineBar>)}
-
-            </div>
-          </div>
-        })
-      }
-
-    </div>
-    {selectedItem && (
+      {selectedItem && (
         <TimelineDetail item={selectedItem} onClose={() => setSelectedId(undefined)} />
       )}
     </>
-  );
-
+  )
 }
 
-const TimelineBar: FC<{item: TimelineItem, width: number, selectedId: string | undefined, setSelectedId: (id: string) => void}> = ({item, width, selectedId, setSelectedId}) => {
-  return <TooltipTrigger key={item.id} delay={500}>
-                  <Button type='button' className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected: ''}`} style={{width: `${width}px`}} data-status={item.status} onClick={(_e) => setSelectedId(item.id)} ></Button>
-                  <Tooltip>
-                      <OverlayArrow className={styles.OverlayArrow}>
-                         <svg width={8} height={8} viewBox="0 0 8 8">
-                            <title>Tooltip Arrow</title>
-                            <path d="M0 0 L4 4 L8 0" />
-                          </svg>
-                      </OverlayArrow>
-                      <span>
-                        <StatusIcon status={item.status} />
-                      </span>
-                      <span>{item.scenario}</span>
-                  </Tooltip>
-                </TooltipTrigger>
+const TimelineAxis: FC<{
+  axisUnitIndex: number
+  setAxisUnitIndex: React.Dispatch<React.SetStateAction<number>>
+  setRowWidthPx: React.Dispatch<React.SetStateAction<number>>
+}> = ({ axisUnitIndex, setAxisUnitIndex, setRowWidthPx }) => {
+  const axisRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const element = axisRef.current
+    if (!element) {
+      return
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setRowWidthPx(entry.contentRect.width)
+      }
+    })
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [setRowWidthPx])
+
+  useEffect(() => {
+    console.log('USE EFF CHALA')
+    const element = axisRef.current
+    if (!element) {
+      return
+    }
+
+    console.log('ADDED ZOOM HANDLER')
+
+    const handleAxisZoom = (e: WheelEvent) => {
+      console.log('HANDLING ZOOM')
+      const zoomDirection = e.deltaY < 0 ? -1 : 1
+      e.preventDefault()
+
+      if (zoomDirection === 1) {
+        setAxisUnitIndex((prev) => Math.min(axisUnits.length - 1, prev + 1))
+      } else {
+        setAxisUnitIndex((prev) => Math.max(0, prev - 1))
+      }
+    }
+
+    element.addEventListener('wheel', handleAxisZoom, { passive: false })
+
+    return () => {
+      element.removeEventListener('wheel', handleAxisZoom)
+    }
+  })
+
+  return (
+    <div className={styles.timelineRow}>
+      <div className={`${styles.cell} ${styles.workerCell}`}></div>
+      <div ref={axisRef} className={styles.cell}>
+        {axisUnits[axisUnitIndex].label}
+      </div>
+    </div>
+  )
 }
 
-
+const TimelineBar: FC<{
+  item: TimelineItem
+  width: number
+  left: number
+  selectedId: string | undefined
+  setSelectedId: (id: string) => void
+}> = ({ item, width, left, selectedId, setSelectedId }) => {
+  return (
+    <TooltipTrigger key={item.id} delay={500}>
+      <Button
+        type="button"
+        className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected : ''}`}
+        style={{ width: `${width}%`, left: `${left}%` }}
+        data-status={item.status}
+        onClick={(_e) => setSelectedId(item.id)}
+      ></Button>
+      <Tooltip>
+        <OverlayArrow className={styles.OverlayArrow}>
+          <svg width={8} height={8} viewBox="0 0 8 8">
+            <title>Tooltip Arrow</title>
+            <path d="M0 0 L4 4 L8 0" />
+          </svg>
+        </OverlayArrow>
+        <span>
+          <StatusIcon status={item.status} />
+        </span>
+        <span>{item.scenario}</span>
+      </Tooltip>
+    </TooltipTrigger>
+  )
+}
 
 const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item, onClose }) => {
   return (

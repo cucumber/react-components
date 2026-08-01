@@ -5,12 +5,12 @@ import { expect } from 'chai'
 import attachments from '../../acceptance/attachments/attachments.js'
 import backgrounds from '../../acceptance/backgrounds/backgrounds.js'
 import hooksConditional from '../../acceptance/hooks-conditional/hooks-conditional.js'
+import parallel from '../../acceptance/parallel/parallel.js'
 import retry from '../../acceptance/retry/retry.js'
 import rules from '../../acceptance/rules/rules.js'
 import { EnvelopesProvider } from '../components/app/EnvelopesProvider.js'
 import { InMemorySearchProvider } from '../components/app/InMemorySearchProvider.js'
 import { useFilteredTestCases } from './useFilteredTestCases.js'
-import parallel from '../../acceptance/parallel/parallel.js'
 
 interface ProviderProps {
   envelopes: Parameters<typeof EnvelopesProvider>[0]['envelopes']

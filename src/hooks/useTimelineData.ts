@@ -5,10 +5,9 @@ import {
   TimeConversion,
 } from '@cucumber/messages'
 import { useMemo } from 'react'
-
+import { useFilteredTestCases } from './useFilteredTestCases.js'
 import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
-import { useFilteredTestCases } from './useFilteredTestCases.js'
 
 export interface TimelineItem {
   readonly id: string
@@ -42,7 +41,7 @@ export function useTimelineData(): TimelineData {
   const { cucumberQuery } = useQueries()
   const { hideStatuses, tagExpression, searchTerm, unchanged } = useSearch()
 
-  const finishedTestCases = useFilteredTestCases();
+  const finishedTestCases = useFilteredTestCases()
   return useMemo(() => {
     const items: TimelineItem[] = []
     const groupIds = new Set<string>()
@@ -56,13 +55,15 @@ export function useTimelineData(): TimelineData {
       if (!testCaseStarted) {
         continue
       }
-      const pickle = testCaseFinished.pickle;
+      const pickle = testCaseFinished.pickle
       if (!pickle) {
         continue
       }
 
       const itemStart = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseStarted.timestamp)
-      const itemEnd = TimeConversion.timestampToMillisecondsSinceEpoch(testCaseFinished.testCaseEvent.timestamp)
+      const itemEnd = TimeConversion.timestampToMillisecondsSinceEpoch(
+        testCaseFinished.testCaseEvent.timestamp
+      )
 
       if (fullStart === undefined || itemStart < fullStart) {
         fullStart = itemStart
