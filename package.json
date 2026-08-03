@@ -92,8 +92,8 @@
     "sass": "^1.89.2",
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.0",
-    "ts-node": "^10.9.1",
-    "typescript": "6.0.3"
+    "tsx": "^4.23.5",
+    "typescript": "7.0.2"
   },
   "overrides": {
     "global-jsdom": {
