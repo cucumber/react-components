@@ -1,5 +1,5 @@
 import { type Envelope, type TestCaseStarted, TestStepResultStatus } from '@cucumber/messages'
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { expect } from 'chai'
 
@@ -94,6 +94,31 @@ describe('<Timeline/>', () => {
     expect(screen.getAllByTestId('cucumber.timeline.group')).to.have.length(2)
     expect(screen.getByText('Worker 0')).to.be.visible
     expect(screen.getByText('Worker 1')).to.be.visible
+  })
+
+  it('should render an axis ruler that updates when zooming and panning', () => {
+    render(
+      <EnvelopesProvider envelopes={examplesTablesFeature}>
+        <ControlledSearchProvider value={{ query: '', hideStatuses: [] }} onChange={() => {}}>
+          <Timeline />
+        </ControlledSearchProvider>
+      </EnvelopesProvider>
+    )
+
+    const axis = screen.getByRole('button', { name: 'Timeline axis scale 10 ms' })
+
+    expect(within(axis).getByText('Scale')).to.be.visible
+    expect(within(axis).getByText('0 seconds')).to.be.visible
+
+    fireEvent.wheel(axis, { deltaY: 1 })
+
+    expect(screen.getByRole('button', { name: 'Timeline axis scale 50 ms' })).to.be.visible
+
+    fireEvent.mouseDown(axis)
+    fireEvent.mouseMove(axis, { movementX: -20 })
+    fireEvent.mouseUp(axis)
+
+    expect(within(axis).getByText('0.01 seconds')).to.be.visible
   })
 
   it('should show scenario details when a bar is selected, and hide them again on close', async () => {
