@@ -9,6 +9,7 @@ import statusName from '../gherkin/statusName.js'
 import { Tags } from '../gherkin/Tags.js'
 import { TestCaseOutcome } from '../results/index.js'
 import styles from './Timeline.module.scss'
+import { useDebouncedCallback } from 'use-debounce'
 
 type unit = {
   label: string
@@ -30,31 +31,41 @@ const axisUnits: unit[] = [
   { label: '1 hr', magnitude: 1 * 60 * 60 * 1000 },
 ]
 
+const pxPerUnit = 20
 export const Timeline: FC = () => {
-  const { groups, items, fullStart, fullEnd, filtered } = useTimelineData()
+  const { groups, items, fullStart, fullEnd } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
-  const [axisUnitIndex, setAxisUnitIndex] = useState(1);
-  const [axisStart, setAxisStart] = useState<number | undefined>(undefined);
+  // const [axisUnitIndex, setAxisUnitIndex] = useState(0);
   const [rowWidthPx, setRowWidthPx] = useState(0);
-  const pxPerUnit = 20
+  
+  const timelineWrapperRef = useRef<HTMLDivElement>(null)
+  const axisStartRef = useRef<number>(fullStart)
+  const axisUnitRef = useRef<number>(0)
 
   const selectedItem = items.find((item) => item.id === selectedId)
 
+  useEffect(() => {
+    if (timelineWrapperRef.current) {
+      timelineWrapperRef.current.style.setProperty('--magnitude', axisUnits[axisUnitRef.current].magnitude.toString())
+      timelineWrapperRef.current.style.setProperty('--axis-start', axisStartRef.current.toString())
+    }
+  }, [])
+
   return (
     <>
-      <div className={styles.timelineWrapper}>
+      <div className={styles.timelineWrapper} ref={timelineWrapperRef}>
         <TimelineAxis
-          axisUnitIndex={axisUnitIndex}
-          setAxisUnitIndex={setAxisUnitIndex}
+          // axisUnitIndex={axisUnitIndex}
+          // setAxisUnitIndex={setAxisUnitIndex}
+          axisUnitRef={axisUnitRef}
           setRowWidthPx={setRowWidthPx}
-          axisStart={axisStart ?? 0}
-          setAxisStart={setAxisStart}
           fullStart={fullStart}
           fullEnd={fullEnd}
+          timelineWrapperRef={timelineWrapperRef}
+          axisStartRef={axisStartRef}
         ></TimelineAxis>
 
         {groups.map((grp) => {
-          let pre = axisStart ?? 0;
           return (
             <div key={grp.id} className={styles.timelineRow}>
               <div className={`${styles.cell} ${styles.workerCell}`}>{grp.label}</div>
@@ -67,27 +78,10 @@ export const Timeline: FC = () => {
                     if (rowWidthPx === 0) {
                       return null
                     }
-
-                    const magnitude = axisUnits[axisUnitIndex].magnitude
-                    const duration = item.end - item.start
-
-                    const widthInUnits = duration / magnitude
-                    const leftOffsetInUnits = (item.start - (pre)) / magnitude
-
-                    const widthInPx = widthInUnits * pxPerUnit
-                    const leftOffsetInPx = leftOffsetInUnits * pxPerUnit
-
-                    const widthPercent = (widthInPx / rowWidthPx) * 100
-                    const leftPercent = (leftOffsetInPx / rowWidthPx) * 100
-
-                    pre = item.end;
-
                     return (
                       <TimelineBar
                         key={item.id}
                         item={item}
-                        width={widthPercent}
-                        left={leftPercent}
                         selectedId={selectedId}
                         setSelectedId={setSelectedId}
                       ></TimelineBar>
@@ -106,21 +100,21 @@ export const Timeline: FC = () => {
 }
 
 const TimelineAxis: FC<{
-  axisUnitIndex: number
-  setAxisUnitIndex: React.Dispatch<React.SetStateAction<number>>
   setRowWidthPx: React.Dispatch<React.SetStateAction<number>>
   fullStart: number
   fullEnd: number
-  axisStart: number
-  setAxisStart: React.Dispatch<React.SetStateAction<number>>
-}> = ({ axisUnitIndex, setAxisUnitIndex, setRowWidthPx, fullStart, fullEnd, axisStart, setAxisStart }) => {
+  axisStartRef: React.RefObject<number>
+  timelineWrapperRef: React.RefObject<HTMLDivElement | null>
+  axisUnitRef: React.RefObject<number>
+}> = ({ setRowWidthPx, fullStart, fullEnd, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
   const axisRef = useRef<HTMLButtonElement>(null)
   const isDragging = useRef<boolean>(false);
 
   // Setting Axis Start
   useEffect(() => {
 
-    setAxisStart(fullStart);
+    axisStartRef.current = fullStart;
+    axisUnitRef.current = 0;
 
     const element = axisRef.current
     if (!element) {
@@ -135,51 +129,85 @@ const TimelineAxis: FC<{
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [setRowWidthPx, setAxisStart, fullStart])
+  }, [setRowWidthPx, axisStartRef, fullStart, axisUnitRef])
 
   // Regisetering Handle Zoom Callback
+  const handleAxisZoom = useDebouncedCallback((deltaY: number) => {
+    if(!timelineWrapperRef?.current || !axisRef.current) {
+      return;
+    }
+    const zoomDirection = deltaY < 0 ? -1 : 1
+
+    let newAxisUnitIndex = 0;
+    if (zoomDirection === 1) {
+      newAxisUnitIndex = Math.min(axisUnits.length - 1, axisUnitRef.current + 1)
+    } else {
+      newAxisUnitIndex = Math.max(0, axisUnitRef.current - 1)
+    }
+
+    axisUnitRef.current = newAxisUnitIndex;
+
+    axisRef.current.textContent = `Axis Unit: ${axisUnits[newAxisUnitIndex].label}`
+    timelineWrapperRef.current.style.setProperty('--magnitude', axisUnits[newAxisUnitIndex].magnitude.toString());
+  }, 100)
+
   useEffect(() => {
     const element = axisRef.current
     if (!element) {
       return
     }
 
-    const handleAxisZoom = (e: WheelEvent) => {
-      const zoomDirection = e.deltaY < 0 ? -1 : 1
-      e.preventDefault()
-
-      if (zoomDirection === 1) {
-        setAxisUnitIndex((prev) => Math.min(axisUnits.length - 1, prev + 1))
-      } else {
-        setAxisUnitIndex((prev) => Math.max(0, prev - 1))
-      }
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault()
+      handleAxisZoom(event.deltaY)
     }
 
-    element.addEventListener('wheel', handleAxisZoom, { passive: false })
-
+    element.addEventListener('wheel', onWheel, { passive: false })
     return () => {
-      element.removeEventListener('wheel', handleAxisZoom)
+      element.removeEventListener('wheel', onWheel)
+      handleAxisZoom.cancel()
     }
-  })
+  }, [handleAxisZoom])
 
+
+  // useEffect(() => {
+  //   const element = axisRef.current
+  //   if (!element) {
+  //     return
+  //   }
+
+    
+
+  //   element.addEventListener('wheel', handleAxisZoom, { passive: false })
+
+  //   // useDebounce(handleAxisZoom, 1000)
+  //   return () => {
+  //     element.removeEventListener('wheel', handleAxisZoom)
+  //   }
+  // })
+ 
 
   const handleAxisPanning = (deltaX: number) => {
-    if(!isDragging.current) {
+    if(!isDragging.current || !timelineWrapperRef?.current) {
       return;
     }
     
+    let newStart = 0;
     if(deltaX < 0) {
-      setAxisStart(prev => Math.min(fullEnd, prev + axisUnits[axisUnitIndex].magnitude));
+      newStart = Math.min(fullEnd, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude)
     } else {
-      setAxisStart(prev => Math.max(fullStart, prev - axisUnits[axisUnitIndex].magnitude));
+      newStart = Math.max(fullStart, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude)
     }
+
+    axisStartRef.current = newStart;
+    timelineWrapperRef.current.style.setProperty('--axis-start', newStart.toString());
   } 
 
   return (
     <div className={styles.timelineRow}>
       <div className={`${styles.cell} ${styles.workerCell}`}></div>
       <Button ref={axisRef} className={`${styles.cell} ${styles.axis}`} type='button' onMouseDown={(_e) => isDragging.current = true} onMouseUp={(_e) => isDragging.current = false} onMouseMove={(e) => handleAxisPanning(e.movementX)}>
-        {`Axis Unit: ${axisUnits[axisUnitIndex].label}`}
+        {`Axis Unit: ${axisUnits[axisUnitRef.current].label}`}
       </Button>
     </div>
   )
@@ -187,19 +215,17 @@ const TimelineAxis: FC<{
 
 const TimelineBar: FC<{
   item: TimelineItem
-  width: number
-  left: number
   selectedId: string | undefined
   setSelectedId: (id: string) => void
-}> = ({ item, width, left, selectedId, setSelectedId }) => {
+}> = ({ item, selectedId, setSelectedId }) => {
   return (
     <TooltipTrigger key={item.id} delay={500}>
       <Button
         type="button"
         className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected : ''}`}
-        style={{ width: `${width}%`, marginLeft: `${left}%` }}
+        style={{ width: `calc( ( (${item.end - item.start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`, marginLeft: `calc(((${item.start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)` }}
         data-status={item.status}
-        onClick={(_e) => setSelectedId(item.id)}
+        onClick={(_e) => setSelectedId(item.id)} 
       ></Button>
       <Tooltip>
         <OverlayArrow className={styles.OverlayArrow}>

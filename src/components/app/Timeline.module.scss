@@ -79,6 +79,7 @@
   gap: 1px;
   border: 1px solid theming.$panelAccentColor;
   border-top: none;
+  // overflow: hidden;
 }
 
 .timelineRow:first-child {
@@ -114,6 +115,9 @@
   align-items: center;
   flex-shrink: 0;
   // position: absolute;
+  position: sticky;
+  // transform: translate3d(200px, 0px, 0px);
+  // border: 1px solid black;
 }
 
 .timelineBar {
@@ -125,7 +129,8 @@
   min-width: 0; // Overrides flexbox min-width: auto
   box-sizing: border-box; // Ensures borders/padding don't add to the width
   flex: none; // Prevents flexbox from growing or shrinking it
-  // position: relative;
+  position: absolute;
+  
 }
 
 @each $name, $color in statuses.$statusColors {
