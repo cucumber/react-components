@@ -30,8 +30,8 @@ export interface TimelineGroup {
 export interface TimelineData {
   readonly groups: readonly TimelineGroup[]
   readonly items: readonly TimelineItem[]
-  readonly fullStart: number | undefined
-  readonly fullEnd: number | undefined
+  readonly fullStart: number
+  readonly fullEnd: number
   readonly filtered: boolean
 }
 
@@ -46,8 +46,8 @@ export function useTimelineData(): TimelineData {
     const items: TimelineItem[] = []
     const groupIds = new Set<string>()
     // const normalizedSearchTerm = searchTerm?.trim().toLowerCase()
-    let fullStart: number | undefined
-    let fullEnd: number | undefined
+    let fullStart: number = Number.MAX_SAFE_INTEGER;
+    let fullEnd: number = Number.MIN_SAFE_INTEGER;
 
     // for (const testCaseFinished of cucumberQuery.findAllTestCaseFinished()) {
     for (const testCaseFinished of finishedTestCases) {
@@ -65,7 +65,7 @@ export function useTimelineData(): TimelineData {
         testCaseFinished.testCaseEvent.timestamp
       )
 
-      if (fullStart === undefined || itemStart < fullStart) {
+      if (itemStart < fullStart) {
         fullStart = itemStart
       }
       if (fullEnd === undefined || itemEnd > fullEnd) {

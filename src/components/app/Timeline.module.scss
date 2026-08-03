@@ -103,12 +103,17 @@
   // font-family: inherit;
 }
 
+.axis {
+  border:none;
+}
+
 
 .workerRow {
   display: flex;
   overflow: hidden;
   align-items: center;
   flex-shrink: 0;
+  // position: absolute;
 }
 
 .timelineBar {
@@ -120,6 +125,7 @@
   min-width: 0; // Overrides flexbox min-width: auto
   box-sizing: border-box; // Ensures borders/padding don't add to the width
   flex: none; // Prevents flexbox from growing or shrinking it
+  // position: relative;
 }
 
 @each $name, $color in statuses.$statusColors {

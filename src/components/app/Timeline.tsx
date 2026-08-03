@@ -33,8 +33,9 @@ const axisUnits: unit[] = [
 export const Timeline: FC = () => {
   const { groups, items, fullStart, fullEnd, filtered } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
-  const [axisUnitIndex, setAxisUnitIndex] = useState(0)
-  const [rowWidthPx, setRowWidthPx] = useState(0)
+  const [axisUnitIndex, setAxisUnitIndex] = useState(1);
+  const [axisStart, setAxisStart] = useState<number | undefined>(undefined);
+  const [rowWidthPx, setRowWidthPx] = useState(0);
   const pxPerUnit = 20
 
   const selectedItem = items.find((item) => item.id === selectedId)
@@ -46,13 +47,19 @@ export const Timeline: FC = () => {
           axisUnitIndex={axisUnitIndex}
           setAxisUnitIndex={setAxisUnitIndex}
           setRowWidthPx={setRowWidthPx}
+          axisStart={axisStart ?? 0}
+          setAxisStart={setAxisStart}
+          fullStart={fullStart}
+          fullEnd={fullEnd}
         ></TimelineAxis>
 
         {groups.map((grp) => {
+          let pre = axisStart ?? 0;
           return (
             <div key={grp.id} className={styles.timelineRow}>
               <div className={`${styles.cell} ${styles.workerCell}`}>{grp.label}</div>
 
+              
               <div className={`${styles.workerRow} ${styles.cell}`}>
                 {items
                   .filter((i) => i.groupId === grp.id)
@@ -65,7 +72,7 @@ export const Timeline: FC = () => {
                     const duration = item.end - item.start
 
                     const widthInUnits = duration / magnitude
-                    const leftOffsetInUnits = (item.start - (fullStart ?? 0)) / magnitude
+                    const leftOffsetInUnits = (item.start - (pre)) / magnitude
 
                     const widthInPx = widthInUnits * pxPerUnit
                     const leftOffsetInPx = leftOffsetInUnits * pxPerUnit
@@ -73,7 +80,8 @@ export const Timeline: FC = () => {
                     const widthPercent = (widthInPx / rowWidthPx) * 100
                     const leftPercent = (leftOffsetInPx / rowWidthPx) * 100
 
-                    // console.log(duration, widthPercent);
+                    pre = item.end;
+
                     return (
                       <TimelineBar
                         key={item.id}
@@ -101,10 +109,19 @@ const TimelineAxis: FC<{
   axisUnitIndex: number
   setAxisUnitIndex: React.Dispatch<React.SetStateAction<number>>
   setRowWidthPx: React.Dispatch<React.SetStateAction<number>>
-}> = ({ axisUnitIndex, setAxisUnitIndex, setRowWidthPx }) => {
-  const axisRef = useRef<HTMLDivElement>(null)
+  fullStart: number
+  fullEnd: number
+  axisStart: number
+  setAxisStart: React.Dispatch<React.SetStateAction<number>>
+}> = ({ axisUnitIndex, setAxisUnitIndex, setRowWidthPx, fullStart, fullEnd, axisStart, setAxisStart }) => {
+  const axisRef = useRef<HTMLButtonElement>(null)
+  const isDragging = useRef<boolean>(false);
 
+  // Setting Axis Start
   useEffect(() => {
+
+    setAxisStart(fullStart);
+
     const element = axisRef.current
     if (!element) {
       return
@@ -118,19 +135,16 @@ const TimelineAxis: FC<{
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [setRowWidthPx])
+  }, [setRowWidthPx, setAxisStart, fullStart])
 
+  // Regisetering Handle Zoom Callback
   useEffect(() => {
-    console.log('USE EFF CHALA')
     const element = axisRef.current
     if (!element) {
       return
     }
 
-    console.log('ADDED ZOOM HANDLER')
-
     const handleAxisZoom = (e: WheelEvent) => {
-      console.log('HANDLING ZOOM')
       const zoomDirection = e.deltaY < 0 ? -1 : 1
       e.preventDefault()
 
@@ -148,12 +162,25 @@ const TimelineAxis: FC<{
     }
   })
 
+
+  const handleAxisPanning = (deltaX: number) => {
+    if(!isDragging.current) {
+      return;
+    }
+    
+    if(deltaX < 0) {
+      setAxisStart(prev => Math.min(fullEnd, prev + axisUnits[axisUnitIndex].magnitude));
+    } else {
+      setAxisStart(prev => Math.max(fullStart, prev - axisUnits[axisUnitIndex].magnitude));
+    }
+  } 
+
   return (
     <div className={styles.timelineRow}>
       <div className={`${styles.cell} ${styles.workerCell}`}></div>
-      <div ref={axisRef} className={styles.cell}>
-        {axisUnits[axisUnitIndex].label}
-      </div>
+      <Button ref={axisRef} className={`${styles.cell} ${styles.axis}`} type='button' onMouseDown={(_e) => isDragging.current = true} onMouseUp={(_e) => isDragging.current = false} onMouseMove={(e) => handleAxisPanning(e.movementX)}>
+        {`Axis Unit: ${axisUnits[axisUnitIndex].label}`}
+      </Button>
     </div>
   )
 }
@@ -170,7 +197,7 @@ const TimelineBar: FC<{
       <Button
         type="button"
         className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected : ''}`}
-        style={{ width: `${width}%`, left: `${left}%` }}
+        style={{ width: `${width}%`, marginLeft: `${left}%` }}
         data-status={item.status}
         onClick={(_e) => setSelectedId(item.id)}
       ></Button>
@@ -207,7 +234,15 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
           <dt>Status</dt>
           <dd>{statusName(item.status)}</dd>
         </div>
+<div>
+          <dt>Start</dt>
+          <dd>{item.start}</dd>
+        </div>
         <div>
+<div>
+          <dt>End</dt>
+          <dd>{item.end}</dd>
+        </div>
           <dt>Duration</dt>
           <dd>{formatExecutionDuration(new Date(item.start), new Date(item.end))}</dd>
         </div>
