@@ -31,11 +31,11 @@ const axisUnits: unit[] = [
   { label: '1 hr', magnitude: 1 * 60 * 60 * 1000 },
 ]
 
-const pxPerUnit = 20
+const pxPerUnit = 2
+
 export const Timeline: FC = () => {
   const { groups, items, fullStart, fullEnd } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
-  // const [axisUnitIndex, setAxisUnitIndex] = useState(0);
   const [rowWidthPx, setRowWidthPx] = useState(0);
   
   const timelineWrapperRef = useRef<HTMLDivElement>(null)
@@ -46,17 +46,16 @@ export const Timeline: FC = () => {
 
   useEffect(() => {
     if (timelineWrapperRef.current) {
+      console.log(`${fullStart} loaded`)
       timelineWrapperRef.current.style.setProperty('--magnitude', axisUnits[axisUnitRef.current].magnitude.toString())
       timelineWrapperRef.current.style.setProperty('--axis-start', axisStartRef.current.toString())
     }
-  }, [])
+  }, [fullStart])
 
   return (
     <>
       <div className={styles.timelineWrapper} ref={timelineWrapperRef}>
         <TimelineAxis
-          // axisUnitIndex={axisUnitIndex}
-          // setAxisUnitIndex={setAxisUnitIndex}
           axisUnitRef={axisUnitRef}
           setRowWidthPx={setRowWidthPx}
           fullStart={fullStart}
@@ -110,7 +109,6 @@ const TimelineAxis: FC<{
   const axisRef = useRef<HTMLButtonElement>(null)
   const isDragging = useRef<boolean>(false);
 
-  // Setting Axis Start
   useEffect(() => {
 
     axisStartRef.current = fullStart;
@@ -169,23 +167,6 @@ const TimelineAxis: FC<{
     }
   }, [handleAxisZoom])
 
-
-  // useEffect(() => {
-  //   const element = axisRef.current
-  //   if (!element) {
-  //     return
-  //   }
-
-    
-
-  //   element.addEventListener('wheel', handleAxisZoom, { passive: false })
-
-  //   // useDebounce(handleAxisZoom, 1000)
-  //   return () => {
-  //     element.removeEventListener('wheel', handleAxisZoom)
-  //   }
-  // })
- 
 
   const handleAxisPanning = (deltaX: number) => {
     if(!isDragging.current || !timelineWrapperRef?.current) {
