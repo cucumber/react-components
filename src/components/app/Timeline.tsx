@@ -53,19 +53,19 @@ export const Timeline: FC = () => {
   const axisUnitRef = useRef<number>(0)
 
   const selectedItem = useMemo(() => {
-  if (!selectedId) {
-    return null
-  }
-  
-  for (const grp of groups) {
-    const found = grp.items.find(item => item.id === selectedId);
-    if (found) {
-      return found
+    if (!selectedId) {
+      return null
     }
-  }
-  
-  return null;
-}, [groups, selectedId]);
+
+    for (const grp of groups) {
+      const found = grp.items.find((item) => item.id === selectedId)
+      if (found) {
+        return found
+      }
+    }
+
+    return null
+  }, [groups, selectedId])
 
   useEffect(() => {
     if (timelineWrapperRef.current) {
@@ -96,18 +96,16 @@ export const Timeline: FC = () => {
               <div className={`${styles.cell} ${styles.leftCell}`}>{grp.label}</div>
 
               <div className={`${styles.timelineBarWrapper} ${styles.cell}`}>
-                {bucketItems(grp.items, axisUnits[axisUnitRef.current].magnitude).map(
-                  (itemIds) => {
-                    return (
-                      <TimelineBar
-                        key={grp.items[itemIds[0]].id}
-                        items={grp.items.slice(itemIds[0], itemIds[itemIds.length - 1] + 1)}
-                        selectedId={selectedId}
-                        setSelectedId={setSelectedId}
-                      ></TimelineBar>
-                    )
-                  }
-                )}
+                {bucketItems(grp.items, axisUnits[axisUnitRef.current].magnitude).map((itemIds) => {
+                  return (
+                    <TimelineBar
+                      key={grp.items[itemIds[0]].id}
+                      items={grp.items.slice(itemIds[0], itemIds[itemIds.length - 1] + 1)}
+                      selectedId={selectedId}
+                      setSelectedId={setSelectedId}
+                    ></TimelineBar>
+                  )
+                })}
               </div>
             </div>
           )
@@ -149,8 +147,14 @@ const TimelineAxis: FC<{
   }, [axisStartRef, fullStart, axisUnitRef, setCurrentUnitIndex])
 
   const checkAxisStartBounds = (magnitude: number) => {
-    axisStartRef.current = Math.min(fullEnd + AXIS_CONFIG.majorInterval * magnitude, axisStartRef.current)
-    axisStartRef.current = Math.max(fullStart - AXIS_CONFIG.majorInterval * magnitude, axisStartRef.current)
+    axisStartRef.current = Math.min(
+      fullEnd + AXIS_CONFIG.majorInterval * magnitude,
+      axisStartRef.current
+    )
+    axisStartRef.current = Math.max(
+      fullStart - AXIS_CONFIG.majorInterval * magnitude,
+      axisStartRef.current
+    )
   }
 
   const handleAxisZoom = useDebouncedCallback((deltaY: number) => {
@@ -164,17 +168,15 @@ const TimelineAxis: FC<{
         ? Math.min(axisUnits.length - 1, axisUnitRef.current + 1)
         : Math.max(0, axisUnitRef.current - 1)
 
-        
-        axisUnitRef.current = newIndex
-        timelineWrapperRef.current.style.setProperty(
-          '--magnitude',
-          axisUnits[newIndex].magnitude.toString()
-        )
-        
-        // Check axis start for new zoom level
-        checkAxisStartBounds(axisUnits[newIndex].magnitude)
-        timelineWrapperRef.current.style.setProperty('--axis-start', axisStartRef.current.toString())
-        
+    axisUnitRef.current = newIndex
+    timelineWrapperRef.current.style.setProperty(
+      '--magnitude',
+      axisUnits[newIndex].magnitude.toString()
+    )
+
+    // Check axis start for new zoom level
+    checkAxisStartBounds(axisUnits[newIndex].magnitude)
+    timelineWrapperRef.current.style.setProperty('--axis-start', axisStartRef.current.toString())
 
     setCurrentUnitIndex(newIndex)
   }, 100)
@@ -204,11 +206,10 @@ const TimelineAxis: FC<{
 
     const newStart =
       deltaX < 0
-        ? 
-            axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * AXIS_CONFIG.PANNING_SPEED
-        :
-            axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * AXIS_CONFIG.PANNING_SPEED
-
+        ? axisStartRef.current +
+          axisUnits[axisUnitRef.current].magnitude * AXIS_CONFIG.PANNING_SPEED
+        : axisStartRef.current -
+          axisUnits[axisUnitRef.current].magnitude * AXIS_CONFIG.PANNING_SPEED
 
     axisStartRef.current = newStart
     checkAxisStartBounds(axisUnits[axisUnitRef.current].magnitude)
@@ -258,7 +259,7 @@ const TimelineAxis: FC<{
             key={time}
             className={isMajor ? styles.majorTick : styles.minorTick}
             style={{
-              transform: `translateX(calc(((${time} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`
+              transform: `translateX(calc(((${time} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`,
             }}
           >
             {isMajor && <span className={styles.tickLabel}>{formatTime(time)}</span>}
@@ -287,7 +288,7 @@ const TimelineBar: FC<{
           style={{
             width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
             // marginLeft: `calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
-            transform: `translateX(calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`
+            transform: `translateX(calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`,
           }}
           data-status={status}
           onClick={() => setSelectedId(items.length === 1 ? items[0].id : undefined)}
@@ -359,7 +360,7 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
   )
 }
 
-function formatTime (time: number): string {
+function formatTime(time: number): string {
   const d = new Date(time)
   const formattedTime = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`
   return formattedTime
