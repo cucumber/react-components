@@ -38,14 +38,14 @@ const axisUnits: unit[] = [
   { label: `${1 * AXIS_CONFIG.minorInterval} hr`, magnitude: 1 * 60 * 60 * 1000 },
 ]
 export const Timeline: FC = () => {
-  const { groups, items, fullStart, fullEnd } = useTimelineData()
+  const { groups, fullStart, fullEnd } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
 
   const timelineWrapperRef = useRef<HTMLDivElement>(null)
   const axisStartRef = useRef<number>(fullStart)
   const axisUnitRef = useRef<number>(0)
 
-  const selectedItem = items.find((item) => item.id === selectedId)
+  let selectedItem: TimelineItem | null = null
 
   useEffect(() => {
     if (timelineWrapperRef.current) {
@@ -75,9 +75,9 @@ export const Timeline: FC = () => {
               <div className={`${styles.cell} ${styles.leftCell}`}>{grp.label}</div>
 
               <div className={`${styles.timelineBarWrapper} ${styles.cell}`}>
-                {items
-                  .filter((i) => i.groupId === grp.id)
+                {grp.items
                   .map((item) => {
+                    selectedItem = selectedId === item.id ? item: selectedItem
                     return (
                       <TimelineBar
                         key={item.id}

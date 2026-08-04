@@ -24,11 +24,11 @@ export interface TimelineItem {
 export interface TimelineGroup {
   readonly id: string
   readonly label: string
+  readonly items: TimelineItem[]
 }
 
 export interface TimelineData {
   readonly groups: readonly TimelineGroup[]
-  readonly items: readonly TimelineItem[]
   readonly fullStart: number
   readonly fullEnd: number
 }
@@ -40,8 +40,7 @@ export function useTimelineData(): TimelineData {
 
   const finishedTestCases = useFilteredTestCases()
   return useMemo(() => {
-    const items: TimelineItem[] = []
-    const groupIds = new Set<string>()
+    const groupMap: Record<string, TimelineGroup> = {}
     let fullStart: number = Number.MAX_SAFE_INTEGER
     let fullEnd: number = Number.MIN_SAFE_INTEGER
 
@@ -76,9 +75,9 @@ export function useTimelineData(): TimelineData {
       const scenario = pickle.name
 
       const groupId = testCaseStarted.workerId ?? UNASSIGNED_GROUP_ID
-      groupIds.add(groupId)
 
-      items.push({
+
+      const item = {
         id: testCaseStarted.id,
         groupId,
         groupLabel: describeGroup(groupId),
@@ -89,16 +88,23 @@ export function useTimelineData(): TimelineData {
         start: itemStart,
         end: itemEnd,
         testCaseStarted,
-      })
+      }
+
+      if(groupMap[groupId]) {
+        groupMap[groupId].items.push(item)
+      } else {
+        groupMap[groupId] = {id: groupId, label: describeGroup(groupId), items: [item]}
+      }
     }
 
-    items.sort((a, b) => a.start - b.start || a.end - b.end)
+    for(const grp of Object.values(groupMap)) {
+      grp.items.sort((a, b) => a.start - b.start || a.end - b.end)
+    }
 
-    const groups: TimelineGroup[] = [...groupIds]
-      .sort(compareGroupIds)
-      .map((id) => ({ id, label: describeGroup(id) }))
+    const groups: TimelineGroup[] = Object.values(groupMap);
+    groups.sort((a, b) => compareGroupIds(a.id, b.id))
 
-    return { groups, items, fullStart, fullEnd }
+    return { groups, fullStart, fullEnd }
   }, [cucumberQuery, finishedTestCases])
 }
 
