@@ -1,7 +1,8 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { type FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, OverlayArrow, Tooltip, TooltipTrigger } from 'react-aria-components'
+import { useDebouncedCallback } from 'use-debounce'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
 import { type TimelineItem, useTimelineData } from '../../hooks/useTimelineData.js'
 import { StatusIcon } from '../gherkin/StatusIcon.js'
@@ -9,35 +10,37 @@ import statusName from '../gherkin/statusName.js'
 import { Tags } from '../gherkin/Tags.js'
 import { TestCaseOutcome } from '../results/index.js'
 import styles from './Timeline.module.scss'
-import { useDebouncedCallback } from 'use-debounce'
 
 type unit = {
   label: string
   magnitude: number
 }
 
-const axisUnits: unit[] = [
-  { label: '1 ms', magnitude: 1 },
-  { label: '10 ms', magnitude: 10 },
-  { label: '50 ms', magnitude: 50 },
-  { label: '100 ms', magnitude: 100 },
-  { label: '500 ms', magnitude: 500 },
-  { label: '1 s', magnitude: 1 * 1000 },
-  { label: '10 s', magnitude: 10 * 1000 },
-  { label: '30 s', magnitude: 30 * 1000 },
-  { label: '1 min', magnitude: 1 * 60 * 1000 },
-  { label: '10 min', magnitude: 10 * 60 * 1000 },
-  { label: '30 min', magnitude: 30 * 60 * 1000 },
-  { label: '1 hr', magnitude: 1 * 60 * 60 * 1000 },
-]
-
 const pxPerUnit = 2
 
+const AXIS_CONFIG = {
+  minorInterval: 5, // Minor tick every N × magnitude ms
+  majorInterval: 50, // Major tick every N × magnitude ms (must be a multiple of minorInterval)
+}
+
+const axisUnits: unit[] = [
+  { label: `${1 * AXIS_CONFIG.minorInterval} ms`, magnitude: 1 },
+  { label: `${10 * AXIS_CONFIG.minorInterval} ms`, magnitude: 10 },
+  { label: `${50 * AXIS_CONFIG.minorInterval} ms`, magnitude: 50 },
+  { label: `${100 * AXIS_CONFIG.minorInterval} ms`, magnitude: 100 },
+  { label: `${500 * AXIS_CONFIG.minorInterval} ms`, magnitude: 500 },
+  { label: `${1 * AXIS_CONFIG.minorInterval} s`, magnitude: 1 * 1000 },
+  { label: `${10 * AXIS_CONFIG.minorInterval} s`, magnitude: 10 * 1000 },
+  { label: `${30 * AXIS_CONFIG.minorInterval} s`, magnitude: 30 * 1000 },
+  { label: `${1 * AXIS_CONFIG.minorInterval} min`, magnitude: 1 * 60 * 1000 },
+  { label: `${10 * AXIS_CONFIG.minorInterval} min`, magnitude: 10 * 60 * 1000 },
+  { label: `${30 * AXIS_CONFIG.minorInterval} min`, magnitude: 30 * 60 * 1000 },
+  { label: `${1 * AXIS_CONFIG.minorInterval} hr`, magnitude: 1 * 60 * 60 * 1000 },
+]
 export const Timeline: FC = () => {
   const { groups, items, fullStart, fullEnd } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
-  const [rowWidthPx, setRowWidthPx] = useState(0);
-  
+
   const timelineWrapperRef = useRef<HTMLDivElement>(null)
   const axisStartRef = useRef<number>(fullStart)
   const axisUnitRef = useRef<number>(0)
@@ -47,7 +50,10 @@ export const Timeline: FC = () => {
   useEffect(() => {
     if (timelineWrapperRef.current) {
       console.log(`${fullStart} loaded`)
-      timelineWrapperRef.current.style.setProperty('--magnitude', axisUnits[axisUnitRef.current].magnitude.toString())
+      timelineWrapperRef.current.style.setProperty(
+        '--magnitude',
+        axisUnits[axisUnitRef.current].magnitude.toString()
+      )
       timelineWrapperRef.current.style.setProperty('--axis-start', axisStartRef.current.toString())
     }
   }, [fullStart])
@@ -57,7 +63,6 @@ export const Timeline: FC = () => {
       <div className={styles.timelineWrapper} ref={timelineWrapperRef}>
         <TimelineAxis
           axisUnitRef={axisUnitRef}
-          setRowWidthPx={setRowWidthPx}
           fullStart={fullStart}
           fullEnd={fullEnd}
           timelineWrapperRef={timelineWrapperRef}
@@ -67,16 +72,12 @@ export const Timeline: FC = () => {
         {groups.map((grp) => {
           return (
             <div key={grp.id} className={styles.timelineRow}>
-              <div className={`${styles.cell} ${styles.workerCell}`}>{grp.label}</div>
+              <div className={`${styles.cell} ${styles.leftCell}`}>{grp.label}</div>
 
-              
-              <div className={`${styles.workerRow} ${styles.cell}`}>
+              <div className={`${styles.timelineBarWrapper} ${styles.cell}`}>
                 {items
                   .filter((i) => i.groupId === grp.id)
                   .map((item) => {
-                    if (rowWidthPx === 0) {
-                      return null
-                    }
                     return (
                       <TimelineBar
                         key={item.id}
@@ -99,54 +100,40 @@ export const Timeline: FC = () => {
 }
 
 const TimelineAxis: FC<{
-  setRowWidthPx: React.Dispatch<React.SetStateAction<number>>
   fullStart: number
   fullEnd: number
   axisStartRef: React.RefObject<number>
   timelineWrapperRef: React.RefObject<HTMLDivElement | null>
   axisUnitRef: React.RefObject<number>
-}> = ({ setRowWidthPx, fullStart, fullEnd, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
+}> = ({ fullStart, fullEnd, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
+  const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
+
   const axisRef = useRef<HTMLButtonElement>(null)
-  const isDragging = useRef<boolean>(false);
+  const isDragging = useRef<boolean>(false)
 
   useEffect(() => {
+    axisStartRef.current = fullStart
+    axisUnitRef.current = 0
+    setCurrentUnitIndex(0)
+  }, [axisStartRef, fullStart, axisUnitRef])
 
-    axisStartRef.current = fullStart;
-    axisUnitRef.current = 0;
-
-    const element = axisRef.current
-    if (!element) {
-      return
-    }
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setRowWidthPx(entry.contentRect.width)
-      }
-    })
-
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [setRowWidthPx, axisStartRef, fullStart, axisUnitRef])
-
-  // Regisetering Handle Zoom Callback
   const handleAxisZoom = useDebouncedCallback((deltaY: number) => {
-    if(!timelineWrapperRef?.current || !axisRef.current) {
-      return;
+    if (!timelineWrapperRef?.current) {
+      return
     }
     const zoomDirection = deltaY < 0 ? -1 : 1
 
-    let newAxisUnitIndex = 0;
-    if (zoomDirection === 1) {
-      newAxisUnitIndex = Math.min(axisUnits.length - 1, axisUnitRef.current + 1)
-    } else {
-      newAxisUnitIndex = Math.max(0, axisUnitRef.current - 1)
-    }
+    const newIndex =
+      zoomDirection === 1
+        ? Math.min(axisUnits.length - 1, axisUnitRef.current + 1)
+        : Math.max(0, axisUnitRef.current - 1)
 
-    axisUnitRef.current = newAxisUnitIndex;
-
-    axisRef.current.textContent = `Axis Unit: ${axisUnits[newAxisUnitIndex].label}`
-    timelineWrapperRef.current.style.setProperty('--magnitude', axisUnits[newAxisUnitIndex].magnitude.toString());
+    axisUnitRef.current = newIndex
+    timelineWrapperRef.current.style.setProperty(
+      '--magnitude',
+      axisUnits[newIndex].magnitude.toString()
+    )
+    setCurrentUnitIndex(newIndex)
   }, 100)
 
   useEffect(() => {
@@ -167,28 +154,68 @@ const TimelineAxis: FC<{
     }
   }, [handleAxisZoom])
 
-
   const handleAxisPanning = (deltaX: number) => {
-    if(!isDragging.current || !timelineWrapperRef?.current) {
-      return;
-    }
-    
-    let newStart = 0;
-    if(deltaX < 0) {
-      newStart = Math.min(fullEnd, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude)
-    } else {
-      newStart = Math.max(fullStart, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude)
+    if (!isDragging.current || !timelineWrapperRef?.current) {
+      return
     }
 
-    axisStartRef.current = newStart;
-    timelineWrapperRef.current.style.setProperty('--axis-start', newStart.toString());
-  } 
+    const newStart =
+      deltaX < 0
+        ? Math.min(fullEnd, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * 5)
+        : Math.max(fullStart, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * 5)
+
+    axisStartRef.current = newStart
+    timelineWrapperRef.current.style.setProperty('--axis-start', newStart.toString())
+  }
+
+  const ticks = useMemo(() => {
+    const magnitude = axisUnits[currentUnitIndex].magnitude
+    const minorInterval = AXIS_CONFIG.minorInterval * magnitude
+    const minorStepsPerMajor = AXIS_CONFIG.majorInterval / AXIS_CONFIG.minorInterval
+
+    const firstK = Math.floor(fullStart / minorInterval)
+    const lastK = Math.ceil(fullEnd / minorInterval)
+
+    const result: Array<{ time: number; isMajor: boolean }> = []
+    for (let k = firstK; k <= lastK; k++) {
+      const time = k * minorInterval
+      const isMajor = k % minorStepsPerMajor === 0
+      result.push({ time, isMajor })
+    }
+    return result
+  }, [currentUnitIndex, fullStart, fullEnd])
 
   return (
     <div className={styles.timelineRow}>
-      <div className={`${styles.cell} ${styles.workerCell}`}></div>
-      <Button ref={axisRef} className={`${styles.cell} ${styles.axis}`} type='button' onMouseDown={(_e) => isDragging.current = true} onMouseUp={(_e) => isDragging.current = false} onMouseMove={(e) => handleAxisPanning(e.movementX)}>
-        {`Axis Unit: ${axisUnits[axisUnitRef.current].label}`}
+      <div className={`${styles.cell} ${styles.leftCell}`}>
+        <span className={styles.axisUnit}>{axisUnits[currentUnitIndex].label}</span>
+      </div>
+
+      <Button
+        ref={axisRef}
+        className={`${styles.cell} ${styles.axisRuler}`}
+        onMouseDown={() => {
+          isDragging.current = true
+        }}
+        onMouseUp={() => {
+          isDragging.current = false
+        }}
+        onMouseLeave={() => {
+          isDragging.current = false
+        }}
+        onMouseMove={(e) => handleAxisPanning(e.movementX)}
+      >
+        {ticks.map(({ time, isMajor }) => (
+          <div
+            key={time}
+            className={isMajor ? styles.majorTick : styles.minorTick}
+            style={{
+              left: `calc(((${time} - var(--axis-start)) / var(--magnitude)) * ${pxPerUnit} * 1px)`,
+            }}
+          >
+            {isMajor && <span className={styles.tickLabel}>{formatTime(time)}</span>}
+          </div>
+        ))}
       </Button>
     </div>
   )
@@ -204,9 +231,12 @@ const TimelineBar: FC<{
       <Button
         type="button"
         className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected : ''}`}
-        style={{ width: `calc( ( (${item.end - item.start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`, marginLeft: `calc(((${item.start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)` }}
+        style={{
+          width: `calc( ( (${item.end - item.start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+          marginLeft: `calc(((${item.start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+        }}
         data-status={item.status}
-        onClick={(_e) => setSelectedId(item.id)} 
+        onClick={(_e) => setSelectedId(item.id)}
       ></Button>
       <Tooltip>
         <OverlayArrow className={styles.OverlayArrow}>
@@ -241,15 +271,15 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
           <dt>Status</dt>
           <dd>{statusName(item.status)}</dd>
         </div>
-<div>
+        <div>
           <dt>Start</dt>
           <dd>{item.start}</dd>
         </div>
         <div>
-<div>
-          <dt>End</dt>
-          <dd>{item.end}</dd>
-        </div>
+          <div>
+            <dt>End</dt>
+            <dd>{item.end}</dd>
+          </div>
           <dt>Duration</dt>
           <dd>{formatExecutionDuration(new Date(item.start), new Date(item.end))}</dd>
         </div>
@@ -261,4 +291,10 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
       <TestCaseOutcome testCaseStarted={item.testCaseStarted} />
     </div>
   )
+}
+
+function formatTime(time: number): string {
+  const d = new Date(time)
+  const formattedTime = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`
+  return formattedTime
 }
