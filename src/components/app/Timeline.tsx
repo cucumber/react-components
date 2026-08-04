@@ -81,7 +81,7 @@ export const Timeline: FC = () => {
                     return (
                       <TimelineBar
                         key={item.id}
-                        item={item}
+                        items={[item]}
                         selectedId={selectedId}
                         setSelectedId={setSelectedId}
                       ></TimelineBar>
@@ -161,8 +161,8 @@ const TimelineAxis: FC<{
 
     const newStart =
       deltaX < 0
-        ? Math.min(fullEnd, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * 5)
-        : Math.max(fullStart, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * 5)
+        ? Math.min(fullEnd + AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * 5)
+        : Math.max(fullStart - AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * 5)
 
     axisStartRef.current = newStart
     timelineWrapperRef.current.style.setProperty('--axis-start', newStart.toString())
@@ -222,33 +222,41 @@ const TimelineAxis: FC<{
 }
 
 const TimelineBar: FC<{
-  item: TimelineItem
+  items: TimelineItem[]
   selectedId: string | undefined
-  setSelectedId: (id: string) => void
-}> = ({ item, selectedId, setSelectedId }) => {
-  return (
-    <TooltipTrigger key={item.id} delay={500}>
+  setSelectedId: (id: string | undefined) => void
+}> = ({ items, selectedId, setSelectedId }) => {
+
+  const start = items.reduce((acc, item) => Math.min(acc, item.start) , Number.MAX_SAFE_INTEGER)
+  const end = items.reduce((acc, item) => Math.max(acc, item.end) , Number.MIN_SAFE_INTEGER)
+  const status = items.length === 1 ? items[0].status: 'undefined'
+
+  return items.length && (
+    <TooltipTrigger delay={500}>
       <Button
         type="button"
-        className={`${styles.timelineBar} ${item.id === selectedId ? styles.selected : ''}`}
+        className={`${styles.timelineBar} ${items.some(item => item.id === selectedId) ? styles.selected : ''}`}
         style={{
-          width: `calc( ( (${item.end - item.start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
-          marginLeft: `calc(((${item.start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+          width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+          marginLeft: `calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
         }}
-        data-status={item.status}
-        onClick={(_e) => setSelectedId(item.id)}
+        data-status={status}
+        onClick={(_e) => setSelectedId(items.length === 1? items[0].id: undefined)}
       ></Button>
       <Tooltip>
         <OverlayArrow className={styles.OverlayArrow}>
           <svg width={8} height={8} viewBox="0 0 8 8">
-            <title>Tooltip Arrow</title>
+            <title>Tooltip Arrow</title> 
             <path d="M0 0 L4 4 L8 0" />
           </svg>
         </OverlayArrow>
-        <span>
-          <StatusIcon status={item.status} />
-        </span>
-        <span>{item.scenario}</span>
+          {items.map(item => {
+              return <button key={item.id} type='button' onClick={(_e) => setSelectedId(item.id)} className={styles.tooltipBtn}>
+              <span>
+              <StatusIcon status={item.status} />
+            </span>
+            <span>{item.scenario}</span> </button>
+          })}
       </Tooltip>
     </TooltipTrigger>
   )
@@ -273,12 +281,12 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
         </div>
         <div>
           <dt>Start</dt>
-          <dd>{item.start}</dd>
+          <dd>{formatTime(item.start)}</dd>
         </div>
         <div>
           <div>
             <dt>End</dt>
-            <dd>{item.end}</dd>
+            <dd>{formatTime(item.end)}</dd>
           </div>
           <dt>Duration</dt>
           <dd>{formatExecutionDuration(new Date(item.start), new Date(item.end))}</dd>
