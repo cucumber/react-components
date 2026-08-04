@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type FC, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, OverlayArrow, Tooltip, TooltipTrigger } from 'react-aria-components'
+import { Button, Tooltip, TooltipTrigger } from 'react-aria-components'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatExecutionDuration } from '../../formatExecutionDuration.js'
 import { type TimelineItem, useTimelineData } from '../../hooks/useTimelineData.js'
@@ -293,12 +293,6 @@ const TimelineBar: FC<{
           onClick={() => setSelectedId(items.length === 1 ? items[0].id : undefined)}
         ></Button>
         <Tooltip>
-          <OverlayArrow className={styles.OverlayArrow}>
-            <svg width={8} height={8} viewBox="0 0 8 8">
-              <title>Tooltip Arrow</title>
-              <path d="M0 0 L4 4 L8 0" />
-            </svg>
-          </OverlayArrow>
           {items.map((item) => {
             return (
               <button
