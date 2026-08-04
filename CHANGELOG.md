@@ -586,4 +586,4 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 
 ## [Unreleased]
 ### Added
-- Add `<Timeline/>` component showing scenario execution over time grouped by worker ported from cucumber-jvm's TimelineFormatter ([#126](https://github.com/cucumber/react-components/issues/126))
+- Added `<Timeline/>` component showing scenario execution over time grouped by worker ([#126](https://github.com/cucumber/react-components/issues/126))

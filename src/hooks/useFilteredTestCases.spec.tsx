@@ -5,7 +5,6 @@ import { expect } from 'chai'
 import attachments from '../../acceptance/attachments/attachments.js'
 import backgrounds from '../../acceptance/backgrounds/backgrounds.js'
 import hooksConditional from '../../acceptance/hooks-conditional/hooks-conditional.js'
-import parallel from '../../acceptance/parallel/parallel.js'
 import retry from '../../acceptance/retry/retry.js'
 import rules from '../../acceptance/rules/rules.js'
 import { EnvelopesProvider } from '../components/app/EnvelopesProvider.js'
@@ -40,9 +39,8 @@ function renderAndExtractPickleNames({
 describe('useFilteredTestCases', () => {
   describe('with no filters', () => {
     it('returns a test case for every finished scenario', async () => {
-      // const { result } = renderAndExtractPickleNames({ envelopes: hooksConditional })
+      const { result } = renderAndExtractPickleNames({ envelopes: hooksConditional })
 
-      const { result } = renderAndExtractPickleNames({ envelopes: parallel })
       await waitFor(() =>
         expect(result.current).to.have.members([
           'A failure in the before hook and a skipped step',
