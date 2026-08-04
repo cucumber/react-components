@@ -62,7 +62,7 @@ export function useTimelineData(): TimelineData {
       if (itemStart < fullStart) {
         fullStart = itemStart
       }
-      if (fullEnd === undefined || itemEnd > fullEnd) {
+      if (itemEnd > fullEnd) {
         fullEnd = itemEnd
       }
 
