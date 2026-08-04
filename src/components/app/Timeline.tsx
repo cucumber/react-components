@@ -78,10 +78,12 @@ export const Timeline: FC = () => {
               <div className={`${styles.cell} ${styles.leftCell}`}>{grp.label}</div>
 
               <div className={`${styles.timelineBarWrapper} ${styles.cell}`}>
-                {bucketItems(grp.items, axisUnits[axisUnitRef.current ?? 0].magnitude)
-                  .map((itemIds) => {
+                {bucketItems(grp.items, axisUnits[axisUnitRef.current ?? 0].magnitude).map(
+                  (itemIds) => {
                     // selectedItem = selectedId === itemIds.id ? item: selectedItem
-                    itemIds.forEach((id) => {selectedItem = grp.items[id].id === selectedId ? grp.items[id]: selectedItem} )
+                    itemIds.forEach((id) => {
+                      selectedItem = grp.items[id].id === selectedId ? grp.items[id] : selectedItem
+                    })
                     return (
                       <TimelineBar
                         key={grp.items[itemIds[0]].id}
@@ -90,7 +92,8 @@ export const Timeline: FC = () => {
                         setSelectedId={setSelectedId}
                       ></TimelineBar>
                     )
-                  })}
+                  }
+                )}
               </div>
             </div>
           )
@@ -111,7 +114,15 @@ const TimelineAxis: FC<{
   axisStartRef: React.RefObject<number>
   timelineWrapperRef: React.RefObject<HTMLDivElement | null>
   axisUnitRef: React.RefObject<number>
-}> = ({ fullStart, fullEnd, currentUnitIndex, setCurrentUnitIndex, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
+}> = ({
+  fullStart,
+  fullEnd,
+  currentUnitIndex,
+  setCurrentUnitIndex,
+  axisStartRef,
+  timelineWrapperRef,
+  axisUnitRef,
+}) => {
   // const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
 
   const axisRef = useRef<HTMLButtonElement>(null)
@@ -167,8 +178,14 @@ const TimelineAxis: FC<{
 
     const newStart =
       deltaX < 0
-        ? Math.min(fullEnd + AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude, axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * 5)
-        : Math.max(fullStart - AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude, axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * 5)
+        ? Math.min(
+            fullEnd + AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude,
+            axisStartRef.current + axisUnits[axisUnitRef.current].magnitude * 5
+          )
+        : Math.max(
+            fullStart - AXIS_CONFIG.majorInterval * axisUnits[axisUnitRef.current].magnitude,
+            axisStartRef.current - axisUnits[axisUnitRef.current].magnitude * 5
+          )
 
     axisStartRef.current = newStart
     timelineWrapperRef.current.style.setProperty('--axis-start', newStart.toString())
@@ -232,39 +249,48 @@ const TimelineBar: FC<{
   selectedId: string | undefined
   setSelectedId: (id: string | undefined) => void
 }> = ({ items, selectedId, setSelectedId }) => {
+  const start = items.reduce((acc, item) => Math.min(acc, item.start), Number.MAX_SAFE_INTEGER)
+  const end = items.reduce((acc, item) => Math.max(acc, item.end), Number.MIN_SAFE_INTEGER)
+  const status = items.length === 1 ? items[0].status : 'UNKNOWN'
 
-  const start = items.reduce((acc, item) => Math.min(acc, item.start) , Number.MAX_SAFE_INTEGER)
-  const end = items.reduce((acc, item) => Math.max(acc, item.end) , Number.MIN_SAFE_INTEGER)
-  const status = items.length === 1 ? items[0].status: 'UNKNOWN'
-
-  return items.length && (
-    <TooltipTrigger delay={500}>
-      <Button
-        type="button"
-        className={`${styles.timelineBar} ${items.some(item => item.id === selectedId) ? styles.selected : ''}`}
-        style={{
-          width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
-          marginLeft: `calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
-        }}
-        data-status={status}
-        onClick={(_e) => setSelectedId(items.length === 1? items[0].id: undefined)}
-      ></Button>
-      <Tooltip>
-        <OverlayArrow className={styles.OverlayArrow}>
-          <svg width={8} height={8} viewBox="0 0 8 8">
-            <title>Tooltip Arrow</title> 
-            <path d="M0 0 L4 4 L8 0" />
-          </svg>
-        </OverlayArrow>
-          {items.map(item => {
-              return <button key={item.id} type='button' onClick={(_e) => setSelectedId(item.id)} className={styles.tooltipBtn}>
-              <span>
-              <StatusIcon status={item.status} />
-            </span>
-            <span>{item.scenario}</span> </button>
+  return (
+    items.length && (
+      <TooltipTrigger delay={500}>
+        <Button
+          type="button"
+          className={`${styles.timelineBar} ${items.some((item) => item.id === selectedId) ? styles.selected : ''}`}
+          style={{
+            width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+            marginLeft: `calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+          }}
+          data-status={status}
+          onClick={(_e) => setSelectedId(items.length === 1 ? items[0].id : undefined)}
+        ></Button>
+        <Tooltip>
+          <OverlayArrow className={styles.OverlayArrow}>
+            <svg width={8} height={8} viewBox="0 0 8 8">
+              <title>Tooltip Arrow</title>
+              <path d="M0 0 L4 4 L8 0" />
+            </svg>
+          </OverlayArrow>
+          {items.map((item) => {
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={(_e) => setSelectedId(item.id)}
+                className={styles.tooltipBtn}
+              >
+                <span>
+                  <StatusIcon status={item.status} />
+                </span>
+                <span>{item.scenario}</span>{' '}
+              </button>
+            )
           })}
-      </Tooltip>
-    </TooltipTrigger>
+        </Tooltip>
+      </TooltipTrigger>
+    )
   )
 }
 
@@ -314,10 +340,10 @@ function formatTime(time: number): string {
 }
 
 function bucketItems(items: TimelineItem[], minDuration: number) {
-  const result: number[][] = [];
+  const result: number[][] = []
 
   let i = 0
-  while(i < items.length) {
+  while (i < items.length) {
     const bucket: number[] = []
     let bucketDuration = 0
 
@@ -325,14 +351,13 @@ function bucketItems(items: TimelineItem[], minDuration: number) {
       bucket.push(i)
       bucketDuration += items[i].end - items[i].start + 1
       i++
-    } while(i < items.length && bucketDuration < minDuration)
+    } while (i < items.length && bucketDuration < minDuration)
 
-
-    if(bucketDuration >= minDuration) {
+    if (bucketDuration >= minDuration) {
       result.push(bucket)
     } else {
       // Try merging with left
-      if(result.length > 0) {
+      if (result.length > 0) {
         result[result.length - 1].push(...bucket)
       } else {
         // No adjacent bucket exist
@@ -341,5 +366,5 @@ function bucketItems(items: TimelineItem[], minDuration: number) {
     }
   }
 
-  return result;
+  return result
 }

@@ -76,7 +76,6 @@ export function useTimelineData(): TimelineData {
 
       const groupId = testCaseStarted.workerId ?? UNASSIGNED_GROUP_ID
 
-
       const item = {
         id: testCaseStarted.id,
         groupId,
@@ -90,18 +89,18 @@ export function useTimelineData(): TimelineData {
         testCaseStarted,
       }
 
-      if(groupMap[groupId]) {
+      if (groupMap[groupId]) {
         groupMap[groupId].items.push(item)
       } else {
-        groupMap[groupId] = {id: groupId, label: describeGroup(groupId), items: [item]}
+        groupMap[groupId] = { id: groupId, label: describeGroup(groupId), items: [item] }
       }
     }
 
-    for(const grp of Object.values(groupMap)) {
+    for (const grp of Object.values(groupMap)) {
       grp.items.sort((a, b) => a.start - b.start || a.end - b.end)
     }
 
-    const groups: TimelineGroup[] = Object.values(groupMap);
+    const groups: TimelineGroup[] = Object.values(groupMap)
     groups.sort((a, b) => compareGroupIds(a.id, b.id))
 
     return { groups, fullStart, fullEnd }
