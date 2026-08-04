@@ -80,6 +80,9 @@
 
 // Tooltip card
 :global(.react-aria-Tooltip) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background-color: theming.$panelBackgroundColor;
   color: theming.$panelTextColor;
   border: 1px solid theming.$panelAccentColor;
@@ -87,12 +90,16 @@
   padding: 0.4em 0.6em;
   font-size: inherit;
   font-family: inherit;
-  display: flex;
   align-items: center;
   gap: 0.4em;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   max-width: 20em;
   margin-bottom: 0.7em;
+}
+
+.tooltipBtn {
+  border: none;
+  background: none;
 }
 
 // Arrow styling
@@ -132,8 +139,6 @@
   height: 30%;
   background-color: theming.$panelAccentColor;
   pointer-events: none;
-  // Centre the 1 px line on the computed left position
-  transform: translateX(-50%);
 }
 
 .majorTick {
@@ -142,7 +147,6 @@
   width: 2px;
   height: 55%;
   background-color: theming.$exampleNumberColor;
-  transform: translateX(-50%);
   pointer-events: none;
 }
 
