@@ -40,6 +40,7 @@ const axisUnits: unit[] = [
 export const Timeline: FC = () => {
   const { groups, fullStart, fullEnd } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
+  const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
 
   const timelineWrapperRef = useRef<HTMLDivElement>(null)
   const axisStartRef = useRef<number>(fullStart)
@@ -65,6 +66,8 @@ export const Timeline: FC = () => {
           axisUnitRef={axisUnitRef}
           fullStart={fullStart}
           fullEnd={fullEnd}
+          currentUnitIndex={currentUnitIndex}
+          setCurrentUnitIndex={setCurrentUnitIndex}
           timelineWrapperRef={timelineWrapperRef}
           axisStartRef={axisStartRef}
         ></TimelineAxis>
@@ -75,13 +78,14 @@ export const Timeline: FC = () => {
               <div className={`${styles.cell} ${styles.leftCell}`}>{grp.label}</div>
 
               <div className={`${styles.timelineBarWrapper} ${styles.cell}`}>
-                {grp.items
-                  .map((item) => {
-                    selectedItem = selectedId === item.id ? item: selectedItem
+                {bucketItems(grp.items, axisUnits[axisUnitRef.current ?? 0].magnitude)
+                  .map((itemIds) => {
+                    // selectedItem = selectedId === itemIds.id ? item: selectedItem
+                    itemIds.forEach((id) => {selectedItem = grp.items[id].id === selectedId ? grp.items[id]: selectedItem} )
                     return (
                       <TimelineBar
-                        key={item.id}
-                        items={[item]}
+                        key={grp.items[itemIds[0]].id}
+                        items={grp.items.slice(itemIds[0], itemIds[itemIds.length - 1] + 1)}
                         selectedId={selectedId}
                         setSelectedId={setSelectedId}
                       ></TimelineBar>
@@ -102,11 +106,13 @@ export const Timeline: FC = () => {
 const TimelineAxis: FC<{
   fullStart: number
   fullEnd: number
+  currentUnitIndex: number
+  setCurrentUnitIndex: React.Dispatch<React.SetStateAction<number>>
   axisStartRef: React.RefObject<number>
   timelineWrapperRef: React.RefObject<HTMLDivElement | null>
   axisUnitRef: React.RefObject<number>
-}> = ({ fullStart, fullEnd, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
-  const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
+}> = ({ fullStart, fullEnd, currentUnitIndex, setCurrentUnitIndex, axisStartRef, timelineWrapperRef, axisUnitRef }) => {
+  // const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
 
   const axisRef = useRef<HTMLButtonElement>(null)
   const isDragging = useRef<boolean>(false)
@@ -115,7 +121,7 @@ const TimelineAxis: FC<{
     axisStartRef.current = fullStart
     axisUnitRef.current = 0
     setCurrentUnitIndex(0)
-  }, [axisStartRef, fullStart, axisUnitRef])
+  }, [axisStartRef, fullStart, axisUnitRef, setCurrentUnitIndex])
 
   const handleAxisZoom = useDebouncedCallback((deltaY: number) => {
     if (!timelineWrapperRef?.current) {
@@ -229,7 +235,7 @@ const TimelineBar: FC<{
 
   const start = items.reduce((acc, item) => Math.min(acc, item.start) , Number.MAX_SAFE_INTEGER)
   const end = items.reduce((acc, item) => Math.max(acc, item.end) , Number.MIN_SAFE_INTEGER)
-  const status = items.length === 1 ? items[0].status: 'undefined'
+  const status = items.length === 1 ? items[0].status: 'UNKNOWN'
 
   return items.length && (
     <TooltipTrigger delay={500}>
@@ -305,4 +311,35 @@ function formatTime(time: number): string {
   const d = new Date(time)
   const formattedTime = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`
   return formattedTime
+}
+
+function bucketItems(items: TimelineItem[], minDuration: number) {
+  const result: number[][] = [];
+
+  let i = 0
+  while(i < items.length) {
+    const bucket: number[] = []
+    let bucketDuration = 0
+
+    do {
+      bucket.push(i)
+      bucketDuration += items[i].end - items[i].start + 1
+      i++
+    } while(i < items.length && bucketDuration < minDuration)
+
+
+    if(bucketDuration >= minDuration) {
+      result.push(bucket)
+    } else {
+      // Try merging with left
+      if(result.length > 0) {
+        result[result.length - 1].push(...bucket)
+      } else {
+        // No adjacent bucket exist
+        result.push(bucket)
+      }
+    }
+  }
+
+  return result;
 }
