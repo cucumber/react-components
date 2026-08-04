@@ -27,7 +27,6 @@ export function useFilteredTestCases(): {
       }),
     [allTestCasesFinished, cucumberQuery, hideStatuses, tagExpression]
   )
-  console.log(candidates[0])
   const searchResult = useSearchResult()
   const [results, setResults] = useState<ReadonlyArray<ExpandedTestCase<TestCaseFinished>>>()
 
