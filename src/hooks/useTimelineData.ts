@@ -7,7 +7,6 @@ import {
 import { useMemo } from 'react'
 import { useFilteredTestCases } from './useFilteredTestCases.js'
 import { useQueries } from './useQueries.js'
-import { useSearch } from './useSearch.js'
 
 export interface TimelineItem {
   readonly id: string
@@ -32,24 +31,20 @@ export interface TimelineData {
   readonly items: readonly TimelineItem[]
   readonly fullStart: number
   readonly fullEnd: number
-  readonly filtered: boolean
 }
 
 const UNASSIGNED_GROUP_ID = ''
 
 export function useTimelineData(): TimelineData {
   const { cucumberQuery } = useQueries()
-  const { hideStatuses, tagExpression, searchTerm, unchanged } = useSearch()
 
   const finishedTestCases = useFilteredTestCases()
   return useMemo(() => {
     const items: TimelineItem[] = []
     const groupIds = new Set<string>()
-    // const normalizedSearchTerm = searchTerm?.trim().toLowerCase()
-    let fullStart: number = Number.MAX_SAFE_INTEGER;
-    let fullEnd: number = Number.MIN_SAFE_INTEGER;
+    let fullStart: number = Number.MAX_SAFE_INTEGER
+    let fullEnd: number = Number.MIN_SAFE_INTEGER
 
-    // for (const testCaseFinished of cucumberQuery.findAllTestCaseFinished()) {
     for (const testCaseFinished of finishedTestCases) {
       const testCaseStarted = cucumberQuery.findTestCaseStartedBy(testCaseFinished.testCaseEvent)
       if (!testCaseStarted) {
@@ -77,26 +72,8 @@ export function useTimelineData(): TimelineData {
         cucumberQuery.findMostSevereTestStepResultBy(testCaseFinished.testCaseEvent)?.status ??
         TestStepResultStatus.PASSED
 
-      // if (hideStatuses.includes(status)) {
-      //   continue
-      // }
-
-      // if (tagExpression) {
-      //   const tagNames = pickle.tags.map((tag) => tag.name)
-      //   if (!tagExpression.evaluate(tagNames)) {
-      //     continue
-      //   }
-      // }
-
       const feature = testCaseFinished.lineage.feature?.name ?? ''
       const scenario = pickle.name
-
-      // if (
-      //   normalizedSearchTerm &&
-      //   !`${feature} ${scenario}`.toLowerCase().includes(normalizedSearchTerm)
-      // ) {
-      //   continue
-      // }
 
       const groupId = testCaseStarted.workerId ?? UNASSIGNED_GROUP_ID
       groupIds.add(groupId)
@@ -121,8 +98,8 @@ export function useTimelineData(): TimelineData {
       .sort(compareGroupIds)
       .map((id) => ({ id, label: describeGroup(id) }))
 
-    return { groups, items, fullStart, fullEnd, filtered: !unchanged }
-  }, [cucumberQuery, unchanged, finishedTestCases])
+    return { groups, items, fullStart, fullEnd }
+  }, [cucumberQuery, finishedTestCases])
 }
 
 function describeGroup(id: string): string {
