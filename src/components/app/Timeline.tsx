@@ -287,7 +287,6 @@ const TimelineBar: FC<{
           className={`${styles.timelineBar} ${items.some((item) => item.id === selectedId) ? styles.selected : ''}`}
           style={{
             width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
-            // marginLeft: `calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px)`,
             transform: `translateX(calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`,
           }}
           data-status={status}
@@ -343,10 +342,10 @@ const TimelineDetail: FC<{ item: TimelineItem; onClose: () => void }> = ({ item,
           <dd>{formatTime(item.start)}</dd>
         </div>
         <div>
-          <div>
-            <dt>End</dt>
-            <dd>{formatTime(item.end)}</dd>
-          </div>
+          <dt>End</dt>
+          <dd>{formatTime(item.end)}</dd>
+        </div>
+        <div>
           <dt>Duration</dt>
           <dd>{formatExecutionDuration(new Date(item.start), new Date(item.end))}</dd>
         </div>
