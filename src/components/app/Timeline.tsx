@@ -286,7 +286,7 @@ const TimelineBar: FC<{
           type="button"
           className={`${styles.timelineBar} ${items.some((item) => item.id === selectedId) ? styles.selected : ''}`}
           style={{
-            width: `calc( ( (${end - start + 1}) / var(--magnitude)) *${pxPerUnit} * 1px)`,
+            width: `calc( (max(${end - start}, var(--magnitude)) / var(--magnitude)) * ${pxPerUnit} * 1px)`,
             transform: `translateX(calc(((${start} - var(--axis-start)) / var(--magnitude)) *${pxPerUnit} * 1px))`,
           }}
           data-status={status}
@@ -366,10 +366,11 @@ function bucketItems(items: TimelineItem[], minDuration: number) {
   while (i < items.length) {
     const bucket: number[] = []
     let bucketDuration = 0
+    const bucketStart = items[i].start
 
     do {
       bucket.push(i)
-      bucketDuration += items[i].end - items[i].start + 1
+      bucketDuration = items[i].end - bucketStart
       i++
     } while (i < items.length && bucketDuration < minDuration)
 
@@ -377,8 +378,20 @@ function bucketItems(items: TimelineItem[], minDuration: number) {
       result.push(bucket)
     } else {
       // Try merging with left
+      
       if (result.length > 0) {
-        result[result.length - 1].push(...bucket)
+        const leftBucket = result[result.length - 1]
+        const leftBucketEnd = items[leftBucket[leftBucket.length - 1]].end
+        const currentBucketEnd = items[bucket[bucket.length - 1]].end
+        
+        if(Math.floor(leftBucketEnd / minDuration) === Math.floor(currentBucketEnd / minDuration)) {
+          // Merge if both ends are in the range [n * minDuration, (n + 1) * minDuration)
+          result[result.length - 1].push(...bucket)
+        } else {
+          // Cannot merge with left
+          result.push(bucket)
+        }
+
       } else {
         // No adjacent bucket exist
         result.push(bucket)
