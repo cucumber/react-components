@@ -360,6 +360,11 @@ function formatTime(time: number): string {
 }
 
 function bucketItems(items: TimelineItem[], minDuration: number) {
+  const canMerge = (item1End: number, item2End: number) => {
+    // Merge if both ends are in the range [n * minDuration, (n + 1) * minDuration)
+    return Math.floor(item1End / minDuration) === Math.floor(item2End / minDuration)
+  }
+
   const result: number[][] = []
 
   let i = 0
@@ -372,26 +377,28 @@ function bucketItems(items: TimelineItem[], minDuration: number) {
       bucket.push(i)
       bucketDuration = items[i].end - bucketStart
       i++
-    } while (i < items.length && bucketDuration < minDuration)
+    } while (
+      i < items.length &&
+      bucketDuration < minDuration &&
+      canMerge(items[i - 1].end, items[i].end)
+    )
 
     if (bucketDuration >= minDuration) {
       result.push(bucket)
     } else {
       // Try merging with left
-      
+
       if (result.length > 0) {
         const leftBucket = result[result.length - 1]
         const leftBucketEnd = items[leftBucket[leftBucket.length - 1]].end
         const currentBucketEnd = items[bucket[bucket.length - 1]].end
-        
-        if(Math.floor(leftBucketEnd / minDuration) === Math.floor(currentBucketEnd / minDuration)) {
-          // Merge if both ends are in the range [n * minDuration, (n + 1) * minDuration)
+
+        if (canMerge(leftBucketEnd, currentBucketEnd)) {
           result[result.length - 1].push(...bucket)
         } else {
           // Cannot merge with left
           result.push(bucket)
         }
-
       } else {
         // No adjacent bucket exist
         result.push(bucket)
