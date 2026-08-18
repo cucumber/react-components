@@ -17,12 +17,8 @@ interface ProviderProps {
   defaultHideStatuses?: readonly TestStepResultStatus[]
 }
 
-function renderAndExtractPickleNames({
-  envelopes,
-  defaultQuery,
-  defaultHideStatuses,
-}: ProviderProps) {
-  return renderHook(() => useFilteredTestCases().map(({ pickle }) => pickle.name), {
+function renderFilteredTestCases({ envelopes, defaultQuery, defaultHideStatuses }: ProviderProps) {
+  return renderHook(useFilteredTestCases, {
     wrapper: ({ children }) => (
       <EnvelopesProvider envelopes={envelopes}>
         <InMemorySearchProvider
@@ -34,6 +30,18 @@ function renderAndExtractPickleNames({
       </EnvelopesProvider>
     ),
   })
+}
+
+function renderAndExtractPickleNames(props: ProviderProps) {
+  const { result, ...rest } = renderFilteredTestCases(props)
+  return {
+    result: {
+      get current() {
+        return (result.current.results ?? []).map(({ pickle }) => pickle.name)
+      },
+    },
+    ...rest,
+  }
 }
 
 describe('useFilteredTestCases', () => {
@@ -146,6 +154,53 @@ describe('useFilteredTestCases', () => {
 
       await waitFor(() => expect(result.current).to.include('one scenario'))
       expect(result.current).to.include('another scenario')
+    })
+  })
+
+  describe('readiness', () => {
+    it('leaves results undefined while the search is still running', () => {
+      const { result } = renderFilteredTestCases({ envelopes: retry, defaultQuery: 'third' })
+
+      expect(result.current.results).to.equal(undefined)
+    })
+
+    it('populates results once the search resolves', async () => {
+      const { result } = renderFilteredTestCases({ envelopes: retry, defaultQuery: 'third' })
+
+      await waitFor(() => expect(result.current.results).not.to.equal(undefined))
+    })
+  })
+
+  describe('the filtered flag', () => {
+    it('is false when no criteria are active', async () => {
+      const { result } = renderFilteredTestCases({ envelopes: hooksConditional })
+
+      await waitFor(() => expect(result.current.results).to.have.lengthOf(3))
+      expect(result.current.filtered).to.equal(false)
+    })
+
+    it('is true when a tag expression is active', async () => {
+      const { result } = renderFilteredTestCases({
+        envelopes: hooksConditional,
+        defaultQuery: '@fail-before',
+      })
+
+      await waitFor(() => expect(result.current.filtered).to.equal(true))
+    })
+
+    it('is true when a text search is active', async () => {
+      const { result } = renderFilteredTestCases({ envelopes: retry, defaultQuery: 'third' })
+
+      await waitFor(() => expect(result.current.filtered).to.equal(true))
+    })
+
+    it('is true when statuses are hidden', async () => {
+      const { result } = renderFilteredTestCases({
+        envelopes: retry,
+        defaultHideStatuses: [TestStepResultStatus.FAILED],
+      })
+
+      await waitFor(() => expect(result.current.filtered).to.equal(true))
     })
   })
 })

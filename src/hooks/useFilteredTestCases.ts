@@ -9,13 +9,16 @@ import { useQueries } from './useQueries.js'
 import { useSearch } from './useSearch.js'
 import { useSearchResult } from './useSearchResult.js'
 
-export function useFilteredTestCases(): ReadonlyArray<ExpandedTestCase<TestCaseFinished>> {
+export function useFilteredTestCases(): {
+  results?: ReadonlyArray<ExpandedTestCase<TestCaseFinished>>
+  filtered: boolean
+} {
   const { cucumberQuery } = useQueries()
   const allTestCasesFinished = useMemo(
     () => cucumberQuery.findAllTestCaseFinished(),
     [cucumberQuery]
   )
-  const { hideStatuses, tagExpression } = useSearch()
+  const { hideStatuses, tagExpression, unchanged } = useSearch()
   const candidates = useMemo(
     () =>
       filterAndExpandTestCaseEvents(cucumberQuery, allTestCasesFinished, {
@@ -25,7 +28,7 @@ export function useFilteredTestCases(): ReadonlyArray<ExpandedTestCase<TestCaseF
     [allTestCasesFinished, cucumberQuery, hideStatuses, tagExpression]
   )
   const searchResult = useSearchResult()
-  const [results, setResults] = useState<ReadonlyArray<ExpandedTestCase<TestCaseFinished>>>([])
+  const [results, setResults] = useState<ReadonlyArray<ExpandedTestCase<TestCaseFinished>>>()
 
   useEffect(() => {
     switch (searchResult.status) {
@@ -43,5 +46,8 @@ export function useFilteredTestCases(): ReadonlyArray<ExpandedTestCase<TestCaseF
     }
   }, [candidates, searchResult])
 
-  return results
+  return {
+    results,
+    filtered: !unchanged,
+  }
 }
