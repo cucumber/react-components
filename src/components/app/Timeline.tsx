@@ -44,7 +44,7 @@ const axisUnits: Unit[] = [
   { label: `${24 * AXIS_CONFIG.minorInterval} hr`, magnitude: 24 * 60 * 60 * 1000 },
 ]
 export const Timeline: FC = () => {
-  const { groups, fullStart, fullEnd } = useTimelineData()
+  const { groups, fullStart, fullEnd, filtered } = useTimelineData()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
   const [currentUnitIndex, setCurrentUnitIndex] = useState(0)
 
@@ -76,6 +76,14 @@ export const Timeline: FC = () => {
       timelineWrapperRef.current.style.setProperty('--axis-start', fullStart.toString())
     }
   }, [fullStart])
+
+  if (groups.length === 0) {
+    return filtered ? (
+      <p className={styles.empty}>No scenarios match your query and/or filters.</p>
+    ) : (
+      <p className={styles.empty}>No scenarios were executed.</p>
+    )
+  }
 
   return (
     <>

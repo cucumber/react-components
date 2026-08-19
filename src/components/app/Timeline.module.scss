@@ -2,6 +2,10 @@
 @use '../../styles/theming';
 @use 'sass:color';
 
+.empty {
+  font-style: italic;
+}
+
 .timelineWrapper {
   display: flex;
   flex-direction: column;

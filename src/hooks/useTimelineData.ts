@@ -31,6 +31,7 @@ export interface TimelineData {
   readonly groups: readonly TimelineGroup[]
   readonly fullStart: number
   readonly fullEnd: number
+  readonly filtered: boolean
 }
 
 const UNASSIGNED_GROUP_ID = ''
@@ -44,7 +45,7 @@ export function useTimelineData(): TimelineData {
     let fullStart: number = Number.MAX_SAFE_INTEGER
     let fullEnd: number = Number.MIN_SAFE_INTEGER
 
-    for (const testCaseFinished of finishedTestCases) {
+    for (const testCaseFinished of finishedTestCases.results ?? []) {
       const testCaseStarted = cucumberQuery.findTestCaseStartedBy(testCaseFinished.testCaseEvent)
       if (!testCaseStarted) {
         continue
@@ -103,7 +104,7 @@ export function useTimelineData(): TimelineData {
     const groups: TimelineGroup[] = Object.values(groupMap)
     groups.sort((a, b) => compareGroupIds(a.id, b.id))
 
-    return { groups, fullStart, fullEnd }
+    return { groups, fullStart, fullEnd, filtered: finishedTestCases.filtered }
   }, [cucumberQuery, finishedTestCases])
 }
 
