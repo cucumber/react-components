@@ -62,7 +62,7 @@
     "@cucumber/message-streams": "^5.0.1",
     "@ladle/react": "^5.0.3",
     "@testing-library/react": "16.3.2",
-    "@testing-library/user-event": "14.6.5",
+    "@testing-library/user-event": "14.6.6",
     "@tsconfig/recommended": "^1.0.13",
     "@types/chai": "^5.0.0",
     "@types/chai-dom": "^1.11.3",
