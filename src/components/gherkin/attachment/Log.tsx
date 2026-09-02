@@ -1,7 +1,7 @@
 // biome-ignore-all lint/security/noDangerouslySetInnerHtml: pre-sanitised
 
 import type { Attachment } from '@cucumber/messages'
-import Convert from 'ansi-to-html'
+import { AnsiUp } from 'ansi_up'
 import type { FC } from 'react'
 
 import { CopyButton } from '../../app/CopyButton.js'
@@ -24,5 +24,5 @@ export const Log: FC<{
 }
 
 function prettyANSI(s: string) {
-  return new Convert().toHtml(s)
+  return new AnsiUp().ansi_to_html(s)
 }
