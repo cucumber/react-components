@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [24.4.0] - 2026-09-02
 ### Changed
 - Add directory hierarchy awareness to document sorting ([#517](https://github.com/cucumber/react-components/pull/517)) by [@MuhammadTalha57](https://github.com/MuhammadTalha57)
 - Replace ANSI handling library ([#562](https://github.com/cucumber/react-components/pull/562))
@@ -523,7 +525,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.3.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.4.0...HEAD
+[24.4.0]: https://github.com/cucumber/cucumber-react/compare/v24.3.0...v24.4.0
 [24.3.0]: https://github.com/cucumber/cucumber-react/compare/v24.2.0...v24.3.0
 [24.2.0]: https://github.com/cucumber/cucumber-react/compare/v24.1.2...v24.2.0
 [24.1.2]: https://github.com/cucumber/cucumber-react/compare/v24.1.1...v24.1.2
