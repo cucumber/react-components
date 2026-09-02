@@ -315,7 +315,7 @@ describe('<Attachment>', () => {
       const { container } = render(<Attachment attachment={attachment} />)
       const data = container.querySelector('pre > span')
       expect(data).to.contain.html(
-        '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
+        '<span style="color:rgb(0,0,0)">black</span><span style="color:rgb(255,255,255)">white</span>'
       )
       expect(screen.getByRole('button', { name: 'Copy' })).to.be.visible
     })
@@ -330,8 +330,20 @@ describe('<Attachment>', () => {
       const { container } = render(<Attachment attachment={attachment} />)
       const data = container.querySelector('pre > span')
       expect(data).to.contain.html(
-        '<span style="color:#000">black<span style="color:#AAA">white</span></span>'
+        '<span style="color:rgb(0,0,0)">black</span><span style="color:rgb(255,255,255)">white</span>'
       )
+    })
+
+    it('escapes HTML in the log content', () => {
+      const attachment: AttachmentMessage = {
+        mediaType: 'text/x.cucumber.log+plain',
+        body: '<img src=x onerror=alert(1)>',
+        contentEncoding: AttachmentContentEncoding.IDENTITY,
+      }
+      const { container } = render(<Attachment attachment={attachment} />)
+      const data = container.querySelector('pre > span')
+      expect(data?.querySelector('img')).to.equal(null)
+      expect(data).to.have.text('<img src=x onerror=alert(1)>')
     })
 
     it('copies raw content without ANSI conversion when clicking copy button', async () => {
