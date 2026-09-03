@@ -1,0 +1,227 @@
+@use '../../styles/statuses';
+@use '../../styles/theming';
+@use 'sass:color';
+
+.empty {
+  font-style: italic;
+}
+
+.timelineWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1px;
+}
+
+.timelineRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 4fr);
+  gap: 1px;
+  border: 1px solid theming.$panelAccentColor;
+  border-top: none;
+}
+
+.timelineRow:first-child {
+  border-top: 1px solid theming.$panelAccentColor;
+}
+
+.cell {
+  height: 3em;
+}
+
+.cell:first-child {
+  border-right: 1px solid theming.$panelAccentColor;
+}
+
+.leftCell {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5em;
+  font-family: inherit;
+}
+
+// Timeline Bar Styles
+
+.timelineBarWrapper {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  position: sticky; // Allows setting timelineBar position: absolute
+}
+
+.timelineBar {
+  height: 80%;
+  border-radius: 0.333em;
+  border: none;
+  padding: 0; 
+  box-sizing: border-box;
+  flex: none;
+  position: absolute;
+}
+
+@each $name, $color in statuses.$statusColors {
+  .timelineBar[data-status='#{$name}'] {
+    background-color: color.adjust($color, $alpha: -0.666);
+    border-color: $color;
+
+  &:hover {
+    outline: 1px solid $color;
+  }
+
+  &.selected {
+    outline: 1px solid $color
+  }
+}
+}
+
+// Tooltip Styles
+
+.icon {
+  padding-top: 0.35em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+// Tooltip card
+:global(.react-aria-Tooltip) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: theming.$panelBackgroundColor;
+  color: theming.$panelTextColor;
+  border: 1px solid theming.$panelAccentColor;
+  border-radius: 0.25em;
+  padding: 0.4em 0.6em;
+  font-size: inherit;
+  font-family: inherit;
+  align-items: center;
+  gap: 0.4em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  max-width: 20em;
+  margin-bottom: 0.7em;
+}
+
+.tooltipBtn {
+  border: none;
+  background: none;
+}
+
+// Arrow styling
+:global(.react-aria-Tooltip) svg {
+  fill: theming.$exampleNumberColor;
+  stroke: theming.$panelAccentColor;
+  stroke-width: 1px;
+}
+
+// Axis Styles
+
+.axisUnit {
+  font-size: 0.65em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: theming.$exampleNumberColor;
+  opacity: 0.9;
+}
+
+.axisRuler {
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  border: none;
+  background-color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.axisRuler:active {
+  cursor: grabbing;
+}
+
+.minorTick {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 30%;
+  background-color: theming.$panelAccentColor;
+  pointer-events: none;
+}
+
+.majorTick {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 55%;
+  background-color: theming.$exampleNumberColor;
+  pointer-events: none;
+}
+
+.tickLabel {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6em;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: theming.$panelTextColor;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+
+// Timeline Bar Detail Styles
+
+.detail {
+  position: relative;
+  padding: 1em;
+  background-color: theming.$panelBackgroundColor;
+  color: theming.$panelTextColor;
+  border: 1px solid theming.$panelAccentColor;
+  border-radius: 0.25em;
+}
+
+.detailClose {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.25em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.detailTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.25em;
+  font-size: 1.1em;
+
+  svg {
+    height: 1em;
+  }
+}
+
+.detailFeature {
+  margin: 0 0 0.5em;
+  opacity: 0.75;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 0.75em 0 0;
+
+  dt {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
