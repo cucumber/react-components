@@ -95,11 +95,6 @@
     "tsx": "^4.23.5",
     "typescript": "7.0.2"
   },
-  "overrides": {
-    "global-jsdom": {
-      "jsdom": "$jsdom"
-    }
-  },
   "bugs": {
     "url": "https://github.com/cucumber/react-components/issues"
   },
