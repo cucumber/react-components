@@ -98,11 +98,28 @@ const PickleStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
 const PickleStepArgument: FC<{ testStep: TestStep }> = ({ testStep }) => {
   const { cucumberQuery } = useQueries()
   const pickleStep = cucumberQuery.findPickleStepBy(testStep) as PickleStep
-  if (pickleStep.argument?.docString) {
-    return <DocString docString={pickleStep.argument.docString} />
+  const { dataTable, docString } = pickleStep.argument ?? {}
+  // argument indexes are only present from newer producers that allow both
+  if (dataTable?.argumentIndex !== undefined && docString?.argumentIndex !== undefined) {
+    const dataTableElement = <DataTable dataTable={dataTable} />
+    const docStringElement = <DocString docString={docString} />
+    return dataTable.argumentIndex < docString.argumentIndex ? (
+      <>
+        {dataTableElement}
+        {docStringElement}
+      </>
+    ) : (
+      <>
+        {docStringElement}
+        {dataTableElement}
+      </>
+    )
   }
-  if (pickleStep.argument?.dataTable) {
-    return <DataTable dataTable={pickleStep.argument.dataTable} />
+  if (docString) {
+    return <DocString docString={docString} />
+  }
+  if (dataTable) {
+    return <DataTable dataTable={dataTable} />
   }
   return null
 }
