@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Render both data table and doc string in source order ([#570](https://github.com/cucumber/react-components/pull/570))
 
 ## [24.4.0] - 2026-09-02
 ### Changed
