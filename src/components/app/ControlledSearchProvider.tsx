@@ -42,7 +42,7 @@ function deriveState(query: string): Pick<SearchContextValue, 'searchTerm' | 'ta
         tagExpression: parse(query),
       }
     } catch (error) {
-      console.error(`Failed to parse tag expression "${query}":`, error)
+      console.error('Failed to parse tag expression "%s":', query, error)
     }
   }
   return {
