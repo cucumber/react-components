@@ -1,4 +1,4 @@
-import type { Envelope, GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 import { Query as CucumberQuery } from '@cucumber/query'
 import { render } from '@testing-library/react'
 import { expect } from 'chai'
@@ -191,54 +191,5 @@ describe('TestStepOutcome', () => {
       ['PRE', 'hello'],
       ['TABLE', 'world'],
     ])
-  })
-
-  it('should show only the doc string when both are present without argument indexes', () => {
-    // messages from older producers do not have argument indexes
-    const envelopes: ReadonlyArray<Envelope> = dataTablesDocStringsSample.map((envelope) => {
-      if (envelope.pickle) {
-        return {
-          pickle: {
-            ...envelope.pickle,
-            steps: envelope.pickle.steps.map((step) => ({
-              ...step,
-              argument: {
-                dataTable: step.argument?.dataTable && {
-                  ...step.argument.dataTable,
-                  argumentIndex: undefined,
-                },
-                docString: step.argument?.docString && {
-                  ...step.argument.docString,
-                  argumentIndex: undefined,
-                },
-              },
-            })),
-          },
-        }
-      }
-      return envelope
-    })
-
-    const cucumberQuery = new CucumberQuery()
-    for (const envelope of envelopes) {
-      cucumberQuery.update(envelope)
-    }
-
-    const [testCaseStarted] = cucumberQuery.findAllTestCaseStarted()
-    const [[testStepFinished, testStep]] =
-      cucumberQuery.findTestStepFinishedAndTestStepBy(testCaseStarted)
-
-    const { container } = render(
-      <EnvelopesProvider envelopes={envelopes}>
-        <TestStepOutcome testStep={testStep} testStepFinished={testStepFinished} />
-      </EnvelopesProvider>
-    )
-
-    expect(
-      Array.from(container.querySelectorAll('table, pre')).map((element) => [
-        element.tagName,
-        element.textContent,
-      ])
-    ).to.deep.eq([['PRE', 'world']])
   })
 })
