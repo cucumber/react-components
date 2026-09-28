@@ -98,11 +98,22 @@ const PickleStepTitle: FC<{ testStep: TestStep }> = ({ testStep }) => {
 const PickleStepArgument: FC<{ testStep: TestStep }> = ({ testStep }) => {
   const { cucumberQuery } = useQueries()
   const pickleStep = cucumberQuery.findPickleStepBy(testStep) as PickleStep
-  if (pickleStep.argument?.docString) {
-    return <DocString docString={pickleStep.argument.docString} />
-  }
-  if (pickleStep.argument?.dataTable) {
-    return <DataTable dataTable={pickleStep.argument.dataTable} />
-  }
-  return null
+  const { dataTable, docString } = pickleStep.argument ?? {}
+  const stepArguments = [dataTable, docString]
+    .filter((stepArgument) => stepArgument !== undefined)
+    .sort(
+      (a, b) =>
+        (a.argumentIndex ?? Number.MAX_SAFE_INTEGER) - (b.argumentIndex ?? Number.MAX_SAFE_INTEGER)
+    )
+  return (
+    <>
+      {stepArguments.map((stepArgument, index) =>
+        'content' in stepArgument ? (
+          <DocString key={index} docString={stepArgument} />
+        ) : (
+          <DataTable key={index} dataTable={stepArgument} />
+        )
+      )}
+    </>
+  )
 }

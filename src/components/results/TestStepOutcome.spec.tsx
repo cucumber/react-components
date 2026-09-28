@@ -4,6 +4,7 @@ import { render } from '@testing-library/react'
 import { expect } from 'chai'
 
 import ambiguousSample from '../../../acceptance/ambiguous/ambiguous.js'
+import dataTablesDocStringsSample from '../../../acceptance/data-tables-doc-strings/data-tables-doc-strings.js'
 import minimalSample from '../../../acceptance/minimal/minimal.js'
 import pendingExceptionSample from '../../../acceptance/pending-exception/pending-exception.js'
 import skippedExceptionSample from '../../../acceptance/skipped-exception/skipped-exception.js'
@@ -147,5 +148,48 @@ describe('TestStepOutcome', () => {
     )
 
     expect(getByText('cukes in my belly')).to.be.visible
+  })
+
+  it('should show both a data table and a doc string in the order they were declared', () => {
+    const cucumberQuery = new CucumberQuery()
+    for (const envelope of dataTablesDocStringsSample) {
+      cucumberQuery.update(envelope)
+    }
+
+    const [tableFirstTestCase, docStringFirstTestCase] = cucumberQuery.findAllTestCaseStarted()
+
+    const [[tableFirstFinished, tableFirstStep]] =
+      cucumberQuery.findTestStepFinishedAndTestStepBy(tableFirstTestCase)
+    const tableFirst = render(
+      <EnvelopesProvider envelopes={dataTablesDocStringsSample}>
+        <TestStepOutcome testStep={tableFirstStep} testStepFinished={tableFirstFinished} />
+      </EnvelopesProvider>
+    )
+    expect(
+      Array.from(tableFirst.container.querySelectorAll('table, pre')).map((element) => [
+        element.tagName,
+        element.textContent,
+      ])
+    ).to.deep.eq([
+      ['TABLE', 'hello'],
+      ['PRE', 'world'],
+    ])
+
+    const [[docStringFirstFinished, docStringFirstStep]] =
+      cucumberQuery.findTestStepFinishedAndTestStepBy(docStringFirstTestCase)
+    const docStringFirst = render(
+      <EnvelopesProvider envelopes={dataTablesDocStringsSample}>
+        <TestStepOutcome testStep={docStringFirstStep} testStepFinished={docStringFirstFinished} />
+      </EnvelopesProvider>
+    )
+    expect(
+      Array.from(docStringFirst.container.querySelectorAll('table, pre')).map((element) => [
+        element.tagName,
+        element.textContent,
+      ])
+    ).to.deep.eq([
+      ['PRE', 'hello'],
+      ['TABLE', 'world'],
+    ])
   })
 })
