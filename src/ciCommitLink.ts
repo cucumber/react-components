@@ -6,7 +6,7 @@ import toRepositoryId from './toRepositoryId.js'
 export default function ciCommitLink(ci: Ci): string | undefined {
   if (ci.git?.remote) {
     const repositoryId = toRepositoryId(ci.git.remote)
-    const github = repositoryId.startsWith('github.com') || ci.name === 'GitHub Actions'
+    const github = repositoryId.startsWith('github.com/') || ci.name === 'GitHub Actions'
     if (ci.git.revision && github) {
       return `https://${repositoryId}/commit/${ci.git.revision}`
     }
