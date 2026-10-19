@@ -39,7 +39,7 @@
     "ansi_up": "6.0.6",
     "date-fns": "4.4.0",
     "hast-util-sanitize": "^5.0.1",
-    "highlight-words-core": "1.2.3",
+    "highlight-words-core": "2.0.0",
     "mime": "^4.0.0",
     "react-aria-components": "^1.16.0",
     "react-error-boundary": "^6.0.0",
