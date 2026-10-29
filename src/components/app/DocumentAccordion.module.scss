@@ -1,4 +1,4 @@
-@use '../../styles/theming';
+@use "../../styles/theming";
 
 .icon {
   padding-top: 0.35em;
@@ -43,7 +43,7 @@
   transform-origin: center center;
   transition: transform 0.2s linear;
 
-  .button[aria-expanded='true'] & {
+  .button[aria-expanded="true"] & {
     transform: rotate(90deg);
   }
 }

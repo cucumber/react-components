@@ -1,4 +1,4 @@
-@use '../../styles/statuses';
+@use "../../styles/statuses";
 
 .statusesList {
   list-style: none;
@@ -20,7 +20,7 @@
   text-transform: uppercase;
 
   @each $name, $color in statuses.$statusColors {
-    &[data-status='#{$name}'] {
+    &[data-status="#{$name}"] {
       background-color: $color;
     }
   }
