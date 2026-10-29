@@ -1,8 +1,8 @@
-@use 'sass:color';
-@use '../../styles/statuses';
+@use "sass:color";
+@use "../../styles/statuses";
 .icon {
   @each $name, $color in statuses.$statusColors {
-    &[data-status='#{$name}'] {
+    &[data-status="#{$name}"] {
       color: color.adjust($color, $alpha: -0.25);
     }
   }

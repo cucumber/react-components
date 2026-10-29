@@ -8,9 +8,6 @@ $errorBackgroundColor: var(--cucumber-error-background-color, oklch(97.1% 0.013 
 $errorTextColor: var(--cucumber-error-text-color, oklch(44.4% 0.177 26.899)); // red-800
 $codeBackgroundColor: var(--cucumber-code-background-color, oklch(98.4% 0.003 247.858)); // slate-50
 $codeTextColor: var(--cucumber-code-text-color, oklch(27.9% 0.041 260.031)); // slate-800
-$panelBackgroundColor: var(
-  --cucumber-panel-background-color,
-  oklch(96.8% 0.007 247.896)
-); // slate-100
+$panelBackgroundColor: var(--cucumber-panel-background-color, oklch(96.8% 0.007 247.896)); // slate-100
 $panelAccentColor: var(--cucumber-panel-accent-color, oklch(92.9% 0.013 255.508)); // slate-200
 $panelTextColor: var(--cucumber-panel-text-color, oklch(27.9% 0.041 260.031)); // slate-800
