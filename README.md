@@ -17,7 +17,7 @@ The source code for the screenshot above is:
 ```jsx
 import { EnvelopesProvider, FilteredDocuments } from '@cucumber/react-components'
 
-<EnvelopesProvider envelopes={envelopes}>
+;<EnvelopesProvider envelopes={envelopes}>
   <FilteredDocuments />
 </EnvelopesProvider>
 ```
@@ -44,7 +44,7 @@ The standard styling comes without any extra providers or configuration. There a
 You can provide your own theme with a small amount of CSS. Target the element above your highest-level usage of the components:
 
 ```jsx
-<div className="dark-theme">
+;<div className="dark-theme">
   <EnvelopesProvider envelopes={envelopes}>
     <FilteredDocuments />
   </EnvelopesProvider>
@@ -92,11 +92,13 @@ Let's say you want to do something totally different with the typography of doc 
 Then, you can provide an `overrides` prop to the `CustomRendering` component, in the form of an object that declares which class names you're going to override and what with:
 
 ```jsx
-<CustomRendering overrides={{
-  DocString: {
-    docString: 'acme-docstring'
-  }
-}}>
+;<CustomRendering
+  overrides={{
+    DocString: {
+      docString: 'acme-docstring',
+    },
+  }}
+>
   <EnvelopesProvider envelopes={envelopes}>
     <FilteredDocuments />
   </EnvelopesProvider>
@@ -112,14 +114,16 @@ To change the rendering of some components entirely, you can selectively provide
 Staying with the doc string example, you can use the same `overrides` prop, but this time instead of an object with class names, you provide a React functional component, giving you full control over the rendering:
 
 ```jsx
-<CustomRendering overrides={{
-  DocString: (props) => (
-    <>
-      <p>I am going to render this doc string in a textarea:</p>
-      <textarea>{props.docString.content}</textarea>
-    </>
-  )
-}}>
+;<CustomRendering
+  overrides={{
+    DocString: (props) => (
+      <>
+        <p>I am going to render this doc string in a textarea:</p>
+        <textarea>{props.docString.content}</textarea>
+      </>
+    ),
+  }}
+>
   <EnvelopesProvider envelopes={envelopes}>
     <FilteredDocuments />
   </EnvelopesProvider>

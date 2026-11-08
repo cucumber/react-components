@@ -1,8 +1,8 @@
-@use '../../styles/statuses';
+@use "../../styles/statuses";
 
 .segment {
   @each $name, $color in statuses.$statusColors {
-    &[data-status='#{$name}'] {
+    &[data-status="#{$name}"] {
       stroke: $color;
     }
   }

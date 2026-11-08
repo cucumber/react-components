@@ -4,6 +4,7 @@
   margin: 0;
 
   > * + * {
+    // biome-ignore lint/complexity/noImportantStyles: needed to override child margins
     margin-top: 0.25rem !important;
   }
 }

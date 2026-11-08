@@ -1,4 +1,4 @@
-@use '../../../styles/theming';
+@use "../../../styles/theming";
 
 .copyButton {
   position: absolute;
@@ -26,7 +26,7 @@
   padding-left: 3.25em;
 
   &::before {
-    content: 'Log';
+    content: "Log";
     position: absolute;
     top: 0.666em;
     left: 0.75em;

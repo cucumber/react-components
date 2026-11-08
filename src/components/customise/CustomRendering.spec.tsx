@@ -5,6 +5,14 @@ import { expect } from 'chai'
 import { Tags } from '../gherkin/index.js'
 import { type Customised, CustomRendering, type TagsClasses, type TagsProps } from './index.js'
 
+const TotallyCustomTags = () => {
+  return <p>Totally custom!</p>
+}
+
+const DeferringTags: Customised<TagsProps, TagsClasses> = (props) => {
+  return <props.DefaultRenderer {...props} />
+}
+
 describe('custom rendering and theming', () => {
   it('uses the generated class names from built-in styles by default', () => {
     const tags: Tag[] = [
@@ -94,14 +102,10 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const CustomComponent = () => {
-      return <p>Totally custom!</p>
-    }
-
     const { container } = render(
       <CustomRendering
         overrides={{
-          Tags: CustomComponent,
+          Tags: TotallyCustomTags,
         }}
       >
         <Tags tags={tags} />
@@ -123,14 +127,10 @@ describe('custom rendering and theming', () => {
       },
     ]
 
-    const CustomComponent: Customised<TagsProps, TagsClasses> = (props) => {
-      return <props.DefaultRenderer {...props} />
-    }
-
     const { getByRole } = render(
       <CustomRendering
         overrides={{
-          Tags: CustomComponent,
+          Tags: DeferringTags,
         }}
       >
         <Tags tags={tags} />
