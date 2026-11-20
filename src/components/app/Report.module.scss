@@ -1,3 +1,5 @@
+@use '../../styles/theming';
+
 .layout {
   > section:not(:last-child) {
     margin-bottom: 1.5em;
@@ -7,4 +9,38 @@
 .heading {
   font-size: 1.25em;
   margin: 1em 0;
+}
+
+.tabList {
+  display: flex;
+  gap: 0.25em;
+  border-bottom: 1px solid theming.$panelAccentColor;
+  margin-bottom: 1em;
+}
+
+.tab {
+  padding: 0.5em 1em;
+  border-bottom: 2px solid transparent;
+  color: theming.$panelTextColor;
+  cursor: pointer;
+  outline: none;
+
+  &[data-hovered] {
+    background-color: theming.$panelBackgroundColor;
+  }
+
+  &[data-selected] {
+    border-bottom-color: theming.$anchorColor;
+    color: theming.$anchorColor;
+    font-weight: 600;
+  }
+
+  &[data-focus-visible] {
+    outline: 2px solid theming.$anchorColor;
+    outline-offset: 2px;
+  }
+}
+
+.tabPanel {
+  outline: none;
 }
