@@ -9,6 +9,16 @@ import {
 } from '../customise/index.js'
 import defaultStyles from './Description.module.scss'
 
+// Gherkin keeps the source file's indentation, which Markdown would otherwise treat as code blocks
+function dedent(text: string): string {
+  const lines = text.split('\n')
+  const indents = lines
+    .filter((line) => line.trim() !== '')
+    .map((line) => line.match(/^[ \t]*/)?.[0].length ?? 0)
+  const common = Math.min(...indents)
+  return lines.map((line) => line.slice(common)).join('\n')
+}
+
 const DefaultRenderer: DefaultComponent<DescriptionProps, DescriptionClasses> = ({
   description,
   styles,
@@ -18,7 +28,7 @@ const DefaultRenderer: DefaultComponent<DescriptionProps, DescriptionClasses> = 
   }
   return (
     <div className={styles.content}>
-      <HighLight text={description} markdown={true} />
+      <HighLight text={dedent(description)} markdown={true} />
     </div>
   )
 }
