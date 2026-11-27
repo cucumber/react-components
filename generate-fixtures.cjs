@@ -21,7 +21,7 @@ function toCamelCase(str) {
 }
 
 if (fs.existsSync('acceptance')) {
-  fs.rmdirSync('acceptance', { recursive: true })
+  fs.rmSync('acceptance', { recursive: true, force: true })
 }
 
 const sampleNames = []
