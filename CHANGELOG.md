@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
-- Strip common indentation from descriptions so they don't render as code blocks ([#586](https://github.com/cucumber/react-components/pull/586))
+- Strip common indentation from descriptions ([#586](https://github.com/cucumber/react-components/pull/586))
 
 ## [24.5.0] - 2026-09-28
 ### Added
