@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [24.5.2] - 2026-11-27
+
 ## [24.5.1] - 2026-11-27
 ### Fixed
 - Strip common indentation from descriptions ([#586](https://github.com/cucumber/react-components/pull/586))
@@ -533,7 +535,8 @@ to rebuild them every time the envelope list is updated. Use this instead of `<W
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.5.1...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-react/compare/v24.5.2...HEAD
+[24.5.2]: https://github.com/cucumber/cucumber-react/compare/v24.5.1...v24.5.2
 [24.5.1]: https://github.com/cucumber/cucumber-react/compare/v24.5.0...v24.5.1
 [24.5.0]: https://github.com/cucumber/cucumber-react/compare/v24.4.0...v24.5.0
 [24.4.0]: https://github.com/cucumber/cucumber-react/compare/v24.3.0...v24.4.0
